@@ -1,0 +1,10 @@
+{
+ "parent":"create:item/package_transforms",
+ "textures":{"shell":"minecraft:block/copper_block","band":"minecraft:block/iron_block","window":"minecraft:block/white_concrete","particle":"minecraft:block/copper_block"},
+ "elements":[
+  {"from":[2,0,2],"to":[14,12,14],"faces":{"north":{"texture":"#shell"},"south":{"texture":"#shell"},"east":{"texture":"#shell"},"west":{"texture":"#shell"},"up":{"texture":"#shell"},"down":{"texture":"#shell"}}},
+  {"from":[1.9,3,1.9],"to":[14.1,4,14.1],"faces":{"north":{"texture":"#band"},"south":{"texture":"#band"},"east":{"texture":"#band"},"west":{"texture":"#band"}}},
+  {"from":[1.9,9,1.9],"to":[14.1,10,14.1],"faces":{"north":{"texture":"#band"},"south":{"texture":"#band"},"east":{"texture":"#band"},"west":{"texture":"#band"}}},
+  {"from":[5,5,1.8],"to":[11,8,1.9],"faces":{"north":{"texture":"#window","tintindex":0},"south":{"texture":"#window","tintindex":0}}}
+ ]
+}

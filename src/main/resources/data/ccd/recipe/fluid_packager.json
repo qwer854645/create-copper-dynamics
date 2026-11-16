@@ -1,0 +1,6 @@
+{
+ "type":"minecraft:crafting_shaped","category":"redstone",
+ "pattern":[" C "," P "," T "],
+ "key":{"C":{"item":"minecraft:copper_ingot"},"P":{"item":"create:packager"},"T":{"item":"create:fluid_tank"}},
+ "result":{"id":"ccd:fluid_packager","count":1}
+}

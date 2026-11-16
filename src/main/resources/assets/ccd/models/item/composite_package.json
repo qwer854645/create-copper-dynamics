@@ -1,0 +1,12 @@
+{
+ "parent":"create:item/package_transforms",
+ "textures":{"shell":"minecraft:block/cut_copper","band":"create:block/brass_block","window":"minecraft:block/white_concrete","particle":"minecraft:block/cut_copper"},
+ "elements":[
+  {"from":[2,0,2],"to":[14,12,14],"faces":{"north":{"texture":"#shell"},"south":{"texture":"#shell"},"east":{"texture":"#shell"},"west":{"texture":"#shell"},"up":{"texture":"#shell"},"down":{"texture":"#shell"}}},
+  {"from":[1.9,0,4],"to":[14.1,12.1,5],"faces":{"north":{"texture":"#band"},"south":{"texture":"#band"},"east":{"texture":"#band"},"west":{"texture":"#band"},"up":{"texture":"#band"}}},
+  {"from":[1.9,0,11],"to":[14.1,12.1,12],"faces":{"north":{"texture":"#band"},"south":{"texture":"#band"},"east":{"texture":"#band"},"west":{"texture":"#band"},"up":{"texture":"#band"}}},
+  {"from":[4,5,1.8],"to":[7.5,8,1.9],"faces":{"north":{"texture":"#window","tintindex":0}}},
+  {"from":[8.5,5,1.8],"to":[12,8,1.9],"faces":{"north":{"texture":"#window","tintindex":1}}},
+  {"from":[6.5,9,1.7],"to":[9.5,11,1.9],"faces":{"north":{"texture":"#band"},"east":{"texture":"#band"},"west":{"texture":"#band"},"up":{"texture":"#band"}}}
+ ]
+}

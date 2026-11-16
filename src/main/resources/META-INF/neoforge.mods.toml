@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+[[mods]]
+modId="ccd"
+version="${version}"
+displayName="Create: Copper Dynamics"
+description='''Fluid packaging and unpacking built around Create logistics.'''
+[[dependencies.ccd]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.219,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.ccd]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+[[dependencies.ccd]]
+modId="create"
+type="required"
+versionRange="[6.0.10,6.0.11)"
+ordering="AFTER"
+side="BOTH"
+[[mixins]]
+config="ccd.mixins.json"
