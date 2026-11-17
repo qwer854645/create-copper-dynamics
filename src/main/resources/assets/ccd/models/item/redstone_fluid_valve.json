@@ -7,6 +7,7 @@
     "1_1": "create:block/axis_top",
     "1_0": "create:block/axis",
     "particle": "create:block/valve_closed",
+    "copper": "create:block/copper_underside",
     "dial": "create:block/valve_open"
   },
   "elements": [
@@ -34,12 +35,12 @@
       "faces": {
         "north": {
           "uv": [
-            9,
-            1,
-            15,
-            7
+            0,
+            0,
+            16,
+            16
           ],
-          "texture": "#2"
+          "texture": "#copper"
         },
         "east": {
           "uv": [
@@ -52,12 +53,12 @@
         },
         "south": {
           "uv": [
-            9,
-            1,
-            15,
-            7
+            0,
+            0,
+            16,
+            16
           ],
-          "texture": "#2"
+          "texture": "#copper"
         },
         "west": {
           "uv": [
@@ -368,79 +369,6 @@
             6.5
           ],
           "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "Axis",
-      "from": [
-        6,
-        6,
-        0
-      ],
-      "to": [
-        10,
-        10,
-        16
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            6,
-            6,
-            10,
-            10
-          ],
-          "rotation": 180,
-          "texture": "#1_1"
-        },
-        "east": {
-          "uv": [
-            6,
-            0,
-            10,
-            16
-          ],
-          "rotation": 90,
-          "texture": "#1_0"
-        },
-        "south": {
-          "uv": [
-            6,
-            6,
-            10,
-            10
-          ],
-          "texture": "#1_1"
-        },
-        "west": {
-          "uv": [
-            6,
-            0,
-            10,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#1_0"
-        },
-        "up": {
-          "uv": [
-            6,
-            0,
-            10,
-            16
-          ],
-          "texture": "#1_0"
-        },
-        "down": {
-          "uv": [
-            6,
-            0,
-            10,
-            16
-          ],
-          "rotation": 180,
-          "texture": "#1_0"
         }
       }
     },

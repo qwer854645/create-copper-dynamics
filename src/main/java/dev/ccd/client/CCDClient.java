@@ -24,7 +24,6 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelRenderer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.simibubi.create.content.fluids.PipeAttachmentModel;
-import com.simibubi.create.content.fluids.pipes.valve.FluidValveVisual;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmRenderer;
@@ -84,8 +83,6 @@ public final class CCDClient {
         });
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ATOMIZER_BE.get())
             .factory(com.simibubi.create.content.kinetics.fan.FanVisual::new).apply());
-        event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get())
-            .factory(FluidValveVisual::new).neverSkipVanillaRender().apply());
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ARM_BE.get())
             .factory(ArmVisual::new).neverSkipVanillaRender().apply());
     }

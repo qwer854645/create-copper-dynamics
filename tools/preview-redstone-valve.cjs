@@ -14,14 +14,30 @@ function rotate(v,axis,angle,point){
  return q.map(n=>n+(point?8:0));
 }
 const transform=(faces,axis,angle)=>faces.map(f=>({...f,vertices:f.vertices.map(v=>rotate(v,axis,angle,true)),n:rotate(f.n,axis,angle,false)}));
+function sealShaftFaces(original){
+ const m=JSON.parse(JSON.stringify(original));let sealed=0;
+ for(const e of m.elements)if(e.from.join(',')==='2,2,2'&&e.to.join(',')==='14,14,14')
+  for(const face of Object.values(e.faces))if(face.texture==='#2'&&face.uv.join(',')==='9,1,15,7'){
+   face.texture='#copper';face.uv=[0,0,16,16];sealed++;
+  }
+ if(sealed!==2)throw Error('Expected exactly two native shaft openings');
+ return m.elements;
+}
 async function main(){
+ for(const orientation of ['horizontal','vertical'])for(const state of ['closed','open']){
+  const name='block_'+orientation+'_'+state,id='create:block/fluid_valve/'+name,native=loadModel(id);
+  fs.writeFileSync(path.join(assets,'models/block/redstone_fluid_valve/'+name+'.json'),
+   JSON.stringify({parent:id,render_type:'minecraft:cutout_mipped',
+    textures:{copper:'create:block/copper_underside'},elements:sealShaftFaces(native)},null,2)+'\n');
+ }
  for(const state of ['closed','open'])fs.writeFileSync(path.join(assets,'models/block/redstone_fluid_valve/dial_'+state+'.json'),
   JSON.stringify({ambientocclusion:false,render_type:'minecraft:cutout_mipped',textures:{dial:'create:block/valve_'+state},elements:planes('#dial')},null,2)+'\n');
  const nativeItem=loadModel('create:block/fluid_valve/item'),nativePointer=loadModel('create:block/fluid_valve/pointer');
  const pointerElements=JSON.parse(JSON.stringify(nativePointer.elements));
  for(const e of pointerElements){e.name='outer_native_pointer';for(const endpoint of [e.from,e.to])endpoint[1]=8+(endpoint[1]-8)*6.02/5.5;}
- const item={parent:'create:block/fluid_valve/item',render_type:'minecraft:cutout_mipped',textures:{...nativeItem.textures,dial:'create:block/valve_open'},
-  elements:[...nativeItem.elements,...planes('#dial'),...transformPointerElements(pointerElements)]};
+ const item={parent:'create:block/fluid_valve/item',render_type:'minecraft:cutout_mipped',textures:{...nativeItem.textures,
+  copper:'create:block/copper_underside',dial:'create:block/valve_open'},
+  elements:[...sealShaftFaces(nativeItem).filter(e=>e.name!=='Axis'),...planes('#dial'),...transformPointerElements(pointerElements)]};
  fs.writeFileSync(path.join(assets,'models/item/redstone_fluid_valve.json'),JSON.stringify(item,null,2)+'\n');
  const pointer=(await mesh('create:block/fluid_valve/pointer')).map(f=>({...f,vertices:f.vertices.map(([x,y,z])=>[x,8+(y-8)*6.02/5.5,z])}));
  const panels=[];
@@ -33,7 +49,7 @@ async function main(){
   const buffer=await render([...shell,...dial,...needles],600,460,[22,20,34],{center:[8,8,8],scale:24});
   panels.push({input:buffer,left:i*600,top:85});
  }
- const labels=Buffer.from(`<svg width="1200" height="610" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="600" y="40" font-size="27">红石流体阀门 · 原生表盘独立绘制</text><text x="600" y="74" font-size="16">保留阀体和管口 · 原生刻度与指针 · 避开阀体内部遮挡</text><text x="300" y="570" font-size="18">关闭</text><text x="900" y="570" font-size="18">开启</text><text x="600" y="600" font-size="14" fill="#677070">实际模型离线预览 / 不包含游戏环境光遮蔽，未启动客户端验证</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1200" height="610" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="600" y="40" font-size="27">红石流体阀门 · 铜板封闭原轴口</text><text x="600" y="74" font-size="16">整面原生铜板 · 保留流体口、刻度与指针 · 不渲染传动轴</text><text x="300" y="570" font-size="18">关闭</text><text x="900" y="570" font-size="18">开启</text><text x="600" y="600" font-size="14" fill="#677070">实际模型离线预览 / 不包含游戏环境光遮蔽，未启动客户端验证</text></g></svg>`);
  await sharp({create:{width:1200,height:610,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),dialPlanes:2,nativeArtwork:true}));
 }
