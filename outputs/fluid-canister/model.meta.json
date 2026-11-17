@@ -1,0 +1,33 @@
+{
+  "name": "Fluid Canister",
+  "model": "ccd:item/fluid_package",
+  "originalArtwork": true,
+  "textureSize": [
+    16,
+    16
+  ],
+  "transportBounds": [
+    12,
+    12,
+    12
+  ],
+  "capacityMillibuckets": 4000,
+  "elements": 4,
+  "integerGeometry": true,
+  "texelsPerModelUnit": 1,
+  "paletteColors": 8,
+  "paletteReference": [
+    "Create copper_casing",
+    "Create fluid_tank"
+  ],
+  "textureOrder": [
+    "side",
+    "front",
+    "back",
+    "band",
+    "cap",
+    "flat"
+  ],
+  "fluidTintedFaces": 0,
+  "opaqueTextures": true
+}

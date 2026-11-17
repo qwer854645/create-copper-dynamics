@@ -75,9 +75,9 @@ async function mesh(id) {
   }
   return result;
 }
-function render(faces,width,height,view) {
+function render(faces,width,height,view,options={}) {
   const camera=normal(view), right=normal(cross([0,1,0],camera)), up=cross(camera,right);
-  const scale=15.5, center=[8,7,8];
+  const scale=options.scale || 15.5, center=options.center || [8,7,8];
   const project=p=>{const d=sub(p,center);return [width/2+dot(d,right)*scale,height/2-dot(d,up)*scale,dot(d,camera)];};
   const rgba=Buffer.alloc(width*height*4), depth=new Float64Array(width*height).fill(-Infinity);
   const edge=(a,b,x,y)=>(x-a[0])*(b[1]-a[1])-(y-a[1])*(b[0]-a[0]);
@@ -143,4 +143,5 @@ async function main() {
   fs.writeFileSync(path.join(output,'palette.json'),JSON.stringify({source:'Create 6.0.10-280',palette:Object.fromEntries(palette),textures:changes},null,2)+'\n');
   console.log(JSON.stringify({output:path.join(output,'comparison.png'),textures:changes.length,recoloredPixels:changes.reduce((sum,x)=>sum+x.recoloredPixels,0)}));
 }
-main().catch(e=>{console.error(e);process.exitCode=1;});
+module.exports={mesh,render,model};
+if (require.main === module) main().catch(e=>{console.error(e);process.exitCode=1;});
