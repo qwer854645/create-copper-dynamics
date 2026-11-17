@@ -1,20 +1,24 @@
 {
-  "originalArtwork": true,
+  "originalArtwork": "copper housing texture only",
   "textureSize": [
     16,
     16
   ],
   "paletteReference": [
     "Create pump",
-    "Create copper_casing",
-    "Create industrial_iron_block"
+    "Create copper_casing"
   ],
-  "elements": 25,
+  "elements": 5,
   "fluidAxis": "y before blockstate rotation",
-  "fluidFlangeWidth": 8,
-  "shaftBearingWidth": 6,
-  "shaftOpeningWidth": 4,
+  "nativePipeModels": [
+    "create:block/fluid_pipe/rim_connector/up",
+    "create:block/fluid_pipe/rim/up",
+    "create:block/fluid_pipe/rim_connector/down",
+    "create:block/fluid_pipe/rim/down"
+  ],
+  "nativePipeTexture": "create:block/pipes",
   "nativeShaftModel": "create:block/shaft_half",
-  "opaqueTextures": true,
+  "customBearings": 0,
+  "rivets": 0,
   "previewOnlyShafts": true
 }

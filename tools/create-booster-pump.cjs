@@ -1,12 +1,11 @@
 // Original 16x16 pixel artwork, referencing Create's pump and copper material palette.
 // Usage: node tools/create-booster-pump.cjs <extracted Create source root>
 const fs=require('node:fs'),path=require('node:path'),sharp=require('sharp');
-const {mesh,render}=require('./preview-fluid-packager.cjs');
+const {mesh,render,model:loadModel}=require('./preview-fluid-packager.cjs');
 const root=path.resolve(__dirname,'..'),assets=path.join(root,'src/main/resources/assets/ccd');
 const textures=path.join(assets,'textures/block/booster_pump'),output=path.join(root,'outputs/booster-pump');
 for(const dir of [textures,output])fs.mkdirSync(dir,{recursive:true});
 const copper=[[70,32,24],[144,73,49],[154,80,56],[167,90,64],[178,98,71],[194,107,76],[200,116,86],[214,123,91],[227,130,108]];
-const iron=[[53,52,56],[63,62,66],[79,79,79],[103,97,97],[127,133,132],[159,163,153],[190,192,175]];
 const image=fn=>{const data=Buffer.alloc(1024);for(let y=0;y<16;y++)for(let x=0;x<16;x++)data.set([...fn(x,y),255],(y*16+x)*4);return data;};
 const paint=(data,x,y,color)=>data.set([...color,255],(y*16+x)*4);
 // Twelve-by-twelve copper shell. Seams, reinforcement and wear are pixel clusters, not noise.
@@ -26,23 +25,8 @@ const panel=[
 ];
 const body=image(()=>copper[5]);
 for(let y=0;y<12;y++)for(let x=0;x<12;x++)paint(body,x+2,y+2,copper[Number(panel[y][x])]);
-for(const [x,y]of [[4,4],[11,4],[4,11],[11,11]]){
- paint(body,x,y,iron[1]);paint(body,x,y-1,iron[5]);
-}
 // The ring opening reveals the recessed, dark pump hub behind it.
 for(let y=6;y<10;y++)for(let x=6;x<10;x++)paint(body,x,y,copper[x===6||y===6?1:0]);
-const flange=image((x,y)=>{
- if(x===4||y===4)return copper[(x+y)%2?8:7];
- if(x===11||y===11)return copper[(x+y)%2?2:1];
- if(x===5||y===5)return copper[5];
- return copper[3];
-});
-for(const [x,y]of [[4,4],[11,4],[4,11],[11,11]])paint(flange,x,y,iron[4]);
-const bearing=image((x,y)=>{
- if(x===5||y===5)return iron[(x+y)%2?6:5];
- if(x===10||y===10)return iron[(x+y)%2?1:0];
- return iron[(x+y)%3===0?3:2];
-});
 const elements=[];
 function box(name,from,to,texture){
  const [x,y,z]=from,[X,Y,Z]=to,face=(uv)=>({uv,texture:'#'+texture});
@@ -53,19 +37,20 @@ function box(name,from,to,texture){
  }});
 }
 box('copper_housing',[2,2,2],[14,14,14],'body');
-function ring(name,axis,lo,hi,outer,inner,texture){
- const a=8-outer,b=8+outer,c=8-inner,d=8+inner;
- // Axis-local coordinates (u,v,w), with w along the connector axis.
- const point=(u,v,w)=>axis==='y'?[u,w,v]:axis==='x'?[w,u,v]:[u,v,w];
- for(const [i,[u,v,U,V]]of [[a,a,b,c],[a,d,b,b],[a,c,c,d],[d,c,b,d]].entries())
-  box(name+'_'+i,point(u,v,lo),point(U,V,hi),texture);
+// Import the native pipe mouths verbatim, including their UV rotation and culling.
+// No hand-drawn substitute, no CCD copy of the upstream pipe texture.
+const nativeParts=[];
+for(const side of ['up','down'])for(const part of ['rim_connector','rim']){
+ const id='create:block/fluid_pipe/'+part+'/'+side,native=loadModel(id);
+ nativeParts.push(id);
+ for(const [i,original]of native.elements.entries()){
+  const element=JSON.parse(JSON.stringify(original));element.name='native_'+part+'_'+side+'_'+i;
+  for(const spec of Object.values(element.faces))spec.texture='#pipe';
+  elements.push(element);
+ }
 }
-ring('fluid_inlet','y',0,2,4,2,'flange');
-ring('fluid_outlet','y',14,16,4,2,'flange');
-for(const axis of ['x','z'])for(const [side,lo,hi]of [['negative',0,2],['positive',14,16]])
- ring('shaft_'+axis+'_'+side,axis,lo,hi,3,2,'bearing');
 const model={parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',
- textures:Object.fromEntries(['body','flange','bearing'].map(n=>[n,'ccd:block/booster_pump/'+n])),elements};
+ textures:{body:'ccd:block/booster_pump/body',pipe:'create:block/pipes'},elements};
 model.textures.particle=model.textures.body;
 const rotate=(v,axis,angle,point)=>{
  const a=angle*Math.PI/180,c=Math.cos(a),s=Math.sin(a),p=v.map(n=>n-(point?8:0)),q=[...p];
@@ -74,7 +59,7 @@ const rotate=(v,axis,angle,point)=>{
 };
 const transform=(faces,axis,angle)=>faces.map(f=>({...f,vertices:f.vertices.map(v=>rotate(v,axis,angle,true)),n:rotate(f.n,axis,angle,false)}));
 async function main(){
- for(const [name,data]of Object.entries({body,flange,bearing}))
+ for(const [name,data]of Object.entries({body}))
   await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  fs.writeFileSync(path.join(assets,'models/block/booster_pump.json'),JSON.stringify(model,null,2)+'\n');
  const shell=await mesh('ccd:block/booster_pump'),shaft=await mesh('create:block/shaft_half');
@@ -85,15 +70,14 @@ async function main(){
   await sharp(buffer).toFile(path.join(output,['horizontal-front','horizontal-rear','vertical'][i]+'.png'));
   panels.push({input:buffer,left:i*500,top:100});
  }
- const labels=Buffer.from(`<svg width="1500" height="660" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="42" font-size="29">增压泵 · 第一版</text><text x="750" y="78" font-size="16">铜壳与铜色法兰 · 小型铁质轴承座 · 原生旋转半轴</text><text x="250" y="612" font-size="18">水平管路 · 正面</text><text x="750" y="612" font-size="18">水平管路 · 背面</text><text x="1250" y="612" font-size="18">竖直管路</text><text x="750" y="644" font-size="14" fill="#677070">16×16 原创像素贴图 / 实际模型离线渲染，半轴按静止角度示意</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="660" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="42" font-size="29">增压泵 · 原生接口版</text><text x="750" y="78" font-size="16">铜壳 · Create 原生流体管口与旋转半轴 · 无额外轴承座或铆钉</text><text x="250" y="612" font-size="18">水平管路 · 正面</text><text x="750" y="612" font-size="18">水平管路 · 背面</text><text x="1250" y="612" font-size="18">竖直管路</text><text x="750" y="644" font-size="14" fill="#677070">实际模型离线渲染 / 铜壳为 16×16 原创像素贴图，接口使用原生资源</text></g></svg>`);
  await sharp({create:{width:1500,height:660,channels:4,background:'#e5e8e2'}})
   .composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
- const texturePanels=[];for(const [i,n]of ['body','flange','bearing'].entries())texturePanels.push({input:await sharp(path.join(textures,n+'.png')).resize(256,256,{kernel:'nearest'}).png().toBuffer(),left:i*272,top:0});
- await sharp({create:{width:800,height:256,channels:4,background:'#e5e8e2'}}).composite(texturePanels).png().toFile(path.join(output,'textures.png'));
- fs.writeFileSync(path.join(output,'model.meta.json'),JSON.stringify({originalArtwork:true,textureSize:[16,16],
-  paletteReference:['Create pump','Create copper_casing','Create industrial_iron_block'],
-  elements:elements.length,fluidAxis:'y before blockstate rotation',fluidFlangeWidth:8,shaftBearingWidth:6,
-  shaftOpeningWidth:4,nativeShaftModel:'create:block/shaft_half',opaqueTextures:true,previewOnlyShafts:true},null,2)+'\n');
- console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,textures:3}));
+ await sharp(path.join(textures,'body.png')).resize(256,256,{kernel:'nearest'}).png().toFile(path.join(output,'textures.png'));
+ fs.writeFileSync(path.join(output,'model.meta.json'),JSON.stringify({originalArtwork:'copper housing texture only',textureSize:[16,16],
+  paletteReference:['Create pump','Create copper_casing'],elements:elements.length,
+  fluidAxis:'y before blockstate rotation',nativePipeModels:nativeParts,nativePipeTexture:'create:block/pipes',
+  nativeShaftModel:'create:block/shaft_half',customBearings:0,rivets:0,previewOnlyShafts:true},null,2)+'\n');
+ console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,customTextures:1}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
