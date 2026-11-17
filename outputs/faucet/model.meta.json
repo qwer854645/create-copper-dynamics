@@ -1,0 +1,53 @@
+{
+  "originalArtwork": "copper neck/stem and handle texture only",
+  "textureSize": [
+    16,
+    16
+  ],
+  "nativeParts": [
+    {
+      "id": "create:block/fluid_pipe/rim_connector/north",
+      "translation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "create:block/fluid_pipe/rim/north",
+      "translation": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "create:block/spout/middle",
+      "translation": [
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "id": "create:block/spout/bottom",
+      "translation": [
+        0,
+        8,
+        0
+      ]
+    }
+  ],
+  "elementsPerModel": 8,
+  "outputCenter": [
+    8,
+    1,
+    8
+  ],
+  "backConnection": "north",
+  "openHandleAxis": "x",
+  "closedHandleAxis": "z",
+  "rivets": 0,
+  "smartFaucet": "inherits shared geometry; existing front filter offset remains outside neck",
+  "logicUnchanged": true
+}
