@@ -1,5 +1,5 @@
 {
  "parent":"create:block/packager/block_vertical",
  "render_type":"minecraft:cutout_mipped",
- "textures":{"particle":"minecraft:block/copper_block"}
+ "textures":{"0":"ccd:block/fluid_packager/packager_frame","1":"ccd:block/fluid_packager/packager_details","5":"ccd:block/fluid_packager/packager_vertical_unpowered","particle":"ccd:block/fluid_packager/packager_particle"}
 }

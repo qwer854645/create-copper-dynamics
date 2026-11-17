@@ -1,7 +1,8 @@
 package dev.ccd.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllPartialModels;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.minecraft.resources.ResourceLocation;
 import com.simibubi.create.content.logistics.packager.PackagerBlock;
 import com.simibubi.create.content.logistics.packager.PackagerRenderer;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
@@ -18,6 +19,11 @@ import net.minecraft.world.phys.Vec3;
 
 /** Native moving parts through Create's renderer API; CCD needs no Flywheel visual registration. */
 public final class FluidPackagerRenderer extends SmartBlockEntityRenderer<FluidPackagerBlockEntity> {
+    private static final PartialModel HATCH_OPEN = part("hatch_open"), HATCH_CLOSED = part("hatch_closed"), TRAY = part("tray");
+    private static PartialModel part(String name) {
+        return PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd", "block/fluid_packager/" + name));
+    }
+    public static void registerModels() {} // Load partial models before baking.
     public FluidPackagerRenderer(BlockEntityRendererProvider.Context context) { super(context); }
     @Override protected void renderSafe(FluidPackagerBlockEntity be, float partialTicks, PoseStack pose,
         MultiBufferSource buffers, int light, int overlay) {
@@ -25,13 +31,13 @@ public final class FluidPackagerRenderer extends SmartBlockEntityRenderer<FluidP
         var state = be.getBlockState();
         var rear = state.getValue(PackagerBlock.FACING).getOpposite();
         var direction = Vec3.atLowerCornerOf(rear.getNormal());
-        CachedBuffers.partial(PackagerRenderer.getHatchModel(be), state)
+        CachedBuffers.partial(PackagerRenderer.isHatchOpen(be) ? HATCH_OPEN : HATCH_CLOSED, state)
             .translate(direction.scale(.49999))
             .rotateYCenteredDegrees(AngleHelper.horizontalAngle(rear))
             .rotateXCenteredDegrees(AngleHelper.verticalAngle(rear))
             .light(light).renderInto(pose, buffers.getBuffer(RenderType.solid()));
         float offset = be.getTrayOffset(partialTicks);
-        CachedBuffers.partial(AllPartialModels.PACKAGER_TRAY_REGULAR, state)
+        CachedBuffers.partial(TRAY, state)
             .translate(direction.scale(offset)).rotateYCenteredDegrees(rear.toYRot())
             .light(light).renderInto(pose, buffers.getBuffer(RenderType.cutoutMipped()));
         var box = be.getRenderedBox();

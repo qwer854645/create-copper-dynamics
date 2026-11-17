@@ -1,0 +1,133 @@
+{
+  "source": "Create 6.0.10-280",
+  "palette": {
+    "5,4,14": [
+      14,
+      7,
+      5
+    ],
+    "12,10,21": [
+      27,
+      14,
+      10
+    ],
+    "18,15,27": [
+      42,
+      23,
+      17
+    ],
+    "30,24,39": [
+      63,
+      32,
+      22
+    ],
+    "42,36,53": [
+      96,
+      46,
+      31
+    ],
+    "43,43,49": [
+      117,
+      56,
+      36
+    ],
+    "53,52,61": [
+      144,
+      73,
+      49
+    ],
+    "61,60,72": [
+      167,
+      90,
+      64
+    ],
+    "65,65,80": [
+      178,
+      98,
+      71
+    ],
+    "68,72,90": [
+      194,
+      107,
+      76
+    ],
+    "73,86,105": [
+      214,
+      123,
+      91
+    ],
+    "75,94,113": [
+      227,
+      130,
+      108
+    ]
+  },
+  "textures": [
+    {
+      "file": "packager_details.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 100
+    },
+    {
+      "file": "packager_frame.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 0
+    },
+    {
+      "file": "packager_horizontal_linked.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 92
+    },
+    {
+      "file": "packager_horizontal_powered.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 92
+    },
+    {
+      "file": "packager_horizontal_unpowered.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 92
+    },
+    {
+      "file": "packager_iris_closed.png",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 4
+    },
+    {
+      "file": "packager_iris_open.png",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 144
+    },
+    {
+      "file": "packager_particle.png",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 22
+    },
+    {
+      "file": "packager_vertical_linked.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 98
+    },
+    {
+      "file": "packager_vertical_powered.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 98
+    },
+    {
+      "file": "packager_vertical_unpowered.png",
+      "width": 32,
+      "height": 32,
+      "recoloredPixels": 98
+    }
+  ]
+}
