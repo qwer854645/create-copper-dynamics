@@ -32,10 +32,10 @@ const side=image(()=>copper[4]);
 for(let y=0;y<panel.length;y++)for(let x=0;x<panel[y].length;x++)
  paint(side,3+x,6+y,ramp[panel[y][x]]);
 const front=Buffer.from(side),back=Buffer.from(side);
-// A droplet-shaped clear glass window replaces the paper label.
-const drop=['0010','0110','1111','1111','0110'];
+// The entire front panel inside the one-pixel frame is clear glass.
+const windowRows=Array(7).fill('11111111');
 const windowPixels=[];
-for(let y=0;y<drop.length;y++)for(let x=0;x<4;x++)if(drop[y][x]==='1')windowPixels.push([6+x,8+y]);
+for(let y=0;y<windowRows.length;y++)for(let x=0;x<8;x++)windowPixels.push([4+x,7+y]);
 for(const [x,y]of windowPixels)for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]])
  if(!windowPixels.some(([a,b])=>a===x+dx&&b===y+dy))paint(front,x+dx,y+dy,steel[dx+dy<0?4:0]);
 const band=image((x,y)=>steel[(x===2||x===13)?0:(x+y)%5===0?4:(x+y)%3===0?2:3]);
@@ -86,7 +86,7 @@ for(let y=6;y<15;y++)for(let x=3;x<13;){
  }else frontPixel('front_'+x+'_'+y,x,y,3,'front',undefined,end-x);
  x=end;
 }
-for(const [x,y]of [[7,9],[6,10]])frontPixel('glass_glint_'+x+'_'+y,x,y,2.99,'glass');
+for(const [x,y]of [[5,8],[4,9]])frontPixel('glass_glint_'+x+'_'+y,x,y,2.99,'glass');
 const model={parent:'create:item/package_transforms',render_type:'minecraft:solid',
  textures:Object.fromEntries(['side','front','back','band','cap','flat','fluid','glass'].map(name=>[name,'ccd:item/fluid_canister/'+name])),
  elements,display:{gui:{rotation:[25,35,0],translation:[0,1,0],scale:[.95,.95,.95]},
@@ -111,7 +111,7 @@ async function main(){
  }
  const labels=Buffer.from(`<svg width="1500" height="640" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535">
  <text x="750" y="44" font-size="29">流体罐 · Fluid Canister</text>
- <text x="750" y="78" font-size="16" fill="#677070">Create 铜色阶与像素纹理 · 液滴形玻璃观察窗</text>
+ <text x="750" y="78" font-size="16" fill="#677070">Create 铜色阶与像素纹理 · 正面整面玻璃观察窗</text>
  <text x="250" y="603" font-size="18">正面斜视</text><text x="750" y="603" font-size="18">正面</text><text x="1250" y="603" font-size="18">背面斜视</text>
  <text x="750" y="632" font-size="14" fill="#677070">模型离线预览 / 窗内蓝色流体为示意，游戏中读取实际流体</text></g></svg>`);
  await sharp({create:{width:1500,height:640,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}])
@@ -127,7 +127,8 @@ async function main(){
   originalArtwork:true,textureSize:[16,16],transportBounds:[12,12,12],capacityMillibuckets:4000,
   elements:elements.length,integerPixelLayout:true,texelsPerModelUnit:1,paletteColors:15,
   paletteReference:['Create copper_casing','Create fluid_tank'],textureOrder:textureNames,
-  fluidTintedFaces:drop.length,windowPixels:windowPixels.length,opaqueTextures:true,glass:'clear with pixel glints',
+  fluidTintedFaces:windowRows.length,windowPixels:windowPixels.length,windowBounds:[4,2,12,9],
+  opaqueTextures:true,glass:'full front panel inside one-pixel frame, with pixel glints',
   dynamicFluid:['still sprite','stack tint','fill level'],previewFluid:'illustrative blue'},null,2)+'\n');
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,textures:textureNames.length}));
 }

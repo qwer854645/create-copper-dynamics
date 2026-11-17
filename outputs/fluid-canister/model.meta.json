@@ -12,7 +12,7 @@
     12
   ],
   "capacityMillibuckets": 4000,
-  "elements": 30,
+  "elements": 36,
   "integerPixelLayout": true,
   "texelsPerModelUnit": 1,
   "paletteColors": 15,
@@ -30,10 +30,16 @@
     "fluid",
     "glass"
   ],
-  "fluidTintedFaces": 5,
-  "windowPixels": 13,
+  "fluidTintedFaces": 7,
+  "windowPixels": 56,
+  "windowBounds": [
+    4,
+    2,
+    12,
+    9
+  ],
   "opaqueTextures": true,
-  "glass": "clear with pixel glints",
+  "glass": "full front panel inside one-pixel frame, with pixel glints",
   "dynamicFluid": [
     "still sprite",
     "stack tint",

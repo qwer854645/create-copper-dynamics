@@ -59,7 +59,7 @@ public final class FluidCanisterModel extends BakedModelWrapper<BakedModel> {
         TextureAtlasSprite sprite = appearance.sprite() == null ? null
             : Minecraft.getInstance().getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)
                 .apply(appearance.sprite());
-        float height = (3 + 5 * appearance.level() / 20f) / 16f;
+        float height = (2 + 7 * appearance.level() / 20f) / 16f;
         for (BakedQuad quad : original.getQuads(null, null, RandomSource.create(0))) {
             if (quad.getTintIndex() != 0 || sprite == null) {
                 quads.add(quad);
