@@ -11,6 +11,14 @@
 - 当前页唯一未勾选的地址决定粘贴目标；多个不同候选时拒绝修改。单独的 `#` 是 CCD 增加的显式清除标记，原生地址建议会忽略该空地址条目。原生并没有“对包裹点击粘贴地址”这一入口，这部分为 CCD 自行实现的交互。
 - 本轮只做源码和资源静态检查，没有编译、游戏测试或客户端运行。
 
+## 铜水槽
+
+- 先阅读原生 `FluidTankBlock` 的创造模式手持容器交互、`FluidTankBlockEntity` 的构造／连接／读写流程、`CreativeFluidTankBlockEntity.CreativeSmartFluidTank`、`SmartFluidTank`、NeoForge `FluidTank` 及 `FluidTankRenderer`。
+- `CopperWaterBasinBlock extends FluidTankBlock` 并启用原生创造储罐交互；实体继承 `FluidTankBlockEntity`，内部罐继承 `CreativeSmartFluidTank`，fill 与两个 drain 重载保持原生实现：输入直接销毁，抽取只模拟而不消耗。实体使用普通父类，是因为 `FluidHelper` 对 `CreativeFluidTankBlockEntity` 特判为不消耗手中容器，放到生存机器会复制桶／瓶；普通实体既保留原生全部储罐行为，也让取放正常消耗和归还容器，无需重写交互流程。
+- 扩展仅固定纯水与 1,000,000 mB 容量：覆盖 `setFluid`、`setContainedFluid`、`readFromNBT` 和容量设置。特别处理原生手持取水后的清空调用、倒液后的换液调用，不允许这些入口改变内部流体。构造期直接初始化水，不在父类尚未初始化时触发更新回调。
+- 六面能力直接提供该原生库存；无需重新实现抽灌、同步节流、光照／比较器或容器交互。连接更新停用以保持单方块，锅炉停用，开口容器不切换窗口。渲染器直接注册原生 `FluidTankRenderer`，外壳使用五个实心模型构件留出开口，避免拿不透明纹理覆盖原生透明孔洞。
+- 合成、创造栏、普通本体掉落、镐标签、中英文护目镜文本已注册。不写水量到掉落物，不添加拆除补偿或旧存档迁移。只做代码及资源静态检查，未构建或运行游戏。
+
 ## 智能储罐
 
 - `SmartFluidTankBlock extends FluidTankBlock`、`SmartFluidTankBlockEntity extends FluidTankBlockEntity`、`SmartFluidTankRenderer extends FluidTankRenderer`，物品也使用原生 `FluidTankItem`。方块状态、碰撞、放置、窗口扳手操作、声音、比较器入口、实体 tick、位置变化、同步节流及窗口布局沿用父类，不重新实现储罐方块体系。

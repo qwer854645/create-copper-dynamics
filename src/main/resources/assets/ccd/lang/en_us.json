@@ -94,5 +94,9 @@
   "item.ccd.composite_package": "Composite Case",
   "ccd.composite.open_hint": "Sneak-open: retrieve items and recover sealed fluid parcels",
   "ccd.composite.invalid": "Invalid composite cargo; keep this parcel",
-  "ccd.composite.fluid_line": "%s · %s mB"
+  "ccd.composite.fluid_line": "%s · %s mB",
+  "block.ccd.copper_water_basin": "Copper Water Basin",
+  "ccd.water_basin.infinite": "Infinite water · fluid cannot be changed",
+  "ccd.water_basin.capacity": "Interface capacity: %s mB (draining does not consume water)",
+  "ccd.water_basin.disposal": "Incoming fluids are destroyed"
 }

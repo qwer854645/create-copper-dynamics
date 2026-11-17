@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": ["C C", "CWC", " C "],
+  "key": {"C": {"item": "minecraft:copper_ingot"}, "W": {"item": "minecraft:water_bucket"}},
+  "result": {"id": "ccd:copper_water_basin", "count": 1}
+}

@@ -94,5 +94,9 @@
   "item.ccd.composite_package": "合装匣",
   "ccd.composite.open_hint": "潜行打开：取回物品，并将流体拆回密封包裹",
   "ccd.composite.invalid": "合装匣内容无效，请勿丢弃",
-  "ccd.composite.fluid_line": "%s · %s mB"
+  "ccd.composite.fluid_line": "%s · %s mB",
+  "block.ccd.copper_water_basin": "铜水槽",
+  "ccd.water_basin.infinite": "无限水源 · 内部流体不可更改",
+  "ccd.water_basin.capacity": "接口容量：%s mB（抽取不消耗水）",
+  "ccd.water_basin.disposal": "输入的流体会被销毁"
 }
