@@ -26,7 +26,7 @@
 
 - 已核对实际 NeoForge 依赖中的 `FluidHandlerItemStack`、`SimpleFluidContent`、`FluidUtil`、`BucketPickupHandlerWrapper`、`DynamicFluidContainerModel` 与能力注册／模型加载注册，以及原版 `BucketItem`、Create 的 `FilterItemStack`、`GenericItemEmptying`／`GenericItemFilling`。未读取三个流体附属的铜桶实现。
 - 直接注册原生 `FluidHandlerItemStack` 作为物品流体能力，使用原生 `SimpleFluidContent` 的持久化与网络 codec，不另写储液增减、模拟、组件比较或空桶转换。容量 4000 mB，单流体且单物品，原生填充／抽取与过滤样本识别因此可直接使用该能力。
-- 普通接口存取使用 `FluidUtil.tryFillContainer`／`tryEmptyContainer`，桶不可堆叠所以无需额外物品归还／拆堆逻辑。只在服务器执行真实转移，更新返回的容器 ItemStack；遵守点击面的能力和玩家操作权限，接口拒绝时不继续在世界放液。
+- 普通接口存取使用 `FluidUtil.tryFillContainer`／`tryEmptyContainer`，桶不可堆叠所以无需额外物品归还／拆堆逻辑。通过 NeoForge `onItemUseFirst` 在方块之前进入现有 `useOn` 路径，只在服务器执行真实转移，并在生存和创造模式下均更新返回的容器 ItemStack；遵守点击面的能力和玩家操作权限，接口拒绝时不继续在世界放液。已核对客户端 `MultiPlayerGameMode` 与服务端 `ServerPlayerGameMode` 的实际调用顺序；这是为避免 Create `FluidHelper.tryFillItemFromBE` 的创造模式分支消耗来源却不返还装好容器，未改动全局流体助手或复制其逻辑。
 - 世界放液直接调用 `FluidUtil.tryPlaceFluid`，每次提供 1000 mB，沿用含水、蒸发、可放置性和原生声效处理。先检查实际数量及操作权限，失败不更新桶内内容；不手写流体方块放置或维度蒸发规则。
 - 世界取液仅为源液体，先模拟确认完整 1000 mB 可装入。标准 `LiquidBlock` 直接移除源方块并存入其真实流体类型；原生含水方块委托 `BucketPickup`。这是必要的窄适配：NeoForge 的 `BucketPickupHandlerWrapper` 要求 pickup 返回物品是 `BucketItem`，而没有对应桶物品的源液体不能满足这个条件。既不依赖桶物品 ID，也不从流动液体虚构整桶量。
 - 渲染使用原生 `neoforge:fluid_container` 加载器、桶形基础纹理和流体遮罩，颜色委托原生 `DynamicFluidContainerModel.Colors`，只为桶壳增加铜色着色。配置实际注册了模型加载器名字，未自行实现动态物品绘制或为每种流体生成模型。

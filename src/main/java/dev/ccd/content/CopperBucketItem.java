@@ -56,6 +56,12 @@ public final class CopperBucketItem extends Item {
     @Override public int getBarWidth(ItemStack stack) { return Math.clamp(Math.round(contents(stack).getAmount() * 13f / CAPACITY), 0, 13); }
     @Override public int getBarColor(ItemStack stack) { return 0xd88a60; }
 
+    @Override public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        // Block interaction runs before useOn. Create's creative-player filling helper discards the filled copy.
+        // Handle sided interfaces first so our native transfer result is always written back to the held bucket.
+        return useOn(context);
+    }
+
     @Override public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
         Level level = context.getLevel();
