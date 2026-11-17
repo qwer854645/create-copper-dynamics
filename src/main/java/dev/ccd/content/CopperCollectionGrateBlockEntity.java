@@ -17,6 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
@@ -27,7 +28,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 /** Floor collector: native incremental world drainage, native tank behaviour and gravity output. */
-public final class CopperCollectionGrateBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+public class CopperCollectionGrateBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     public static final int CAPACITY = 2000;
     private static final int INTERVAL = 5;
     private SmartFluidTankBehaviour tank;
@@ -38,12 +39,16 @@ public final class CopperCollectionGrateBlockEntity extends SmartBlockEntity imp
     private boolean transferring;
 
     public CopperCollectionGrateBlockEntity(BlockPos pos, BlockState state) {
-        super(CopperDynamics.COPPER_COLLECTION_GRATE_BE.get(), pos, state);
+        this(CopperDynamics.COPPER_COLLECTION_GRATE_BE.get(), pos, state);
+    }
+    protected CopperCollectionGrateBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(tank = SmartFluidTankBehaviour.single(this, CAPACITY).whenFluidUpdates(() -> {
             if (level != null && !level.isClientSide()) level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
         }));
+        inventory().setValidator(this::acceptsFluid);
         behaviours.add(drainer = new FluidDrainingBehaviour(this) {
             @Override public void tick() {
                 // Preserve Create's incremental search budget, but run it only on scheduled work ticks with room available.
@@ -57,17 +62,20 @@ public final class CopperCollectionGrateBlockEntity extends SmartBlockEntity imp
     }
     public SmartFluidTank inventory() { return tank.getPrimaryHandler(); }
     public SmartFluidTankBehaviour tankBehaviour() { return tank; }
+    protected boolean automaticEnabled() { return true; }
+    protected boolean acceptsFluid(FluidStack fluid) { return true; }
     private boolean workTick() {
-        return level instanceof ServerLevel && Math.floorMod(level.getGameTime() + worldPosition.asLong(), INTERVAL) == 0;
+        return level instanceof ServerLevel && automaticEnabled()
+            && Math.floorMod(level.getGameTime() + worldPosition.asLong(), INTERVAL) == 0;
     }
     private boolean canCollectArea() {
         if (inventory().getSpace() < 1000 || !level.hasChunkAt(worldPosition.above())) return false;
         var source = level.getFluidState(worldPosition.above());
-        return !source.isEmpty() && (inventory().isEmpty()
+        return !source.isEmpty() && acceptsFluid(new FluidStack(FluidHelper.convertToStill(source.getType()), 1000)) && (inventory().isEmpty()
             || inventory().getFluid().getFluid().isSame(FluidHelper.convertToStill(source.getType())));
     }
     public void collectEnvironmental(Fluid fluid, int amount) {
-        if (amount <= 0 || amount > CAPACITY) return;
+        if (!automaticEnabled() || amount <= 0 || amount > CAPACITY) return;
         var sample = new FluidStack(fluid, amount);
         if (inventory().fill(sample, FluidAction.SIMULATE) == amount) inventory().fill(sample, FluidAction.EXECUTE);
     }

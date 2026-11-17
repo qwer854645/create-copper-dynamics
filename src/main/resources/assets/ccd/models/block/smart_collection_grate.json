@@ -1,0 +1,4 @@
+{
+  "parent": "ccd:block/copper_collection_grate",
+  "textures": {"particle": "create:block/brass_casing", "copper": "create:block/brass_casing"}
+}

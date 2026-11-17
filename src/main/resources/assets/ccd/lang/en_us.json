@@ -108,5 +108,10 @@
   "ccd.water_supply.unlimited": "Unlimited: fills accepted capacity in one supply operation",
   "block.ccd.copper_collection_grate": "Copper Collection Grate",
   "ccd.collection_grate.area": "Drains connected fluid above; pauses when full and outputs below",
-  "ccd.collection_grate.infinite": "Create's infinite-fluid conditions are satisfied"
+  "ccd.collection_grate.infinite": "Create's infinite-fluid conditions are satisfied",
+  "block.ccd.smart_collection_grate": "Smart Collection Grate",
+  "ccd.smart_collection_grate.active": "Automatic collection and downward output: active",
+  "ccd.smart_collection_grate.paused": "Redstone signal: automatic collection and downward output paused",
+  "ccd.smart_collection_grate.unfiltered": "Set the fluid filter at the top center; currently accepts all fluids",
+  "ccd.smart_collection_grate.filtered": "Incoming fluid is filtered; existing contents remain drainable"
 }

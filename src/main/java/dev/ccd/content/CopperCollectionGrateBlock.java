@@ -26,7 +26,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags;
 
 /** Native cauldron weather and scheduled dripstone reception, backed by a Create fluid inventory. */
-public final class CopperCollectionGrateBlock extends CauldronBlock implements IBE<CopperCollectionGrateBlockEntity>, IWrenchable {
+public class CopperCollectionGrateBlock extends CauldronBlock implements IBE<CopperCollectionGrateBlockEntity>, IWrenchable {
     // CauldronBlock's codec return type is invariant; the factory still creates this grate subtype.
     public static final MapCodec<CauldronBlock> CODEC = simpleCodec(CopperCollectionGrateBlock::new);
     private static final VoxelShape SHAPE = box(0, 0, 0, 16, 4, 16);
