@@ -38,6 +38,7 @@ public final class CopperWaterBasinBlockEntity extends FluidTankBlockEntity {
         tooltip.add(Component.translatable("ccd.water_basin.infinite").withStyle(ChatFormatting.AQUA));
         tooltip.add(Component.translatable("ccd.water_basin.capacity", CAPACITY).withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("ccd.water_basin.disposal").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("ccd.water_basin.interaction").withStyle(ChatFormatting.GRAY));
         return true;
     }
 

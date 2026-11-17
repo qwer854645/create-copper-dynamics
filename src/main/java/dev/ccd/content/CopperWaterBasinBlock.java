@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-/** Native tank block with a fixed water source and fill-only handheld interaction. */
+/** Native tank block with a fixed water source and explicit fill/disposal handheld modes. */
 public final class CopperWaterBasinBlock extends FluidTankBlock {
     public static final MapCodec<CopperWaterBasinBlock> CODEC = simpleCodec(CopperWaterBasinBlock::new);
     private static final VoxelShape SHAPE = Shapes.or(Block.box(0, 0, 0, 16, 4, 16),
@@ -35,10 +35,14 @@ public final class CopperWaterBasinBlock extends FluidTankBlock {
         BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (stack.isEmpty()) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (!(level.getBlockEntity(pos) instanceof CopperWaterBasinBlockEntity basin)) return ItemInteractionResult.FAIL;
-        // Always fill first; the native tank's empty-first interaction would discard a partly filled container.
-        if (FluidHelper.tryFillItemFromBE(level, player, hand, stack, basin)) {
+        // Only an explicit sneak interaction may discard the held container's fluid. Do not fall back between modes.
+        boolean discard = player.isShiftKeyDown();
+        boolean exchanged = discard ? FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, basin)
+            : FluidHelper.tryFillItemFromBE(level, player, hand, stack, basin);
+        if (exchanged) {
             if (!level.isClientSide()) level.playSound(null, pos,
-                FluidHelper.getFillSound(basin.getTankInventory().getFluid()), SoundSource.BLOCKS, .5f, 1f);
+                discard ? FluidHelper.getEmptySound(basin.getTankInventory().getFluid())
+                    : FluidHelper.getFillSound(basin.getTankInventory().getFluid()), SoundSource.BLOCKS, .5f, 1f);
             return ItemInteractionResult.SUCCESS;
         }
         // A full/incompatible fluid container must not fall through to placing or pouring its contents.

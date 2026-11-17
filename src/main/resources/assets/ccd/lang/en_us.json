@@ -98,5 +98,6 @@
   "block.ccd.copper_water_basin": "Copper Water Basin",
   "ccd.water_basin.infinite": "Infinite water · fluid cannot be changed",
   "ccd.water_basin.capacity": "Interface capacity: %s mB (draining does not consume water)",
-  "ccd.water_basin.disposal": "Incoming fluids are destroyed"
+  "ccd.water_basin.disposal": "Fluid entering through pipes or interfaces is destroyed",
+  "ccd.water_basin.interaction": "Right-click to fill with water; sneak-right-click to discard fluid"
 }

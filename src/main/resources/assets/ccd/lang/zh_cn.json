@@ -98,5 +98,6 @@
   "block.ccd.copper_water_basin": "铜水槽",
   "ccd.water_basin.infinite": "无限水源 · 内部流体不可更改",
   "ccd.water_basin.capacity": "接口容量：%s mB（抽取不消耗水）",
-  "ccd.water_basin.disposal": "输入的流体会被销毁"
+  "ccd.water_basin.disposal": "接口输入的流体会被销毁",
+  "ccd.water_basin.interaction": "右键装水；潜行右键倒液并销毁"
 }
