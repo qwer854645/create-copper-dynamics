@@ -7,7 +7,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.inventory.InvManipul
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.CapManipulationBehaviourBase.InterfaceProvider;
 import dev.ccd.content.FluidPackagerBlockEntity;
 import dev.ccd.content.FluidHatchBlockEntity;
-import dev.ccd.content.SmartFluidTankBlockEntity;
 import dev.ccd.content.FluidStockItem;
 import com.simibubi.create.content.logistics.packager.PackagerBlock;
 import net.createmod.catnip.math.BlockFace;
@@ -50,7 +49,6 @@ public final class FluidInventoryBehaviour extends InvManipulationBehaviour {
             packager.getBlockState().getValue(PackagerBlock.FACING));
         if (target == null) return null;
         if (level.getBlockEntity(target) instanceof FluidTankBlockEntity tank) target = tank.getController();
-        else if (level.getBlockEntity(target) instanceof SmartFluidTankBlockEntity tank) target = tank.getController();
         return new IdentifiedInventory(new StorageId(level.dimension(), target), view);
     }
     public record StorageId(ResourceKey<Level> dimension, BlockPos pos) implements InventoryIdentifier {

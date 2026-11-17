@@ -20,7 +20,12 @@ public final class SmartTankInventory implements IFluidHandler {
     }
     public int capacity() { return capacity.getAsInt(); }
     public long amount() { return contents.stream().mapToLong(FluidStack::getAmount).sum(); }
-    public int kinds() { return (int) contents.stream().filter(fluid -> !fluid.isEmpty()).count(); }
+    public int kinds() {
+        List<FluidStack> identities = new ArrayList<>();
+        for (var fluid : contents) if (!fluid.isEmpty()
+            && identities.stream().noneMatch(known -> FluidStack.isSameFluidSameComponents(known, fluid))) identities.add(fluid);
+        return identities.size();
+    }
     private int free() { return (int) Math.max(0, (long) capacity() - amount()); }
     @Override public int getTanks() { return Math.max(maxTypes.getAsInt(), contents.size()); }
     @Override public FluidStack getFluidInTank(int tank) {
@@ -41,10 +46,6 @@ public final class SmartTankInventory implements IFluidHandler {
         return true;
     }
     @Override public int fill(FluidStack resource, FluidAction action) {
-        return fill(resource, action, true);
-    }
-    int fillShared(FluidStack resource, FluidAction action) { return fill(resource, action, false); }
-    private int fill(FluidStack resource, FluidAction action, boolean limitTypes) {
         if (resource.isEmpty()) return 0;
         int accepted = Math.min(resource.getAmount(), free());
         if (accepted <= 0) return 0;
@@ -55,7 +56,7 @@ public final class SmartTankInventory implements IFluidHandler {
             if (fluid.isEmpty() && empty == -1) empty = i;
         }
         if (slot == -1) {
-            if (limitTypes && kinds() >= maxTypes.getAsInt()) return 0;
+            if (kinds() >= maxTypes.getAsInt()) return 0;
             slot = empty == -1 ? contents.size() : empty;
         }
         if (action.execute()) {
@@ -68,10 +69,13 @@ public final class SmartTankInventory implements IFluidHandler {
     }
     @Override public FluidStack drain(FluidStack resource, FluidAction action) {
         if (resource.isEmpty()) return FluidStack.EMPTY;
+        int taken = 0;
         for (int tank = 0; tank < contents.size(); tank++) {
-            if (FluidStack.isSameFluidSameComponents(contents.get(tank), resource)) return drainSlot(tank, resource.getAmount(), action);
+            if (FluidStack.isSameFluidSameComponents(contents.get(tank), resource))
+                taken += drainSlot(tank, resource.getAmount() - taken, action).getAmount();
+            if (taken == resource.getAmount()) break;
         }
-        return FluidStack.EMPTY;
+        return taken == 0 ? FluidStack.EMPTY : resource.copyWithAmount(taken);
     }
     @Override public FluidStack drain(int amount, FluidAction action) {
         if (amount <= 0) return FluidStack.EMPTY;
@@ -96,12 +100,40 @@ public final class SmartTankInventory implements IFluidHandler {
     }
     public void load(ListTag list, HolderLookup.Provider registries) {
         contents.clear();
-        // Preserve slots and saved fluid even when capacity or max types have since been lowered.
-        for (int i = 0; i < list.size(); i++) contents.add(FluidStack.parseOptional(registries, list.getCompound(i)));
+        int room = capacity();
+        boolean clipped = false;
+        for (int i = 0; i < list.size(); i++) {
+            FluidStack fluid = FluidStack.parseOptional(registries, list.getCompound(i));
+            int kept = Math.min(room, fluid.getAmount());
+            clipped |= kept < fluid.getAmount();
+            contents.add(kept == 0 ? FluidStack.EMPTY : fluid.copyWithAmount(kept));
+            room -= kept;
+        }
+        if (clipped) changed.run();
     }
     public List<FluidStack> takeAll() {
         List<FluidStack> result = contents.stream().filter(fluid -> !fluid.isEmpty()).map(FluidStack::copy).toList();
         contents.clear();
+        if (!result.isEmpty()) changed.run();
         return result;
+    }
+    /** Formation ownership transfer only; final structure capacity is not available during member assignment. */
+    void absorbOwned(List<FluidStack> incoming) {
+        for (var fluid : incoming) {
+            int left = fluid.getAmount();
+            for (var stored : contents) if (FluidStack.isSameFluidSameComponents(stored, fluid)) {
+                int moved = (int) Math.min(left, (long) Integer.MAX_VALUE - stored.getAmount());
+                stored.grow(moved);
+                left -= moved;
+                if (left == 0) break;
+            }
+            if (left > 0) {
+                int empty = -1;
+                for (int i = 0; i < contents.size(); i++) if (contents.get(i).isEmpty()) { empty = i; break; }
+                if (empty == -1) contents.add(fluid.copyWithAmount(left));
+                else contents.set(empty, fluid.copyWithAmount(left));
+            }
+        }
+        if (!incoming.isEmpty()) changed.run();
     }
 }

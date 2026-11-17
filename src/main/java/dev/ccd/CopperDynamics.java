@@ -192,7 +192,8 @@ public final class CopperDynamics {
             .mapColor(MapColor.COLOR_YELLOW).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()
             .sound(net.minecraft.world.level.block.SoundType.METAL)));
     public static final DeferredHolder<Item, BlockItem> SMART_FLUID_TANK_ITEM =
-        ITEMS.register("smart_fluid_tank", () -> new BlockItem(SMART_FLUID_TANK.get(), new Item.Properties()));
+        ITEMS.register("smart_fluid_tank", () -> new com.simibubi.create.content.fluids.tank.FluidTankItem(
+            SMART_FLUID_TANK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SmartFluidTankBlockEntity>> SMART_FLUID_TANK_BE =
         BLOCK_ENTITIES.register("smart_fluid_tank", () -> BlockEntityType.Builder.of(
             SmartFluidTankBlockEntity::new, SMART_FLUID_TANK.get()).build(null));

@@ -96,7 +96,7 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
         state.ccd$progress(0);
     }
     @Override public void destroy() {
-        state().ccd$held(FluidArmCargoItem.sealed(state().ccd$held()));
+        if (FluidPackageItem.isFluidPackage(state().ccd$held())) state().ccd$held(ItemStack.EMPTY);
         super.destroy();
         state().ccd$held(ItemStack.EMPTY);
     }

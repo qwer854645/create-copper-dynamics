@@ -25,7 +25,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -255,11 +254,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public void destroy() {
-        if (level != null && !level.isClientSide() && !recovery.isEmpty()) {
-            Containers.dropItemStack(level, worldPosition.getX() + .5, worldPosition.getY() + .5,
-                worldPosition.getZ() + .5, FluidPackageItem.containingFluid(recovery));
-            recovery = FluidStack.EMPTY;
-        }
+        recovery = FluidStack.EMPTY;
         super.destroy();
     }
     @Override public void clearContent() {

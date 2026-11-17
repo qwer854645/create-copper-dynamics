@@ -1,18 +1,19 @@
 package dev.ccd.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
+import com.simibubi.create.content.fluids.tank.FluidTankRenderer;
+import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import dev.ccd.content.SmartFluidTankBlockEntity;
 import net.createmod.catnip.platform.NeoForgeCatnipServices;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 /** Use Create's actual fluid-box renderer; bands are storage proportions, not mixing or density. */
-public final class SmartFluidTankRenderer extends SafeBlockEntityRenderer<SmartFluidTankBlockEntity> {
-    public SmartFluidTankRenderer(BlockEntityRendererProvider.Context context) {}
-    @Override protected void renderSafe(SmartFluidTankBlockEntity tank, float partialTicks, PoseStack pose,
+public final class SmartFluidTankRenderer extends FluidTankRenderer {
+    public SmartFluidTankRenderer(BlockEntityRendererProvider.Context context) { super(context); }
+    @Override protected void renderSafe(FluidTankBlockEntity entity, float partialTicks, PoseStack pose,
         MultiBufferSource buffer, int light, int overlay) {
-        if (!tank.isController()) return;
+        if (!(entity instanceof SmartFluidTankBlockEntity tank) || !tank.isController() || !tank.hasWindow()) return;
         var view = tank.inventory.snapshot();
         if (view == null) return;
         double denominator = Math.max(view.capacity(), view.amount());
@@ -26,5 +27,4 @@ public final class SmartFluidTankRenderer extends SafeBlockEntityRenderer<SmartF
             bottom = top;
         }
     }
-    @Override public boolean shouldRenderOffScreen(SmartFluidTankBlockEntity tank) { return tank.isController(); }
 }
