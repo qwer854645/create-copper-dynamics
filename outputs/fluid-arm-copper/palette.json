@@ -125,14 +125,14 @@
       "recoloredPixels": 493
     }
   ],
-  "geometry": "native parents; item geometry retains original base materials",
+  "geometry": "native arm joints; new fixed syringe head; base copper rim",
   "preserved": [
-    "brass base",
+    "mostly brass base",
     "brass rotating base",
     "neutral metal",
     "cog",
     "elevator_pulley texture",
     "goggles texture",
-    "all alpha"
+    "native atlas alpha"
   ]
 }

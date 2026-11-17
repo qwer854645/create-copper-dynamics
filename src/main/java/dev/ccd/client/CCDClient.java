@@ -92,6 +92,10 @@ public final class CCDClient {
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_package"), "inventory");
         var canisterModel = event.getModels().get(canister);
         if (canisterModel != null) event.getModels().put(canister, FluidCanisterModel.install(canisterModel));
+        var cargo = new net.minecraft.client.resources.model.ModelResourceLocation(
+            ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_arm_cargo"), "inventory");
+        var cargoModel = event.getModels().get(cargo);
+        if (cargoModel != null) event.getModels().put(cargo, new FluidArmCargoModel(cargoModel));
         // Three-way valve multipart models already include native rims/connectors and status stamps.
         // A PipeAttachmentModel wrapper would draw duplicate coplanar mouths over those stamps.
         for (var state : CopperDynamics.REDSTONE_FLUID_VALVE.get().getStateDefinition().getPossibleStates()) {

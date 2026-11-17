@@ -8,7 +8,7 @@ import java.util.Map;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
 
-/** Scoped material variants: retain native arm animation and never replace Create's global model fields. */
+/** Scoped arm materials and syringe head, retaining Create's native joint animation. */
 public final class FluidArmModels {
     private static final Map<PartialModel, PartialModel> MODELS = new IdentityHashMap<>();
     static {
