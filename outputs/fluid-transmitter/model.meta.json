@@ -1,0 +1,47 @@
+{
+  "originalArtwork": "CCD copper housing/filter panel only",
+  "textureSize": [
+    16,
+    16
+  ],
+  "nativePipeModels": [
+    "create:block/fluid_pipe/rim_connector/north",
+    "create:block/fluid_pipe/rim/north",
+    "create:block/fluid_pipe/rim_connector/south",
+    "create:block/fluid_pipe/rim/south"
+  ],
+  "nativePipeTexture": "create:block/pipes",
+  "elements": 5,
+  "outputDirection": "local +Z, transformed by existing blockstate",
+  "filterFaces": [
+    "east",
+    "west",
+    "up",
+    "down"
+  ],
+  "filterCenters": [
+    [
+      16,
+      8,
+      8
+    ],
+    [
+      0,
+      8,
+      8
+    ],
+    [
+      8,
+      16,
+      8
+    ],
+    [
+      8,
+      0,
+      8
+    ]
+  ],
+  "rivets": 0,
+  "shafts": 0,
+  "fluidStorage": 0
+}
