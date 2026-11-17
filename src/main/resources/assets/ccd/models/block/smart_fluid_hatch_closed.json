@@ -1,0 +1,4 @@
+{
+  "parent": "ccd:block/fluid_hatch_closed",
+  "textures": {"0": "create:block/brass_casing", "particle": "create:block/brass_casing"}
+}

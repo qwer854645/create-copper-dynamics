@@ -23,6 +23,15 @@
 - `FluidInventoryBehaviour` 在取得物流库存身份前解析 CCD 舱口链，再沿用 Create 储罐控制器归一化，避免经舱口重复统计同一库存。第三方自有代理的身份归一化范围没有扩大。
 - 已补齐注册、创造栏、模型、配方、掉落、镐标签及中英文提示。仅做静态检查，没有构建或游戏运行结论。
 
+## 智能流体舱口
+
+- 阅读原生 `SmartFluidPipeBlockEntity`、`FilteringBehaviour`、`FilterItemStack`、`HatchFilterSlot`、`ValueSettingsInputHandler` 和 `SmartBlockEntityRenderer`，直接接入 `FilteringBehaviour.forFluids()` 与 `HatchFilterSlot`，不另写过滤匹配、配置网络或保存格式。父类构造期间的行为注册使用继承自 `ItemHatchBlockEntity` 的 `filtering` 字段，避免子类字段初始化覆盖行为实例。
+- `SmartFluidHatchBlock`／`SmartFluidHatchBlockEntity` 继承普通舱口，父类增加带类型的构造及流体接收、按数量抽取扩展点。公共流体能力在 `isFluidValid`、`fill` 和指定流体的 `drain` 入口统一检查过滤；不指定流体的 `drain` 遍历匹配罐，先模拟再执行指定流体抽取。普通版保留直接委托的行为。
+- 智能版未配置过滤时明确拒绝进出，这是相对原生空过滤器的唯一默认语义调整。读取库存仍返回后方真实数据，保留物理库存身份去重；手动取液所使用的临时视图同时检查过滤和精确抽取量，防止原生装瓶方法绕过限制。模拟和执行均不通过无过滤的后方能力提供额外入口。
+- 过滤变更失效能力缓存并从正面相邻实际管路传播压力变化；紧邻泵时使用其 `updatePressureChange`。旧代理每次仍检查当前过滤，移液臂到达前改变过滤后也必须重新验证。串联舱口逐层执行各自过滤，不绕开中间代理。
+- 移液臂的舱口类型检查和物流身份解析使用基类 `instanceof`，因此智能子类直接兼容默认舱口交互限制和实际容器身份归一化。客户端注册原生 `SmartBlockEntityRenderer` 绘制过滤图标；几何和过滤槽位置沿用普通舱口及 Create，材质改为黄铜机壳。
+- 已补齐注册、创造栏、配方、掉落、模型、镐标签和中英文提示。仅做静态检查，未构建或运行。
+
 ## 动力移液臂
 
 - 已阅读 `ArmBlock`、`ArmItem`、`ArmBlockEntity`、`ArmInteractionPoint`／`Type`／`Handler`、`ArmPlacementPacket`、`ArmRenderer`／`ArmVisual` 及 Create 的交互点注册表。原生目标选择物品判断硬编码了普通动力臂，取放与货载使用 ItemStack，因此保留原生机械部分并专门适配流体选择和交互点。

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,open=false": {"model": "ccd:block/smart_fluid_hatch_closed"},
+    "facing=east,open=false": {"model": "ccd:block/smart_fluid_hatch_closed", "y": 90},
+    "facing=south,open=false": {"model": "ccd:block/smart_fluid_hatch_closed", "y": 180},
+    "facing=west,open=false": {"model": "ccd:block/smart_fluid_hatch_closed", "y": 270},
+    "facing=north,open=true": {"model": "ccd:block/smart_fluid_hatch_open"},
+    "facing=east,open=true": {"model": "ccd:block/smart_fluid_hatch_open", "y": 90},
+    "facing=south,open=true": {"model": "ccd:block/smart_fluid_hatch_open", "y": 180},
+    "facing=west,open=true": {"model": "ccd:block/smart_fluid_hatch_open", "y": 270}
+  }
+}

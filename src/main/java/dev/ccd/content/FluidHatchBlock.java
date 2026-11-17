@@ -22,7 +22,7 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
 /** Native hatch placement, geometry, waterlogging, wrenching and timed closing; fluid interaction only. */
-public final class FluidHatchBlock extends ItemHatchBlock {
+public class FluidHatchBlock extends ItemHatchBlock {
     public static final MapCodec<FluidHatchBlock> CODEC = simpleCodec(FluidHatchBlock::new);
 
     public FluidHatchBlock(Properties properties) { super(properties); }

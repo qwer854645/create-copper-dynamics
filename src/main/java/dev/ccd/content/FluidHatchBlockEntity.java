@@ -19,26 +19,34 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 
 /** No storage: each operation resolves the current sided capability behind the native hatch. */
-public final class FluidHatchBlockEntity extends ItemHatchBlockEntity implements IHaveGoggleInformation {
+public class FluidHatchBlockEntity extends ItemHatchBlockEntity implements IHaveGoggleInformation {
     private static final ThreadLocal<Set<FluidHatchBlockEntity>> ACTIVE = ThreadLocal.withInitial(HashSet::new);
     private final IFluidHandler unsided = new Proxy(null);
     private final IFluidHandler[] sides = new IFluidHandler[Direction.values().length];
     @Nullable private ItemStack exchangeContainer;
 
     public FluidHatchBlockEntity(BlockPos pos, BlockState state) {
-        super(CopperDynamics.FLUID_HATCH_BE.get(), pos, state);
+        this(CopperDynamics.FLUID_HATCH_BE.get(), pos, state);
+    }
+    protected FluidHatchBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
         for (Direction direction : Direction.values()) sides[direction.get3DDataValue()] = new Proxy(direction);
     }
 
     // The basic hatch has neither the native item filter nor an item inventory.
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {}
     @Override public void clearContent() {}
+    protected boolean acceptsFluid(FluidStack fluid) { return true; }
+    protected FluidStack drainAllowed(IFluidHandler target, int amount, IFluidHandler.FluidAction action) {
+        return target.drain(amount, action);
+    }
 
     public boolean exchangeWith(Player player, InteractionHand hand, ItemStack stack) {
         if (level == null || level.isClientSide() || exchangeContainer != null) return false;
@@ -94,7 +102,7 @@ public final class FluidHatchBlockEntity extends ItemHatchBlockEntity implements
     }
 
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(Component.translatable("block.ccd.fluid_hatch").withStyle(ChatFormatting.GOLD));
+        tooltip.add(getBlockState().getBlock().getName().withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.translatable("ccd.fluid_hatch.proxy").withStyle(ChatFormatting.GRAY));
         if (!containedFluidTooltip(tooltip, sneaking, unsided)) {
             tooltip.add(Component.translatable("ccd.fluid_hatch.no_container").withStyle(ChatFormatting.GRAY));
@@ -111,6 +119,7 @@ public final class FluidHatchBlockEntity extends ItemHatchBlockEntity implements
                 if (tank < 0 || tank >= target.getTanks()) return FluidStack.EMPTY;
                 FluidStack sample = target.getFluidInTank(tank).copy();
                 if (exchangeContainer == null || side != null || sample.isEmpty()) return sample;
+                if (!acceptsFluid(sample)) return FluidStack.EMPTY;
                 // Native tryFillItemFromBE checks the displayed amount, not drain(SIMULATE).
                 // Require this container's exact amount, respecting read-only, rate-limited and discrete sources.
                 int required = GenericItemFilling.getRequiredAmountForItem(level, exchangeContainer.copy(), sample.copy());
@@ -124,17 +133,18 @@ public final class FluidHatchBlockEntity extends ItemHatchBlockEntity implements
             return access(side, target -> tank >= 0 && tank < target.getTanks() ? target.getTankCapacity(tank) : 0, 0);
         }
         @Override public boolean isFluidValid(int tank, FluidStack stack) {
-            return access(side, target -> tank >= 0 && tank < target.getTanks() && target.isFluidValid(tank, stack.copy()), false);
+            return !stack.isEmpty() && acceptsFluid(stack) && access(side,
+                target -> tank >= 0 && tank < target.getTanks() && target.isFluidValid(tank, stack.copy()), false);
         }
         @Override public int fill(FluidStack resource, FluidAction action) {
-            return resource.isEmpty() ? 0 : access(side, target -> target.fill(resource.copy(), action), 0);
+            return resource.isEmpty() || !acceptsFluid(resource) ? 0 : access(side, target -> target.fill(resource.copy(), action), 0);
         }
         @Override public FluidStack drain(FluidStack resource, FluidAction action) {
-            return resource.isEmpty() ? FluidStack.EMPTY
+            return resource.isEmpty() || !acceptsFluid(resource) ? FluidStack.EMPTY
                 : access(side, target -> target.drain(resource.copy(), action), FluidStack.EMPTY);
         }
         @Override public FluidStack drain(int amount, FluidAction action) {
-            return amount <= 0 ? FluidStack.EMPTY : access(side, target -> target.drain(amount, action), FluidStack.EMPTY);
+            return amount <= 0 ? FluidStack.EMPTY : access(side, target -> drainAllowed(target, amount, action), FluidStack.EMPTY);
         }
     }
 }

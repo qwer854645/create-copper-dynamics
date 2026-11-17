@@ -1,0 +1,4 @@
+{
+  "parent": "ccd:block/smart_fluid_hatch_closed",
+  "textures": {"1": "create:block/hatch_open"}
+}

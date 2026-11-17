@@ -1,6 +1,9 @@
 {
   "itemGroup.ccd": "Create: Copper Dynamics",
   "block.ccd.fluid_hatch": "Fluid Hatch",
+  "block.ccd.smart_fluid_hatch": "Smart Fluid Hatch",
+  "ccd.smart_fluid_hatch.unconfigured": "No filter configured; fluid transfer blocked",
+  "ccd.smart_fluid_hatch.filtered": "Only matching fluids may enter or leave",
   "ccd.fluid_hatch.proxy": "Live contents of the rear container; no internal fluid storage",
   "ccd.fluid_hatch.no_container": "No accessible rear fluid container; check orientation and sided access",
   "ccd.fluid_hatch.rejected": "Cannot exchange fluid: check fluid type, available amount and free capacity",

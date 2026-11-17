@@ -1,6 +1,9 @@
 {
   "itemGroup.ccd": "机械动力：铜流工程",
   "block.ccd.fluid_hatch": "流体舱口",
+  "block.ccd.smart_fluid_hatch": "智能流体舱口",
+  "ccd.smart_fluid_hatch.unconfigured": "未设置过滤 · 已停止流体进出",
+  "ccd.smart_fluid_hatch.filtered": "仅允许符合过滤条件的流体进出",
   "ccd.fluid_hatch.proxy": "背后容器实时库存 · 舱口无内部储液",
   "ccd.fluid_hatch.no_container": "背后没有可访问的流体容器，请检查朝向和接口",
   "ccd.fluid_hatch.rejected": "无法取放：检查流体种类、余量和剩余容量",

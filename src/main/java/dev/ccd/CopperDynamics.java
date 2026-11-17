@@ -21,6 +21,8 @@ import dev.ccd.content.FluidArmItem;
 import dev.ccd.content.FluidArmCargoItem;
 import dev.ccd.content.FluidHatchBlock;
 import dev.ccd.content.FluidHatchBlockEntity;
+import dev.ccd.content.SmartFluidHatchBlock;
+import dev.ccd.content.SmartFluidHatchBlockEntity;
 import dev.ccd.logistics.FluidArmPoint;
 import com.simibubi.create.api.registry.CreateRegistries;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
@@ -173,6 +175,15 @@ public final class CopperDynamics {
         ITEMS.register("fluid_hatch", () -> new BlockItem(FLUID_HATCH.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidHatchBlockEntity>> FLUID_HATCH_BE =
         BLOCK_ENTITIES.register("fluid_hatch", () -> BlockEntityType.Builder.of(FluidHatchBlockEntity::new, FLUID_HATCH.get()).build(null));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, SmartFluidHatchBlock> SMART_FLUID_HATCH =
+        BLOCKS.register("smart_fluid_hatch", () -> new SmartFluidHatchBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_YELLOW).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()
+            .sound(net.minecraft.world.level.block.SoundType.NETHERITE_BLOCK)));
+    public static final DeferredHolder<Item, BlockItem> SMART_FLUID_HATCH_ITEM =
+        ITEMS.register("smart_fluid_hatch", () -> new BlockItem(SMART_FLUID_HATCH.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SmartFluidHatchBlockEntity>> SMART_FLUID_HATCH_BE =
+        BLOCK_ENTITIES.register("smart_fluid_hatch", () -> BlockEntityType.Builder.of(
+            SmartFluidHatchBlockEntity::new, SMART_FLUID_HATCH.get()).build(null));
 
     public CopperDynamics(IEventBus bus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
@@ -196,6 +207,7 @@ public final class CopperDynamics {
                 output.accept(SMART_FAUCET_ITEM.get());
                 output.accept(FLUID_ARM_ITEM.get());
                 output.accept(FLUID_HATCH_ITEM.get());
+                output.accept(SMART_FLUID_HATCH_ITEM.get());
                 // A valid sample for inspecting/opening the carrier in creative mode.
                 var sampleItems = new net.neoforged.neoforge.items.ItemStackHandler(com.simibubi.create.content.logistics.box.PackageItem.SLOTS);
                 sampleItems.setStackInSlot(0, new ItemStack(net.minecraft.world.item.Items.IRON_INGOT));
@@ -220,5 +232,7 @@ public final class CopperDynamics {
             (be, side) -> be.inventory);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_HATCH_BE.get(),
             FluidHatchBlockEntity::fluidHandler);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SMART_FLUID_HATCH_BE.get(),
+            SmartFluidHatchBlockEntity::fluidHandler);
     }
 }
