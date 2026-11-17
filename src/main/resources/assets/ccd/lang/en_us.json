@@ -113,5 +113,9 @@
   "ccd.smart_collection_grate.active": "Automatic collection and downward output: active",
   "ccd.smart_collection_grate.paused": "Redstone signal: automatic collection and downward output paused",
   "ccd.smart_collection_grate.unfiltered": "Set the fluid filter at the top center; currently accepts all fluids",
-  "ccd.smart_collection_grate.filtered": "Incoming fluid is filtered; existing contents remain drainable"
+  "ccd.smart_collection_grate.filtered": "Incoming fluid is filtered; existing contents remain drainable",
+  "item.ccd.copper_bucket": "Copper Bucket",
+  "item.ccd.copper_bucket.filled": "Copper Bucket (%s)",
+  "ccd.copper_bucket.amount": "%s / %s mB",
+  "ccd.copper_bucket.interaction": "Interfaces: use to fill, sneak to empty; world transfers 1000 mB at a time"
 }

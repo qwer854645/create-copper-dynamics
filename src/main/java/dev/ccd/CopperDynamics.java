@@ -33,6 +33,7 @@ import dev.ccd.content.CopperCollectionGrateBlock;
 import dev.ccd.content.CopperCollectionGrateBlockEntity;
 import dev.ccd.content.SmartCollectionGrateBlock;
 import dev.ccd.content.SmartCollectionGrateBlockEntity;
+import dev.ccd.content.CopperBucketItem;
 import dev.ccd.logistics.FluidArmPoint;
 import com.simibubi.create.api.registry.CreateRegistries;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
@@ -65,6 +66,8 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.fluids.SimpleFluidContent;
+import net.neoforged.neoforge.fluids.capability.templates.FluidHandlerItemStack;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -90,6 +93,11 @@ public final class CopperDynamics {
         COMPONENTS.register("recovered", () -> DataComponentType.<Boolean>builder()
             .persistent(com.mojang.serialization.Codec.BOOL)
             .networkSynchronized(net.minecraft.network.codec.ByteBufCodecs.BOOL).build());
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<SimpleFluidContent>> COPPER_BUCKET_FLUID =
+        COMPONENTS.register("copper_bucket_fluid", () -> DataComponentType.<SimpleFluidContent>builder()
+            .persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC).build());
+    public static final DeferredHolder<Item, CopperBucketItem> COPPER_BUCKET =
+        ITEMS.register("copper_bucket", () -> new CopperBucketItem(new Item.Properties().stacksTo(1)));
     public static final DeferredHolder<Item, FluidPackageItem> FLUID_PACKAGE =
         ITEMS.register("fluid_package", () -> new FluidPackageItem(new Item.Properties().stacksTo(1)));
     // Internal native-arm cargo representation; deliberately absent from creative tabs and recipes.
@@ -274,6 +282,7 @@ public final class CopperDynamics {
                 output.accept(COPPER_WATER_SUPPLY_ITEM.get());
                 output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
                 output.accept(SMART_COLLECTION_GRATE_ITEM.get());
+                output.accept(COPPER_BUCKET.get());
                 // A valid sample for inspecting/opening the carrier in creative mode.
                 var sampleItems = new net.neoforged.neoforge.items.ItemStackHandler(com.simibubi.create.content.logistics.box.PackageItem.SLOTS);
                 sampleItems.setStackInSlot(0, new ItemStack(net.minecraft.world.item.Items.IRON_INGOT));
@@ -293,6 +302,8 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+            (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.CAPACITY), COPPER_BUCKET.get());
         // Use the native handler so frogports also recognize the direct packager path.
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, FLUID_PACKAGER_BE.get(),
             (be, side) -> be.inventory);

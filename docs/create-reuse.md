@@ -11,6 +11,16 @@
 - 当前页唯一未勾选的地址决定粘贴目标；多个不同候选时拒绝修改。单独的 `#` 是 CCD 增加的显式清除标记，原生地址建议会忽略该空地址条目。原生并没有“对包裹点击粘贴地址”这一入口，这部分为 CCD 自行实现的交互。
 - 本轮只做源码和资源静态检查，没有编译、游戏测试或客户端运行。
 
+## 铜桶
+
+- 已核对实际 NeoForge 依赖中的 `FluidHandlerItemStack`、`SimpleFluidContent`、`FluidUtil`、`BucketPickupHandlerWrapper`、`DynamicFluidContainerModel` 与能力注册／模型加载注册，以及原版 `BucketItem`、Create 的 `FilterItemStack`、`GenericItemEmptying`／`GenericItemFilling`。未读取三个流体附属的铜桶实现。
+- 直接注册原生 `FluidHandlerItemStack` 作为物品流体能力，使用原生 `SimpleFluidContent` 的持久化与网络 codec，不另写储液增减、模拟、组件比较或空桶转换。容量 4000 mB，单流体且单物品，原生填充／抽取与过滤样本识别因此可直接使用该能力。
+- 普通接口存取使用 `FluidUtil.tryFillContainer`／`tryEmptyContainer`，桶不可堆叠所以无需额外物品归还／拆堆逻辑。只在服务器执行真实转移，更新返回的容器 ItemStack；遵守点击面的能力和玩家操作权限，接口拒绝时不继续在世界放液。
+- 世界放液直接调用 `FluidUtil.tryPlaceFluid`，每次提供 1000 mB，沿用含水、蒸发、可放置性和原生声效处理。先检查实际数量及操作权限，失败不更新桶内内容；不手写流体方块放置或维度蒸发规则。
+- 世界取液仅为源液体，先模拟确认完整 1000 mB 可装入。标准 `LiquidBlock` 直接移除源方块并存入其真实流体类型；原生含水方块委托 `BucketPickup`。这是必要的窄适配：NeoForge 的 `BucketPickupHandlerWrapper` 要求 pickup 返回物品是 `BucketItem`，而没有对应桶物品的源液体不能满足这个条件。既不依赖桶物品 ID，也不从流动液体虚构整桶量。
+- 渲染使用原生 `neoforge:fluid_container` 加载器、桶形基础纹理和流体遮罩，颜色委托原生 `DynamicFluidContainerModel.Colors`，只为桶壳增加铜色着色。配置实际注册了模型加载器名字，未自行实现动态物品绘制或为每种流体生成模型。
+- 新增单一物品、单一流体组件、创造栏、配方及中英文内容提示；不加入旧存档迁移。仅做静态检查，未构建、运行或验证世界交互和视觉效果。
+
 ## 铜集液栅
 
 - 已阅读原生软管滑轮的实体／流体接口、`FluidDrainingBehaviour`／`FluidManipulationBehaviour`、排液口、`SmartFluidTankBehaviour`、工作盆侧向输出及 `DirectBeltInputBehaviour`。同时从实际 NeoForge 依赖源码核对原版 `CauldronBlock`／`AbstractCauldronBlock`、滴水石锥的炼药锅寻址与调度，以及 `FluidUtil.tryFluidTransfer`。未读取其他流体附属的实现代码。

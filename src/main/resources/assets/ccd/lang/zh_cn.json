@@ -113,5 +113,9 @@
   "ccd.smart_collection_grate.active": "自动收集与向下排液：运行中",
   "ccd.smart_collection_grate.paused": "红石信号：自动收集与向下排液已暂停",
   "ccd.smart_collection_grate.unfiltered": "顶部中央设置流体过滤；当前接受全部流体",
-  "ccd.smart_collection_grate.filtered": "流体入栅受过滤限制；已有存液仍可取出"
+  "ccd.smart_collection_grate.filtered": "流体入栅受过滤限制；已有存液仍可取出",
+  "item.ccd.copper_bucket": "铜桶",
+  "item.ccd.copper_bucket.filled": "铜桶（%s）",
+  "ccd.copper_bucket.amount": "%s / %s mB",
+  "ccd.copper_bucket.interaction": "接口右键取液，潜行倒液；世界每次取放 1000 mB"
 }
