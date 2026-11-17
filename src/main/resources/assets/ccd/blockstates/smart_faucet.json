@@ -1,64 +1,211 @@
 {
-  "variants": {
-    "facing=south,open=false,powered=false": {
-      "model": "ccd:block/smart_faucet_closed"
+  "multipart": [
+    {
+      "when": {
+        "facing": "south",
+        "open": "false",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed"
+      }
     },
-    "facing=south,open=false,powered=true": {
-      "model": "ccd:block/smart_faucet_closed"
+    {
+      "when": {
+        "facing": "south",
+        "open": "false",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed"
+      }
     },
-    "facing=south,open=true,powered=false": {
-      "model": "ccd:block/smart_faucet_open"
+    {
+      "when": {
+        "facing": "south",
+        "open": "true",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_open"
+      }
     },
-    "facing=south,open=true,powered=true": {
-      "model": "ccd:block/smart_faucet_closed"
+    {
+      "when": {
+        "facing": "south",
+        "open": "true",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed"
+      }
     },
-    "facing=north,open=false,powered=false": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "open": "false",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 180
+      }
     },
-    "facing=north,open=false,powered=true": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "open": "false",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 180
+      }
     },
-    "facing=north,open=true,powered=false": {
-      "model": "ccd:block/smart_faucet_open",
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "open": "true",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_open",
+        "y": 180
+      }
     },
-    "facing=north,open=true,powered=true": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "open": "true",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 180
+      }
     },
-    "facing=east,open=false,powered=false": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 270
+    {
+      "when": {
+        "facing": "east",
+        "open": "false",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 270
+      }
     },
-    "facing=east,open=false,powered=true": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 270
+    {
+      "when": {
+        "facing": "east",
+        "open": "false",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 270
+      }
     },
-    "facing=east,open=true,powered=false": {
-      "model": "ccd:block/smart_faucet_open",
-      "y": 270
+    {
+      "when": {
+        "facing": "east",
+        "open": "true",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_open",
+        "y": 270
+      }
     },
-    "facing=east,open=true,powered=true": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 270
+    {
+      "when": {
+        "facing": "east",
+        "open": "true",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 270
+      }
     },
-    "facing=west,open=false,powered=false": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 90
+    {
+      "when": {
+        "facing": "west",
+        "open": "false",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 90
+      }
     },
-    "facing=west,open=false,powered=true": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 90
+    {
+      "when": {
+        "facing": "west",
+        "open": "false",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 90
+      }
     },
-    "facing=west,open=true,powered=false": {
-      "model": "ccd:block/smart_faucet_open",
-      "y": 90
+    {
+      "when": {
+        "facing": "west",
+        "open": "true",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_open",
+        "y": 90
+      }
     },
-    "facing=west,open=true,powered=true": {
-      "model": "ccd:block/smart_faucet_closed",
-      "y": 90
+    {
+      "when": {
+        "facing": "west",
+        "open": "true",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_closed",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_filter"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_filter",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_filter",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/smart_faucet_filter",
+        "y": 90
+      }
     }
-  }
+  ]
 }

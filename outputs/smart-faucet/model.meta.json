@@ -1,0 +1,39 @@
+{
+  "originalArtwork": "brass recoloring of CCD faucet body only",
+  "textureSize": [
+    16,
+    16
+  ],
+  "paletteReference": "Create brass_block",
+  "sharedGeometry": [
+    "ccd:block/faucet_closed",
+    "ccd:block/faucet_open"
+  ],
+  "filterTexture": "create:block/smart_pipe_2",
+  "filterBox": [
+    [
+      4.9,
+      4.9,
+      9.8
+    ],
+    [
+      11.1,
+      11.1,
+      11.2
+    ]
+  ],
+  "filterFaceCenter": [
+    8,
+    8,
+    11.2
+  ],
+  "filterInteractionCenter": [
+    8,
+    8,
+    11.25
+  ],
+  "filterScale": 0.375,
+  "filterSides": "front only, per user choice",
+  "nozzleAndPipeUnchanged": true,
+  "processingLogicUnchanged": true
+}

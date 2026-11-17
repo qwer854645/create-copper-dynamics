@@ -1,8 +1,8 @@
 {
   "parent": "ccd:block/faucet_open",
   "textures": {
-    "body": "create:block/brass_block",
-    "base": "create:block/brass_casing",
-    "particle": "create:block/brass_casing"
+    "body": "ccd:block/smart_faucet/body",
+    "base": "ccd:block/smart_faucet/body",
+    "particle": "ccd:block/smart_faucet/body"
   }
 }

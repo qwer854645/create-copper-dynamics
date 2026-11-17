@@ -41,9 +41,10 @@ public final class SmartFaucetBlockEntity extends FaucetBlockEntity {
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform.Sided() {
-            @Override protected Vec3 getSouthLocation() { return new Vec3(.5, .5, .65); }
+            @Override protected Vec3 getSouthLocation() { return new Vec3(.5, .5, 11.25 / 16); }
+            @Override public float getScale() { return .375f; }
             @Override protected boolean isSideActive(BlockState state, Direction side) {
-                return side != Direction.DOWN && side != state.getValue(FaucetBlock.FACING).getOpposite();
+                return side == state.getValue(FaucetBlock.FACING);
             }
         }).forFluids());
         behaviours.add(new BeltProcessingBehaviour(this).whenItemEnters(this::receive).whileItemHeld(this::hold));
