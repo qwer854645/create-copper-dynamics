@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "ceiling=false": {
+      "model": "ccd:block/fluid_arm"
+    },
+    "ceiling=true": {
+      "model": "ccd:block/fluid_arm",
+      "x": 180
+    }
+  }
+}

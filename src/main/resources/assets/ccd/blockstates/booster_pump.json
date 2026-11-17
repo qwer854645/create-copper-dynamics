@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "ccd:block/booster_pump"
+    },
+    "facing=down": {
+      "model": "ccd:block/booster_pump",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "ccd:block/booster_pump",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "ccd:block/booster_pump",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east": {
+      "model": "ccd:block/booster_pump",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "ccd:block/booster_pump",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

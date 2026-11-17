@@ -147,15 +147,14 @@ public final class FluidPackagingTests {
             var handler = level.getCapability(Capabilities.FluidHandler.BLOCK, h.absolutePos(tank), Direction.SOUTH);
             check(h, handler != null, "Create tank did not expose standard fluid capability");
             handler.fill(water(1_250), FluidAction.EXECUTE);
-            be.amount.setValue(1_000);
             be.attemptToSend(null);
-            check(h, FluidPackageItem.contents(be.heldBox).getAmount() == 1_000, "Machine failed to package exact quantity");
-            check(h, handler.getFluidInTank(0).getAmount() == 250, "Wrong source remainder");
+            check(h, FluidPackageItem.contents(be.heldBox).getAmount() == 1_250, "Machine should package all available fluid below capacity");
+            check(h, handler.getFluidInTank(0).isEmpty(), "Wrong source remainder");
             ItemStack parcel = be.heldBox.copy();
             be.heldBox = ItemStack.EMPTY;
             be.animationTicks = 0;
             check(h, be.unwrapBox(parcel, true), "Own packager should accept fluid parcel");
-            check(h, handler.getFluidInTank(0).getAmount() == 250, "Simulated unpack changed tank");
+            check(h, handler.getFluidInTank(0).isEmpty(), "Simulated unpack changed tank");
             check(h, be.inventory.insertItem(0, parcel, false).isEmpty(), "Native package item interface rejected own parcel");
             check(h, handler.getFluidInTank(0).getAmount() == 1_250, "Roundtrip lost or duplicated fluid");
             check(h, be.getRecovery().isEmpty(), "Unexpected retained fluid after full transfer");
@@ -164,7 +163,7 @@ public final class FluidPackagingTests {
     }
 
     @GameTest(template = "empty")
-    public static void exactModeDoesNotDrainShortSource(GameTestHelper h) {
+    public static void automaticModePackagesAvailableRemainder(GameTestHelper h) {
         BlockPos machine = new BlockPos(2, 1, 2);
         h.setBlock(machine.north(), AllBlocks.FLUID_TANK.getDefaultState());
         h.setBlock(machine, CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING, Direction.SOUTH));
@@ -173,10 +172,9 @@ public final class FluidPackagingTests {
             var handler = be.targetFluidHandler();
             check(h, handler != null, "Missing tank capability");
             handler.fill(water(250), FluidAction.EXECUTE);
-            be.amount.setValue(1_000);
             be.attemptToSend(null);
-            check(h, be.heldBox.isEmpty(), "Exact machine created an undersized package");
-            check(h, handler.getFluidInTank(0).getAmount() == 250, "Waiting machine drained source");
+            check(h, FluidPackageItem.contents(be.heldBox).getAmount() == 250, "Machine should package the available remainder");
+            check(h, handler.getFluidInTank(0).isEmpty(), "Packaged fluid must leave the source");
             h.succeed();
         });
     }

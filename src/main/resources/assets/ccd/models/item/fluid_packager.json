@@ -1,1 +1,1 @@
-{"parent":"create:block/packager/item","textures":{"0":"minecraft:block/copper_block"}}
+{"parent":"create:block/packager/item","render_type":"minecraft:cutout_mipped"}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " C ",
+    "GPG",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "create:copper_casing"
+    },
+    "G": {
+      "item": "create:gearbox"
+    },
+    "P": {
+      "item": "create:mechanical_pump"
+    }
+  },
+  "result": {
+    "id": "ccd:booster_pump",
+    "count": 1
+  }
+}

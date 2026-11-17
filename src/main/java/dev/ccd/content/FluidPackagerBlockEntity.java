@@ -18,8 +18,6 @@ import com.simibubi.create.content.logistics.packager.PackagerBlock;
 import com.simibubi.create.content.logistics.packager.PackagerBlockEntity;
 import com.simibubi.create.content.logistics.packager.PackagingRequest;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
-import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import dev.ccd.CopperDynamics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -30,7 +28,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -38,7 +35,6 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 import org.jetbrains.annotations.Nullable;
 
 public final class FluidPackagerBlockEntity extends PackagerBlockEntity implements IHaveGoggleInformation {
-    public ScrollValueBehaviour amount;
     private FluidStack filter = FluidStack.EMPTY;
     private FluidStack recovery = FluidStack.EMPTY;
     private String status = "ready";
@@ -52,14 +48,6 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         super.addBehaviours(behaviours);
         behaviours.removeIf(behaviour -> behaviour instanceof InvManipulationBehaviour);
         behaviours.add(targetInventory = new FluidInventoryBehaviour(this));
-        amount = new ScrollValueBehaviour(Component.translatable("ccd.packager.amount"), this, new ValueBoxTransform.Sided() {
-            @Override protected Vec3 getSouthLocation() { return new Vec3(.5, .75, 1); }
-            @Override protected boolean isSideActive(BlockState state, Direction direction) {
-                return state.getValue(PackagerBlock.FACING) == direction;
-            }
-        }).between(0, FluidPackageItem.CAPACITY)
-            .withFormatter(value -> value == 0 ? Component.translatable("ccd.packager.auto").getString() : value + " mB");
-        behaviours.add(amount);
     }
 
     @Override public InventorySummary getAvailableItems() {
@@ -162,16 +150,13 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         if (!recovery.isEmpty()) { status("recovery"); return; }
         IFluidHandler source = targetFluidHandler();
         if (source == null) { status("no_container"); return; }
-        int setting = amount.getValue();
-        int requested = setting == 0 ? FluidPackageItem.CAPACITY : setting;
-        FluidStack planned = FluidTransfers.planDrain(source, filter, requested, setting != 0);
-        if (planned.isEmpty()) { status(setting == 0 ? "no_fluid" : "not_enough"); return; }
+        FluidStack planned = FluidTransfers.planDrain(source, filter, FluidPackageItem.CAPACITY, false);
+        if (planned.isEmpty()) { status("no_fluid"); return; }
         FluidStack actual = source.drain(planned.copy(), FluidAction.EXECUTE);
         if (actual.isEmpty()) { status("no_fluid"); return; }
         // Keep even an unexpected actual result: external simulation is not a transaction.
         if (actual.getAmount() > FluidPackageItem.CAPACITY
-            || !FluidStack.isSameFluidSameComponents(actual, planned)
-            || (setting != 0 && actual.getAmount() != requested)) {
+            || !FluidStack.isSameFluidSameComponents(actual, planned)) {
             recovery = actual.copy();
             status("recovery");
             notifyUpdate();
@@ -255,6 +240,8 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         filter = FluidStack.parseOptional(registries, tag.getCompound("FluidFilter"));
         recovery = FluidStack.parseOptional(registries, tag.getCompound("RecoveryFluid"));
         status = tag.contains("FluidStatus") ? tag.getString("FluidStatus") : "ready";
+        // Old saves may have been waiting for the removed exact-amount setting.
+        if (status.equals("not_enough")) status = "ready";
         if (!clientPacket && tag.contains("FluidSummary"))
             fluidSummary = CatnipCodecUtils.decode(InventorySummary.CODEC, registries, tag.get("FluidSummary")).orElse(null);
     }
@@ -283,7 +270,6 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         tooltip.add(Component.translatable("block.ccd.fluid_packager").withStyle(ChatFormatting.GOLD));
         tooltip.add(Component.translatable("ccd.status." + status).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.packager.amount_value", amount.formatValue()));
         if (!filter.isEmpty()) tooltip.add(Component.translatable("ccd.packager.filter_set", filter.getHoverName()));
         if (!recovery.isEmpty()) tooltip.add(Component.translatable("ccd.packager.recovery_amount", recovery.getAmount(), recovery.getHoverName()));
         return true;

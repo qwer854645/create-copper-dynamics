@@ -1,0 +1,45 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "body": "create:block/copper_casing",
+    "common": "minecraft:block/iron_block",
+    "selected": "minecraft:block/oxidized_copper",
+    "closed": "minecraft:block/copper_block",
+    "particle": "create:block/copper_casing"
+  },
+  "elements": [
+    {
+      "name": "housing",
+      "from": [
+        3,
+        3,
+        3
+      ],
+      "to": [
+        13,
+        13,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#body"
+        },
+        "south": {
+          "texture": "#body"
+        },
+        "west": {
+          "texture": "#body"
+        },
+        "east": {
+          "texture": "#body"
+        },
+        "down": {
+          "texture": "#body"
+        },
+        "up": {
+          "texture": "#body"
+        }
+      }
+    }
+  ]
+}

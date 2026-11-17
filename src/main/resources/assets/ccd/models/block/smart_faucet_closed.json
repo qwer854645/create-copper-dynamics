@@ -1,0 +1,8 @@
+{
+  "parent": "ccd:block/faucet_closed",
+  "textures": {
+    "body": "create:block/brass_block",
+    "base": "create:block/brass_casing",
+    "particle": "create:block/brass_casing"
+  }
+}

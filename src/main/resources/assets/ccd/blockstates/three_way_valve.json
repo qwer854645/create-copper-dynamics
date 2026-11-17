@@ -1,0 +1,645 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ccd:block/three_way_valve/body"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/common_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/common_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/common_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/common_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/common_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/common_down"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_up"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_north"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_east"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_south"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/closed_west"
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/selected_west"
+      }
+    }
+  ]
+}

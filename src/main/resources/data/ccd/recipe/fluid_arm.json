@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "create:mechanical_arm"
+    },
+    {
+      "item": "create:fluid_pipe"
+    },
+    {
+      "item": "create:fluid_pipe"
+    },
+    {
+      "item": "create:copper_casing"
+    }
+  ],
+  "result": {
+    "id": "ccd:fluid_arm",
+    "count": 1
+  }
+}

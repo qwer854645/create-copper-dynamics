@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "ccd:redstone_fluid_valve"
+    },
+    {
+      "item": "create:fluid_pipe"
+    },
+    {
+      "item": "create:copper_casing"
+    }
+  ],
+  "result": {
+    "id": "ccd:three_way_valve",
+    "count": 1
+  }
+}

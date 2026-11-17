@@ -1,4 +1,5 @@
 {
  "parent":"create:block/packager/block_vertical",
- "textures":{"0":"minecraft:block/copper_block","particle":"minecraft:block/copper_block"}
+ "render_type":"minecraft:cutout_mipped",
+ "textures":{"particle":"minecraft:block/copper_block"}
 }

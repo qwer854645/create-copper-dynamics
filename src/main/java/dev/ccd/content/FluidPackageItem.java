@@ -5,18 +5,22 @@ import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.content.logistics.box.PackageStyles;
 import dev.ccd.CopperDynamics;
+import dev.ccd.logistics.FluidPackageAddressing;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.SlotAccess;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-public final class FluidPackageItem extends PackageItem {
+public class FluidPackageItem extends PackageItem {
     public static final int CAPACITY = 4_000;
 
     public FluidPackageItem(Properties properties) {
@@ -54,6 +58,12 @@ public final class FluidPackageItem extends PackageItem {
     }
 
     @Override
+    public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action,
+        Player player, SlotAccess access) {
+        return FluidPackageAddressing.interact(stack, other, slot, action, player);
+    }
+
+    @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flags) {
         FluidStack fluid = contents(stack);
         if (fluid.isEmpty()) {
@@ -65,6 +75,7 @@ public final class FluidPackageItem extends PackageItem {
         String address = PackageItem.getAddress(stack);
         if (!address.isBlank()) lines.add(Component.literal("→ " + address).withStyle(ChatFormatting.GOLD));
         lines.add(Component.translatable("ccd.package.sealed").withStyle(ChatFormatting.DARK_GRAY));
+        lines.add(Component.translatable("ccd.package.address.hint").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override

@@ -1,0 +1,144 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "body": "create:block/copper_casing",
+    "common": "minecraft:block/iron_block",
+    "selected": "minecraft:block/oxidized_copper",
+    "closed": "minecraft:block/copper_block",
+    "particle": "create:block/copper_casing"
+  },
+  "elements": [
+    {
+      "name": "north_0",
+      "from": [
+        4,
+        4,
+        0
+      ],
+      "to": [
+        6,
+        12,
+        3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#closed"
+        },
+        "south": {
+          "texture": "#closed"
+        },
+        "west": {
+          "texture": "#closed"
+        },
+        "east": {
+          "texture": "#closed"
+        },
+        "down": {
+          "texture": "#closed"
+        },
+        "up": {
+          "texture": "#closed"
+        }
+      }
+    },
+    {
+      "name": "north_1",
+      "from": [
+        10,
+        4,
+        0
+      ],
+      "to": [
+        12,
+        12,
+        3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#closed"
+        },
+        "south": {
+          "texture": "#closed"
+        },
+        "west": {
+          "texture": "#closed"
+        },
+        "east": {
+          "texture": "#closed"
+        },
+        "down": {
+          "texture": "#closed"
+        },
+        "up": {
+          "texture": "#closed"
+        }
+      }
+    },
+    {
+      "name": "north_2",
+      "from": [
+        6,
+        4,
+        0
+      ],
+      "to": [
+        10,
+        6,
+        3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#closed"
+        },
+        "south": {
+          "texture": "#closed"
+        },
+        "west": {
+          "texture": "#closed"
+        },
+        "east": {
+          "texture": "#closed"
+        },
+        "down": {
+          "texture": "#closed"
+        },
+        "up": {
+          "texture": "#closed"
+        }
+      }
+    },
+    {
+      "name": "north_3",
+      "from": [
+        6,
+        10,
+        0
+      ],
+      "to": [
+        10,
+        12,
+        3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#closed"
+        },
+        "south": {
+          "texture": "#closed"
+        },
+        "west": {
+          "texture": "#closed"
+        },
+        "east": {
+          "texture": "#closed"
+        },
+        "down": {
+          "texture": "#closed"
+        },
+        "up": {
+          "texture": "#closed"
+        }
+      }
+    }
+  ]
+}

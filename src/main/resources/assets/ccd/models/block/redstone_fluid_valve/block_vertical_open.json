@@ -1,0 +1,4 @@
+{
+  "parent": "create:block/fluid_valve/block_vertical_open",
+  "render_type": "minecraft:cutout_mipped"
+}

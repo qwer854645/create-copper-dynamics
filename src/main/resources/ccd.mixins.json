@@ -3,6 +3,8 @@
   "minVersion": "0.8",
   "package": "dev.ccd.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["PackagerGuardMixin", "RepackagerMixin", "PackageEntityMixin", "FluidGaugeRestockMixin"],
+  "mixins": ["PackagerGuardMixin", "RepackagerMixin", "PackageEntityMixin", "FluidGaugeRestockMixin",
+    "BoosterPumpPressureMixin", "BoosterPumpConnectionMixin", "BoosterPumpDiscoveryMixin", "BoosterPumpShaftMixin",
+    "FluidValvePointerAccessor", "ThreeWayValveEndpointMixin", "FluidArmAccessor"],
   "injectors": {"defaultRequire": 1}
 }

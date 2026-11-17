@@ -1,8 +1,90 @@
-# 流体仪表：沿用 Create 的实现边界
+# Create 原生机制复用说明
 
 本轮依据实际依赖的 Create `6.0.10-280` 源码包实现，未使用其他流体附属的实现代码。
 
-## 直接复用
+## 包裹地址与剪贴板接入
+
+- 实际阅读 `PackageItem` 的地址组件读写与 `matchAddress`、`PackageEntity.interact`、`PackagePortBlockEntity.addAddressToClipboard`、`AddressEditBoxHelper`、`ClipboardContent`、`ClipboardEntry` 和 `ClipboardValueSettingsHandler`。没有读取其他三个流体附属的实现代码。
+- 原生包裹类型通过 `instanceof PackageItem` 识别，CCD 流体包裹直接继承，已有地址组件与通配符匹配无需额外注入。原生剪贴板设置复制入口针对方块实体，包裹实体交互则只支持空手取回；因此不能把“继承包裹”视为已经具备剪贴板地址粘贴。
+- 沿用原生 `ClipboardContent` 与 `#地址` 条目格式，复制出的地址仍能被原生 `AddressEditBoxHelper` 用作地址建议；原生蛙港写入的地址簿也能作为 CCD 的粘贴来源。剪贴板的其他页面、图标、只读标记及已复制机器设置予以保留。
+- 仅在 `FluidPackageItem.overrideOtherStackedOnMe` 接入标准物品槽点击：鼠标持剪贴板时右击复制、左击粘贴，方向与原生机器设置剪贴板的右击复制／左击粘贴一致。由标准菜单处理客户端预测和服务器同步，不新增数据包或实体交互 Mixin。
+- 当前页唯一未勾选的地址决定粘贴目标；多个不同候选时拒绝修改。单独的 `#` 是 CCD 增加的显式清除标记，原生地址建议会忽略该空地址条目。原生并没有“对包裹点击粘贴地址”这一入口，这部分为 CCD 自行实现的交互。
+- 本轮只做源码和资源静态检查，没有编译、游戏测试或客户端运行。
+
+## 动力移液臂
+
+- 已阅读 `ArmBlock`、`ArmItem`、`ArmBlockEntity`、`ArmInteractionPoint`／`Type`／`Handler`、`ArmPlacementPacket`、`ArmRenderer`／`ArmVisual` 及 Create 的交互点注册表。原生目标选择物品判断硬编码了普通动力臂，取放与货载使用 ItemStack，因此保留原生机械部分并专门适配流体选择和交互点。
+- `FluidArmBlock extends ArmBlock`、`FluidArmBlockEntity extends ArmBlockEntity`。状态机 tick、输入和输出搜索、三种输出策略、转速影响、动画角度、红石锁与持货存档直接复用；手动卸货和拆除时先将内部液囊转换成普通流体包裹，再分别使用原生库存回收与货载掉落方法。
+- `FluidArmPoint` 将每个输入的流体罐视作一个可查询槽位，明确保存点击面，通过标准有向流体能力取放。`FluidArmCargoItem` 继承 CCD 流体包裹，以现有流体组件桥接原生货载，但用独立液囊模型呈现，并且不加入配方、创造栏或原生随机包裹池。它保存已从源移出的真实在途流体，不对外暴露库存或流体能力。每次最多 1000 mB，目标暂时拒收后仍由原生 heldItem 保存剩余量。卸货转换复制完整组件；读取旧版普通包裹货载时转换为液囊。
+- 覆盖 `getDistributableAmount` 将原生物品数量计算换成真实 mB 接收量。预检使用单个有效输出的最大接收量，不累加可能重叠的能力视图；实际交付与部分接收继续走原生输出调度及自定义交互点。`collectItem` 仅在原生取货后追加空货载检查，处理流体接口模拟成功、执行为空时的阶段恢复；不替换原生取货调度。
+- 原生交互点反序列化没有机械臂调用者参数，全球目标选择又与普通物品动力臂共享。因此将 fluid_arm_point 类型注册用于原生序列化，但不加入普通臂的可选目标；流体子类通过专用加载器验证类型、数量、相对距离、点击面和已加载区块，构造输入输出列表。保留原生 writeInteractionPoints 和相对坐标格式，结构变换同时旋转目标相对位置及接触面。
+- 一个 `FluidArmAccessor` 暴露原生包可见状态，供目标初始化和配置时安全重置当前阶段使用，没有替换原生调度方法。客户端收包后刷新目标列表，避免目标数量相同但面或模式已改变时沿用旧数据。
+- 配置物品通过 NeoForge 标准 `onItemUseFirst` 在容器打开前选择目标，使用正常物品使用同步，服务端保存带维度的 CustomData 并在应用时验证范围和流体接口；没有另做配置网络包。客户端以原生 Outliner 标记所选面。
+- 应力通过公开 `BlockStressValues.IMPACTS` 延迟读取原生机械臂系数。普通渲染与 Flywheel Visual 同时注册，显式保留普通渲染路径以显示爪端液囊。液囊模型使用透明孔洞外壳及标准流体颜色，不重新实现机械臂渲染器；静态底座和机械臂物品模型引用原生资源。护目镜只显示爪端流体与工作状态。
+- 首版限标准容器搬运；只有静态代码与资源核对结果，没有构建、运行或游戏测试结论。
+
+## 智能龙头
+
+- 进一步阅读 `BeltProcessingBehaviour`、`TransportedItemStackHandlerBehaviour`、`TransportedResult`、`DepotBehaviour`、`TransportedItemStack`、`FillingBySpout` 和 `GenericItemFilling`，确认原生回调的位置为下方两格，置物台与传送带均可通过行为发现处理器。
+- `SmartFaucetBlock`／`SmartFaucetBlockEntity` 继承 CCD 基础龙头，基类开放有向源查询、流体过滤判定与异常即时回流方法，原来的普通龙头仍默认允许全部流体。智能版新增原生 `FilteringBehaviour.forFluids()` 和 `BeltProcessingBehaviour`。
+- 物品是否可加工、需要多少流体以及产出结果，直接调用 `FillingBySpout`，由其查找原生注液／序列装配配方并回退到 `GenericItemFilling`；不重新编写一套物品配方系统。
+- 接收与停留回调决定 PASS／HOLD。计时仅记录待处理对象的弱引用、输入身份副本和完成时刻，不预扣液体，不拥有额外物品库存。完成前重新扫描当前源与过滤。关闭或暂停放行；区块重载重新计时，不产生在途流体预留。
+- 在输入物品及流体副本上计算原生结果，确认消耗符合预期后模拟并执行真实源抽取。只有完整抽出准确数量及组件的流体，且原生目标仍存在、物品仍匹配时，才经 `handleProcessingOnAllItems`／`TransportedResult.convertToAndLeaveHeld` 交付；未提交时即时回流实际流体。丢失目标、模拟执行偏差时不消耗原输入物品。
+- 原生通用物品灌装 API 假定物品流体能力正确实现模拟／执行语义，本实现沿用该接口边界。空产出配方按原生消耗语义处理，不把空产出简单视为失败。
+- 客户端使用原生 `SmartBlockEntityRenderer` 显示过滤图标，复用基础龙头开关模型并替换黄铜材质，无新 Mixin、内部储液或对外流体库存能力。仅完成静态检查，未构建、测试或运行。
+
+## 铜龙头
+
+- 已阅读 `SpoutBlock`、`SpoutBlockEntity`、`FillingBySpout`、`GenericItemFilling`、`BlockSpoutingBehaviour`、`CauldronSpoutingBehavior` 与原生默认注液行为注册。原生分液池使用 1000 mB 的 `SmartFluidTankBehaviour`、传送带停留加工和下方两格的方块目标；基础龙头的直接容器供液与该结构不同，因此使用新的 `SmartBlockEntity`，不继承其储液和传送带处理。
+- 复用原生 `IBE`、扳手、含水机制、`SpoutBlockEntity.FILLING_TIME` 周期和 `FluidFX` 粒子数据。源、目标使用标准有向流体能力，背面取液、下方供液，先模拟双方再执行；没有内部储罐、流体能力注册或液体数量 NBT。
+- 炼药锅复用公开的 `CAULDRON_INFO` 注册表读取流体、用量与目标状态，基础的层数增长自行适配。`BlockSpoutingBehaviour.fillBlock` 需要真实的分液池上下文，基础版没有调用该扩展接口；其他方块注液配方和传送带注液留待智能龙头接入。
+- 手动开关与红石暂停独立保存于方块状态。放置及实体初始化时复核实际信号，供液只在服务端发生，不查询未加载的源／目标区块。转移失败时当场回流，不能回流则生成已有的 CCD 密封包裹，不持久化余液。
+- 模型含水平四向的打开／关闭手柄状态，通电暂停时显示关闭。无需额外动态渲染器，不受 Flywheel 对方块实体渲染的跳过逻辑影响。本轮只静态检查，没有构建、测试或启动客户端。
+
+## 红石三通阀门
+
+- 三通不继承原生二通 `FluidValveBlock`，因为其静态管轴判定与直线连接假设不适用于切换后的弯路。新方块使用 `DirectionalBlock`、原生 `IBE`、`IWrenchable`、`ProperWaterloggedBlock` 和结构变换接口；实体继承 `SmartBlockEntity`。
+- 直接使用 `FluidTransportBehaviour`，`canHaveFlowToward` 每次只开放公共口和选中的支路，`canPullFluidFrom` 同步检查有效端口。原生泵发现、压力传播、路径分支和 `FluidNetwork` 实际流体转移均复用，不增加抽液 tick 或独立流体库存。
+- 依据实际源码中的 `wipePressure` 行为：它先删除不再开放的接口条目，因此先逐一 `resetNetwork` 清理旧连接缓存，再重建连接并传播压力变化。额外通知全部六个相邻位置的管路，覆盖旋转前后的旧支路；紧贴泵时直接调用其 `updatePressureChange`，避免只从泵所在位置扫描却未通知该泵自身。
+- 方块切换、邻居变化、放置和实体初始化将更新合并至延后一 tick 的原生方块 tick；拆除前也清理连接。邻接查询检查区块已加载，不强制加载。保持完整方块碰撞面，防止关闭接口被原生开放端检测误认为可向世界排液的位置。
+- `FACING` 表示直通口，反向为公共口，`ROLL` 的四个取值表示垂直侧口朝向，红石决定选择直通或侧通。旋转、镜像与 `StructureTransform` 同时变换直通和侧口方向，再重新确定 ROLL，保持端口关系。
+- 静态 multipart 模型按同一方向规则组成主体及三个管口，并用原生 `PipeAttachmentModel.withAO` 增加连接附件。无需额外方块实体渲染器或 Flywheel Visual，不会因动态渲染后端开启而跳过静态模型。
+- 额外核对原生泵的 `distributePressureTo` 后发现：它在进入邻接管道前不总是检查对方反向接口是否开放。增加仅针对 CCD 三通关闭接口的 `ThreeWayValveEndpointMixin`，让该管面成为压力图末端，阻止压力搜索穿过关闭口干扰选中通路；该面没有流体能力，也不属于开放排液端，不会成为实际收发目标。
+- 无流体能力注册、无液体库存或液体数量持久化；仅含原生管道流动描述数据。本轮只静态核对源码与资源，没有构建、游戏测试或客户端检查。
+
+## 红石流体阀门
+
+- 已阅读实际依赖版本的 `FluidValveBlock`、`FluidValveBlockEntity`（含内部 `ValvePipeBehaviour`）、`FluidValveRenderer`、`FluidValveVisual`、`PipeAttachmentModel` 与 `DirectionalAxisKineticBlock`。
+- `RedstoneFluidValveBlock extends FluidValveBlock`，`RedstoneFluidValveBlockEntity extends FluidValveBlockEntity`。原生通断依据 `ENABLED`，原生 tick 根据指针到达端点切换该状态；关闭判断在继承的 `canPullFluidFrom` 中。CCD 只将指针目标改由 `POWERED` 驱动，仍让原生 tick 负责开关和原生方块回调负责管网更新。
+- 指针字段 `pointer` 为包可见，增加只读 `FluidValvePointerAccessor`，用于调用其现有 `chase` 方法。未替换原生 tick、管道行为或 NBT 序列化；覆盖速度变化回调后重新应用红石目标，避免继承的旋转执行器目标覆盖红石控制。
+- 放置时初始化 `POWERED` 和开关状态，邻居变化与方块重新初始化时复核实际信号。关闭传动轴连接及轴连接放置偏好，不虚构 RPM；流体管轴、含水、碰撞、扳手和结构旋转仍继承。
+- 原生阀门方块状态资源作为方向与开关映射依据，CCD 子模型直接继承对应模型并声明 `cutout_mipped`，不替换透明纹理。模型烘焙沿用原生 `PipeAttachmentModel.withAO` 包装。
+- 同时注册原生 `FluidValveRenderer` 与 `FluidValveVisual`，已通过本地 Flywheel 类签名静态确认 Visual 工厂支持子类型，避免只注册普通渲染器后被 Flywheel 跳过造成缺件。
+- 没有内部储液与额外流体能力。本轮未构建、运行或检查客户端画面；运行时 Accessor 应用、红石开关及显示仍待验证。
+
+## 流体传输器
+
+- 已阅读 `FunnelBlockEntity` 的红石暂停与节流机制、`SmartFluidPipeBlockEntity` 的原生流体过滤行为及过滤渲染。复用 `SmartBlockEntity`、`IBE`、`FilteringBehaviour.forFluids()` 和 `SmartBlockEntityRenderer`；直接转移由 CCD 实现。
+- 按用户要求，完全移除内部流体库存、异常余液字段、流体 NBT 读写和流体能力注册。方块实体只保存过滤行为及运行时调度状态；查询的 `IFluidHandler` 属于源／目标容器。
+- 最末端节点沿背面逐格查找同向传输器和源容器，最多 64 台，不递归代理能力、不强制加载区块。任一节点暂停、反向、正在转移或端点缺失即中止；每种候选流体必须通过所有节点过滤。
+- 仅末端节点发起转移，成功解析通路后统一预留本周期，避免串联设备重复调度或拓扑变化造成重叠转移。默认整链每 8 tick 最多 250 mB，间隔读取原生漏斗配置。
+- 先模拟源和目标，缩小到双方可接受数量，并再次确认缩小后的源抽取量，然后执行。未交付部分当场退回源；无法退回的部分转成密封包裹掉落，不持久化到设备里。正常转移没有跨 tick 的在途流体。
+- 不新增 Mixin，不参与管道压力传播。本轮只做源码和资源静态检查，没有构建或运行。
+
+## 增压泵
+
+- 已阅读 `PumpBlock`、`PumpBlockEntity`（包括内部 `PumpFluidTransferBehaviour`）、`FluidPropagator`、`FluidNetwork`、`RotationPropagator`、`GearboxBlock`／`GearboxBlockEntity`、原生动力渲染器、`BlockStressValues`、`CStress` 和 `KineticNetwork`。实现只参考实际依赖版本的 Create 源码与 NeoForge 接口。
+- 方块、方块实体分别继承 `PumpBlock`／`PumpBlockEntity`。保留原生流体轴、两侧连接、压力图搜索、分支分配、流体身份、模拟及执行转移、存档和过载停机，不重写流体网络。只改变压力和范围输入。
+- 应力通过公开的 `BlockStressValues.IMPACTS` 注册一个延迟读取配置的供应器：`原生机械泵系数 × CCD stressMultiplier`。默认倍率按用户要求为 1.5，通常为 6 SU/RPM；网络仍按真实转速绝对值乘算，四个轴口只对应一台设备。Create 的 `CStress.setImpact` 限制非原生方块使用，因此配置注册在 CCD 自己的服务端配置中。
+- 压力在原生 `distributePressureTo` 中倍率提升；内部传输行为每 tick 写入的泵口压力同步提升。两处都只针对 `BoosterPumpBlockEntity`，防止只增强外围管道而在泵口形成原生压力瓶颈。没有篡改 `getSpeed()` 或重复调用 `FluidNetwork.tick()`。
+- 原生 `FluidNetwork` 从入口压力计算每 tick 转移上限，直接复用即可得到更高输送能力。默认压力 2 倍，在简单无瓶颈管路中流量约 2 倍；实际流量仍取决于接口、分支和整数取整。
+- 泵自身搜索距离仅对 CCD 增压泵增加。另将 `propagateChangedPipe` 的泵发现扫描范围扩到增压泵距离，让未建立压力的远端管道编辑也能通知泵；这不修改普通机械泵实际分布压力的距离。默认距离随 Create 配置乘 2，通常每侧 32 格。
+- 原生齿轮箱的轴向转换在 `RotationPropagator.getAxisModifier` 内按其实体类型特判，`PumpBlockEntity` 无法通过单继承同时成为齿轮箱。仅对增压泵的四个轴口提供固定参考方向的 1:1 转换因子，让原生传播过程在传入、传出两侧使用同一组因子；渲染共用该因子，未添加全局改速规则。关闭继承来的小齿轮识别，避免无外露齿轮的外壳仍与邻近齿轮啮合。
+- 四个轴口的几何开孔为 CCD 自建方块模型，纹理和旋转半轴引用原生资源；渲染器直接渲染这些半轴，不因 Flywheel 开启而跳过尚未另注册 Visual 的 CCD 方块实体。
+- 重新载入方块实体时主动刷新压力，以覆盖保存转速未变时原生速度变更逻辑可能跳过重算的情况。配置需要重进世界；没有实现运行中的配置热重载。
+- 本轮只静态检查，尚未确认运行时 Mixin 应用、游戏内传动、流量与视觉效果。
+
+## 流体仪表直接复用
 
 - `FluidGaugeBlock extends FactoryPanelBlock`：安装方向、含水状态、命中槽位、碰撞形状、四格布局、初次放置。
 - 原生 `FactoryPanelBlockItem`：存量转信器调频、已调频提示、放置前检查、网络频率数据。

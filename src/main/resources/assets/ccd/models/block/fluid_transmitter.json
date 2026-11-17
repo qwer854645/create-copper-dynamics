@@ -1,0 +1,243 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "body": "create:block/copper_casing",
+    "copper": "minecraft:block/copper_block",
+    "green": "minecraft:block/oxidized_copper",
+    "filter": "minecraft:block/iron_block",
+    "particle": "create:block/copper_casing"
+  },
+  "elements": [
+    {
+      "name": "housing",
+      "from": [
+        1,
+        1,
+        3
+      ],
+      "to": [
+        15,
+        15,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#body"
+        },
+        "south": {
+          "texture": "#body"
+        },
+        "east": {
+          "texture": "#body"
+        },
+        "west": {
+          "texture": "#body"
+        },
+        "up": {
+          "texture": "#body"
+        },
+        "down": {
+          "texture": "#body"
+        }
+      }
+    },
+    {
+      "name": "input",
+      "from": [
+        4,
+        4,
+        0
+      ],
+      "to": [
+        12,
+        12,
+        3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper"
+        },
+        "south": {
+          "texture": "#copper"
+        },
+        "east": {
+          "texture": "#copper"
+        },
+        "west": {
+          "texture": "#copper"
+        },
+        "up": {
+          "texture": "#copper"
+        },
+        "down": {
+          "texture": "#copper"
+        }
+      }
+    },
+    {
+      "name": "output",
+      "from": [
+        4,
+        4,
+        13
+      ],
+      "to": [
+        12,
+        12,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#green"
+        },
+        "south": {
+          "texture": "#green"
+        },
+        "east": {
+          "texture": "#green"
+        },
+        "west": {
+          "texture": "#green"
+        },
+        "up": {
+          "texture": "#green"
+        },
+        "down": {
+          "texture": "#green"
+        }
+      }
+    },
+    {
+      "name": "filter_left",
+      "from": [
+        0.9,
+        5,
+        5
+      ],
+      "to": [
+        1,
+        11,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#filter"
+        },
+        "south": {
+          "texture": "#filter"
+        },
+        "east": {
+          "texture": "#filter"
+        },
+        "west": {
+          "texture": "#filter"
+        },
+        "up": {
+          "texture": "#filter"
+        },
+        "down": {
+          "texture": "#filter"
+        }
+      }
+    },
+    {
+      "name": "filter_right",
+      "from": [
+        15,
+        5,
+        5
+      ],
+      "to": [
+        15.1,
+        11,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#filter"
+        },
+        "south": {
+          "texture": "#filter"
+        },
+        "east": {
+          "texture": "#filter"
+        },
+        "west": {
+          "texture": "#filter"
+        },
+        "up": {
+          "texture": "#filter"
+        },
+        "down": {
+          "texture": "#filter"
+        }
+      }
+    },
+    {
+      "name": "filter_top",
+      "from": [
+        5,
+        15,
+        5
+      ],
+      "to": [
+        11,
+        15.1,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#filter"
+        },
+        "south": {
+          "texture": "#filter"
+        },
+        "east": {
+          "texture": "#filter"
+        },
+        "west": {
+          "texture": "#filter"
+        },
+        "up": {
+          "texture": "#filter"
+        },
+        "down": {
+          "texture": "#filter"
+        }
+      }
+    },
+    {
+      "name": "filter_bottom",
+      "from": [
+        5,
+        0.9,
+        5
+      ],
+      "to": [
+        11,
+        1,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#filter"
+        },
+        "south": {
+          "texture": "#filter"
+        },
+        "east": {
+          "texture": "#filter"
+        },
+        "west": {
+          "texture": "#filter"
+        },
+        "up": {
+          "texture": "#filter"
+        },
+        "down": {
+          "texture": "#filter"
+        }
+      }
+    }
+  ]
+}

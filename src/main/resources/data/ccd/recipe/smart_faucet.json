@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "ccd:faucet"
+    },
+    {
+      "item": "create:brass_ingot"
+    },
+    {
+      "item": "create:electron_tube"
+    }
+  ],
+  "result": {
+    "id": "ccd:smart_faucet",
+    "count": 1
+  }
+}

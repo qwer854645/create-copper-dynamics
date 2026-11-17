@@ -1,0 +1,144 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "body": "create:block/copper_casing",
+    "common": "minecraft:block/iron_block",
+    "selected": "minecraft:block/oxidized_copper",
+    "closed": "minecraft:block/copper_block",
+    "particle": "create:block/copper_casing"
+  },
+  "elements": [
+    {
+      "name": "west_0",
+      "from": [
+        0,
+        4,
+        4
+      ],
+      "to": [
+        3,
+        6,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    },
+    {
+      "name": "west_1",
+      "from": [
+        0,
+        10,
+        4
+      ],
+      "to": [
+        3,
+        12,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    },
+    {
+      "name": "west_2",
+      "from": [
+        0,
+        6,
+        4
+      ],
+      "to": [
+        3,
+        10,
+        6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    },
+    {
+      "name": "west_3",
+      "from": [
+        0,
+        6,
+        10
+      ],
+      "to": [
+        3,
+        10,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    }
+  ]
+}

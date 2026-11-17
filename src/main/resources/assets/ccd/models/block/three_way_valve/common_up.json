@@ -1,0 +1,144 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "body": "create:block/copper_casing",
+    "common": "minecraft:block/iron_block",
+    "selected": "minecraft:block/oxidized_copper",
+    "closed": "minecraft:block/copper_block",
+    "particle": "create:block/copper_casing"
+  },
+  "elements": [
+    {
+      "name": "up_0",
+      "from": [
+        4,
+        13,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        6
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    },
+    {
+      "name": "up_1",
+      "from": [
+        4,
+        13,
+        10
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    },
+    {
+      "name": "up_2",
+      "from": [
+        4,
+        13,
+        6
+      ],
+      "to": [
+        6,
+        16,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    },
+    {
+      "name": "up_3",
+      "from": [
+        10,
+        13,
+        6
+      ],
+      "to": [
+        12,
+        16,
+        10
+      ],
+      "faces": {
+        "north": {
+          "texture": "#common"
+        },
+        "south": {
+          "texture": "#common"
+        },
+        "west": {
+          "texture": "#common"
+        },
+        "east": {
+          "texture": "#common"
+        },
+        "down": {
+          "texture": "#common"
+        },
+        "up": {
+          "texture": "#common"
+        }
+      }
+    }
+  ]
+}
