@@ -1,144 +1,155 @@
 {
   "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "create:block/copper_casing",
-    "common": "minecraft:block/iron_block",
-    "selected": "minecraft:block/oxidized_copper",
-    "closed": "minecraft:block/copper_block",
-    "particle": "create:block/copper_casing"
+    "pipe": "ccd:block/three_way_valve/pipe_selected",
+    "particle": "create:block/pipes"
   },
   "elements": [
     {
-      "name": "north_0",
+      "name": "native_rim_connector_north_0",
       "from": [
         4,
         4,
         0
       ],
       "to": [
-        6,
         12,
-        3
+        12,
+        4
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          8,
+          0
+        ]
+      },
       "faces": {
-        "north": {
-          "texture": "#selected"
-        },
-        "south": {
-          "texture": "#selected"
+        "east": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "west": {
-          "texture": "#selected"
-        },
-        "east": {
-          "texture": "#selected"
-        },
-        "down": {
-          "texture": "#selected"
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "up": {
-          "texture": "#selected"
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
         }
       }
     },
     {
-      "name": "north_1",
       "from": [
-        10,
-        4,
+        3,
+        3,
         0
       ],
       "to": [
-        12,
-        12,
-        3
+        13,
+        13,
+        2
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          28,
+          8
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#selected"
-        },
-        "south": {
-          "texture": "#selected"
-        },
-        "west": {
-          "texture": "#selected"
-        },
-        "east": {
-          "texture": "#selected"
-        },
-        "down": {
-          "texture": "#selected"
-        },
-        "up": {
-          "texture": "#selected"
-        }
-      }
-    },
-    {
-      "name": "north_2",
-      "from": [
-        6,
-        4,
-        0
-      ],
-      "to": [
-        10,
-        6,
-        3
-      ],
-      "faces": {
-        "north": {
-          "texture": "#selected"
-        },
-        "south": {
-          "texture": "#selected"
-        },
-        "west": {
-          "texture": "#selected"
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe",
+          "cullface": "north"
         },
         "east": {
-          "texture": "#selected"
-        },
-        "down": {
-          "texture": "#selected"
-        },
-        "up": {
-          "texture": "#selected"
-        }
-      }
-    },
-    {
-      "name": "north_3",
-      "from": [
-        6,
-        10,
-        0
-      ],
-      "to": [
-        10,
-        12,
-        3
-      ],
-      "faces": {
-        "north": {
-          "texture": "#selected"
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "texture": "#pipe"
         },
         "south": {
-          "texture": "#selected"
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe"
         },
         "west": {
-          "texture": "#selected"
-        },
-        "east": {
-          "texture": "#selected"
-        },
-        "down": {
-          "texture": "#selected"
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#pipe"
         },
         "up": {
-          "texture": "#selected"
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
         }
-      }
+      },
+      "name": "native_rim_north_0"
     }
   ]
 }

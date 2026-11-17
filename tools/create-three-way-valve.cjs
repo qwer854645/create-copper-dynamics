@@ -1,0 +1,69 @@
+// CCD copper shell and native Create pipe mouths with four-pixel port-status stamps.
+// Usage: node tools/create-three-way-valve.cjs <extracted Create source root>
+const fs=require('node:fs'),path=require('node:path'),sharp=require('sharp');
+const {mesh,render,model:loadModel}=require('./preview-fluid-packager.cjs');
+const root=path.resolve(__dirname,'..'),assets=path.join(root,'src/main/resources/assets/ccd');
+const textures=path.join(assets,'textures/block/three_way_valve'),models=path.join(assets,'models/block/three_way_valve');
+const output=path.join(root,'outputs/three-way-valve');
+for(const dir of [textures,models,output])fs.mkdirSync(dir,{recursive:true});
+const copper=[[96,46,31],[144,73,49],[154,80,56],[167,90,64],[178,98,71],[194,107,76],[214,123,91],[227,130,108]];
+const patches=['166667776642','655666655543','655556655433','655555544433','655555444443','655544444543',
+ '655444455553','554444555543','554455555433','454555544433','343333333221','122211111110'];
+const body=Buffer.alloc(1024);
+for(let y=0;y<16;y++)for(let x=0;x<16;x++){
+ const color=x>=2&&x<14&&y>=2&&y<14?copper[Number(patches[y-2][x-2])]:copper[4];
+ body.set([...color,255],(y*16+x)*4);
+}
+const shell={name:'housing',from:[3,3,3],to:[13,13,13],faces:{
+ north:{texture:'#body',uv:[13,3,3,13]},south:{texture:'#body',uv:[3,3,13,13]},
+ east:{texture:'#body',uv:[13,3,3,13]},west:{texture:'#body',uv:[3,3,13,13]},
+ up:{texture:'#body',uv:[3,3,13,13]},down:{texture:'#body',uv:[3,13,13,3]},
+}};
+const faces=['north','south','east','west','up','down'];
+const colors={common:[[194,188,171],[159,155,147]],selected:[[63,142,67],[40,106,56]],closed:[[191,45,32],[116,30,7]]};
+function port(role,face){
+ const elements=[];
+ for(const part of ['rim_connector','rim'])for(const [i,source]of loadModel('create:block/fluid_pipe/'+part+'/'+face).elements.entries()){
+  const e=JSON.parse(JSON.stringify(source));e.name='native_'+part+'_'+face+'_'+i;
+  for(const spec of Object.values(e.faces))spec.texture='#pipe';elements.push(e);
+ }
+ return {parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',
+  textures:{pipe:'ccd:block/three_way_valve/pipe_'+role,particle:'create:block/pipes'},elements};
+}
+const save=(file,object)=>fs.writeFileSync(file,JSON.stringify(object,null,2)+'\n');
+async function main(){
+ await sharp(body,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'body.png'));
+ const reference=path.resolve(process.argv[2]);
+ const {data:pipe,info}=await sharp(path.join(reference,'assets/create/textures/block/pipes.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ if(info.width!==32||info.height!==32)throw Error('Unexpected native pipe atlas size');
+ for(const [role,ramp]of Object.entries(colors)){
+  const data=Buffer.from(pipe);
+  for(let y=22;y<24;y++)for(let x=26;x<28;x++)data.set([...ramp[y-22],255],(y*32+x)*4);
+  for(let i=3;i<data.length;i+=4)if(data[i]!==pipe[i])throw Error('Pipe alpha changed');
+  await sharp(data,{raw:{width:32,height:32,channels:4}}).png().toFile(path.join(textures,'pipe_'+role+'.png'));
+ }
+ save(path.join(models,'body.json'),{parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',
+  textures:{body:'ccd:block/three_way_valve/body',particle:'ccd:block/three_way_valve/body'},elements:[shell]});
+ for(const role of Object.keys(colors))for(const face of faces)save(path.join(models,role+'_'+face+'.json'),port(role,face));
+ const itemElements=[shell],itemTextures={body:'ccd:block/three_way_valve/body',particle:'ccd:block/three_way_valve/body'};
+ for(const [role,face]of [['common','north'],['selected','south'],['closed','up']]){
+  const m=port(role,face);itemTextures[role]=m.textures.pipe;
+  for(const original of m.elements){const e=JSON.parse(JSON.stringify(original));for(const spec of Object.values(e.faces))spec.texture='#'+role;itemElements.push(e);}
+ }
+ save(path.join(assets,'models/item/three_way_valve.json'),{parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',textures:itemTextures,elements:itemElements});
+ const panels=[];
+ for(const [i,powered,view]of [[0,false,[26,20,-34]],[1,true,[26,20,-34]],[2,true,[-26,20,34]]]){
+  const parts=['body','common_north',powered?'closed_south':'selected_south',powered?'selected_up':'closed_up'];
+  const geometry=[];for(const part of parts)geometry.push(...await mesh('ccd:block/three_way_valve/'+part));
+  const buffer=await render(geometry,500,480,view,{center:[8,8,8],scale:23});
+  await sharp(buffer).toFile(path.join(output,['straight','branch','branch-rear'][i]+'.png'));panels.push({input:buffer,left:i*500,top:100});
+ }
+ const labels=Buffer.from(`<svg width="1500" height="670" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="42" font-size="29">红石三通阀 · 铜壳与原生管口</text><text x="750" y="78" font-size="16">不规则铜色纹理 · 小色标：浅色公共口 / 绿色选通 / 红色关闭</text><text x="250" y="613" font-size="18">无红石：直通</text><text x="750" y="613" font-size="18">有红石：转向侧路</text><text x="1250" y="613" font-size="18">转向状态 · 背面</text><text x="750" y="650" font-size="14" fill="#677070">实际 multipart 模型离线渲染 / 无动力轴、额外铆钉或储液显示</text></g></svg>`);
+ await sharp({create:{width:1500,height:670,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
+ save(path.join(output,'model.meta.json'),{originalArtwork:'copper shell and four status pixels per pipe atlas only',
+  source:'Create 6.0.10-280 fluid_pipe/rim and rim_connector (six directions), pipes.png',
+  textureSizes:{body:[16,16],pipeAtlases:[32,32]},nativeGeometry:true,statusPixelsPerAtlas:4,colors,
+  housingBounds:[[3,3,3],[13,13,13]],models:19,itemDefault:{facing:'south',roll:0,powered:false},blockstatesUnchanged:true});
+ console.log(JSON.stringify({preview:path.join(output,'preview.png'),blockModels:19,textures:4}));
+}
+main().catch(e=>{console.error(e);process.exitCode=1;});

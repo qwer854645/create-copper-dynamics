@@ -1,0 +1,73 @@
+{
+  "originalArtwork": "copper shell and four status pixels per pipe atlas only",
+  "source": "Create 6.0.10-280 fluid_pipe/rim and rim_connector (six directions), pipes.png",
+  "textureSizes": {
+    "body": [
+      16,
+      16
+    ],
+    "pipeAtlases": [
+      32,
+      32
+    ]
+  },
+  "nativeGeometry": true,
+  "statusPixelsPerAtlas": 4,
+  "colors": {
+    "common": [
+      [
+        194,
+        188,
+        171
+      ],
+      [
+        159,
+        155,
+        147
+      ]
+    ],
+    "selected": [
+      [
+        63,
+        142,
+        67
+      ],
+      [
+        40,
+        106,
+        56
+      ]
+    ],
+    "closed": [
+      [
+        191,
+        45,
+        32
+      ],
+      [
+        116,
+        30,
+        7
+      ]
+    ]
+  },
+  "housingBounds": [
+    [
+      3,
+      3,
+      3
+    ],
+    [
+      13,
+      13,
+      13
+    ]
+  ],
+  "models": 19,
+  "itemDefault": {
+    "facing": "south",
+    "roll": 0,
+    "powered": false
+  },
+  "blockstatesUnchanged": true
+}

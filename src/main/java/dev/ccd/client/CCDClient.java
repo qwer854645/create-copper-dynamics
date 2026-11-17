@@ -91,11 +91,8 @@ public final class CCDClient {
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_package"), "inventory");
         var canisterModel = event.getModels().get(canister);
         if (canisterModel != null) event.getModels().put(canister, FluidCanisterModel.install(canisterModel));
-        for (var state : CopperDynamics.THREE_WAY_VALVE.get().getStateDefinition().getPossibleStates()) {
-            var location = BlockModelShaper.stateToModelLocation(state);
-            var baked = event.getModels().get(location);
-            if (baked != null) event.getModels().put(location, PipeAttachmentModel.withAO(baked));
-        }
+        // Three-way valve multipart models already include native rims/connectors and status stamps.
+        // A PipeAttachmentModel wrapper would draw duplicate coplanar mouths over those stamps.
         for (var state : CopperDynamics.REDSTONE_FLUID_VALVE.get().getStateDefinition().getPossibleStates()) {
             var location = BlockModelShaper.stateToModelLocation(state);
             var baked = event.getModels().get(location);

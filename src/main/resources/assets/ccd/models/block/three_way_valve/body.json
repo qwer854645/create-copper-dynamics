@@ -1,11 +1,9 @@
 {
   "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "create:block/copper_casing",
-    "common": "minecraft:block/iron_block",
-    "selected": "minecraft:block/oxidized_copper",
-    "closed": "minecraft:block/copper_block",
-    "particle": "create:block/copper_casing"
+    "body": "ccd:block/three_way_valve/body",
+    "particle": "ccd:block/three_way_valve/body"
   },
   "elements": [
     {
@@ -22,22 +20,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#body"
+          "texture": "#body",
+          "uv": [
+            13,
+            3,
+            3,
+            13
+          ]
         },
         "south": {
-          "texture": "#body"
-        },
-        "west": {
-          "texture": "#body"
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
         },
         "east": {
-          "texture": "#body"
+          "texture": "#body",
+          "uv": [
+            13,
+            3,
+            3,
+            13
+          ]
         },
-        "down": {
-          "texture": "#body"
+        "west": {
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
         },
         "up": {
-          "texture": "#body"
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "down": {
+          "texture": "#body",
+          "uv": [
+            3,
+            13,
+            13,
+            3
+          ]
         }
       }
     }

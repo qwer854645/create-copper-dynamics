@@ -1,144 +1,145 @@
 {
   "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "create:block/copper_casing",
-    "common": "minecraft:block/iron_block",
-    "selected": "minecraft:block/oxidized_copper",
-    "closed": "minecraft:block/copper_block",
-    "particle": "create:block/copper_casing"
+    "pipe": "ccd:block/three_way_valve/pipe_closed",
+    "particle": "create:block/pipes"
   },
   "elements": [
     {
-      "name": "west_0",
+      "name": "native_rim_connector_west_0",
       "from": [
         0,
         4,
         4
       ],
       "to": [
-        3,
-        6,
-        12
-      ],
-      "faces": {
-        "north": {
-          "texture": "#closed"
-        },
-        "south": {
-          "texture": "#closed"
-        },
-        "west": {
-          "texture": "#closed"
-        },
-        "east": {
-          "texture": "#closed"
-        },
-        "down": {
-          "texture": "#closed"
-        },
-        "up": {
-          "texture": "#closed"
-        }
-      }
-    },
-    {
-      "name": "west_1",
-      "from": [
-        0,
-        10,
-        4
-      ],
-      "to": [
-        3,
+        4,
         12,
         12
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          16,
+          0,
+          -16
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#closed"
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "south": {
-          "texture": "#closed"
-        },
-        "west": {
-          "texture": "#closed"
-        },
-        "east": {
-          "texture": "#closed"
-        },
-        "down": {
-          "texture": "#closed"
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "up": {
-          "texture": "#closed"
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
         }
       }
     },
     {
-      "name": "west_2",
       "from": [
         0,
-        6,
-        4
+        3,
+        3
       ],
       "to": [
-        3,
-        10,
-        6
+        2,
+        13,
+        13
       ],
       "faces": {
         "north": {
-          "texture": "#closed"
-        },
-        "south": {
-          "texture": "#closed"
-        },
-        "west": {
-          "texture": "#closed"
-        },
-        "east": {
-          "texture": "#closed"
-        },
-        "down": {
-          "texture": "#closed"
-        },
-        "up": {
-          "texture": "#closed"
-        }
-      }
-    },
-    {
-      "name": "west_3",
-      "from": [
-        0,
-        6,
-        10
-      ],
-      "to": [
-        3,
-        10,
-        12
-      ],
-      "faces": {
-        "north": {
-          "texture": "#closed"
-        },
-        "south": {
-          "texture": "#closed"
-        },
-        "west": {
-          "texture": "#closed"
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "texture": "#pipe"
         },
         "east": {
-          "texture": "#closed"
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe"
         },
-        "down": {
-          "texture": "#closed"
+        "south": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe",
+          "cullface": "west"
         },
         "up": {
-          "texture": "#closed"
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#pipe"
         }
-      }
+      },
+      "name": "native_rim_west_0"
     }
   ]
 }

@@ -1,15 +1,13 @@
 {
   "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "create:block/copper_casing",
-    "common": "minecraft:block/iron_block",
-    "selected": "minecraft:block/oxidized_copper",
-    "closed": "minecraft:block/copper_block",
-    "particle": "create:block/copper_casing"
+    "pipe": "ccd:block/three_way_valve/pipe_common",
+    "particle": "create:block/pipes"
   },
   "elements": [
     {
-      "name": "down_0",
+      "name": "native_rim_connector_down_0",
       "from": [
         4,
         0,
@@ -17,128 +15,132 @@
       ],
       "to": [
         12,
-        3,
-        6
-      ],
-      "faces": {
-        "north": {
-          "texture": "#common"
-        },
-        "south": {
-          "texture": "#common"
-        },
-        "west": {
-          "texture": "#common"
-        },
-        "east": {
-          "texture": "#common"
-        },
-        "down": {
-          "texture": "#common"
-        },
-        "up": {
-          "texture": "#common"
-        }
-      }
-    },
-    {
-      "name": "down_1",
-      "from": [
         4,
-        0,
-        10
-      ],
-      "to": [
-        12,
-        3,
         12
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          16,
+          0,
+          -16
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#common"
-        },
-        "south": {
-          "texture": "#common"
-        },
-        "west": {
-          "texture": "#common"
+          "uv": [
+            4,
+            6,
+            8,
+            8
+          ],
+          "texture": "#pipe"
         },
         "east": {
-          "texture": "#common"
+          "uv": [
+            4,
+            6,
+            8,
+            8
+          ],
+          "texture": "#pipe"
         },
-        "down": {
-          "texture": "#common"
+        "south": {
+          "uv": [
+            8,
+            6,
+            4,
+            8
+          ],
+          "texture": "#pipe"
         },
-        "up": {
-          "texture": "#common"
+        "west": {
+          "uv": [
+            8,
+            6,
+            4,
+            8
+          ],
+          "texture": "#pipe"
         }
       }
     },
     {
-      "name": "down_2",
       "from": [
-        4,
+        3,
         0,
-        6
+        3
       ],
       "to": [
-        6,
-        3,
-        10
+        13,
+        2,
+        13
       ],
       "faces": {
         "north": {
-          "texture": "#common"
-        },
-        "south": {
-          "texture": "#common"
-        },
-        "west": {
-          "texture": "#common"
-        },
-        "east": {
-          "texture": "#common"
-        },
-        "down": {
-          "texture": "#common"
-        },
-        "up": {
-          "texture": "#common"
-        }
-      }
-    },
-    {
-      "name": "down_3",
-      "from": [
-        10,
-        0,
-        6
-      ],
-      "to": [
-        12,
-        3,
-        10
-      ],
-      "faces": {
-        "north": {
-          "texture": "#common"
-        },
-        "south": {
-          "texture": "#common"
-        },
-        "west": {
-          "texture": "#common"
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "east": {
-          "texture": "#common"
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
-        "down": {
-          "texture": "#common"
+        "south": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "up": {
-          "texture": "#common"
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 270,
+          "texture": "#pipe",
+          "cullface": "down"
         }
-      }
+      },
+      "name": "native_rim_down_0"
     }
   ]
 }
