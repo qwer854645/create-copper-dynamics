@@ -1,9 +1,41 @@
 {
-  "originalArtwork": "CCD copper housing/filter panel only",
-  "textureSize": [
-    16,
-    16
-  ],
+  "originalArtwork": "CCD copper housing and arrow only; filter panel belongs to Create",
+  "textureSizes": {
+    "body": [
+      16,
+      16
+    ],
+    "side": [
+      32,
+      32
+    ],
+    "top": [
+      32,
+      32
+    ]
+  },
+  "nativeFilterFace": "create:block/smart_pipe_2 UV [8,8,16,16]",
+  "filterMounting": "four flush faces, existing interaction centers",
+  "directionArrow": {
+    "mode": "small, always visible on housing",
+    "sizeInModelUnits": [
+      3.5,
+      2.5
+    ],
+    "shape": [
+      "0000100",
+      "0000110",
+      "1111111",
+      "0000110",
+      "0000100"
+    ],
+    "color": [
+      123,
+      61,
+      41
+    ],
+    "pointsTo": "output"
+  },
   "nativePipeModels": [
     "create:block/fluid_pipe/rim_connector/north",
     "create:block/fluid_pipe/rim/north",
