@@ -12,10 +12,10 @@
     12
   ],
   "capacityMillibuckets": 4000,
-  "elements": 4,
-  "integerGeometry": true,
+  "elements": 30,
+  "integerPixelLayout": true,
   "texelsPerModelUnit": 1,
-  "paletteColors": 8,
+  "paletteColors": 15,
   "paletteReference": [
     "Create copper_casing",
     "Create fluid_tank"
@@ -26,8 +26,18 @@
     "back",
     "band",
     "cap",
-    "flat"
+    "flat",
+    "fluid",
+    "glass"
   ],
-  "fluidTintedFaces": 0,
-  "opaqueTextures": true
+  "fluidTintedFaces": 5,
+  "windowPixels": 13,
+  "opaqueTextures": true,
+  "glass": "clear with pixel glints",
+  "dynamicFluid": [
+    "still sprite",
+    "stack tint",
+    "fill level"
+  ],
+  "previewFluid": "illustrative blue"
 }

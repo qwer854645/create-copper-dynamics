@@ -3,8 +3,31 @@
   "minVersion": "0.8",
   "package": "dev.ccd.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": ["PackagerGuardMixin", "RepackagerMixin", "PackageEntityMixin", "FluidGaugeRestockMixin",
-    "BoosterPumpPressureMixin", "BoosterPumpConnectionMixin", "BoosterPumpDiscoveryMixin", "BoosterPumpShaftMixin",
-    "FluidValvePointerAccessor", "ThreeWayValveEndpointMixin", "FluidArmAccessor", "AtomizerFanProcessingMixin", "PowderSnowFluidTargetMixin"],
-  "injectors": {"defaultRequire": 1}
+  "mixins": [
+    "PackagerGuardMixin",
+    "RepackagerMixin",
+    "PackageEntityMixin",
+    "FluidGaugeRestockMixin",
+    "BoosterPumpPressureMixin",
+    "BoosterPumpConnectionMixin",
+    "BoosterPumpDiscoveryMixin",
+    "BoosterPumpShaftMixin",
+    "FluidValvePointerAccessor",
+    "ThreeWayValveEndpointMixin",
+    "FluidArmAccessor",
+    "AtomizerFanProcessingMixin",
+    "PowderSnowFluidTargetMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "CanisterPartialModelAccessor",
+    "CanisterEntityRenderMixin",
+    "CanisterEntityVisualMixin",
+    "CanisterChainRenderMixin",
+    "CanisterChainVisualMixin",
+    "CanisterFrogRenderMixin",
+    "CanisterFrogVisualMixin"
+  ]
 }

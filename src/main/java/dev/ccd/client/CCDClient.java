@@ -90,6 +90,10 @@ public final class CCDClient {
             .factory(ArmVisual::new).neverSkipVanillaRender().apply());
     }
     @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event) {
+        var canister = new net.minecraft.client.resources.model.ModelResourceLocation(
+            ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_package"), "inventory");
+        var canisterModel = event.getModels().get(canister);
+        if (canisterModel != null) event.getModels().put(canister, FluidCanisterModel.install(canisterModel));
         for (var state : CopperDynamics.THREE_WAY_VALVE.get().getStateDefinition().getPossibleStates()) {
             var location = BlockModelShaper.stateToModelLocation(state);
             var baked = event.getModels().get(location);
@@ -106,6 +110,9 @@ public final class CCDClient {
             var baked = event.getModels().get(location);
             if (baked != null) event.getModels().put(location, new FactoryPanelModel(baked));
         }
+    }
+    @SubscribeEvent public static void modelsReady(ModelEvent.BakingCompleted event) {
+        FluidCanisterModel.rebuildTransportVariants();
     }
     @SubscribeEvent public static void colors(RegisterColorHandlersEvent.Item event) {
         var bucketColors = new net.neoforged.neoforge.client.model.DynamicFluidContainerModel.Colors();
