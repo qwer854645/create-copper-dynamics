@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [" P ", "CFC", " M "],
+  "key": {
+    "P": {"item": "create:spout"},
+    "C": {"item": "create:copper_casing"},
+    "F": {"item": "create:encased_fan"},
+    "M": {"item": "create:precision_mechanism"}
+  },
+  "result": {"id": "ccd:fluid_atomizer", "count": 1}
+}

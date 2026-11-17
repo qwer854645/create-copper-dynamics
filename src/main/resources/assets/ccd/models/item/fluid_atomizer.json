@@ -1,0 +1,5 @@
+{
+  "parent": "create:block/encased_fan/item",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {"fan_side": "create:block/copper_casing", "particle": "create:block/copper_casing"}
+}

@@ -11,6 +11,7 @@ public final class CCDConfig {
     public static final ModConfigSpec.BooleanValue ARM_ALLOW_DIRECT_CONTAINER_INTERACTION;
     public static final ModConfigSpec.IntValue SMART_TANK_MAX_FLUIDS;
     public static final ModConfigSpec.IntValue WATER_SUPPLY_RATE;
+    public static final ModConfigSpec.IntValue ATOMIZER_NORMAL_COST, ATOMIZER_POTION_COST;
 
     static {
         var builder = new ModConfigSpec.Builder();
@@ -38,6 +39,12 @@ public final class CCDConfig {
             "-1 fills all available water capacity in one supply operation; 0 disables automatic supply.",
             "Idle/full targets are polled every 20 ticks. Manual water access is unaffected.")
             .worldRestart().defineInRange("rate", 1000, -1, Integer.MAX_VALUE);
+        builder.pop();
+        builder.push("atomizer");
+        ATOMIZER_NORMAL_COST = builder.comment("mB consumed per 20 ticks for native tagged fan-processing fluids.")
+            .worldRestart().defineInRange("normalConsumption", 10, 1, 4000);
+        ATOMIZER_POTION_COST = builder.comment("mB consumed per 20 ticks for native Create potion fluid.")
+            .worldRestart().defineInRange("potionConsumption", 25, 1, 4000);
         builder.pop();
         SPEC = builder.build();
     }

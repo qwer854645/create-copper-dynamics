@@ -117,5 +117,8 @@
   "item.ccd.copper_bucket": "铜桶",
   "item.ccd.copper_bucket.filled": "铜桶（%s）",
   "ccd.copper_bucket.amount": "%s / %s mB",
-  "ccd.copper_bucket.interaction": "接口右键取液，潜行倒液；世界每次取放 1000 mB"
+  "ccd.copper_bucket.interaction": "接口右键取液，潜行倒液；世界每次取放 1000 mB",
+  "block.ccd.fluid_atomizer": "流体雾化器",
+  "ccd.atomizer.active": "雾化运行中：已按间隔支付耗液",
+  "ccd.atomizer.idle": "普通风：缺液、无匹配规则、转速不足或红石暂停"
 }

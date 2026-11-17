@@ -26,3 +26,9 @@ ordering="AFTER"
 side="BOTH"
 [[mixins]]
 config="ccd.mixins.json"
+[[dependencies.ccd]]
+modId="kubejs"
+type="optional"
+versionRange="[2101.7.2,2102)"
+ordering="AFTER"
+side="BOTH"

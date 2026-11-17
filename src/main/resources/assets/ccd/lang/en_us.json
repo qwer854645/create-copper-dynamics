@@ -117,5 +117,8 @@
   "item.ccd.copper_bucket": "Copper Bucket",
   "item.ccd.copper_bucket.filled": "Copper Bucket (%s)",
   "ccd.copper_bucket.amount": "%s / %s mB",
-  "ccd.copper_bucket.interaction": "Interfaces: use to fill, sneak to empty; world transfers 1000 mB at a time"
+  "ccd.copper_bucket.interaction": "Interfaces: use to fill, sneak to empty; world transfers 1000 mB at a time",
+  "block.ccd.fluid_atomizer": "Fluid Atomizer",
+  "ccd.atomizer.active": "Atomizing: fluid paid for the current interval",
+  "ccd.atomizer.idle": "Ordinary air: no fluid/rule, insufficient speed, or redstone pause"
 }

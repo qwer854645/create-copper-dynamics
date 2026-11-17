@@ -56,8 +56,11 @@ public final class CCDClient {
             com.simibubi.create.content.fluids.tank.FluidTankRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.FLUID_ATOMIZER_BE.get(), com.simibubi.create.content.kinetics.fan.EncasedFanRenderer::new);
     }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ATOMIZER_BE.get())
+            .factory(com.simibubi.create.content.kinetics.fan.FanVisual::new).apply());
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get())
             .factory(FluidValveVisual::new).apply());
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ARM_BE.get())

@@ -11,6 +11,17 @@
 - 当前页唯一未勾选的地址决定粘贴目标；多个不同候选时拒绝修改。单独的 `#` 是 CCD 增加的显式清除标记，原生地址建议会忽略该空地址条目。原生并没有“对包裹点击粘贴地址”这一入口，这部分为 CCD 自行实现的交互。
 - 本轮只做源码和资源静态检查，没有编译、游戏测试或客户端运行。
 
+## 流体雾化器与可选 KubeJS
+
+- 已核对 Create 6.0.10 的 `EncasedFanBlock`／实体、`IAirCurrentSource`、`AirCurrent`、加工类型注册表与 `FanProcessing`、原生转子渲染／Flywheel Visual、药水流体及原版药云的效果应用方式。核对 KubeJS 2101 分支插件发现、绑定、服务端脚本加载生命周期，并确认固定编译版本 `2101.7.2-build.382` 的 Maven 元数据与依赖。
+- 方块／实体直接继承鼓风机，内部罐用 `SmartFluidTankBehaviour`；渲染与 Flywheel Visual 直接注册原生实现，保留原生框架开孔与转子。只替换侧板铜色材质，避免不透明材质封住原生风口。
+- 自定义 `AirCurrent` 只扩展加工类型查询并在原生处理调用期间传递机器上下文，不复制气流搜索、遮挡、实体移动、传送带遍历或产物转换。沿途原生加工媒介继续优先；生物作用复用原生气流已发现且仍处于范围内的实体，避免重复区域扫描。
+- 数据规则注册为标准配方类型，使用 NeoForge `FluidIngredient`、原生 `Ingredient`／`ItemStack`／`MobEffectInstance` codec 和带注册表的网络 codec，可由数据包和 KubeJS event.custom 同样提供。选择规则按优先级与 ID 稳定排序，流体身份／规则重载失效缓存，不每 tick 扫描全部配方。
+- 自定义物品加工注册一个真实的 Create `FanProcessingType`，其 `isValidAt` 始终为 false，只有雾化器自身选择它。两处定点 Mixin 只在该类型与当前雾化器上下文同时成立时初始化原生计时；普通鼓风机与原生加工类型不受影响。换液／规则重载更换上下文键，原生进度不能跨定义错误复用。
+- KubeJS 仅 compileOnly，不作为必装运行依赖；插件由 `kubejs.plugins.txt` 按 KubeJS 原生方式发现。核心代码不引用 KubeJS 类型，服务端绑定提供 CCDAtomizer，beforeScriptsLoaded 清理旧回调。回调上下文只提供副本和值，库存扣液与物品／生物结果提交由 CCD 控制。
+- 本版数据规则、字段、脚本结果语义和重载方式详见 `fluid-atomizer.md`。没有启动期脚本动态注册任意新的 Create 类型；现有类型映射和共享适配器覆盖首版用途，重载不修改冻结注册表。
+- 已补齐模型、注册、能力、应力、配方、普通掉落、工具标签、中英文说明、可选依赖声明与数据包／KubeJS 示例。只做静态检查，未编译、运行或验证脚本／视觉／性能。
+
 ## 铜桶
 
 - 已核对实际 NeoForge 依赖中的 `FluidHandlerItemStack`、`SimpleFluidContent`、`FluidUtil`、`BucketPickupHandlerWrapper`、`DynamicFluidContainerModel` 与能力注册／模型加载注册，以及原版 `BucketItem`、Create 的 `FilterItemStack`、`GenericItemEmptying`／`GenericItemFilling`。未读取三个流体附属的铜桶实现。

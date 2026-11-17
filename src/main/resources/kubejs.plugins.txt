@@ -1,0 +1,1 @@
+dev.ccd.compat.kubejs.CCDKubeJSPlugin ccd

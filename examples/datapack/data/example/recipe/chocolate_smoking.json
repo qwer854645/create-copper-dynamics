@@ -1,0 +1,7 @@
+{
+  "type": "ccd:atomizing",
+  "fluid": {"fluid": "create:chocolate"},
+  "processing_type": "create:smoking",
+  "consumption": {"amount": 10, "interval": 20},
+  "priority": 10
+}

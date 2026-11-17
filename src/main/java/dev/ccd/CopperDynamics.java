@@ -34,6 +34,14 @@ import dev.ccd.content.CopperCollectionGrateBlockEntity;
 import dev.ccd.content.SmartCollectionGrateBlock;
 import dev.ccd.content.SmartCollectionGrateBlockEntity;
 import dev.ccd.content.CopperBucketItem;
+import dev.ccd.content.FluidAtomizerBlock;
+import dev.ccd.content.FluidAtomizerBlockEntity;
+import dev.ccd.atomizing.AtomizingRecipe;
+import dev.ccd.atomizing.AtomizingFanType;
+import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import dev.ccd.logistics.FluidArmPoint;
 import com.simibubi.create.api.registry.CreateRegistries;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
@@ -80,6 +88,14 @@ public final class CopperDynamics {
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, ID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ID);
     public static final DeferredRegister<ArmInteractionPointType> ARM_POINTS = DeferredRegister.create(CreateRegistries.ARM_INTERACTION_POINT_TYPE, ID);
+    public static final DeferredRegister<FanProcessingType> FAN_TYPES = DeferredRegister.create(CreateRegistries.FAN_PROCESSING_TYPE, ID);
+    public static final DeferredHolder<FanProcessingType, AtomizingFanType> ATOMIZING_FAN_TYPE = FAN_TYPES.register("atomizing", AtomizingFanType::new);
+    public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, ID);
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AtomizingRecipe>> ATOMIZING_TYPE = RECIPE_TYPES.register("atomizing",
+        () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(ID, "atomizing")));
+    public static final DeferredHolder<RecipeSerializer<?>, AtomizingRecipe.Serializer> ATOMIZING_SERIALIZER =
+        RECIPE_SERIALIZERS.register("atomizing", AtomizingRecipe.Serializer::new);
     public static final DeferredHolder<ArmInteractionPointType, FluidArmPoint.Type> FLUID_ARM_POINT =
         ARM_POINTS.register("fluid_arm_point", FluidArmPoint.Type::new);
 
@@ -254,6 +270,14 @@ public final class CopperDynamics {
         BLOCK_ENTITIES.register("smart_collection_grate", () -> BlockEntityType.Builder.of(
             SmartCollectionGrateBlockEntity::new, SMART_COLLECTION_GRATE.get()).build(null));
 
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, FluidAtomizerBlock> FLUID_ATOMIZER =
+        BLOCKS.register("fluid_atomizer", () -> new FluidAtomizerBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_ORANGE).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<Item, BlockItem> FLUID_ATOMIZER_ITEM =
+        ITEMS.register("fluid_atomizer", () -> new BlockItem(FLUID_ATOMIZER.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidAtomizerBlockEntity>> FLUID_ATOMIZER_BE =
+        BLOCK_ENTITIES.register("fluid_atomizer", () -> BlockEntityType.Builder.of(FluidAtomizerBlockEntity::new, FLUID_ATOMIZER.get()).build(null));
+
     public CopperDynamics(IEventBus bus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
         CatnipServices.PLATFORM.executeOnClientOnly(() -> CCDClient::init);
@@ -262,6 +286,9 @@ public final class CopperDynamics {
         BLOCK_ENTITIES.register(bus);
         COMPONENTS.register(bus);
         ARM_POINTS.register(bus);
+        FAN_TYPES.register(bus);
+        RECIPE_TYPES.register(bus);
+        RECIPE_SERIALIZERS.register(bus);
         TABS.register("main", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.ccd"))
             .icon(() -> new ItemStack(FLUID_PACKAGER_ITEM.get()))
@@ -283,6 +310,7 @@ public final class CopperDynamics {
                 output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
                 output.accept(SMART_COLLECTION_GRATE_ITEM.get());
                 output.accept(COPPER_BUCKET.get());
+                output.accept(FLUID_ATOMIZER_ITEM.get());
                 // A valid sample for inspecting/opening the carrier in creative mode.
                 var sampleItems = new net.neoforged.neoforge.items.ItemStackHandler(com.simibubi.create.content.logistics.box.PackageItem.SLOTS);
                 sampleItems.setStackInSlot(0, new ItemStack(net.minecraft.world.item.Items.IRON_INGOT));
@@ -299,9 +327,12 @@ public final class CopperDynamics {
             () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get()) * CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(FLUID_ARM.get(),
             () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_ARM.get())));
+        event.enqueueWork(() -> BlockStressValues.IMPACTS.register(FLUID_ATOMIZER.get(),
+            () -> BlockStressValues.getImpact(AllBlocks.ENCASED_FAN.get())));
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ATOMIZER_BE.get(), FluidAtomizerBlockEntity::fluidHandler);
         event.registerItem(Capabilities.FluidHandler.ITEM,
             (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.CAPACITY), COPPER_BUCKET.get());
         // Use the native handler so frogports also recognize the direct packager path.
