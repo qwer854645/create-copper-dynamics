@@ -34,6 +34,7 @@ import dev.ccd.content.CopperCollectionGrateBlockEntity;
 import dev.ccd.content.SmartCollectionGrateBlock;
 import dev.ccd.content.SmartCollectionGrateBlockEntity;
 import dev.ccd.content.CopperBucketItem;
+import dev.ccd.content.HoneycombMoldItem;
 import dev.ccd.content.FluidAtomizerBlock;
 import dev.ccd.content.FluidAtomizerBlockEntity;
 import dev.ccd.atomizing.AtomizingRecipe;
@@ -114,6 +115,8 @@ public final class CopperDynamics {
             .persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC).build());
     public static final DeferredHolder<Item, CopperBucketItem> COPPER_BUCKET =
         ITEMS.register("copper_bucket", () -> new CopperBucketItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, HoneycombMoldItem> HONEYCOMB_MOLD =
+        ITEMS.register("honeycomb_mold", () -> new HoneycombMoldItem(new Item.Properties().stacksTo(1)));
     public static final DeferredHolder<Item, FluidPackageItem> FLUID_PACKAGE =
         ITEMS.register("fluid_package", () -> new FluidPackageItem(new Item.Properties().stacksTo(1)));
     // Internal native-arm cargo representation; deliberately absent from creative tabs and recipes.
@@ -280,6 +283,7 @@ public final class CopperDynamics {
 
     public CopperDynamics(IEventBus bus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
+        CCDFluids.register(bus);
         CatnipServices.PLATFORM.executeOnClientOnly(() -> CCDClient::init);
         ITEMS.register(bus);
         BLOCKS.register(bus);
@@ -310,6 +314,8 @@ public final class CopperDynamics {
                 output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
                 output.accept(SMART_COLLECTION_GRATE_ITEM.get());
                 output.accept(COPPER_BUCKET.get());
+                output.accept(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET);
+                output.accept(HONEYCOMB_MOLD.get());
                 output.accept(FLUID_ATOMIZER_ITEM.get());
                 // A valid sample for inspecting/opening the carrier in creative mode.
                 var sampleItems = new net.neoforged.neoforge.items.ItemStackHandler(com.simibubi.create.content.logistics.box.PackageItem.SLOTS);
@@ -323,6 +329,7 @@ public final class CopperDynamics {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(CCDFluids::setup);
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(BOOSTER_PUMP.get(),
             () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get()) * CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(FLUID_ARM.get(),

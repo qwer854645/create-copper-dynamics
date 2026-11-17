@@ -6,6 +6,7 @@ import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -39,8 +40,10 @@ public class CopperCollectionGrateBlock extends CauldronBlock implements IBE<Cop
             ? (int) Math.ceil(grate.inventory().getFluidAmount() * 15.0 / CopperCollectionGrateBlockEntity.CAPACITY) : 0;
     }
     @Override public void handlePrecipitation(BlockState state, Level level, BlockPos pos, Biome.Precipitation precipitation) {
-        if (!level.isClientSide() && precipitation == Biome.Precipitation.RAIN && shouldHandlePrecipitation(level, precipitation))
-            collectDrip(level, pos, Fluids.WATER);
+        if (level.isClientSide() || !shouldHandlePrecipitation(level, precipitation)) return;
+        if (precipitation == Biome.Precipitation.RAIN) collectDrip(level, pos, Fluids.WATER);
+        else if (precipitation == Biome.Precipitation.SNOW && level.getBlockEntity(pos) instanceof CopperCollectionGrateBlockEntity grate)
+            grate.collectEnvironmental(CCDFluids.POWDER_SNOW.get(), 1000 / 3);
     }
     @Override protected boolean canReceiveStalactiteDrip(Fluid fluid) { return fluid == Fluids.WATER || fluid == Fluids.LAVA; }
     @Override protected void receiveStalactiteDrip(BlockState state, Level level, BlockPos pos, Fluid fluid) {

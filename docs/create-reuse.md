@@ -206,3 +206,13 @@
 ## 设备拆除策略
 
 按当前约定，设备内部未封装流体随拆除直接清除。FluidArmBlockEntity 在父类掉落货载前清空爪端流体，FluidPackagerBlockEntity 在父类处理正常包裹前清空恢复余液，智能储罐缩减后的超量流体不生成包裹。普通物流实体包裹及运行时恢复路径不属于拆除补偿。默认不做旧存档兼容，后续开发优先继承、调用 Create 原生机制。
+
+## 细雪流体与蜜脾模具
+
+- 先阅读 Create `VirtualFluid`、`GenericItemFilling`／`GenericItemEmptying`、`CauldronSpoutingBehavior`、`VanillaFluidTargets`、`FluidPropagator`、`FlowSource` 和 `BasinRecipe`，以及 NeoForge `CauldronFluidContent`、`CauldronWrapper`、`FluidBucketWrapper` 与原版 `SolidBucketItem`／`PowderSnowBlock`。
+- 细雪继承 `VirtualFluid`，世界状态引用原版细雪。原版细雪桶是 `SolidBucketItem`，只增加 `FluidBucketWrapper.getFluid()` 适配；空桶填充、容器装卸、过滤与自动化仍走标准处理路径。
+- 炼药锅通过原生注册事件与包装器提供接口；分液池注液使用 Create 公开的 `CAULDRON_INFO`，完整桶与满锅统一为 1000 mB。已被其他模组注册的雪锅不重复注册。
+- Create 的 `FlowSource.FluidHandler` 要求目标存在方块实体，不能直接发现原版细雪或雪锅接口。小范围 Mixin 只扩展 `VanillaFluidTargets` 的目标判断与抽取入口，液量转移保留原生管口实现；固态细雪的实际移除调用原版 `BucketPickup`。不为原版方块缓存未经失效处理的全局接口。
+- 集液栅沿用天气回调与原生概率，智能版继承过滤、红石控制；单块细雪转移通过 `FluidUtil.tryFluidTransfer` 执行，不另写区域搜索。
+- 蜜脾模具只实现物品余物接口，`BasinRecipe` 原生检查产物与返还模具的容量并提交；配方使用 `create:compacting`，没有复制原生压块逻辑。
+- 未读取或复用 Repackaged、Create: Fluid、FluidLogistics 的实现代码；本次只静态检查，未运行构建、游戏或测试。

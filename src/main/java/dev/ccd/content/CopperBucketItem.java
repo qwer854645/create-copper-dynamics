@@ -3,6 +3,7 @@ package dev.ccd.content;
 import java.util.List;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDFluids;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -81,7 +82,8 @@ public final class CopperBucketItem extends Item {
         FluidStack fluid = contents(stack);
         if (!player.isShiftKeyDown() && CAPACITY - fluid.getAmount() >= WORLD_AMOUNT) {
             BlockHitResult pickupHit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
-            if (pickupHit.getType() == HitResult.Type.BLOCK && level.getFluidState(pickupHit.getBlockPos()).isSource())
+            if (pickupHit.getType() == HitResult.Type.BLOCK && (level.getFluidState(pickupHit.getBlockPos()).isSource()
+                || level.getBlockState(pickupHit.getBlockPos()).is(Blocks.POWDER_SNOW)))
                 return pickUpSource(level, player, hand, stack, pickupHit);
         }
         if (fluid.getAmount() < WORLD_AMOUNT) return InteractionResultHolder.pass(stack);
@@ -119,7 +121,8 @@ public final class CopperBucketItem extends Item {
         var state = level.getBlockState(pos);
         var fluidState = state.getFluidState();
         var handler = stack.getCapability(Capabilities.FluidHandler.ITEM);
-        FluidStack sample = new FluidStack(FluidHelper.convertToStill(fluidState.getType()), WORLD_AMOUNT);
+        FluidStack sample = new FluidStack(state.is(Blocks.POWDER_SNOW) ? CCDFluids.POWDER_SNOW.get()
+            : FluidHelper.convertToStill(fluidState.getType()), WORLD_AMOUNT);
         if (!(state.getBlock() instanceof LiquidBlock || state.getBlock() instanceof BucketPickup)
             || !canUse(level, player, stack, hit, pos) || handler == null || handler.fill(sample, FluidAction.SIMULATE) != WORLD_AMOUNT)
             return InteractionResultHolder.fail(stack);

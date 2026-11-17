@@ -5,6 +5,6 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": ["PackagerGuardMixin", "RepackagerMixin", "PackageEntityMixin", "FluidGaugeRestockMixin",
     "BoosterPumpPressureMixin", "BoosterPumpConnectionMixin", "BoosterPumpDiscoveryMixin", "BoosterPumpShaftMixin",
-    "FluidValvePointerAccessor", "ThreeWayValveEndpointMixin", "FluidArmAccessor", "AtomizerFanProcessingMixin"],
+    "FluidValvePointerAccessor", "ThreeWayValveEndpointMixin", "FluidArmAccessor", "AtomizerFanProcessingMixin", "PowderSnowFluidTargetMixin"],
   "injectors": {"defaultRequire": 1}
 }

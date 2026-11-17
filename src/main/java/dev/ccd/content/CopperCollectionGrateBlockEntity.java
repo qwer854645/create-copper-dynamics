@@ -83,6 +83,7 @@ public class CopperCollectionGrateBlockEntity extends SmartBlockEntity implement
         super.tick();
         if (!workTick() || isRemoved() || transferring) return;
         pushDown();
+        if (collectPowderSnow()) return;
         if (!canCollectArea()) return;
         BlockPos root = worldPosition.above();
         Fluid fluid = FluidHelper.convertToStill(level.getFluidState(root).getType());
@@ -96,6 +97,13 @@ public class CopperCollectionGrateBlockEntity extends SmartBlockEntity implement
         FluidStack available = drainer.getDrainableFluid(root);
         if (!available.isEmpty() && inventory().fill(available, FluidAction.SIMULATE) == available.getAmount()
             && drainer.pullNext(root, false)) inventory().fill(available, FluidAction.EXECUTE);
+    }
+    private boolean collectPowderSnow() {
+        BlockPos above = worldPosition.above();
+        if (!level.hasChunkAt(above) || !level.getBlockState(above).is(net.minecraft.world.level.block.Blocks.POWDER_SNOW)) return false;
+        // Solid snow has no FluidState. A temporary handler avoids caching a capability on a vanilla block.
+        if (inventory().getSpace() >= 1000) FluidUtil.tryFluidTransfer(inventory(), new PowderSnowPickupHandler(level, above), 1000, true);
+        return true;
     }
     private void pushDown() {
         if (!(level instanceof ServerLevel server) || inventory().isEmpty()) return;

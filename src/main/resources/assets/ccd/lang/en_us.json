@@ -120,5 +120,10 @@
   "ccd.copper_bucket.interaction": "Interfaces: use to fill, sneak to empty; world transfers 1000 mB at a time",
   "block.ccd.fluid_atomizer": "Fluid Atomizer",
   "ccd.atomizer.active": "Atomizing: fluid paid for the current interval",
-  "ccd.atomizer.idle": "Ordinary air: no fluid/rule, insufficient speed, or redstone pause"
+  "ccd.atomizer.idle": "Ordinary air: no fluid/rule, insufficient speed, or redstone pause",
+  "fluid_type.ccd.powder_snow": "Powder Snow",
+  "fluid.ccd.powder_snow": "Powder Snow",
+  "fluid.ccd.flowing_powder_snow": "Powder Snow",
+  "item.ccd.honeycomb_mold": "Honeycomb Mold",
+  "ccd.honeycomb_mold.reusable": "Basin compacting: 250 mB honey makes honeycomb; mold returned"
 }

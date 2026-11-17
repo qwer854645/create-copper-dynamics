@@ -120,5 +120,10 @@
   "ccd.copper_bucket.interaction": "接口右键取液，潜行倒液；世界每次取放 1000 mB",
   "block.ccd.fluid_atomizer": "流体雾化器",
   "ccd.atomizer.active": "雾化运行中：已按间隔支付耗液",
-  "ccd.atomizer.idle": "普通风：缺液、无匹配规则、转速不足或红石暂停"
+  "ccd.atomizer.idle": "普通风：缺液、无匹配规则、转速不足或红石暂停",
+  "fluid_type.ccd.powder_snow": "细雪",
+  "fluid.ccd.powder_snow": "细雪",
+  "fluid.ccd.flowing_powder_snow": "细雪",
+  "item.ccd.honeycomb_mold": "蜜脾模具",
+  "ccd.honeycomb_mold.reusable": "工作盆压块塑形：250 mB 蜂蜜制成蜜脾，模具返还"
 }

@@ -1,0 +1,10 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {"item": "minecraft:snowball"},
+    {"item": "minecraft:snowball"},
+    {"item": "minecraft:snowball"},
+    {"item": "minecraft:snowball"}
+  ],
+  "results": [{"id": "ccd:powder_snow", "amount": 1000}]
+}

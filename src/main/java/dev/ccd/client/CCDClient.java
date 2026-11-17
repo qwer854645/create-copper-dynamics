@@ -1,6 +1,7 @@
 package dev.ccd.client;
 
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDFluids;
 import dev.ccd.content.FluidPackageItem;
 import dev.ccd.content.CompositePackageItem;
 import com.simibubi.create.AllPartialModels;
@@ -12,6 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelModel;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelRenderer;
@@ -57,6 +59,13 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_ATOMIZER_BE.get(), com.simibubi.create.content.kinetics.fan.EncasedFanRenderer::new);
+    }
+    @SubscribeEvent public static void fluidExtensions(RegisterClientExtensionsEvent event) {
+        event.registerFluidType(new IClientFluidTypeExtensions() {
+            private static final ResourceLocation SNOW = ResourceLocation.withDefaultNamespace("block/powder_snow");
+            @Override public ResourceLocation getStillTexture() { return SNOW; }
+            @Override public ResourceLocation getFlowingTexture() { return SNOW; }
+        }, CCDFluids.POWDER_SNOW_TYPE.get());
     }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ATOMIZER_BE.get())
