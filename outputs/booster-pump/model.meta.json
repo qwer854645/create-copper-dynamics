@@ -1,0 +1,20 @@
+{
+  "originalArtwork": true,
+  "textureSize": [
+    16,
+    16
+  ],
+  "paletteReference": [
+    "Create pump",
+    "Create copper_casing",
+    "Create industrial_iron_block"
+  ],
+  "elements": 25,
+  "fluidAxis": "y before blockstate rotation",
+  "fluidFlangeWidth": 8,
+  "shaftBearingWidth": 6,
+  "shaftOpeningWidth": 4,
+  "nativeShaftModel": "create:block/shaft_half",
+  "opaqueTextures": true,
+  "previewOnlyShafts": true
+}

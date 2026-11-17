@@ -2,11 +2,10 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "create:block/copper_casing",
-    "bearing": "minecraft:block/iron_block",
-    "inlet": "minecraft:block/copper_block",
-    "outlet": "minecraft:block/oxidized_copper",
-    "particle": "create:block/copper_casing"
+    "body": "ccd:block/booster_pump/body",
+    "flange": "ccd:block/booster_pump/flange",
+    "bearing": "ccd:block/booster_pump/bearing",
+    "particle": "ccd:block/booster_pump/body"
   },
   "elements": [
     {
@@ -23,21 +22,57 @@
       ],
       "faces": {
         "north": {
+          "uv": [
+            14,
+            2,
+            2,
+            14
+          ],
           "texture": "#body"
         },
         "south": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
           "texture": "#body"
         },
         "east": {
+          "uv": [
+            14,
+            2,
+            2,
+            14
+          ],
           "texture": "#body"
         },
         "west": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
           "texture": "#body"
         },
         "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
           "texture": "#body"
         },
         "down": {
+          "uv": [
+            2,
+            14,
+            14,
+            2
+          ],
           "texture": "#body"
         }
       }
@@ -56,22 +91,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#inlet"
+          "uv": [
+            12,
+            14,
+            4,
+            16
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            14,
+            12,
+            16
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#inlet"
+          "uv": [
+            6,
+            14,
+            4,
+            16
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            14,
+            6,
+            16
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            4,
+            12,
+            6
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            6,
+            12,
+            4
+          ],
+          "texture": "#flange"
         }
       }
     },
@@ -89,22 +160,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#inlet"
+          "uv": [
+            12,
+            14,
+            4,
+            16
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            14,
+            12,
+            16
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#inlet"
+          "uv": [
+            12,
+            14,
+            10,
+            16
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#inlet"
+          "uv": [
+            10,
+            14,
+            12,
+            16
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            10,
+            12,
+            12
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            12,
+            12,
+            10
+          ],
+          "texture": "#flange"
         }
       }
     },
@@ -122,22 +229,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#inlet"
+          "uv": [
+            6,
+            14,
+            4,
+            16
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            14,
+            6,
+            16
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#inlet"
+          "uv": [
+            10,
+            14,
+            6,
+            16
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#inlet"
+          "uv": [
+            6,
+            14,
+            10,
+            16
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            6,
+            6,
+            10
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#inlet"
+          "uv": [
+            4,
+            10,
+            6,
+            6
+          ],
+          "texture": "#flange"
         }
       }
     },
@@ -155,22 +298,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#inlet"
+          "uv": [
+            12,
+            14,
+            10,
+            16
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#inlet"
+          "uv": [
+            10,
+            14,
+            12,
+            16
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#inlet"
+          "uv": [
+            10,
+            14,
+            6,
+            16
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#inlet"
+          "uv": [
+            6,
+            14,
+            10,
+            16
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#inlet"
+          "uv": [
+            10,
+            6,
+            12,
+            10
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#inlet"
+          "uv": [
+            10,
+            10,
+            12,
+            6
+          ],
+          "texture": "#flange"
         }
       }
     },
@@ -188,22 +367,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#outlet"
+          "uv": [
+            12,
+            0,
+            4,
+            2
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            0,
+            12,
+            2
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#outlet"
+          "uv": [
+            6,
+            0,
+            4,
+            2
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            0,
+            6,
+            2
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            4,
+            12,
+            6
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            6,
+            12,
+            4
+          ],
+          "texture": "#flange"
         }
       }
     },
@@ -221,22 +436,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#outlet"
+          "uv": [
+            12,
+            0,
+            4,
+            2
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            0,
+            12,
+            2
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#outlet"
+          "uv": [
+            12,
+            0,
+            10,
+            2
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#outlet"
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            10,
+            12,
+            12
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            12,
+            12,
+            10
+          ],
+          "texture": "#flange"
         }
       }
     },
@@ -254,22 +505,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#outlet"
+          "uv": [
+            6,
+            0,
+            4,
+            2
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            0,
+            6,
+            2
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#outlet"
+          "uv": [
+            10,
+            0,
+            6,
+            2
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#outlet"
+          "uv": [
+            6,
+            0,
+            10,
+            2
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            6,
+            6,
+            10
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#outlet"
+          "uv": [
+            4,
+            10,
+            6,
+            6
+          ],
+          "texture": "#flange"
         }
       }
     },
@@ -287,549 +574,1161 @@
       ],
       "faces": {
         "north": {
-          "texture": "#outlet"
+          "uv": [
+            12,
+            0,
+            10,
+            2
+          ],
+          "texture": "#flange"
         },
         "south": {
-          "texture": "#outlet"
+          "uv": [
+            10,
+            0,
+            12,
+            2
+          ],
+          "texture": "#flange"
         },
         "east": {
-          "texture": "#outlet"
+          "uv": [
+            10,
+            0,
+            6,
+            2
+          ],
+          "texture": "#flange"
         },
         "west": {
-          "texture": "#outlet"
+          "uv": [
+            6,
+            0,
+            10,
+            2
+          ],
+          "texture": "#flange"
         },
         "up": {
-          "texture": "#outlet"
+          "uv": [
+            10,
+            6,
+            12,
+            10
+          ],
+          "texture": "#flange"
         },
         "down": {
-          "texture": "#outlet"
+          "uv": [
+            10,
+            10,
+            12,
+            6
+          ],
+          "texture": "#flange"
         }
       }
     },
     {
-      "name": "shaft_0_negative_0",
+      "name": "shaft_x_negative_0",
       "from": [
         0,
-        4,
-        4
+        5,
+        5
       ],
       "to": [
         2,
-        6,
-        12
-      ],
-      "faces": {
-        "north": {
-          "texture": "#bearing"
-        },
-        "south": {
-          "texture": "#bearing"
-        },
-        "east": {
-          "texture": "#bearing"
-        },
-        "west": {
-          "texture": "#bearing"
-        },
-        "up": {
-          "texture": "#bearing"
-        },
-        "down": {
-          "texture": "#bearing"
-        }
-      }
-    },
-    {
-      "name": "shaft_0_negative_1",
-      "from": [
-        0,
-        10,
-        4
-      ],
-      "to": [
-        2,
-        12,
-        12
-      ],
-      "faces": {
-        "north": {
-          "texture": "#bearing"
-        },
-        "south": {
-          "texture": "#bearing"
-        },
-        "east": {
-          "texture": "#bearing"
-        },
-        "west": {
-          "texture": "#bearing"
-        },
-        "up": {
-          "texture": "#bearing"
-        },
-        "down": {
-          "texture": "#bearing"
-        }
-      }
-    },
-    {
-      "name": "shaft_0_negative_2",
-      "from": [
-        0,
-        6,
-        4
-      ],
-      "to": [
-        2,
-        10,
+        11,
         6
       ],
       "faces": {
         "north": {
+          "uv": [
+            2,
+            5,
+            0,
+            11
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            0,
+            5,
+            2,
+            11
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            6,
+            5,
+            5,
+            11
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            5,
+            5,
+            6,
+            11
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            0,
+            5,
+            2,
+            6
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            0,
+            6,
+            2,
+            5
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_0_negative_3",
+      "name": "shaft_x_negative_1",
       "from": [
         0,
-        6,
+        5,
         10
       ],
       "to": [
         2,
-        10,
-        12
+        11,
+        11
       ],
       "faces": {
         "north": {
+          "uv": [
+            2,
+            5,
+            0,
+            11
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            0,
+            5,
+            2,
+            11
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            11,
+            5,
+            10,
+            11
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            10,
+            5,
+            11,
+            11
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            0,
+            10,
+            2,
+            11
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            0,
+            11,
+            2,
+            10
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_0_positive_0",
+      "name": "shaft_x_negative_2",
       "from": [
-        14,
-        4,
-        4
+        0,
+        5,
+        6
       ],
       "to": [
-        16,
+        2,
         6,
-        12
+        10
       ],
       "faces": {
         "north": {
+          "uv": [
+            2,
+            10,
+            0,
+            11
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            0,
+            10,
+            2,
+            11
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            10,
+            10,
+            6,
+            11
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            6,
+            10,
+            10,
+            11
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            0,
+            6,
+            2,
+            10
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            0,
+            10,
+            2,
+            6
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_0_positive_1",
+      "name": "shaft_x_negative_3",
       "from": [
-        14,
+        0,
         10,
-        4
+        6
       ],
       "to": [
-        16,
-        12,
-        12
+        2,
+        11,
+        10
       ],
       "faces": {
         "north": {
+          "uv": [
+            2,
+            5,
+            0,
+            6
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            0,
+            5,
+            2,
+            6
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            10,
+            5,
+            6,
+            6
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            6,
+            5,
+            10,
+            6
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            0,
+            6,
+            2,
+            10
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            0,
+            10,
+            2,
+            6
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_0_positive_2",
+      "name": "shaft_x_positive_0",
       "from": [
         14,
-        6,
-        4
+        5,
+        5
       ],
       "to": [
         16,
-        10,
+        11,
         6
       ],
       "faces": {
         "north": {
+          "uv": [
+            16,
+            5,
+            14,
+            11
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            14,
+            5,
+            16,
+            11
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            6,
+            5,
+            5,
+            11
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            5,
+            5,
+            6,
+            11
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            14,
+            5,
+            16,
+            6
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            14,
+            6,
+            16,
+            5
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_0_positive_3",
+      "name": "shaft_x_positive_1",
       "from": [
         14,
-        6,
+        5,
         10
       ],
       "to": [
         16,
-        10,
-        12
+        11,
+        11
       ],
       "faces": {
         "north": {
+          "uv": [
+            16,
+            5,
+            14,
+            11
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            14,
+            5,
+            16,
+            11
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            11,
+            5,
+            10,
+            11
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            10,
+            5,
+            11,
+            11
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            14,
+            10,
+            16,
+            11
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            14,
+            11,
+            16,
+            10
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_2_negative_0",
+      "name": "shaft_x_positive_2",
       "from": [
-        4,
-        4,
+        14,
+        5,
+        6
+      ],
+      "to": [
+        16,
+        6,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            10,
+            14,
+            11
+          ],
+          "texture": "#bearing"
+        },
+        "south": {
+          "uv": [
+            14,
+            10,
+            16,
+            11
+          ],
+          "texture": "#bearing"
+        },
+        "east": {
+          "uv": [
+            10,
+            10,
+            6,
+            11
+          ],
+          "texture": "#bearing"
+        },
+        "west": {
+          "uv": [
+            6,
+            10,
+            10,
+            11
+          ],
+          "texture": "#bearing"
+        },
+        "up": {
+          "uv": [
+            14,
+            6,
+            16,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "down": {
+          "uv": [
+            14,
+            10,
+            16,
+            6
+          ],
+          "texture": "#bearing"
+        }
+      }
+    },
+    {
+      "name": "shaft_x_positive_3",
+      "from": [
+        14,
+        10,
+        6
+      ],
+      "to": [
+        16,
+        11,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            16,
+            5,
+            14,
+            6
+          ],
+          "texture": "#bearing"
+        },
+        "south": {
+          "uv": [
+            14,
+            5,
+            16,
+            6
+          ],
+          "texture": "#bearing"
+        },
+        "east": {
+          "uv": [
+            10,
+            5,
+            6,
+            6
+          ],
+          "texture": "#bearing"
+        },
+        "west": {
+          "uv": [
+            6,
+            5,
+            10,
+            6
+          ],
+          "texture": "#bearing"
+        },
+        "up": {
+          "uv": [
+            14,
+            6,
+            16,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "down": {
+          "uv": [
+            14,
+            10,
+            16,
+            6
+          ],
+          "texture": "#bearing"
+        }
+      }
+    },
+    {
+      "name": "shaft_z_negative_0",
+      "from": [
+        5,
+        5,
         0
       ],
       "to": [
+        11,
         6,
-        12,
         2
       ],
       "faces": {
         "north": {
+          "uv": [
+            11,
+            10,
+            5,
+            11
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            5,
+            10,
+            11,
+            11
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            2,
+            10,
+            0,
+            11
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            0,
+            10,
+            2,
+            11
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            5,
+            0,
+            11,
+            2
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            5,
+            2,
+            11,
+            0
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_2_negative_1",
+      "name": "shaft_z_negative_1",
       "from": [
-        10,
-        4,
-        0
-      ],
-      "to": [
-        12,
-        12,
-        2
-      ],
-      "faces": {
-        "north": {
-          "texture": "#bearing"
-        },
-        "south": {
-          "texture": "#bearing"
-        },
-        "east": {
-          "texture": "#bearing"
-        },
-        "west": {
-          "texture": "#bearing"
-        },
-        "up": {
-          "texture": "#bearing"
-        },
-        "down": {
-          "texture": "#bearing"
-        }
-      }
-    },
-    {
-      "name": "shaft_2_negative_2",
-      "from": [
-        6,
-        4,
-        0
-      ],
-      "to": [
-        10,
-        6,
-        2
-      ],
-      "faces": {
-        "north": {
-          "texture": "#bearing"
-        },
-        "south": {
-          "texture": "#bearing"
-        },
-        "east": {
-          "texture": "#bearing"
-        },
-        "west": {
-          "texture": "#bearing"
-        },
-        "up": {
-          "texture": "#bearing"
-        },
-        "down": {
-          "texture": "#bearing"
-        }
-      }
-    },
-    {
-      "name": "shaft_2_negative_3",
-      "from": [
-        6,
+        5,
         10,
         0
       ],
       "to": [
-        10,
-        12,
+        11,
+        11,
         2
       ],
       "faces": {
         "north": {
+          "uv": [
+            11,
+            5,
+            5,
+            6
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            5,
+            5,
+            11,
+            6
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            2,
+            5,
+            0,
+            6
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            0,
+            5,
+            2,
+            6
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            5,
+            0,
+            11,
+            2
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            5,
+            2,
+            11,
+            0
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_2_positive_0",
+      "name": "shaft_z_negative_2",
       "from": [
-        4,
-        4,
-        14
+        5,
+        6,
+        0
       ],
       "to": [
         6,
-        12,
-        16
+        10,
+        2
       ],
       "faces": {
         "north": {
+          "uv": [
+            6,
+            6,
+            5,
+            10
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            5,
+            6,
+            6,
+            10
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            2,
+            6,
+            0,
+            10
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            0,
+            6,
+            2,
+            10
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            5,
+            0,
+            6,
+            2
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            5,
+            2,
+            6,
+            0
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_2_positive_1",
+      "name": "shaft_z_negative_3",
       "from": [
         10,
-        4,
-        14
+        6,
+        0
       ],
       "to": [
-        12,
-        12,
-        16
+        11,
+        10,
+        2
       ],
       "faces": {
         "north": {
+          "uv": [
+            11,
+            6,
+            10,
+            10
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            10,
+            6,
+            11,
+            10
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            2,
+            6,
+            0,
+            10
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            0,
+            6,
+            2,
+            10
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            10,
+            0,
+            11,
+            2
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            10,
+            2,
+            11,
+            0
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_2_positive_2",
+      "name": "shaft_z_positive_0",
       "from": [
-        6,
-        4,
+        5,
+        5,
         14
       ],
       "to": [
-        10,
+        11,
         6,
         16
       ],
       "faces": {
         "north": {
+          "uv": [
+            11,
+            10,
+            5,
+            11
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            5,
+            10,
+            11,
+            11
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            16,
+            10,
+            14,
+            11
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            14,
+            10,
+            16,
+            11
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            5,
+            14,
+            11,
+            16
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            5,
+            16,
+            11,
+            14
+          ],
           "texture": "#bearing"
         }
       }
     },
     {
-      "name": "shaft_2_positive_3",
+      "name": "shaft_z_positive_1",
       "from": [
-        6,
+        5,
         10,
         14
       ],
       "to": [
-        10,
-        12,
+        11,
+        11,
         16
       ],
       "faces": {
         "north": {
+          "uv": [
+            11,
+            5,
+            5,
+            6
+          ],
           "texture": "#bearing"
         },
         "south": {
+          "uv": [
+            5,
+            5,
+            11,
+            6
+          ],
           "texture": "#bearing"
         },
         "east": {
+          "uv": [
+            16,
+            5,
+            14,
+            6
+          ],
           "texture": "#bearing"
         },
         "west": {
+          "uv": [
+            14,
+            5,
+            16,
+            6
+          ],
           "texture": "#bearing"
         },
         "up": {
+          "uv": [
+            5,
+            14,
+            11,
+            16
+          ],
           "texture": "#bearing"
         },
         "down": {
+          "uv": [
+            5,
+            16,
+            11,
+            14
+          ],
+          "texture": "#bearing"
+        }
+      }
+    },
+    {
+      "name": "shaft_z_positive_2",
+      "from": [
+        5,
+        6,
+        14
+      ],
+      "to": [
+        6,
+        10,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            6,
+            5,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "south": {
+          "uv": [
+            5,
+            6,
+            6,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "east": {
+          "uv": [
+            16,
+            6,
+            14,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "west": {
+          "uv": [
+            14,
+            6,
+            16,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "up": {
+          "uv": [
+            5,
+            14,
+            6,
+            16
+          ],
+          "texture": "#bearing"
+        },
+        "down": {
+          "uv": [
+            5,
+            16,
+            6,
+            14
+          ],
+          "texture": "#bearing"
+        }
+      }
+    },
+    {
+      "name": "shaft_z_positive_3",
+      "from": [
+        10,
+        6,
+        14
+      ],
+      "to": [
+        11,
+        10,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            6,
+            10,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "south": {
+          "uv": [
+            10,
+            6,
+            11,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "east": {
+          "uv": [
+            16,
+            6,
+            14,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "west": {
+          "uv": [
+            14,
+            6,
+            16,
+            10
+          ],
+          "texture": "#bearing"
+        },
+        "up": {
+          "uv": [
+            10,
+            14,
+            11,
+            16
+          ],
+          "texture": "#bearing"
+        },
+        "down": {
+          "uv": [
+            10,
+            16,
+            11,
+            14
+          ],
           "texture": "#bearing"
         }
       }
