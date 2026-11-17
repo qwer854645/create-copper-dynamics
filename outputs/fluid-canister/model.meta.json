@@ -15,10 +15,11 @@
   "elements": 36,
   "integerPixelLayout": true,
   "texelsPerModelUnit": 1,
-  "paletteColors": 15,
+  "paletteColors": 16,
   "paletteReference": [
     "Create copper_casing",
-    "Create fluid_tank"
+    "Create fluid_tank",
+    "Create industrial_iron_block_top"
   ],
   "textureOrder": [
     "side",
@@ -30,6 +31,8 @@
     "fluid",
     "glass"
   ],
+  "windowFrame": "copper",
+  "endPlates": "original pixel seams, reinforcement and fasteners",
   "fluidTintedFaces": 7,
   "windowPixels": 56,
   "windowBounds": [

@@ -8,7 +8,7 @@ fs.mkdirSync(textures,{recursive:true});fs.mkdirSync(output,{recursive:true});
 // Copper and neutral frame colors sampled from Create's fluid tank / copper casing.
 // Original pixel clusters using the full native copper ramp, not broad flat fills.
 const copper=[[144,73,49],[154,80,56],[167,90,64],[178,98,71],[194,107,76],[200,116,86],[214,123,91],[227,130,108]];
-const steel=[[68,65,64],[75,73,72],[85,84,83],[94,91,90],[114,108,105]];
+const steel=[[53,52,56],[63,62,66],[79,79,79],[89,88,88],[103,97,97],[152,151,151]];
 function image(pixel){
  const data=Buffer.alloc(16*16*4);
  for(let y=0;y<16;y++)for(let x=0;x<16;x++)data.set([...pixel(x,y),255],(y*16+x)*4);
@@ -37,20 +37,31 @@ const windowRows=Array(7).fill('11111111');
 const windowPixels=[];
 for(let y=0;y<windowRows.length;y++)for(let x=0;x<8;x++)windowPixels.push([4+x,7+y]);
 for(const [x,y]of windowPixels)for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]])
- if(!windowPixels.some(([a,b])=>a===x+dx&&b===y+dy))paint(front,x+dx,y+dy,steel[dx+dy<0?4:0]);
+ if(!windowPixels.some(([a,b])=>a===x+dx&&b===y+dy))
+  paint(front,x+dx,y+dy,dy<0?copper[6+x%2]:dx<0?copper[3+y%2]:copper[(x+y)%2]);
 const band=image((x,y)=>steel[(x===2||x===13)?0:(x+y)%5===0?4:(x+y)%3===0?2:3]);
 const cap=image((x,y)=>{
  if(x===6||y===6)return steel[4];
  if(x===9||y===9)return steel[0];
  return steel[3];
 });
-const flat=image((x,y)=>{
- if(x===13||y===13)return steel[0];
- if(x===2||y===2)return steel[4];
- if(x===12||y===12)return steel[1];
- if(x===3||y===3)return steel[2];
- return steel[(x===5&&y>5&&y<11)||(y===10&&x>6&&x<11)?2:3];
-});
+// Original 12x12 plate: industrial-iron folded seams, recessed reinforcement and four fasteners.
+const plate=[
+ '055444444550',
+ '532222222235',
+ '421333333124',
+ '423444444324',
+ '423433334324',
+ '423432234324',
+ '423432234324',
+ '423433334324',
+ '423444444324',
+ '421333333124',
+ '532222222235',
+ '000111111000',
+];
+const flat=image(()=>steel[3]);
+for(let y=0;y<12;y++)for(let x=0;x<12;x++)paint(flat,2+x,2+y,steel[Number(plate[y][x])]);
 const fluid=image(()=>[56,62,61]);
 const glass=image(()=>[182,207,205]);
 const elements=[];
@@ -116,6 +127,14 @@ async function main(){
  <text x="750" y="632" font-size="14" fill="#677070">模型离线预览 / 窗内蓝色流体为示意，游戏中读取实际流体</text></g></svg>`);
  await sharp({create:{width:1500,height:640,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}])
   .png().toFile(path.join(output,'preview.png'));
+ const plateViews=[];
+ for(const [i,view]of [[0,[12,35,-20]],[1,[12,-35,-20]]]){
+  const buffer=await render(faces,500,480,view,{center:[8,6,8],scale:25});
+  plateViews.push({input:buffer,left:i*500,top:65});
+ }
+ const plateLabels=Buffer.from(`<svg width="1000" height="580" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535"><text x="500" y="38" font-size="25">上下端板 · 工业铁块风格的像素接缝与铆接</text><text x="250" y="565" font-size="18">顶部</text><text x="750" y="565" font-size="18">底部</text></g></svg>`);
+ await sharp({create:{width:1000,height:580,channels:4,background:'#e5e8e2'}})
+  .composite([...plateViews,{input:plateLabels,left:0,top:0}]).png().toFile(path.join(output,'top-bottom.png'));
  // Show the source pixels as well as the rendered model, enlarged only by nearest neighbor.
  const textureNames=['side','front','back','band','cap','flat','fluid','glass'];
  await sharp({create:{width:128,height:16,channels:4,background:'#e5e8e2'}})
@@ -125,8 +144,9 @@ async function main(){
   .png().toFile(path.join(output,'textures.png'));
  fs.writeFileSync(path.join(output,'model.meta.json'),JSON.stringify({name:'Fluid Canister',model:'ccd:item/fluid_package',
   originalArtwork:true,textureSize:[16,16],transportBounds:[12,12,12],capacityMillibuckets:4000,
-  elements:elements.length,integerPixelLayout:true,texelsPerModelUnit:1,paletteColors:15,
-  paletteReference:['Create copper_casing','Create fluid_tank'],textureOrder:textureNames,
+  elements:elements.length,integerPixelLayout:true,texelsPerModelUnit:1,paletteColors:16,
+  paletteReference:['Create copper_casing','Create fluid_tank','Create industrial_iron_block_top'],textureOrder:textureNames,
+  windowFrame:'copper',endPlates:'original pixel seams, reinforcement and fasteners',
   fluidTintedFaces:windowRows.length,windowPixels:windowPixels.length,windowBounds:[4,2,12,9],
   opaqueTextures:true,glass:'full front panel inside one-pixel frame, with pixel glints',
   dynamicFluid:['still sprite','stack tint','fill level'],previewFluid:'illustrative blue'},null,2)+'\n');
