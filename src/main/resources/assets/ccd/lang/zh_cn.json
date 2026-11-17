@@ -105,5 +105,8 @@
   "ccd.water_supply.paused": "红石信号：自动供水已暂停",
   "ccd.water_supply.disabled": "配置已关闭自动供水",
   "ccd.water_supply.rate": "每个容器：%s mB/t（间隔批量供水）",
-  "ccd.water_supply.unlimited": "不限速：供水检查时一次补满可接收容量"
+  "ccd.water_supply.unlimited": "不限速：供水检查时一次补满可接收容量",
+  "block.ccd.copper_collection_grate": "铜集液栅",
+  "ccd.collection_grate.area": "上方连通区域抽液；满罐暂停，向下排液",
+  "ccd.collection_grate.infinite": "已达到 Create 无限流体条件"
 }

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:block",
+  "pools": [{
+    "rolls": 1,
+    "entries": [{"type": "minecraft:item", "name": "ccd:copper_collection_grate"}],
+    "conditions": [{"condition": "minecraft:survives_explosion"}]
+  }]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": ["CPC", "PHP", "CDC"],
+  "key": {
+    "C": {"item": "create:copper_sheet"},
+    "P": {"item": "create:fluid_pipe"},
+    "H": {"item": "create:hose_pulley"},
+    "D": {"item": "create:item_drain"}
+  },
+  "result": {"id": "ccd:copper_collection_grate", "count": 1}
+}

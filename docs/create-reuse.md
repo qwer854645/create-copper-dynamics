@@ -11,6 +11,16 @@
 - 当前页唯一未勾选的地址决定粘贴目标；多个不同候选时拒绝修改。单独的 `#` 是 CCD 增加的显式清除标记，原生地址建议会忽略该空地址条目。原生并没有“对包裹点击粘贴地址”这一入口，这部分为 CCD 自行实现的交互。
 - 本轮只做源码和资源静态检查，没有编译、游戏测试或客户端运行。
 
+## 铜集液栅
+
+- 已阅读原生软管滑轮的实体／流体接口、`FluidDrainingBehaviour`／`FluidManipulationBehaviour`、排液口、`SmartFluidTankBehaviour`、工作盆侧向输出及 `DirectBeltInputBehaviour`。同时从实际 NeoForge 依赖源码核对原版 `CauldronBlock`／`AbstractCauldronBlock`、滴水石锥的炼药锅寻址与调度，以及 `FluidUtil.tryFluidTransfer`。未读取其他流体附属的实现代码。
+- 方块继承原版 `CauldronBlock`，覆盖存液接收与手持交互而不让原生桶逻辑替换方块；继承雨水概率与滴水石调度，不用自写随机滴液扫描。`codec` 保持父类的 `MapCodec<CauldronBlock>` 返回类型，工厂仍构造集液栅。环境接收量复用 Create 的 `CauldronSpoutingBehavior.CAULDRON_INFO`。
+- 实体继承 `SmartBlockEntity`，2000 mB 单罐直接使用原生 `SmartFluidTankBehaviour`，沿用其完整组件保存、流体组件同步、8 tick 同步节流与液面追踪。区域抽液直接注册 `FluidDrainingBehaviour`；仅覆盖 tick 调度，以每 5 tick 的位置错峰时机推进原生增量搜索，且要求缓冲有整桶空位、入口液体与缓冲兼容。不重写区域队列、搜索方向、范围或无限判定。
+- 工作入口为方块上方一格，入口位置或流体变化时重建原生搜索上下文。先模拟完整 1000 mB 入罐，再调用原生真实抽取，满罐时不调用区域抽取。只承接原生对源方块／含水方块／流动液体清理的处理，不把每段流动液体都计算成新的一桶。
+- 底部出口使用 NeoForge `BlockCapabilityCache`，每 5 tick 通过 `FluidUtil.tryFluidTransfer` 执行标准模拟／抽取／填充；目标遵守面限制、过滤及剩余容量。出口移动或维度变化后重建，失效时释放引用。转移基于标准流体接口契约，未增加独立恢复库存或新的异常包裹逻辑。
+- 工作盆用 `DirectBeltInputBehaviour` 判定侧向输出目标，因此注册该原生行为并仅允许水平方向发现；不注册物品能力，原生默认物品插入返回原物品，纯流体输出仍通过标准流体能力接入。手持交互复用 `FluidHelper`，潜行入口扩展现有交互钩子。
+- 外壳使用底板、边框和栅条实体模型，真实孔洞下方使用 Catnip 原生流体绘制接口与储罐行为的液面动画。补齐注册、配方、自身掉落、镐标签、中英文提示和比较器。未增加旧存档迁移。仅做静态检查，未构建、运行或实测视觉／性能。
+
 ## 铜供水箱
 
 - 已核对实际依赖 NeoForge 的 `BlockCapabilityCache` 创建参数、有效性与失效回调约束，以及 Create 的机械合成配方格式。供水调用标准有向 `IFluidHandler.fill`，先模拟再执行，不另写管道压力或网络搜索。

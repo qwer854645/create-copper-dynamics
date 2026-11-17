@@ -54,6 +54,7 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FLUID_TANK_BE.get(), SmartFluidTankRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_WATER_BASIN_BE.get(),
             com.simibubi.create.content.fluids.tank.FluidTankRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.COPPER_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
     }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get())

@@ -29,6 +29,8 @@ import dev.ccd.content.CopperWaterBasinBlock;
 import dev.ccd.content.CopperWaterBasinBlockEntity;
 import dev.ccd.content.CopperWaterSupplyBlock;
 import dev.ccd.content.CopperWaterSupplyBlockEntity;
+import dev.ccd.content.CopperCollectionGrateBlock;
+import dev.ccd.content.CopperCollectionGrateBlockEntity;
 import dev.ccd.logistics.FluidArmPoint;
 import com.simibubi.create.api.registry.CreateRegistries;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
@@ -222,6 +224,16 @@ public final class CopperDynamics {
         BLOCK_ENTITIES.register("copper_water_supply", () -> BlockEntityType.Builder.of(
             CopperWaterSupplyBlockEntity::new, COPPER_WATER_SUPPLY.get()).build(null));
 
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, CopperCollectionGrateBlock> COPPER_COLLECTION_GRATE =
+        BLOCKS.register("copper_collection_grate", () -> new CopperCollectionGrateBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_ORANGE).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()
+            .sound(net.minecraft.world.level.block.SoundType.COPPER)));
+    public static final DeferredHolder<Item, BlockItem> COPPER_COLLECTION_GRATE_ITEM =
+        ITEMS.register("copper_collection_grate", () -> new BlockItem(COPPER_COLLECTION_GRATE.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CopperCollectionGrateBlockEntity>> COPPER_COLLECTION_GRATE_BE =
+        BLOCK_ENTITIES.register("copper_collection_grate", () -> BlockEntityType.Builder.of(
+            CopperCollectionGrateBlockEntity::new, COPPER_COLLECTION_GRATE.get()).build(null));
+
     public CopperDynamics(IEventBus bus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
         CatnipServices.PLATFORM.executeOnClientOnly(() -> CCDClient::init);
@@ -248,6 +260,7 @@ public final class CopperDynamics {
                 output.accept(SMART_FLUID_TANK_ITEM.get());
                 output.accept(COPPER_WATER_BASIN_ITEM.get());
                 output.accept(COPPER_WATER_SUPPLY_ITEM.get());
+                output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
                 // A valid sample for inspecting/opening the carrier in creative mode.
                 var sampleItems = new net.neoforged.neoforge.items.ItemStackHandler(com.simibubi.create.content.logistics.box.PackageItem.SLOTS);
                 sampleItems.setStackInSlot(0, new ItemStack(net.minecraft.world.item.Items.IRON_INGOT));
@@ -280,5 +293,7 @@ public final class CopperDynamics {
             (be, side) -> be.getTankInventory());
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COPPER_WATER_SUPPLY_BE.get(),
             (be, side) -> be.getTankInventory());
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COPPER_COLLECTION_GRATE_BE.get(),
+            (be, side) -> be.tankBehaviour().getCapability());
     }
 }

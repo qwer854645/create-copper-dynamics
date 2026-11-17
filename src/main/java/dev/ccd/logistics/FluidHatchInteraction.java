@@ -3,6 +3,7 @@ package dev.ccd.logistics;
 import dev.ccd.CopperDynamics;
 import dev.ccd.content.FluidHatchBlock;
 import dev.ccd.content.CopperWaterBasinBlock;
+import dev.ccd.content.CopperCollectionGrateBlock;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,7 +19,7 @@ public final class FluidHatchInteraction {
         var block = event.getLevel().getBlockState(event.getPos()).getBlock();
         if (event.getUseItem() == TriState.DEFAULT
             && event.getUseBlock() != TriState.FALSE
-            && (block instanceof FluidHatchBlock || block instanceof CopperWaterBasinBlock)
+            && (block instanceof FluidHatchBlock || block instanceof CopperWaterBasinBlock || block instanceof CopperCollectionGrateBlock)
             && !event.getItemStack().is(Tags.Items.TOOLS_WRENCH)
             && FluidHatchBlock.isFluidContainer(event.getLevel(), event.getItemStack())) {
             event.setUseBlock(TriState.TRUE);

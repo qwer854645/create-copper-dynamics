@@ -105,5 +105,8 @@
   "ccd.water_supply.paused": "Redstone signal: automatic supply paused",
   "ccd.water_supply.disabled": "Automatic supply disabled in configuration",
   "ccd.water_supply.rate": "Per container: %s mB/t (supplied in periodic batches)",
-  "ccd.water_supply.unlimited": "Unlimited: fills accepted capacity in one supply operation"
+  "ccd.water_supply.unlimited": "Unlimited: fills accepted capacity in one supply operation",
+  "block.ccd.copper_collection_grate": "Copper Collection Grate",
+  "ccd.collection_grate.area": "Drains connected fluid above; pauses when full and outputs below",
+  "ccd.collection_grate.infinite": "Create's infinite-fluid conditions are satisfied"
 }
