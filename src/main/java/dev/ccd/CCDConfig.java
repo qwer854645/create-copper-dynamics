@@ -10,6 +10,7 @@ public final class CCDConfig {
     public static final ModConfigSpec.IntValue PUMP_RANGE_MULTIPLIER;
     public static final ModConfigSpec.BooleanValue ARM_ALLOW_DIRECT_CONTAINER_INTERACTION;
     public static final ModConfigSpec.IntValue SMART_TANK_MAX_FLUIDS;
+    public static final ModConfigSpec.IntValue WATER_SUPPLY_RATE;
 
     static {
         var builder = new ModConfigSpec.Builder();
@@ -31,6 +32,12 @@ public final class CCDConfig {
         SMART_TANK_MAX_FLUIDS = builder.comment("Maximum distinct fluid/component combinations per formed smart-tank structure.",
             "Lowering this preserves existing contents; only new fluid kinds are rejected.")
             .worldRestart().defineInRange("maxFluidTypes", 8, 1, 64);
+        builder.pop();
+        builder.push("waterSupply");
+        WATER_SUPPLY_RATE = builder.comment("Water per connected container per tick, delivered in batches every 5 ticks.",
+            "-1 fills all available water capacity in one supply operation; 0 disables automatic supply.",
+            "Idle/full targets are polled every 20 ticks. Manual water access is unaffected.")
+            .worldRestart().defineInRange("rate", 1000, -1, Integer.MAX_VALUE);
         builder.pop();
         SPEC = builder.build();
     }

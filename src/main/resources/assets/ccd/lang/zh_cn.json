@@ -99,5 +99,11 @@
   "ccd.water_basin.infinite": "无限水源 · 内部流体不可更改",
   "ccd.water_basin.capacity": "接口容量：%s mB（抽取不消耗水）",
   "ccd.water_basin.disposal": "接口输入的流体会被销毁",
-  "ccd.water_basin.interaction": "右键装水；潜行右键倒液并销毁"
+  "ccd.water_basin.interaction": "右键装水；潜行右键倒液并销毁",
+  "block.ccd.copper_water_supply": "铜供水箱",
+  "ccd.water_supply.active": "自动向相邻六面容器补水",
+  "ccd.water_supply.paused": "红石信号：自动供水已暂停",
+  "ccd.water_supply.disabled": "配置已关闭自动供水",
+  "ccd.water_supply.rate": "每个容器：%s mB/t（间隔批量供水）",
+  "ccd.water_supply.unlimited": "不限速：供水检查时一次补满可接收容量"
 }

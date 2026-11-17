@@ -13,15 +13,19 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 /** Reuse native creative draining and input disposal; only the fluid identity and capacity are fixed. */
-public final class CopperWaterBasinBlockEntity extends FluidTankBlockEntity {
+public class CopperWaterBasinBlockEntity extends FluidTankBlockEntity {
     public static final int CAPACITY = 1_000_000;
 
     public CopperWaterBasinBlockEntity(BlockPos pos, BlockState state) {
-        super(CopperDynamics.COPPER_WATER_BASIN_BE.get(), pos, state);
+        this(CopperDynamics.COPPER_WATER_BASIN_BE.get(), pos, state);
+    }
+    protected CopperWaterBasinBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
     // Keep the regular native entity: FluidHelper deliberately duplicates containers for creative-tank entities.
     // Only the inventory needs creative behavior; survival buckets and bottles must still be consumed normally.

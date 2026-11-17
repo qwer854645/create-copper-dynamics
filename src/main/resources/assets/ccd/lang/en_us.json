@@ -99,5 +99,11 @@
   "ccd.water_basin.infinite": "Infinite water · fluid cannot be changed",
   "ccd.water_basin.capacity": "Interface capacity: %s mB (draining does not consume water)",
   "ccd.water_basin.disposal": "Fluid entering through pipes or interfaces is destroyed",
-  "ccd.water_basin.interaction": "Right-click to fill with water; sneak-right-click to discard fluid"
+  "ccd.water_basin.interaction": "Right-click to fill with water; sneak-right-click to discard fluid",
+  "block.ccd.copper_water_supply": "Copper Water Supply Box",
+  "ccd.water_supply.active": "Automatically supplies the six adjacent container faces",
+  "ccd.water_supply.paused": "Redstone signal: automatic supply paused",
+  "ccd.water_supply.disabled": "Automatic supply disabled in configuration",
+  "ccd.water_supply.rate": "Per container: %s mB/t (supplied in periodic batches)",
+  "ccd.water_supply.unlimited": "Unlimited: fills accepted capacity in one supply operation"
 }

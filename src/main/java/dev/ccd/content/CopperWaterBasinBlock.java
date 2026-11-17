@@ -23,7 +23,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /** Native tank block with a fixed water source and explicit fill/disposal handheld modes. */
-public final class CopperWaterBasinBlock extends FluidTankBlock {
+public class CopperWaterBasinBlock extends FluidTankBlock {
     public static final MapCodec<CopperWaterBasinBlock> CODEC = simpleCodec(CopperWaterBasinBlock::new);
     private static final VoxelShape SHAPE = Shapes.or(Block.box(0, 0, 0, 16, 4, 16),
         Block.box(0, 4, 0, 16, 14, 1), Block.box(0, 4, 15, 16, 14, 16),

@@ -1,0 +1,15 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "pattern": ["CBCBC", "BPTPB", "TWSWT", "BPTPB", "CBCBC"],
+  "key": {
+    "C": {"item": "create:copper_sheet"},
+    "B": {"item": "create:brass_casing"},
+    "P": {"item": "create:precision_mechanism"},
+    "T": {"item": "create:electron_tube"},
+    "W": {"item": "create:mechanical_pump"},
+    "S": {"item": "ccd:copper_water_basin"}
+  },
+  "result": {"id": "ccd:copper_water_supply", "count": 1}
+}
