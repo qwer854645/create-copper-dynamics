@@ -28,7 +28,7 @@ public final class CCDConfig {
             .worldRestart().define("allowDirectContainerInteraction", false);
         builder.pop();
         builder.push("smartTank");
-        SMART_TANK_MAX_FLUIDS = builder.comment("Maximum distinct fluid/component combinations per smart tank.",
+        SMART_TANK_MAX_FLUIDS = builder.comment("Maximum distinct fluid/component combinations per formed smart-tank structure.",
             "Lowering this preserves existing contents; only new fluid kinds are rejected.")
             .worldRestart().defineInRange("maxFluidTypes", 8, 1, 64);
         builder.pop();

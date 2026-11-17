@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/fluid_tank/block_bottom_window_ne",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "particle": "create:block/brass_casing",
+    "0": "create:block/brass_casing"
+  }
+}

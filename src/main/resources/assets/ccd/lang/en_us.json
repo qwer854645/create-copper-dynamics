@@ -1,6 +1,8 @@
 {
   "itemGroup.ccd": "Create: Copper Dynamics",
   "block.ccd.smart_fluid_tank": "Smart Fluid Tank",
+  "ccd.smart_tank.structure": "Structure: %s wide, %s tall; %s tank blocks",
+  "ccd.smart_tank.unavailable": "Structure incomplete or rebuilding; fluid access paused",
   "ccd.smart_tank.total": "Total: %s / %s mB (shared capacity)",
   "ccd.smart_tank.types": "Fluid types: %s / %s",
   "ccd.smart_tank.fluid": "%s, %s mB",

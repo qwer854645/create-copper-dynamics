@@ -12,16 +12,19 @@ public final class SmartFluidTankRenderer extends SafeBlockEntityRenderer<SmartF
     public SmartFluidTankRenderer(BlockEntityRendererProvider.Context context) {}
     @Override protected void renderSafe(SmartFluidTankBlockEntity tank, float partialTicks, PoseStack pose,
         MultiBufferSource buffer, int light, int overlay) {
-        var inventory = tank.inventory;
-        double denominator = Math.max(inventory.capacity(), inventory.amount());
+        if (!tank.isController()) return;
+        var view = tank.inventory.snapshot();
+        if (view == null) return;
+        double denominator = Math.max(view.capacity(), view.amount());
+        float totalHeight = tank.getHeight() - .5f;
         float bottom = .25f;
-        for (int slot = 0; slot < inventory.getTanks(); slot++) {
-            var fluid = inventory.getFluidInTank(slot);
-            if (fluid.isEmpty()) continue;
-            float top = bottom + (float) (.5 * fluid.getAmount() / denominator);
+        for (var fluid : view.fluids()) {
+            float top = bottom + (float) (totalHeight * fluid.getAmount() / denominator);
             if (top - bottom > .00001f) NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(fluid,
-                .07f, bottom, .07f, .93f, top, .93f, buffer, pose, light, false, true);
+                .07f, bottom, .07f, tank.getWidth() - .07f, top, tank.getWidth() - .07f,
+                buffer, pose, light, false, true);
             bottom = top;
         }
     }
+    @Override public boolean shouldRenderOffScreen(SmartFluidTankBlockEntity tank) { return tank.isController(); }
 }

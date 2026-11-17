@@ -41,6 +41,10 @@ public final class SmartTankInventory implements IFluidHandler {
         return true;
     }
     @Override public int fill(FluidStack resource, FluidAction action) {
+        return fill(resource, action, true);
+    }
+    int fillShared(FluidStack resource, FluidAction action) { return fill(resource, action, false); }
+    private int fill(FluidStack resource, FluidAction action, boolean limitTypes) {
         if (resource.isEmpty()) return 0;
         int accepted = Math.min(resource.getAmount(), free());
         if (accepted <= 0) return 0;
@@ -51,7 +55,7 @@ public final class SmartTankInventory implements IFluidHandler {
             if (fluid.isEmpty() && empty == -1) empty = i;
         }
         if (slot == -1) {
-            if (kinds() >= maxTypes.getAsInt()) return 0;
+            if (limitTypes && kinds() >= maxTypes.getAsInt()) return 0;
             slot = empty == -1 ? contents.size() : empty;
         }
         if (action.execute()) {
