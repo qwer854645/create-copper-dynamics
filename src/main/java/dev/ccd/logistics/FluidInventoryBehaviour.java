@@ -6,7 +6,9 @@ import com.simibubi.create.content.logistics.packager.IdentifiedInventory;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.InvManipulationBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.inventory.CapManipulationBehaviourBase.InterfaceProvider;
 import dev.ccd.content.FluidPackagerBlockEntity;
+import dev.ccd.content.FluidHatchBlockEntity;
 import dev.ccd.content.FluidStockItem;
+import com.simibubi.create.content.logistics.packager.PackagerBlock;
 import net.createmod.catnip.math.BlockFace;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
@@ -43,7 +45,9 @@ public final class FluidInventoryBehaviour extends InvManipulationBehaviour {
     @Override public IdentifiedInventory getIdentifiedInventory() {
         if (!hasInventory()) return null;
         var level = packager.getLevel();
-        BlockPos target = packager.targetFluidPos();
+        BlockPos target = FluidHatchBlockEntity.resolveContainer(level, packager.targetFluidPos(),
+            packager.getBlockState().getValue(PackagerBlock.FACING));
+        if (target == null) return null;
         if (level.getBlockEntity(target) instanceof FluidTankBlockEntity tank) target = tank.getController();
         return new IdentifiedInventory(new StorageId(level.dimension(), target), view);
     }

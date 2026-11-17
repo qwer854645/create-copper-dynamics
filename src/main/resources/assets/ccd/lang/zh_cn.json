@@ -1,5 +1,9 @@
 {
   "itemGroup.ccd": "机械动力：铜流工程",
+  "block.ccd.fluid_hatch": "流体舱口",
+  "ccd.fluid_hatch.proxy": "背后容器实时库存 · 舱口无内部储液",
+  "ccd.fluid_hatch.no_container": "背后没有可访问的流体容器，请检查朝向和接口",
+  "ccd.fluid_hatch.rejected": "无法取放：检查流体种类、余量和剩余容量",
   "block.ccd.fluid_arm": "动力移液臂",
   "item.ccd.fluid_arm_cargo": "移液臂爪端液囊",
   "ccd.fluid_arm.input": "已设为流体输入面（蓝色）",

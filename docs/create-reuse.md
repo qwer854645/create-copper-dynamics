@@ -11,6 +11,18 @@
 - 当前页唯一未勾选的地址决定粘贴目标；多个不同候选时拒绝修改。单独的 `#` 是 CCD 增加的显式清除标记，原生地址建议会忽略该空地址条目。原生并没有“对包裹点击粘贴地址”这一入口，这部分为 CCD 自行实现的交互。
 - 本轮只做源码和资源静态检查，没有编译、游戏测试或客户端运行。
 
+## 流体舱口
+
+- 先阅读 `ItemHatchBlock`／`ItemHatchBlockEntity`／`ItemHatchHandler`／`HatchFilterSlot`、`FluidTankBlock`／`FluidTankBlockEntity`、`FluidHelper`、`GenericItemEmptying`／`GenericItemFilling`、`PortableFluidInterfaceBlockEntity`、`FluidPipeBlock`／`FluidPropagator` 和 `IHaveGoggleInformation`。仅使用 Create 源码及 NeoForge API，没有读取三个流体附属的实现代码。
+- `FluidHatchBlock extends ItemHatchBlock`，直接复用水平侧面安装、含水状态、形状、扳手行为、10 tick 定时关闭及移除方块实体逻辑。模型继承原生舱口几何体，铜色框架通过材质覆盖实现，指定 `cutout_mipped` 渲染层。
+- `FluidHatchBlockEntity extends ItemHatchBlockEntity`，普通版覆盖 `addBehaviours` 和 `clearContent`，不创建原生物品过滤行为、物品库存或流体储罐。原生护目镜的 `containedFluidTooltip` 显示的是后方容器实时内容。
+- 通过 NeoForge `Capabilities.FluidHandler.BLOCK` 注册正面及无方向的代理；每次操作查询背后容器朝向舱口面的能力。`FACING` 沿用原生定义，指向容器；正面与被查询容器面均为其反方向。代理保留填充／抽取、模拟／执行和流体组件，不调用无方向的后方接口来绕开面限制。
+- 手动取放直接调用原生 `FluidHelper.tryEmptyItemIntoBE`／`tryFillItemFromBE`，优先灌入，再尝试取出，兼容其玻璃瓶、药水及标准流体容器路径。原生取出方法只检查显示存量、不模拟源端抽取，因此该次交互期间根据 `GenericItemFilling.getRequiredAmountForItem` 取得本次容器所需数量，仅向它显示经精确 `drain(SIMULATE)` 确认可取出的流体，避免绕过只读、限流或定量抽取限制；普通能力读取和护目镜仍显示原始库存。临时容器副本只在该次调用期间使用，finally 清除，不存档、不对外提供库存。执行偏离模拟等接口违约情况没有另建缓冲或事务机制。
+- 原生 `ItemHatchHandler` 只匹配 Create 注册的普通舱口，因此增加限定 CCD 舱口、流体容器且未明确禁止方块交互的潜行交互钩子；扳手操作不拦截。手动交互沿用原生不接受 FakePlayer 的规则，自动化通过流体能力操作。
+- 稳定代理重新解析后方目标，不保留过期容器能力；逐方向代理每次复核朝向，旋转时也调用原生能力失效通知。每次查询检查区块加载及实体有效性，线程内调用链最多 64 层并拒绝重入，防止舱口或第三方代理循环递归。
+- `FluidInventoryBehaviour` 在取得物流库存身份前解析 CCD 舱口链，再沿用 Create 储罐控制器归一化，避免经舱口重复统计同一库存。第三方自有代理的身份归一化范围没有扩大。
+- 已补齐注册、创造栏、模型、配方、掉落、镐标签及中英文提示。仅做静态检查，没有构建或游戏运行结论。
+
 ## 动力移液臂
 
 - 已阅读 `ArmBlock`、`ArmItem`、`ArmBlockEntity`、`ArmInteractionPoint`／`Type`／`Handler`、`ArmPlacementPacket`、`ArmRenderer`／`ArmVisual` 及 Create 的交互点注册表。原生目标选择物品判断硬编码了普通动力臂，取放与货载使用 ItemStack，因此保留原生机械部分并专门适配流体选择和交互点。
