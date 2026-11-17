@@ -11,6 +11,16 @@
 - 当前页唯一未勾选的地址决定粘贴目标；多个不同候选时拒绝修改。单独的 `#` 是 CCD 增加的显式清除标记，原生地址建议会忽略该空地址条目。原生并没有“对包裹点击粘贴地址”这一入口，这部分为 CCD 自行实现的交互。
 - 本轮只做源码和资源静态检查，没有编译、游戏测试或客户端运行。
 
+## 智能储罐
+
+- 已阅读 `FluidTankBlock`／`FluidTankBlockEntity`／`FluidTankItem`／`FluidTankRenderer`，确认原生库存字段为单个 `FluidTank`，合罐接口 `getTank`、`getFluid`、容量变更、窗口层高及锅炉都围绕单流体工作。因此新建 `SmartBlockEntity` 储罐，暂不接入原生多方块连接与锅炉，未改动原生罐类型或用虚拟单流体伪装多流体。
+- `SmartTankInventory` 通过标准 `IFluidHandler` 提供稳定虚拟槽位，槽位仅用于枚举流体身份。共享容量引用原生 `FluidTankBlockEntity.getCapacityMultiplier()`，种类上限由 CCD 服务端 `smartTank.maxFluidTypes` 控制；存量求和使用 long，填充同时检查共享余量和种类数，SIMULATE 不修改库存。每槽的容量是自身存量加当前共享余量，不能将各槽容量相加当作物理总容量。
+- 相同流体身份使用 `FluidStack.isSameFluidSameComponents` 判定，读取和操作输入均复制，类型相同而组件不同的流体不合并。空槽保留，避免抽空一种流体导致其他槽位索引变化。存档逐槽使用标准 `FluidStack.saveOptional`／`parseOptional`，不因新配置降低上限而截断旧数据。
+- 注册六面标准流体能力，沿用舱口、过滤和流体打包机的通用接口及实际方块位置库存身份；移液臂的默认舱口限制保持生效。手持容器沿用原生 `FluidHelper` 取放，库存本身不增加面过滤或额外限流。
+- 静态外壳引用原生单罐窗口模型；客户端通过 `NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox` 分别绘制真实流体纹理和颜色，按共享容量占比分层。护目镜使用实际库存生成逐项信息，比较器使用原生 `ComparatorUtil` 计算总占用比例。
+- 方块移除沿用 `IBE.onRemove`，先取出并清空库存，再将实际液体逐类拆成不超过普通包裹容量和当前单罐容量的 CCD 密封包裹；方块掉落物不同时保存液体，以免重复恢复。库存变更立即标脏，客户端同步合并为至多每 8 tick 一次。创造／蓝图的安全配置保存不包含真实库存。尚未实现保液罐物品、多方块扩容或锅炉用途。
+- 已补齐配置、注册、创造栏、模型、配方、掉落、镐标签及中英文提示。本轮只做静态检查，没有构建、测试服务器或客户端运行结论。
+
 ## 流体舱口
 
 - 先阅读 `ItemHatchBlock`／`ItemHatchBlockEntity`／`ItemHatchHandler`／`HatchFilterSlot`、`FluidTankBlock`／`FluidTankBlockEntity`、`FluidHelper`、`GenericItemEmptying`／`GenericItemFilling`、`PortableFluidInterfaceBlockEntity`、`FluidPipeBlock`／`FluidPropagator` 和 `IHaveGoggleInformation`。仅使用 Create 源码及 NeoForge API，没有读取三个流体附属的实现代码。

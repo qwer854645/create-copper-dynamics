@@ -1,5 +1,9 @@
 {
   "itemGroup.ccd": "机械动力：铜流工程",
+  "block.ccd.smart_fluid_tank": "智能储罐",
+  "ccd.smart_tank.total": "总存量：%s / %s mB（共享容量）",
+  "ccd.smart_tank.types": "流体种类：%s / %s",
+  "ccd.smart_tank.fluid": "%s · %s mB",
   "block.ccd.fluid_hatch": "流体舱口",
   "block.ccd.smart_fluid_hatch": "智能流体舱口",
   "ccd.smart_fluid_hatch.unconfigured": "未设置过滤 · 已停止流体进出",

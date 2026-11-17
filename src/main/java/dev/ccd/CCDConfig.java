@@ -9,6 +9,7 @@ public final class CCDConfig {
     public static final ModConfigSpec.DoubleValue PUMP_PRESSURE_MULTIPLIER;
     public static final ModConfigSpec.IntValue PUMP_RANGE_MULTIPLIER;
     public static final ModConfigSpec.BooleanValue ARM_ALLOW_DIRECT_CONTAINER_INTERACTION;
+    public static final ModConfigSpec.IntValue SMART_TANK_MAX_FLUIDS;
 
     static {
         var builder = new ModConfigSpec.Builder();
@@ -25,6 +26,11 @@ public final class CCDConfig {
             "Allow the fluid arm to interact directly with any sided fluid container.",
             "When false, inputs and outputs must be CCD fluid hatches. Hatch sided access and filtering still apply.")
             .worldRestart().define("allowDirectContainerInteraction", false);
+        builder.pop();
+        builder.push("smartTank");
+        SMART_TANK_MAX_FLUIDS = builder.comment("Maximum distinct fluid/component combinations per smart tank.",
+            "Lowering this preserves existing contents; only new fluid kinds are rejected.")
+            .worldRestart().defineInRange("maxFluidTypes", 8, 1, 64);
         builder.pop();
         SPEC = builder.build();
     }
