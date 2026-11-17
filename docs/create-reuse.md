@@ -147,7 +147,7 @@
 - 指针字段 `pointer` 为包可见，增加只读 `FluidValvePointerAccessor`，用于调用其现有 `chase` 方法。未替换原生 tick、管道行为或 NBT 序列化；覆盖速度变化回调后重新应用红石目标，避免继承的旋转执行器目标覆盖红石控制。
 - 放置时初始化 `POWERED` 和开关状态，邻居变化与方块重新初始化时复核实际信号。关闭传动轴连接及轴连接放置偏好，不虚构 RPM；流体管轴、含水、碰撞、扳手和结构旋转仍继承。
 - 原生阀门方块状态资源作为方向与开关映射依据，CCD 子模型直接继承对应模型并声明 `cutout_mipped`，不替换透明纹理。模型烘焙沿用原生 `PipeAttachmentModel.withAO` 包装。
-- 同时注册原生 `FluidValveRenderer` 与 `FluidValveVisual`，已通过本地 Flywheel 类签名静态确认 Visual 工厂支持子类型，避免只注册普通渲染器后被 Flywheel 跳过造成缺件。
+- 表盘黑色问题修正后改用 `RedstoneFluidValveRenderer extends FluidValveRenderer`，保留原生 `FluidValveVisual` 并启用 `neverSkipVanillaRender()`；额外在表壳外侧绘制原生刻度和指针，继续读取原生指针动画。阀体静态模型和原生管口不变，见 `docs/redstone-valve-dial.md`。
 - 没有内部储液与额外流体能力。本轮未构建、运行或检查客户端画面；运行时 Accessor 应用、红石开关及显示仍待验证。
 
 ## 流体传输器

@@ -24,7 +24,6 @@ import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelRenderer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
 import com.simibubi.create.content.fluids.PipeAttachmentModel;
-import com.simibubi.create.content.fluids.pipes.valve.FluidValveRenderer;
 import com.simibubi.create.content.fluids.pipes.valve.FluidValveVisual;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -37,6 +36,7 @@ public final class CCDClient {
     public static void init() {
         FluidPackagerRenderer.registerModels();
         FluidGaugeModel.registerModels();
+        RedstoneFluidValveRenderer.registerModels();
         registerPackageModel("fluid_package");
         registerPackageModel("fluid_arm_cargo");
         registerPackageModel("composite_package");
@@ -55,7 +55,7 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_GAUGE_BE.get(), FactoryPanelRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.BOOSTER_PUMP_BE.get(), BoosterPumpRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_TRANSMITTER_BE.get(), SmartBlockEntityRenderer::new);
-        event.registerBlockEntityRenderer(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get(), FluidValveRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get(), RedstoneFluidValveRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FAUCET_BE.get(), SmartBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_ARM_BE.get(), ArmRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FLUID_HATCH_BE.get(), SmartBlockEntityRenderer::new);
@@ -85,7 +85,7 @@ public final class CCDClient {
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ATOMIZER_BE.get())
             .factory(com.simibubi.create.content.kinetics.fan.FanVisual::new).apply());
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get())
-            .factory(FluidValveVisual::new).apply());
+            .factory(FluidValveVisual::new).neverSkipVanillaRender().apply());
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ARM_BE.get())
             .factory(ArmVisual::new).neverSkipVanillaRender().apply());
     }
