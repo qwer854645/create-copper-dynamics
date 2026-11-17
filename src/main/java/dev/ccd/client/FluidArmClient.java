@@ -2,6 +2,7 @@ package dev.ccd.client;
 
 import dev.ccd.CopperDynamics;
 import dev.ccd.content.FluidArmItem;
+import dev.ccd.logistics.FluidArmPoint;
 import net.createmod.catnip.outliner.Outliner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.AABB;
@@ -19,7 +20,7 @@ public final class FluidArmClient {
         var held = minecraft.player.getMainHandItem();
         if (!(held.getItem() instanceof FluidArmItem)) return;
         for (var selected : FluidArmItem.selected(held, minecraft.level)) {
-            if (!minecraft.level.hasChunkAt(selected.pos())) continue;
+            if (!FluidArmPoint.canTarget(minecraft.level, selected.pos())) continue;
             Vec3 center = Vec3.atCenterOf(selected.pos()).add(Vec3.atLowerCornerOf(selected.face().getNormal()).scale(.51));
             double x = selected.face().getStepX() == 0 ? .35 : .025;
             double y = selected.face().getStepY() == 0 ? .35 : .025;

@@ -72,6 +72,10 @@ public final class FluidArmItem extends BlockItem {
         }
         Direction face = context.getClickedFace();
         if (level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face) == null) return InteractionResult.PASS;
+        if (!FluidArmPoint.canTarget(level, pos)) {
+            if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.fluid_arm.hatch_required"), true);
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         List<Selected> points = new ArrayList<>(selected(stack, level));
         int index = -1;
@@ -143,5 +147,6 @@ public final class FluidArmItem extends BlockItem {
         super.appendHoverText(stack, context, tooltip, flags);
         tooltip.add(Component.translatable("ccd.fluid_arm.select_hint").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("ccd.fluid_arm.apply_hint").withStyle(ChatFormatting.DARK_GRAY));
+        tooltip.add(Component.translatable("ccd.fluid_arm.access_hint").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

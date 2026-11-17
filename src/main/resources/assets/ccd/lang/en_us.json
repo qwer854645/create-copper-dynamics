@@ -5,6 +5,8 @@
   "ccd.fluid_hatch.no_container": "No accessible rear fluid container; check orientation and sided access",
   "ccd.fluid_hatch.rejected": "Cannot exchange fluid: check fluid type, available amount and free capacity",
   "block.ccd.fluid_arm": "Mechanical Pipetting Arm",
+  "ccd.fluid_arm.hatch_required": "Direct container access is disabled; select the front of a fluid hatch",
+  "ccd.fluid_arm.access_hint": "Uses fluid hatches by default; direct container access is controlled by server config",
   "item.ccd.fluid_arm_cargo": "Arm Fluid Pouch",
   "ccd.fluid_arm.input": "Fluid input face selected (blue)",
   "ccd.fluid_arm.output": "Fluid output face selected (gold)",

@@ -5,6 +5,8 @@
   "ccd.fluid_hatch.no_container": "背后没有可访问的流体容器，请检查朝向和接口",
   "ccd.fluid_hatch.rejected": "无法取放：检查流体种类、余量和剩余容量",
   "block.ccd.fluid_arm": "动力移液臂",
+  "ccd.fluid_arm.hatch_required": "直接访问容器已关闭，请选择流体舱口的正面",
+  "ccd.fluid_arm.access_hint": "默认通过流体舱口交互；直接访问容器由服务端配置控制",
   "item.ccd.fluid_arm_cargo": "移液臂爪端液囊",
   "ccd.fluid_arm.input": "已设为流体输入面（蓝色）",
   "ccd.fluid_arm.output": "已设为流体输出面（金色）",

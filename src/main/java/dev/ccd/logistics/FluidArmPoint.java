@@ -4,8 +4,10 @@ import com.simibubi.create.content.kinetics.mechanicalArm.ArmBlockEntity;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPointType;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDConfig;
 import dev.ccd.content.FluidArmBlockEntity;
 import dev.ccd.content.FluidArmCargoItem;
+import dev.ccd.content.FluidHatchBlock;
 import dev.ccd.content.FluidPackageItem;
 import dev.ccd.content.FluidCargo;
 import net.minecraft.core.BlockPos;
@@ -31,8 +33,13 @@ public final class FluidArmPoint extends ArmInteractionPoint {
         this.mode = mode;
     }
     @Override public boolean isValid() { return handler() != null; }
+    /** Shared by selection and every capability lookup, including points restored from older saves. */
+    public static boolean canTarget(Level level, BlockPos pos) {
+        return level.hasChunkAt(pos) && (level.getBlockState(pos).getBlock() instanceof FluidHatchBlock
+            || CCDConfig.ARM_ALLOW_DIRECT_CONTAINER_INTERACTION.get());
+    }
     @Nullable private IFluidHandler handler() {
-        return level.hasChunkAt(pos) ? level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face) : null;
+        return canTarget(level, pos) ? level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face) : null;
     }
     private boolean allowed(ArmBlockEntity arm) {
         return arm instanceof FluidArmBlockEntity && !arm.isRemoved() && level == arm.getLevel()
