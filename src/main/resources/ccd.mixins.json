@@ -28,6 +28,8 @@
     "CanisterChainRenderMixin",
     "CanisterChainVisualMixin",
     "CanisterFrogRenderMixin",
-    "CanisterFrogVisualMixin"
+    "CanisterFrogVisualMixin",
+    "FluidArmRendererModelsMixin",
+    "FluidArmVisualModelsMixin"
   ]
 }

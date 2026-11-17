@@ -35,6 +35,7 @@ public final class CCDClient {
     public static void init() {
         FluidPackagerRenderer.registerModels();
         FluidGaugeModel.registerModels();
+        FluidArmModels.registerModels();
         RedstoneFluidValveRenderer.registerModels();
         registerPackageModel("fluid_package");
         registerPackageModel("fluid_arm_cargo");
