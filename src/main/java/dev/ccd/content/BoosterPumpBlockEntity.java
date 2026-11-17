@@ -4,8 +4,8 @@ import java.util.List;
 import com.simibubi.create.content.fluids.FluidPropagator;
 import com.simibubi.create.content.fluids.pump.PumpBlockEntity;
 import dev.ccd.CCDConfig;
+import dev.ccd.CCDTooltip;
 import dev.ccd.CopperDynamics;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,11 +23,9 @@ public final class BoosterPumpBlockEntity extends PumpBlockEntity {
 
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
-        tooltip.add(Component.translatable("ccd.booster_pump.range",
-            CCDConfig.boosterRange(FluidPropagator.getPumpRange())).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.booster_pump.pressure",
-            CCDConfig.PUMP_PRESSURE_MULTIPLIER.get()).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.booster_pump.ports").withStyle(ChatFormatting.DARK_GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.pump");
+        CCDTooltip.line(tooltip, "ccd.booster_pump.range", CCDTooltip.number(CCDConfig.boosterRange(FluidPropagator.getPumpRange())));
+        CCDTooltip.line(tooltip, "ccd.booster_pump.pressure", CCDTooltip.number(CCDConfig.PUMP_PRESSURE_MULTIPLIER.get()));
         return true;
     }
 }

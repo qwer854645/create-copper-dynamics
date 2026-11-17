@@ -5,6 +5,7 @@ import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.content.logistics.box.PackageStyles;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import dev.ccd.logistics.FluidPackageAddressing;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -70,17 +71,15 @@ public class FluidPackageItem extends PackageItem {
             lines.add(Component.translatable("ccd.package.invalid").withStyle(ChatFormatting.RED));
         } else {
             lines.add(fluid.getHoverName().copy().withStyle(ChatFormatting.AQUA));
-            lines.add(Component.translatable("ccd.package.amount", fluid.getAmount()).withStyle(ChatFormatting.GRAY));
+            lines.add(CCDTooltip.amount(fluid.getAmount()));
         }
         String address = PackageItem.getAddress(stack);
         if (!address.isBlank()) lines.add(Component.literal("→ " + address).withStyle(ChatFormatting.GOLD));
-        lines.add(Component.translatable("ccd.package.sealed").withStyle(ChatFormatting.DARK_GRAY));
-        lines.add(Component.translatable("ccd.package.address.hint").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override
     public InteractionResultHolder<ItemStack> open(Level level, Player player, InteractionHand hand) {
-        if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.package.use_packager"), true);
+        if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.package.use_packager").withStyle(ChatFormatting.YELLOW), true);
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }
 }

@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,9 +53,10 @@ public final class SmartCollectionGrateBlockEntity extends CopperCollectionGrate
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
-        tooltip.add(Component.translatable(automaticEnabled() ? "ccd.smart_collection_grate.active" : "ccd.smart_collection_grate.paused"));
-        tooltip.add(Component.translatable(filtering.getFilter().isEmpty() ? "ccd.smart_collection_grate.unfiltered"
-            : "ccd.smart_collection_grate.filtered").withStyle(ChatFormatting.GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.collection");
+        CCDTooltip.line(tooltip, automaticEnabled() ? ChatFormatting.AQUA : ChatFormatting.YELLOW,
+            automaticEnabled() ? "ccd.smart_collection_grate.active" : "ccd.smart_collection_grate.paused");
+        CCDTooltip.line(tooltip, filtering.getFilter().isEmpty() ? "ccd.smart_collection_grate.unfiltered" : "ccd.smart_collection_grate.filtered");
         return true;
     }
 }

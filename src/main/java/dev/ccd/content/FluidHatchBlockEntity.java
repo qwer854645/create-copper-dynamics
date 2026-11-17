@@ -10,6 +10,7 @@ import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -102,11 +103,10 @@ public class FluidHatchBlockEntity extends ItemHatchBlockEntity implements IHave
     }
 
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(getBlockState().getBlock().getName().withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("ccd.fluid_hatch.proxy").withStyle(ChatFormatting.GRAY));
-        if (!containedFluidTooltip(tooltip, sneaking, unsided)) {
-            tooltip.add(Component.translatable("ccd.fluid_hatch.no_container").withStyle(ChatFormatting.GRAY));
-        }
+        boolean connected = containedFluidTooltip(tooltip, sneaking, unsided);
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.connection");
+        CCDTooltip.line(tooltip, connected ? ChatFormatting.GRAY : ChatFormatting.YELLOW,
+            connected ? "ccd.fluid_hatch.proxy" : "ccd.fluid_hatch.no_container");
         return true;
     }
 

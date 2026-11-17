@@ -7,6 +7,7 @@ import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.content.logistics.box.PackageStyles;
 import com.simibubi.create.foundation.item.ItemHelper;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -60,9 +61,8 @@ public final class CompositePackageItem extends PackageItem {
     @Override public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flag) {
         super.appendHoverText(stack, context, lines, flag);
         for (FluidStack fluid : fluids(stack)) lines.add(Component.translatable("ccd.composite.fluid_line",
-            fluid.getHoverName(), fluid.getAmount()).withStyle(ChatFormatting.AQUA));
+            fluid.getHoverName(), CCDTooltip.amount(fluid.getAmount())).withStyle(ChatFormatting.GRAY));
         if (!isValid(stack)) lines.add(Component.translatable("ccd.composite.invalid").withStyle(ChatFormatting.RED));
-        lines.add(Component.translatable("ccd.composite.open_hint").withStyle(ChatFormatting.DARK_GRAY));
     }
     @Override public InteractionResultHolder<ItemStack> open(Level level, Player player, InteractionHand hand) {
         ItemStack box = player.getItemInHand(hand);

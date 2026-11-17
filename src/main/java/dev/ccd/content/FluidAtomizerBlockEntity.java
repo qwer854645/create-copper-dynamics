@@ -9,6 +9,7 @@ import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import dev.ccd.api.AtomizerScripts;
 import dev.ccd.atomizing.AtomizerProcessing;
 import dev.ccd.atomizing.AtomizingRecipe;
@@ -167,7 +168,9 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
         containedFluidTooltip(tooltip, sneaking, tank.getCapability());
-        tooltip.add(Component.translatable(mistActive ? "ccd.atomizer.active" : "ccd.atomizer.idle").withStyle(ChatFormatting.GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.atomizer");
+        CCDTooltip.line(tooltip, mistActive ? ChatFormatting.AQUA : ChatFormatting.GRAY,
+            mistActive ? "ccd.atomizer.active" : "ccd.atomizer.idle");
         return true;
     }
     private static final class MistAirCurrent extends AirCurrent {

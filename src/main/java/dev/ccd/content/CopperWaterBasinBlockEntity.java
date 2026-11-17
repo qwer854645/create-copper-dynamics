@@ -6,6 +6,7 @@ import com.simibubi.create.content.fluids.tank.CreativeFluidTankBlockEntity.Crea
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
@@ -38,11 +39,9 @@ public class CopperWaterBasinBlockEntity extends FluidTankBlockEntity {
     @Override public void toggleWindows() {} // An open basin always displays its water.
 
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(getBlockState().getBlock().getName().withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("ccd.water_basin.infinite").withStyle(ChatFormatting.AQUA));
-        tooltip.add(Component.translatable("ccd.water_basin.capacity", CAPACITY).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.water_basin.disposal").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.water_basin.interaction").withStyle(ChatFormatting.GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.water_source");
+        CCDTooltip.line(tooltip, ChatFormatting.AQUA, "ccd.water_basin.infinite");
+        CCDTooltip.line(tooltip, "ccd.water_basin.disposal");
         return true;
     }
 

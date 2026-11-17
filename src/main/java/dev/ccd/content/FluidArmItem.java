@@ -18,7 +18,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -73,7 +72,7 @@ public final class FluidArmItem extends BlockItem {
         Direction face = context.getClickedFace();
         if (level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face) == null) return InteractionResult.PASS;
         if (!FluidArmPoint.canTarget(level, pos)) {
-            if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.fluid_arm.hatch_required"), true);
+            if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.fluid_arm.hatch_required").withStyle(ChatFormatting.YELLOW), true);
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
         if (level.isClientSide()) return InteractionResult.SUCCESS;
@@ -89,7 +88,7 @@ public final class FluidArmItem extends BlockItem {
             return InteractionResult.SUCCESS;
         } else {
             if (points.size() >= FluidArmBlockEntity.MAX_POINTS) {
-                player.displayClientMessage(Component.translatable("ccd.fluid_arm.limit", FluidArmBlockEntity.MAX_POINTS), true);
+                player.displayClientMessage(Component.translatable("ccd.fluid_arm.limit", FluidArmBlockEntity.MAX_POINTS).withStyle(ChatFormatting.RED), true);
                 return InteractionResult.SUCCESS;
             }
             points.add(new Selected(pos.immutable(), face, true)); action = "input";
@@ -107,13 +106,14 @@ public final class FluidArmItem extends BlockItem {
         selection.put("Points", tags);
         save(stack, selection);
         player.getInventory().setChanged();
-        player.displayClientMessage(Component.translatable("ccd.fluid_arm." + action), true);
+        player.displayClientMessage(Component.translatable("ccd.fluid_arm." + action).withStyle(
+            action.equals("input") ? ChatFormatting.AQUA : action.equals("output") ? ChatFormatting.GOLD : ChatFormatting.GRAY), true);
         return InteractionResult.SUCCESS;
     }
     private boolean apply(ItemStack stack, Level level, FluidArmBlockEntity arm, Player player) {
         List<Selected> selected = selected(stack, level);
         if (selected.isEmpty()) {
-            player.displayClientMessage(Component.translatable("ccd.fluid_arm.no_selection"), true);
+            player.displayClientMessage(Component.translatable("ccd.fluid_arm.no_selection").withStyle(ChatFormatting.YELLOW), true);
             return false;
         }
         List<FluidArmPoint> points = new ArrayList<>();
@@ -125,7 +125,7 @@ public final class FluidArmItem extends BlockItem {
             if (target.isValid()) points.add(target);
         }
         if (points.isEmpty()) {
-            player.displayClientMessage(Component.translatable("ccd.fluid_arm.no_valid_points"), true);
+            player.displayClientMessage(Component.translatable("ccd.fluid_arm.no_valid_points").withStyle(ChatFormatting.RED), true);
             return false;
         }
         arm.configure(points);
@@ -142,11 +142,5 @@ public final class FluidArmItem extends BlockItem {
         if (!level.isClientSide() && player != null && !selected(stack, level).isEmpty()
             && level.getBlockEntity(pos) instanceof FluidArmBlockEntity arm) applied |= apply(stack, level, arm, player);
         return applied;
-    }
-    @Override public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flags) {
-        super.appendHoverText(stack, context, tooltip, flags);
-        tooltip.add(Component.translatable("ccd.fluid_arm.select_hint").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.fluid_arm.apply_hint").withStyle(ChatFormatting.DARK_GRAY));
-        tooltip.add(Component.translatable("ccd.fluid_arm.access_hint").withStyle(ChatFormatting.DARK_GRAY));
     }
 }

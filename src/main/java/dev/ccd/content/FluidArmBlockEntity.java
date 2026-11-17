@@ -5,6 +5,7 @@ import com.simibubi.create.content.contraptions.StructureTransform;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmBlockEntity;
 import com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import dev.ccd.logistics.FluidArmPoint;
 import dev.ccd.mixin.FluidArmAccessor;
 import net.createmod.catnip.nbt.NBTHelper;
@@ -138,12 +139,13 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
-        tooltip.add(Component.translatable("block.ccd.fluid_arm").withStyle(ChatFormatting.GOLD));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.fluid_arm");
         var fluid = FluidPackageItem.contents(state().ccd$held());
-        if (!fluid.isEmpty()) tooltip.add(Component.translatable("ccd.fluid_arm.cargo", fluid.getHoverName(), fluid.getAmount()));
-        tooltip.add(Component.translatable("ccd.fluid_arm.status",
-            Component.translatable("ccd.fluid_arm.status." + workStatus())).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.fluid_arm.points", state().ccd$inputs().size(), state().ccd$outputs().size()));
+        if (!fluid.isEmpty()) CCDTooltip.line(tooltip, "ccd.fluid_arm.cargo", fluid.getHoverName(), CCDTooltip.amount(fluid.getAmount()));
+        String status = workStatus();
+        CCDTooltip.line(tooltip, status.equals("redstone") ? ChatFormatting.YELLOW : ChatFormatting.GRAY,
+            "ccd.fluid_arm.status", Component.translatable("ccd.fluid_arm.status." + status));
+        CCDTooltip.line(tooltip, "ccd.fluid_arm.points", CCDTooltip.number(state().ccd$inputs().size()), CCDTooltip.number(state().ccd$outputs().size()));
         return true;
     }
     private String workStatus() {

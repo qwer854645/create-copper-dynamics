@@ -7,6 +7,7 @@ import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
 import com.simibubi.create.content.logistics.itemHatch.ItemHatchBlock;
 import com.simibubi.create.content.logistics.itemHatch.ItemHatchBlockEntity;
 import dev.ccd.CopperDynamics;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -40,7 +41,7 @@ public class FluidHatchBlock extends ItemHatchBlock {
         if (level.isClientSide() || player instanceof FakePlayer) return ItemInteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch)) return ItemInteractionResult.SUCCESS;
         if (hatch.fluidHandler(null).getTanks() == 0) {
-            player.displayClientMessage(Component.translatable("ccd.fluid_hatch.no_container"), true);
+            player.displayClientMessage(Component.translatable("ccd.fluid_hatch.no_container").withStyle(ChatFormatting.RED), true);
             return ItemInteractionResult.SUCCESS;
         }
         // Reuse the same generic container handling as Create's tank, including bottles and potions.
@@ -48,7 +49,7 @@ public class FluidHatchBlock extends ItemHatchBlock {
             AllSoundEvents.ITEM_HATCH.playOnServer(level, pos);
             level.setBlockAndUpdate(pos, state.setValue(OPEN, true));
             level.scheduleTick(pos, this, 10);
-        } else player.displayClientMessage(Component.translatable("ccd.fluid_hatch.rejected"), true);
+        } else player.displayClientMessage(Component.translatable("ccd.fluid_hatch.rejected").withStyle(ChatFormatting.RED), true);
         // Consume failed fluid-container interactions so a bucket cannot place its fluid into the world instead.
         return ItemInteractionResult.SUCCESS;
     }

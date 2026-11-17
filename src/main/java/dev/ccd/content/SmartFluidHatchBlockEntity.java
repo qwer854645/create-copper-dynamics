@@ -7,6 +7,7 @@ import com.simibubi.create.content.logistics.itemHatch.HatchFilterSlot;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -55,8 +56,8 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
-        tooltip.add(Component.translatable(filtering.getFilter().isEmpty()
-            ? "ccd.smart_fluid_hatch.unconfigured" : "ccd.smart_fluid_hatch.filtered").withStyle(ChatFormatting.GRAY));
+        CCDTooltip.line(tooltip, filtering.getFilter().isEmpty() ? ChatFormatting.YELLOW : ChatFormatting.GRAY,
+            filtering.getFilter().isEmpty() ? "ccd.smart_fluid_hatch.unconfigured" : "ccd.smart_fluid_hatch.filtered");
         return true;
     }
 }

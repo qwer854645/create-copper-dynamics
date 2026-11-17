@@ -6,6 +6,7 @@ import com.simibubi.create.api.connectivity.ConnectivityHandler;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import dev.ccd.CCDConfig;
+import dev.ccd.CCDTooltip;
 import dev.ccd.CopperDynamics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -169,18 +170,18 @@ public final class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
         super.destroy();
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(Component.translatable("block.ccd.smart_fluid_tank").withStyle(ChatFormatting.GOLD));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.smart_tank");
         var view = inventory.snapshot();
         if (view == null) {
-            tooltip.add(Component.translatable("ccd.smart_tank.unavailable").withStyle(ChatFormatting.GRAY));
+            CCDTooltip.line(tooltip, ChatFormatting.YELLOW, "ccd.smart_tank.unavailable");
             return true;
         }
         var root = getControllerBE();
-        tooltip.add(Component.translatable("ccd.smart_tank.structure", root.getWidth(), root.getHeight(), view.blocks()));
-        tooltip.add(Component.translatable("ccd.smart_tank.total", view.amount(), view.capacity()));
-        tooltip.add(Component.translatable("ccd.smart_tank.types", view.kinds(), CCDConfig.SMART_TANK_MAX_FLUIDS.get()));
-        for (var fluid : view.fluids()) tooltip.add(Component.translatable("ccd.smart_tank.fluid", fluid.getHoverName(), fluid.getAmount())
-            .withStyle(ChatFormatting.GRAY));
+        CCDTooltip.line(tooltip, "ccd.smart_tank.total", CCDTooltip.amount(view.amount()), CCDTooltip.amount(view.capacity()));
+        CCDTooltip.line(tooltip, "ccd.smart_tank.types", CCDTooltip.number(view.kinds()), CCDTooltip.number(CCDConfig.SMART_TANK_MAX_FLUIDS.get()));
+        if (sneaking) CCDTooltip.line(tooltip, "ccd.smart_tank.structure", CCDTooltip.number(root.getWidth()),
+            CCDTooltip.number(root.getHeight()), CCDTooltip.number(view.blocks()));
+        for (var fluid : view.fluids()) CCDTooltip.line(tooltip, "ccd.smart_tank.fluid", fluid.getHoverName(), CCDTooltip.amount(fluid.getAmount()));
         return true;
     }
 }

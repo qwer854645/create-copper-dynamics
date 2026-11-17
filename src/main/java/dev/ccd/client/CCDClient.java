@@ -5,6 +5,11 @@ import dev.ccd.CCDFluids;
 import dev.ccd.content.FluidPackageItem;
 import dev.ccd.content.CompositePackageItem;
 import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipModifier;
+import net.createmod.catnip.lang.FontHelper;
+import net.minecraft.core.registries.BuiltInRegistries;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -68,6 +73,14 @@ public final class CCDClient {
         }, CCDFluids.POWDER_SNOW_TYPE.get());
     }
     @SubscribeEvent public static void setup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            TooltipModifier.REGISTRY.registerProvider(item -> {
+                if (!BuiltInRegistries.ITEM.getKey(item).getNamespace().equals(CopperDynamics.ID)
+                    && item != net.minecraft.world.item.Items.POWDER_SNOW_BUCKET) return null;
+                return new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+                    .andThen(TooltipModifier.mapNull(KineticStats.create(item)));
+            });
+        });
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ATOMIZER_BE.get())
             .factory(com.simibubi.create.content.kinetics.fan.FanVisual::new).apply());
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get())

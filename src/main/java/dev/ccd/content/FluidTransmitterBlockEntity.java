@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -129,11 +130,11 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
         }
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(Component.translatable("block.ccd.fluid_transmitter").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("ccd.transmitter." + (paused() ? "paused" : "ready")));
-        tooltip.add(Component.translatable("ccd.transmitter.direct").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.transmitter.rate", BATCH,
-            AllConfigs.server().logistics.defaultExtractionTimer.get()).withStyle(ChatFormatting.GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.transfer");
+        CCDTooltip.line(tooltip, paused() ? ChatFormatting.YELLOW : ChatFormatting.AQUA,
+            "ccd.transmitter." + (paused() ? "paused" : "ready"));
+        CCDTooltip.line(tooltip, "ccd.transmitter.rate", CCDTooltip.amount(BATCH),
+            CCDTooltip.number(AllConfigs.server().logistics.defaultExtractionTimer.get()));
         return true;
     }
 }

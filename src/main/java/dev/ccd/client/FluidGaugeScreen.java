@@ -3,11 +3,11 @@ package dev.ccd.client;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelScreen;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsPacket;
 import dev.ccd.content.FluidGaugeBehaviour;
-import net.createmod.catnip.gui.ScreenOpener;
 import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 
@@ -23,13 +23,15 @@ public final class FluidGaugeScreen extends FactoryPanelScreen {
         target.setMaxLength(6);
         target.setFilter(value -> value.isEmpty() || value.matches("[0-9]{1,6}") && Integer.parseInt(value) <= 100_000);
         target.setValue(Integer.toString(panel.count));
+        target.setTooltip(Tooltip.create(Component.translatable("ccd.gauge.target_amount.tooltip")));
         addRenderableWidget(target);
         addRenderableWidget(Button.builder(Component.translatable("ccd.gauge.apply"), button -> {
             if (target.getValue().isEmpty()) return;
             int value = Integer.parseInt(target.getValue());
             CatnipServices.NETWORK.sendToServer(new ValueSettingsPacket(panel.getPos(), 0, value,
                 null, null, Direction.UP, false, panel.netId()));
-        }).bounds(guiLeft + 150, guiTop - 42, 42, 18).build());
+        }).bounds(guiLeft + 150, guiTop - 42, 42, 18)
+            .tooltip(Tooltip.create(Component.translatable("ccd.gauge.apply.tooltip"))).build());
     }
     @Override protected void renderWindow(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
         super.renderWindow(graphics, mouseX, mouseY, partialTicks);

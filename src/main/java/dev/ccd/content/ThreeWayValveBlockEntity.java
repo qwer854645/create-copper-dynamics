@@ -7,6 +7,7 @@ import com.simibubi.create.content.fluids.FluidTransportBehaviour;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,10 +39,9 @@ public final class ThreeWayValveBlockEntity extends SmartBlockEntity implements 
         }
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(Component.translatable("block.ccd.three_way_valve").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable(getBlockState().getValue(ThreeWayValveBlock.POWERED)
-            ? "ccd.three_way.side" : "ccd.three_way.straight").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.three_way.control").withStyle(ChatFormatting.DARK_GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.valve");
+        CCDTooltip.line(tooltip, ChatFormatting.AQUA, getBlockState().getValue(ThreeWayValveBlock.POWERED)
+            ? "ccd.three_way.side" : "ccd.three_way.straight");
         return true;
     }
 }

@@ -14,7 +14,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import dev.ccd.CopperDynamics;
-import net.minecraft.ChatFormatting;
+import dev.ccd.CCDTooltip;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -150,7 +150,7 @@ public final class SmartFaucetBlockEntity extends FaucetBlockEntity {
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
-        tooltip.add(Component.translatable("ccd.smart_faucet.items").withStyle(ChatFormatting.GRAY));
+        CCDTooltip.line(tooltip, "ccd.smart_faucet.items");
         return true;
     }
 }

@@ -9,6 +9,7 @@ import java.util.Collections;
 import com.simibubi.create.content.fluids.tank.CreativeFluidTankBlockEntity;
 import com.simibubi.create.content.fluids.tank.FluidTankBlockEntity;
 import dev.ccd.CCDConfig;
+import dev.ccd.CCDTooltip;
 import dev.ccd.CopperDynamics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -110,10 +111,12 @@ public final class CopperWaterSupplyBlockEntity extends CopperWaterBasinBlockEnt
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
         int rate = CCDConfig.WATER_SUPPLY_RATE.get();
-        tooltip.add(Component.translatable(rate == 0 ? "ccd.water_supply.disabled"
-            : getBlockState().getValue(CopperWaterSupplyBlock.POWERED) ? "ccd.water_supply.paused" : "ccd.water_supply.active"));
-        tooltip.add((rate == -1 ? Component.translatable("ccd.water_supply.unlimited")
-            : Component.translatable("ccd.water_supply.rate", rate)).withStyle(ChatFormatting.GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.water_supply");
+        boolean paused = getBlockState().getValue(CopperWaterSupplyBlock.POWERED);
+        CCDTooltip.line(tooltip, rate == 0 || paused ? ChatFormatting.YELLOW : ChatFormatting.AQUA,
+            rate == 0 ? "ccd.water_supply.disabled" : paused ? "ccd.water_supply.paused" : "ccd.water_supply.active");
+        if (rate == -1) CCDTooltip.line(tooltip, "ccd.water_supply.unlimited");
+        else if (rate > 0) CCDTooltip.line(tooltip, "ccd.water_supply.rate", CCDTooltip.amount(rate));
         return true;
     }
 }

@@ -3,7 +3,6 @@ package dev.ccd.content;
 import java.util.List;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.logistics.BigItemStack;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlockEntity;
 import com.simibubi.create.content.logistics.packager.IdentifiedInventory;
 import com.simibubi.create.content.logistics.packagerLink.LogisticsManager;
 import com.simibubi.create.content.logistics.packagerLink.PackagerLinkBlockEntity;
@@ -19,6 +18,7 @@ import com.simibubi.create.content.logistics.packager.PackagerBlockEntity;
 import com.simibubi.create.content.logistics.packager.PackagingRequest;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -263,10 +263,11 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        tooltip.add(Component.translatable("block.ccd.fluid_packager").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable("ccd.status." + status).withStyle(ChatFormatting.GRAY));
-        if (!filter.isEmpty()) tooltip.add(Component.translatable("ccd.packager.filter_set", filter.getHoverName()));
-        if (!recovery.isEmpty()) tooltip.add(Component.translatable("ccd.packager.recovery_amount", recovery.getAmount(), recovery.getHoverName()));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.packager");
+        CCDTooltip.line(tooltip, status.equals("no_container") || status.equals("recovery") ? ChatFormatting.YELLOW : ChatFormatting.GRAY,
+            "ccd.status." + status);
+        if (!filter.isEmpty()) CCDTooltip.line(tooltip, "ccd.packager.filter_set", filter.getHoverName());
+        if (!recovery.isEmpty()) CCDTooltip.line(tooltip, "ccd.packager.recovery_amount", recovery.getHoverName(), CCDTooltip.amount(recovery.getAmount()));
         return true;
     }
 }

@@ -8,6 +8,7 @@ import com.simibubi.create.content.fluids.spout.SpoutBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -115,11 +116,11 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
         return simulate || level.setBlockAndUpdate(pos, next) ? info.amount() : 0;
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(getBlockState().getBlock().getName().copy().withStyle(ChatFormatting.GOLD));
         String mode = getBlockState().getValue(FaucetBlock.POWERED) ? "paused"
             : getBlockState().getValue(FaucetBlock.OPEN) ? "open" : "closed";
-        tooltip.add(Component.translatable("ccd.faucet." + mode).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.faucet.control").withStyle(ChatFormatting.DARK_GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.faucet");
+        CCDTooltip.line(tooltip, mode.equals("paused") ? ChatFormatting.YELLOW
+            : mode.equals("open") ? ChatFormatting.AQUA : ChatFormatting.GRAY, "ccd.faucet." + mode);
         return true;
     }
 }

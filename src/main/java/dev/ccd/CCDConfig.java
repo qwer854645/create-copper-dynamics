@@ -15,35 +15,43 @@ public final class CCDConfig {
 
     static {
         var builder = new ModConfigSpec.Builder();
-        builder.push("boosterPump");
-        PUMP_STRESS_MULTIPLIER = builder.comment("Stress impact relative to Create's mechanical pump.")
+        builder.translation("ccd.configuration.boosterPump").push("boosterPump");
+        PUMP_STRESS_MULTIPLIER = builder.comment("Stress cost as a multiple of a Mechanical Pump at the same speed.")
+            .translation("ccd.configuration.boosterPump.stressMultiplier")
             .worldRestart().defineInRange("stressMultiplier", 1.5, 1.0, 16.0);
-        PUMP_PRESSURE_MULTIPLIER = builder.comment("Pressure multiplier at the same actual RPM; also increases native flow rate.")
+        PUMP_PRESSURE_MULTIPLIER = builder.comment("Pumping pressure as a multiple of a Mechanical Pump at the same speed. Higher values increase flow rate.")
+            .translation("ccd.configuration.boosterPump.pressureMultiplier")
             .worldRestart().defineInRange("pressureMultiplier", 2.0, 1.0, 16.0);
-        PUMP_RANGE_MULTIPLIER = builder.comment("Range on each fluid side, relative to Create's configured mechanical pump range.")
+        PUMP_RANGE_MULTIPLIER = builder.comment("Pumping distance on either side as a multiple of the Mechanical Pump's configured range.")
+            .translation("ccd.configuration.boosterPump.rangeMultiplier")
             .worldRestart().defineInRange("rangeMultiplier", 2, 1, 8);
         builder.pop();
-        builder.push("fluidArm");
+        builder.translation("ccd.configuration.fluidArm").push("fluidArm");
         ARM_ALLOW_DIRECT_CONTAINER_INTERACTION = builder.comment(
-            "Allow the fluid arm to interact directly with any sided fluid container.",
-            "When false, inputs and outputs must be CCD fluid hatches. Hatch sided access and filtering still apply.")
+            "Allow fluid arms to use fluid containers directly instead of requiring Fluid Hatches.",
+            "Container faces and fluid filters still restrict transfer.")
+            .translation("ccd.configuration.fluidArm.allowDirectContainerInteraction")
             .worldRestart().define("allowDirectContainerInteraction", false);
         builder.pop();
-        builder.push("smartTank");
-        SMART_TANK_MAX_FLUIDS = builder.comment("Maximum distinct fluid/component combinations per formed smart-tank structure.",
-            "Lowering this preserves existing contents; only new fluid kinds are rejected.")
+        builder.translation("ccd.configuration.smartTank").push("smartTank");
+        SMART_TANK_MAX_FLUIDS = builder.comment("Maximum fluid types in one connected Smart Fluid Tank. Different fluid properties count separately.",
+            "Lowering this limit keeps existing contents, but prevents additional types from being inserted.")
+            .translation("ccd.configuration.smartTank.maxFluidTypes")
             .worldRestart().defineInRange("maxFluidTypes", 8, 1, 64);
         builder.pop();
-        builder.push("waterSupply");
-        WATER_SUPPLY_RATE = builder.comment("Water per connected container per tick, delivered in batches every 5 ticks.",
-            "-1 fills all available water capacity in one supply operation; 0 disables automatic supply.",
-            "Idle/full targets are polled every 20 ticks. Manual water access is unaffected.")
+        builder.translation("ccd.configuration.waterSupply").push("waterSupply");
+        WATER_SUPPLY_RATE = builder.comment("[in mB/t per adjacent container] Automatic water supply rate.",
+            "-1 fills the available capacity in one operation. 0 disables automatic supply.",
+            "Manual filling remains available. Water is supplied periodically rather than every tick.")
+            .translation("ccd.configuration.waterSupply.rate")
             .worldRestart().defineInRange("rate", 1000, -1, Integer.MAX_VALUE);
         builder.pop();
-        builder.push("atomizer");
-        ATOMIZER_NORMAL_COST = builder.comment("mB consumed per 20 ticks for native tagged fan-processing fluids.")
+        builder.translation("ccd.configuration.atomizer").push("atomizer");
+        ATOMIZER_NORMAL_COST = builder.comment("[in mB per second] Fluid consumed when atomizing a fan-processing medium. Custom recipes may override this.")
+            .translation("ccd.configuration.atomizer.normalConsumption")
             .worldRestart().defineInRange("normalConsumption", 10, 1, 4000);
-        ATOMIZER_POTION_COST = builder.comment("mB consumed per 20 ticks for native Create potion fluid.")
+        ATOMIZER_POTION_COST = builder.comment("[in mB per second] Potion consumed while spraying potion effects. Custom recipes may override this.")
+            .translation("ccd.configuration.atomizer.potionConsumption")
             .worldRestart().defineInRange("potionConsumption", 25, 1, 4000);
         builder.pop();
         SPEC = builder.build();

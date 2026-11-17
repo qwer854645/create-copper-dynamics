@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTank
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.SmartFluidTank;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -122,10 +123,8 @@ public class CopperCollectionGrateBlockEntity extends SmartBlockEntity implement
         outlet = null;
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(getBlockState().getBlock().getName().withStyle(ChatFormatting.GOLD));
         containedFluidTooltip(tooltip, sneaking, tank.getCapability());
-        tooltip.add(Component.translatable("ccd.collection_grate.area").withStyle(ChatFormatting.GRAY));
-        if (drainer.isInfinite()) tooltip.add(Component.translatable("ccd.collection_grate.infinite").withStyle(ChatFormatting.AQUA));
+        if (drainer.isInfinite()) CCDTooltip.line(tooltip, ChatFormatting.AQUA, "ccd.collection_grate.infinite");
         return true;
     }
 }

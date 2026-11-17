@@ -4,6 +4,7 @@ import java.util.List;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import dev.ccd.CopperDynamics;
 import dev.ccd.CCDFluids;
+import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -49,8 +50,8 @@ public final class CopperBucketItem extends Item {
     }
     @Override public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(Component.translatable("ccd.copper_bucket.amount", contents(stack).getAmount(), CAPACITY).withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.copper_bucket.interaction").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("ccd.copper_bucket.amount", CCDTooltip.amount(contents(stack).getAmount()),
+            CCDTooltip.amount(CAPACITY)).withStyle(ChatFormatting.GRAY));
     }
     @Override public boolean isBarVisible(ItemStack stack) { return !contents(stack).isEmpty(); }
     @Override public int getBarWidth(ItemStack stack) { return Math.clamp(Math.round(contents(stack).getAmount() * 13f / CAPACITY), 0, 13); }

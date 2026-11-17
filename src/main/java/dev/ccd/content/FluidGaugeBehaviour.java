@@ -53,7 +53,8 @@ public final class FluidGaugeBehaviour extends FactoryPanelBehaviour {
         return count >= 1_000 ? new ValueSettings(1, Math.min(100, count / 1_000)) : new ValueSettings(0, Math.min(100, count));
     }
     @Override public MutableComponent formatValue(ValueSettings settings) {
-        return Component.literal(settings.value() + (settings.row() == 1 ? " B" : " mB"));
+        return com.simibubi.create.foundation.utility.CreateLang.number(settings.value())
+            .translate(settings.row() == 1 ? "generic.unit.buckets" : "generic.unit.millibuckets").component();
     }
     @Override public MutableComponent getCountLabelForValueBox() {
         return getFilter().isEmpty() ? Component.empty()

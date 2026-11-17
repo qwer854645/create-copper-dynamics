@@ -216,3 +216,7 @@
 - 集液栅沿用天气回调与原生概率，智能版继承过滤、红石控制；单块细雪转移通过 `FluidUtil.tryFluidTransfer` 执行，不另写区域搜索。
 - 蜜脾模具只实现物品余物接口，`BasinRecipe` 原生检查产物与返还模具的容量并提交；配方使用 `create:compacting`，没有复制原生压块逻辑。
 - 未读取或复用 Repackaged、Create: Fluid、FluidLogistics 的实现代码；本次只静态检查，未运行构建、游戏或测试。
+
+## 提示与物品说明
+
+物品说明沿用 `TooltipModifier.REGISTRY` 提供器、`ItemDescription.Modifier` 和 `KineticStats`；原生客户端事件负责读取 Create 的提示开关、按键、语言缓存和排版。护目镜通过 `CCDTooltip` 复用 `LangBuilder.forGoggles` 与 `CreateLang.number`，不另写一套绘制或断行实现。配置名称与说明使用 NeoForge `ModConfigSpec.translation` 和 `.tooltip` 规则。中英文文本、动态数据和静态操作说明分工见 `tooltips.md`。本次未构建或启动客户端。

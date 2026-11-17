@@ -1,11 +1,9 @@
 package dev.ccd.content;
 
-import java.util.List;
 import dev.ccd.CopperDynamics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -41,8 +39,5 @@ public final class FluidStockItem extends Item {
         FluidStack fluid = fluid(stack);
         return fluid.isEmpty() ? Component.translatable("item.ccd.fluid_stock")
             : Component.translatable("ccd.fluid_stock.name", fluid.getHoverName());
-    }
-    @Override public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("ccd.fluid_stock.explanation"));
     }
 }

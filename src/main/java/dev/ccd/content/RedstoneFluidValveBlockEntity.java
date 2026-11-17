@@ -3,6 +3,7 @@ package dev.ccd.content;
 import java.util.List;
 import com.simibubi.create.content.fluids.pipes.valve.FluidValveBlockEntity;
 import dev.ccd.CopperDynamics;
+import dev.ccd.CCDTooltip;
 import dev.ccd.mixin.FluidValvePointerAccessor;
 import net.createmod.catnip.animation.LerpedFloat.Chaser;
 import net.minecraft.ChatFormatting;
@@ -33,10 +34,9 @@ public final class RedstoneFluidValveBlockEntity extends FluidValveBlockEntity {
         ((FluidValvePointerAccessor) (Object) this).ccd$getPointer().chase(powered ? 1 : 0, 1, Chaser.LINEAR);
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        tooltip.add(Component.translatable("block.ccd.redstone_fluid_valve").withStyle(ChatFormatting.GOLD));
-        tooltip.add(Component.translatable(getBlockState().getValue(RedstoneFluidValveBlock.ENABLED)
-            ? "ccd.valve.open" : "ccd.valve.closed").withStyle(ChatFormatting.GRAY));
-        tooltip.add(Component.translatable("ccd.valve.control").withStyle(ChatFormatting.DARK_GRAY));
+        CCDTooltip.heading(tooltip, "ccd.gui.goggles.valve");
+        boolean open = getBlockState().getValue(RedstoneFluidValveBlock.ENABLED);
+        CCDTooltip.line(tooltip, open ? ChatFormatting.AQUA : ChatFormatting.GRAY, open ? "ccd.valve.open" : "ccd.valve.closed");
         return true;
     }
 }

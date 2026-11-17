@@ -93,6 +93,8 @@ public final class FluidPackageAddressing {
 
     private static void message(Player player, String action, Object... args) {
         if (player.level().isClientSide())
-            player.displayClientMessage(Component.translatable("ccd.package.address." + action, args), true);
+            player.displayClientMessage(Component.translatable("ccd.package.address." + action, args).withStyle(
+                action.equals("read_only") || action.equals("missing") || action.equals("ambiguous")
+                    ? net.minecraft.ChatFormatting.RED : net.minecraft.ChatFormatting.WHITE), true);
     }
 }
