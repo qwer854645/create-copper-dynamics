@@ -3,6 +3,7 @@
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "body": "ccd:block/booster_pump/body",
+    "shaft_face": "ccd:block/booster_pump/shaft_face",
     "pipe": "create:block/pipes",
     "particle": "ccd:block/booster_pump/body"
   },
@@ -27,7 +28,7 @@
             2,
             14
           ],
-          "texture": "#body"
+          "texture": "#shaft_face"
         },
         "south": {
           "uv": [
@@ -36,7 +37,7 @@
             14,
             14
           ],
-          "texture": "#body"
+          "texture": "#shaft_face"
         },
         "east": {
           "uv": [
@@ -45,7 +46,7 @@
             2,
             14
           ],
-          "texture": "#body"
+          "texture": "#shaft_face"
         },
         "west": {
           "uv": [
@@ -54,7 +55,7 @@
             14,
             14
           ],
-          "texture": "#body"
+          "texture": "#shaft_face"
         },
         "up": {
           "uv": [

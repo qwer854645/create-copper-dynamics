@@ -10,18 +10,18 @@ const image=fn=>{const data=Buffer.alloc(1024);for(let y=0;y<16;y++)for(let x=0;
 const paint=(data,x,y,color)=>data.set([...color,255],(y*16+x)*4);
 // Twelve-by-twelve copper shell. Seams, reinforcement and wear are pixel clusters, not noise.
 const panel=[
- '278777676872',
- '765655565657',
- '853555655546',
- '765444554657',
- '754544455546',
- '765554544657',
- '754454554546',
- '765544455657',
- '754545554546',
- '765555655657',
- '254333434532',
- '121222121211',
+ '277778776642',
+ '765666655543',
+ '765556655433',
+ '665555544433',
+ '655555444443',
+ '655544444543',
+ '655444455553',
+ '554444555543',
+ '554455555433',
+ '454555544433',
+ '343333333221',
+ '122211111110',
 ];
 const body=image(()=>copper[5]);
 for(let y=0;y<12;y++)for(let x=0;x<12;x++)paint(body,x+2,y+2,copper[Number(panel[y][x])]);
@@ -37,6 +37,7 @@ function box(name,from,to,texture){
  }});
 }
 box('copper_housing',[2,2,2],[14,14,14],'body');
+for(const face of ['north','south','east','west'])elements[0].faces[face].texture='#shaft_face';
 // Import the native pipe mouths verbatim, including their UV rotation and culling.
 // No hand-drawn substitute, no CCD copy of the upstream pipe texture.
 const nativeParts=[];
@@ -50,7 +51,7 @@ for(const side of ['up','down'])for(const part of ['rim_connector','rim']){
  }
 }
 const model={parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',
- textures:{body:'ccd:block/booster_pump/body',pipe:'create:block/pipes'},elements};
+ textures:{body:'ccd:block/booster_pump/body',shaft_face:'ccd:block/booster_pump/shaft_face',pipe:'create:block/pipes'},elements};
 model.textures.particle=model.textures.body;
 const rotate=(v,axis,angle,point)=>{
  const a=angle*Math.PI/180,c=Math.cos(a),s=Math.sin(a),p=v.map(n=>n-(point?8:0)),q=[...p];
@@ -59,7 +60,17 @@ const rotate=(v,axis,angle,point)=>{
 };
 const transform=(faces,axis,angle)=>faces.map(f=>({...f,vertices:f.vertices.map(v=>rotate(v,axis,angle,true)),n:rotate(f.n,axis,angle,false)}));
 async function main(){
- for(const [name,data]of Object.entries({body}))
+ // Create's gearbox/encased-shaft aperture is an opaque dark circular recess, not an alpha cutout.
+ // Reuse its central 8x8 pixels verbatim, preserving the native shaft-to-hole proportions.
+ const reference=path.resolve(process.argv[2]);
+ const {data:opening,info}=await sharp(path.join(reference,'assets/create/textures/block/gearbox.png'))
+  .ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ if(info.width!==16||info.height!==16)throw Error('Unexpected native gearbox texture size');
+ const shaftFace=Buffer.from(body);
+ for(let y=4;y<12;y++)for(let x=4;x<12;x++){
+  const i=(y*16+x)*4;opening.copy(shaftFace,i,i,i+4);
+ }
+ for(const [name,data]of Object.entries({body,shaft_face:shaftFace}))
   await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  fs.writeFileSync(path.join(assets,'models/block/booster_pump.json'),JSON.stringify(model,null,2)+'\n');
  const shell=await mesh('ccd:block/booster_pump'),shaft=await mesh('create:block/shaft_half');
@@ -70,14 +81,18 @@ async function main(){
   await sharp(buffer).toFile(path.join(output,['horizontal-front','horizontal-rear','vertical'][i]+'.png'));
   panels.push({input:buffer,left:i*500,top:100});
  }
- const labels=Buffer.from(`<svg width="1500" height="660" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="42" font-size="29">增压泵 · 原生接口版</text><text x="750" y="78" font-size="16">铜壳 · Create 原生流体管口与旋转半轴 · 无额外轴承座或铆钉</text><text x="250" y="612" font-size="18">水平管路 · 正面</text><text x="750" y="612" font-size="18">水平管路 · 背面</text><text x="1250" y="612" font-size="18">竖直管路</text><text x="750" y="644" font-size="14" fill="#677070">实际模型离线渲染 / 铜壳为 16×16 原创像素贴图，接口使用原生资源</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="660" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="42" font-size="29">增压泵 · 轴孔与铜面调整</text><text x="750" y="78" font-size="16">原生机器轴孔 · 不规则铜色纹理 · 原生流体管口与半轴</text><text x="250" y="612" font-size="18">水平管路 · 正面</text><text x="750" y="612" font-size="18">水平管路 · 背面</text><text x="1250" y="612" font-size="18">竖直管路</text><text x="750" y="644" font-size="14" fill="#677070">实际模型离线渲染 / 铜壳手工像素布局，轴孔复用 Create 齿轮箱纹理</text></g></svg>`);
  await sharp({create:{width:1500,height:660,channels:4,background:'#e5e8e2'}})
   .composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
- await sharp(path.join(textures,'body.png')).resize(256,256,{kernel:'nearest'}).png().toFile(path.join(output,'textures.png'));
- fs.writeFileSync(path.join(output,'model.meta.json'),JSON.stringify({originalArtwork:'copper housing texture only',textureSize:[16,16],
+ await sharp({create:{width:528,height:256,channels:4,background:'#e5e8e2'}}).composite([
+  {input:await sharp(path.join(textures,'body.png')).resize(256,256,{kernel:'nearest'}).png().toBuffer(),left:0,top:0},
+  {input:await sharp(path.join(textures,'shaft_face.png')).resize(256,256,{kernel:'nearest'}).png().toBuffer(),left:272,top:0},
+ ]).png().toFile(path.join(output,'textures.png'));
+ fs.writeFileSync(path.join(output,'model.meta.json'),JSON.stringify({originalArtwork:'copper housing pixels only; shaft-face center belongs to Create',textureSize:[16,16],
   paletteReference:['Create pump','Create copper_casing'],elements:elements.length,
   fluidAxis:'y before blockstate rotation',nativePipeModels:nativeParts,nativePipeTexture:'create:block/pipes',
-  nativeShaftModel:'create:block/shaft_half',customBearings:0,rivets:0,previewOnlyShafts:true},null,2)+'\n');
- console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,customTextures:1}));
+  nativeShaftModel:'create:block/shaft_half',shaftOpeningTexture:'Create gearbox.png crop [4,4,12,12]',
+  shaftOpeningFaces:4,customBearings:0,rivets:0,previewOnlyShafts:true},null,2)+'\n');
+ console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,textures:2}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
