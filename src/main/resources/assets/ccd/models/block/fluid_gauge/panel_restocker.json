@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/factory_gauge/panel_restocker",
+  "textures": {
+    "0": "ccd:block/fluid_gauge/factory_panel_packager_mode",
+    "particle": "ccd:block/fluid_gauge/factory_panel_packager_mode"
+  }
+}

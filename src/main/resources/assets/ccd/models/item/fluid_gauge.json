@@ -1,1 +1,7 @@
-{"parent":"create:item/factory_gauge"}
+{
+  "parent": "create:item/factory_gauge",
+  "textures": {
+    "0": "ccd:block/fluid_gauge/factory_panel",
+    "particle": "ccd:block/fluid_gauge/factory_panel"
+  }
+}

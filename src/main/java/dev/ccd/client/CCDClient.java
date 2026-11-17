@@ -20,7 +20,6 @@ import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
-import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelModel;
 import com.simibubi.create.content.logistics.factoryBoard.FactoryPanelRenderer;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
@@ -37,6 +36,7 @@ public final class CCDClient {
     /** Register before model baking; native package entities and conveyors use these maps. */
     public static void init() {
         FluidPackagerRenderer.registerModels();
+        FluidGaugeModel.registerModels();
         registerPackageModel("fluid_package");
         registerPackageModel("fluid_arm_cargo");
         registerPackageModel("composite_package");
@@ -108,7 +108,13 @@ public final class CCDClient {
         for (var state : CopperDynamics.FLUID_GAUGE.get().getStateDefinition().getPossibleStates()) {
             var location = BlockModelShaper.stateToModelLocation(state);
             var baked = event.getModels().get(location);
-            if (baked != null) event.getModels().put(location, new FactoryPanelModel(baked));
+            if (baked != null) event.getModels().put(location, new FluidGaugeModel(baked,
+                event.getTextureGetter().apply(new net.minecraft.client.resources.model.Material(
+                    net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS,
+                    ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "block/fluid_gauge/factory_panel"))),
+                event.getTextureGetter().apply(new net.minecraft.client.resources.model.Material(
+                    net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS,
+                    ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "block/fluid_gauge/factory_panel_packager_mode")))));
         }
     }
     @SubscribeEvent public static void modelsReady(ModelEvent.BakingCompleted event) {
