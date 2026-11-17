@@ -61,15 +61,19 @@ const rotate=(v,axis,angle,point)=>{
 const transform=(faces,axis,angle)=>faces.map(f=>({...f,vertices:f.vertices.map(v=>rotate(v,axis,angle,true)),n:rotate(f.n,axis,angle,false)}));
 async function main(){
  // Create's gearbox/encased-shaft aperture is an opaque dark circular recess, not an alpha cutout.
- // Reuse its central 8x8 pixels verbatim, preserving the native shaft-to-hole proportions.
+ // Preserve the native hole and wall pixels; replace the old casing's brown corner pixels with copper.
  const reference=path.resolve(process.argv[2]);
  const {data:opening,info}=await sharp(path.join(reference,'assets/create/textures/block/gearbox.png'))
   .ensureAlpha().raw().toBuffer({resolveWithObject:true});
  if(info.width!==16||info.height!==16)throw Error('Unexpected native gearbox texture size');
  const shaftFace=Buffer.from(body);
+ let casingPixelsReplaced=0;
  for(let y=4;y<12;y++)for(let x=4;x<12;x++){
-  const i=(y*16+x)*4;opening.copy(shaftFace,i,i,i+4);
+  const i=(y*16+x)*4;
+  if(opening[i]===112&&opening[i+1]===82&&opening[i+2]===46){casingPixelsReplaced++;continue;}
+  opening.copy(shaftFace,i,i,i+4);
  }
+ if(casingPixelsReplaced!==4)throw Error('Unexpected native gearbox casing pixels');
  for(const [name,data]of Object.entries({body,shaft_face:shaftFace}))
   await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  fs.writeFileSync(path.join(assets,'models/block/booster_pump.json'),JSON.stringify(model,null,2)+'\n');
@@ -91,7 +95,8 @@ async function main(){
  fs.writeFileSync(path.join(output,'model.meta.json'),JSON.stringify({originalArtwork:'copper housing pixels only; shaft-face center belongs to Create',textureSize:[16,16],
   paletteReference:['Create pump','Create copper_casing'],elements:elements.length,
   fluidAxis:'y before blockstate rotation',nativePipeModels:nativeParts,nativePipeTexture:'create:block/pipes',
-  nativeShaftModel:'create:block/shaft_half',shaftOpeningTexture:'Create gearbox.png crop [4,4,12,12]',
+  nativeShaftModel:'create:block/shaft_half',shaftOpeningTexture:'Create gearbox.png crop [4,4,12,12], brown casing corners replaced by copper',
+  shaftOpeningCasingPixelsReplaced:casingPixelsReplaced,
   shaftOpeningFaces:4,customBearings:0,rivets:0,previewOnlyShafts:true},null,2)+'\n');
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,textures:2}));
 }

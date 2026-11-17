@@ -4,7 +4,7 @@
 
 两个流体口直接导入 Create 6.0.10-280 的 `fluid_pipe/rim_connector/up`、`rim/up`、`rim_connector/down`、`rim/down` 原模型几何，逐面保留原生 UV、旋转、裁切面和尺寸，贴图直接引用 `create:block/pipes`。没有重画管口或复制管道贴图。原接口资源归 The Create Team / The Creators of Create 所有，不将其标注为 CCD 原创；美术许可见 [Create LICENSE.md](https://github.com/Creators-of-Create/Create/blob/mc1.21.1/dev/LICENSE.md)。
 
-四个动力面使用独立的 `shaft_face.png`：外侧沿用新铜面，中央 8×8 像素直接复用 Create `gearbox.png` 的 [4,4,12,12] 区域。参考原生齿轮箱与机壳传动轴模型，这是不透明的深色圆形内凹轴孔，不是透明洞；原生宽 4 的半轴置于轴孔中央，交接处可见孔壁。原生轴孔像素同样归 Create 所有。没有增加独立轴承座或铆钉。
+四个动力面使用独立的 `shaft_face.png`：外侧沿用新铜面，中央 8×8 像素复用 Create `gearbox.png` 的 [4,4,12,12] 区域，其中四个原机壳棕色角像素替换为对应位置的铜面像素，其余六十个深色孔洞与灰色孔壁像素保持原值。参考原生齿轮箱与机壳传动轴模型，这是不透明的深色圆形内凹轴孔，不是透明洞；原生宽 4 的半轴置于轴孔中央，交接处可见孔壁。原生轴孔像素同样归 Create 所有。没有增加独立轴承座或铆钉。
 
 转轴继续由现有 `BoosterPumpRenderer` 绘制 Create `SHAFT_HALF`。静态模型不额外放置轴体，避免重叠；物品外观沿用静态父模型，不额外实现动态半轴渲染。中央泵体尺寸和接口中心不变。方块朝向、管路连接、四面动力、碰撞、泵送能力和应力配置沿用现有逻辑。
 
