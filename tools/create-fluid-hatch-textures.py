@@ -180,6 +180,11 @@ def swap_material(src: Image.Image, ramp, keep_silver=True, keep_black=True, war
 FRAME_WIN = (3, 3, 15, 17)
 WALL_WIN = (2, 2, 15, 17)   # x16 / y18 are transparent in Create's sheet, hence 15..17
 
+# Neutral slate for the recessed face. Deliberately NOT a warm brown: `brass_casing` gets its
+# depth from #442B15 / #53381A, which at 16 px reads as dark wood.
+RECESS = [(0x22, 0x24, 0x26), (0x2B, 0x2D, 0x30), (0x35, 0x37, 0x3A), (0x3F, 0x41, 0x44),
+          (0x4A, 0x4C, 0x4F), (0x55, 0x57, 0x5A)]
+
 
 def bezel(im, win, bright=None, dark=None):
     """Ring a window the way Create's brass casings are built: lit gold rim, dark seam.
@@ -203,6 +208,70 @@ def bezel(im, win, bright=None, dark=None):
     return out
 
 
+def _lum(c):
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+
+
+def three_values(im, window, frame_ramp, frame_w=2, seam_idx=0, recess_ramp=None):
+    """Bright frame / one dark seam / recessed interior, each on its own ramp.
+
+    A frame drawn in the same brass as the panel it surrounds reads flat - that was the whole
+    problem with the earlier versions. Splitting the face into three values gives the hatch the
+    lit-frame-around-a-sunken-panel look Create's own casings have.
+
+    `recess_ramp=None` keeps the interior untouched.
+    """
+    x0, y0, x1, y1 = window
+    px = im.load()
+    tones = sorted({px[x, y][:3] for y in range(im.height) for x in range(im.width)
+                    if px[x, y][3]}, key=_lum)
+    rank = {c: (k / (len(tones) - 1) if len(tones) > 1 else 0.5) for k, c in enumerate(tones)}
+    out = im.copy()
+    op = out.load()
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            a = op[x, y][3]
+            if not a:
+                continue
+            d = min(x - x0, y - y0, x1 - x, y1 - y)
+            src = px[x, y][:3]
+            t = rank[src]
+            if d < frame_w:
+                idx = min(len(frame_ramp) - 1, round(t * (len(frame_ramp) - 1)))
+                if d == 0:
+                    idx = len(frame_ramp) - 1          # outer pixel is the lit edge
+                op[x, y] = frame_ramp[idx] + (a,)
+            elif d == frame_w:
+                op[x, y] = frame_ramp[seam_idx] + (a,)
+            elif recess_ramp is not None:
+                idx = min(len(recess_ramp) - 1, round(t * (len(recess_ramp) - 1)))
+                op[x, y] = recess_ramp[idx] + (a,)
+    return out
+
+
+def door_bevel(im, ramp):
+    """The slanted door: lit outer pixel, mid body, so it reads as a door rather than a decal."""
+    px = im.load()
+    w, h = im.size
+    tones = sorted({c[:3] for c in im.getdata() if c[3]}, key=_lum)
+    rank = {c: (k / (len(tones) - 1) if len(tones) > 1 else 0.5) for k, c in enumerate(tones)}
+    out = im.copy()
+    op = out.load()
+    for y in range(h):
+        for x in range(w):
+            a = op[x, y][3]
+            if not a:
+                continue
+            idx = min(len(ramp) - 1, round(rank[px[x, y][:3]] * (len(ramp) - 1)))
+            d = min(x, y, w - 1 - x, h - 1 - y)
+            if d == 0:
+                idx = len(ramp) - 1
+            elif d == 1:
+                idx = max(0, idx - 1)
+            op[x, y] = ramp[idx] + (a,)
+    return out
+
+
 def derive(assets: Path, create_src: Path):
     housing_src = load_create(create_src, "hatch.png")
     flap_src = load_create(create_src, "hatch_closed.png")
@@ -210,12 +279,13 @@ def derive(assets: Path, create_src: Path):
     for material, key in (("fluid_hatch", "copper"), ("smart_fluid_hatch", "brass")):
         ramp = TINT[key]
         housing = swap_material(housing_src, ramp)
-        if key == "brass":
-            # both windows: the visible wall face, and the frame face in case the hatch is
-            # ever placed the other way round
-            housing = bezel(bezel(housing, FRAME_WIN), WALL_WIN)
+        # visible wall face: 2 px frame, a dark seam, then a neutral slate recess
+        housing = three_values(housing, WALL_WIN, ramp, frame_w=2, seam_idx=0,
+                               recess_ramp=RECESS)
+        # the protruding frame face (container side): 1 px lit edge + seam, keeps the louvre
+        housing = three_values(housing, FRAME_WIN, ramp, frame_w=1, seam_idx=0)
         out[f"block/{material}/housing.png"] = housing
-        out[f"block/{material}/flap.png"] = swap_material(flap_src, ramp)
+        out[f"block/{material}/flap.png"] = door_bevel(swap_material(flap_src, ramp), ramp)
     return out
 
 
