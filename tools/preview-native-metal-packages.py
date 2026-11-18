@@ -31,13 +31,13 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
         # Draw metal afresh instead of retaining paper grain/creases from the source.
         panels={
             'copper':[
-                '266766676662','655665565553','654554655453','655445654553',
-                '645455544563','654565445553','655654455453','645554565553',
-                '654455654543','655465545453','654554455553','233333433332'],
+                '266666666662','655555555553','655555555553','655555544453',
+                '655555544453','655555554453','655445555553','655445555553',
+                '655444555553','655555555553','655555555553','244444444442'],
             'brass':[
-                '377877787773','766776676664','765665766564','766556765664',
-                '756566655674','765676556664','766765566564','756665676664',
-                '765566765654','766576656564','765665566664','344444544443']}
+                '377777777773','766666666664','766666666664','766666655564',
+                '766666655564','766666665564','766556666664','766556666664',
+                '766555666664','766666666664','766666666664','355555555553']}
         for tile in range(5):
             c=Canvas(12,12)
             for y,row in enumerate(panels[name]):
@@ -46,7 +46,7 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
             # Flush metal sealing band, lighter folded lip with dark right edge.
             if tile in (0,1,2):
                 for y in range(12):
-                    c.set(5,y,ramp[6 if name=='copper' else 7])
+                    c.set(5,y,ramp[5 if name=='copper' else 6])
                     c.set(6,y,ramp[5 if name=='copper' else 6])
                     c.set(7,y,ramp[4 if name=='copper' else 5])
                 # Horizontal lid fold is defined through pixels, no extra cuboids.
@@ -54,7 +54,7 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
                     if x not in (5,6,7): c.set(x,2,ramp[4 if name=='copper' else 5])
             else:
                 for y in range(12):
-                    c.set(5,y,ramp[6 if name=='copper' else 7]); c.set(6,y,ramp[5 if name=='copper' else 6]); c.set(7,y,ramp[4 if name=='copper' else 5])
+                    c.set(5,y,ramp[5 if name=='copper' else 6]); c.set(6,y,ramp[5 if name=='copper' else 6]); c.set(7,y,ramp[4 if name=='copper' else 5])
                 # Inset lid seam following original folded package construction.
                 for x in list(range(1,5))+list(range(8,11)):
                     c.set(x,5,ramp[4 if name=='copper' else 5]); c.set(x,6,ramp[5 if name=='copper' else 6])
