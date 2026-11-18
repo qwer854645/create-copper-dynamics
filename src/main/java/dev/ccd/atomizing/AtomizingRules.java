@@ -50,6 +50,9 @@ public final class AtomizingRules {
         if(fluid.getFluid().getFluidType()==dev.ccd.CCDFluids.QUICKSAND_TYPE.get())
             return new Selection("ccd:quicksand",null,SandblastingType.processingType(),CCDConfig.ATOMIZER_NORMAL_COST.get(),20,false);
         // Native fluid catalyst tags and priority, without fabricating blocks or a fake level.
+        var compatible=dev.ccd.compat.FanCompat.select(fluid);
+        if(compatible!=null) return new Selection("ccd:compat/"+com.simibubi.create.api.registry.CreateBuiltInRegistries.FAN_PROCESSING_TYPE.getKey(compatible),
+            null,compatible,CCDConfig.ATOMIZER_NORMAL_COST.get(),20,false);
         FanProcessingType type = null;
         var f = fluid.getFluid();
         if (AllFluidTags.FAN_PROCESSING_CATALYSTS_BLASTING.matches(f)) type = AllFanProcessingTypes.BLASTING;

@@ -18,13 +18,8 @@ import net.minecraft.world.phys.Vec3;
 /** Reads the live sandpaper recipe type directly; no cloned processing recipes. */
 public final class SandblastingType implements FanProcessingType {
     public static FanProcessingType processingType() {
-        if(net.neoforged.fml.ModList.get().isLoaded("create_connected")) {
-            for(var type:CreateBuiltInRegistries.FAN_PROCESSING_TYPE) {
-                var id=CreateBuiltInRegistries.FAN_PROCESSING_TYPE.getKey(type);
-                if(id!=null && !id.getNamespace().equals("ccd") &&
-                    (id.getPath().equals("sanding") || id.getPath().equals("sandblasting"))) return type;
-            }
-        }
+        var type=dev.ccd.compat.FanCompat.sanding();
+        if(type!=null) return type;
         return CopperDynamics.SANDBLASTING.get();
     }
     @Override public boolean isValidAt(Level level,BlockPos pos) {

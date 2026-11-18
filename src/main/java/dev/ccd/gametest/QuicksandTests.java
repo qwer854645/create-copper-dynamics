@@ -18,6 +18,14 @@ import net.minecraft.world.item.ItemStack;
 @PrefixGameTestTemplate(false)
 public final class QuicksandTests {
     @GameTest(template="empty")
+    public static void optionalCompatDoesNotInventMissingTypes(GameTestHelper h) {
+        h.assertTrue(dev.ccd.compat.FanCompat.find("ccd_missing_test","sanding")==null,"Missing optional mod must not resolve a fan type");
+        h.assertTrue(dev.ccd.compat.FanCompat.select(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000))==null,"Compatibility layer unexpectedly replaced ordinary water");
+        h.assertTrue(dev.ccd.compat.FanCompat.catalyst(new FluidStack(dev.ccd.CCDFluids.QUICKSAND.get(),1000)).equals("fan_sanding_catalyst"),"Quicksand catalyst mapping changed");
+        h.assertTrue(dev.ccd.compat.FanCompat.RULES.stream().noneMatch(r->r.mod().equals("dye_depot")),"Excluded dye integration enabled");
+        h.succeed();
+    }
+    @GameTest(template="empty")
     public static void sandpaperRecipesWorkInBulk(GameTestHelper h) {
         var type=new SandblastingType();
         var input=AllItems.ROSE_QUARTZ.asStack(16);
