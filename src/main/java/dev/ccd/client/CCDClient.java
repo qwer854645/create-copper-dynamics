@@ -42,6 +42,11 @@ public final class CCDClient {
         registerPackageModel("fluid_package");
         registerPackageModel("fluid_arm_cargo");
         registerPackageModel("composite_package");
+        for(var variant:dev.ccd.content.MetalPackages.VARIANTS) {
+            registerPackageModel(variant.id());
+            AllPartialModels.PACKAGE_RIGGING.put(ResourceLocation.fromNamespaceAndPath("ccd",variant.id()),
+                PartialModel.of(ResourceLocation.fromNamespaceAndPath("create","item/package/rigging_"+variant.size())));
+        }
     }
 
     private static void registerPackageModel(String name) {
@@ -112,11 +117,10 @@ public final class CCDClient {
         var canister = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_package"), "inventory");
         var canisterModel = event.getModels().get(canister);
-        if (canisterModel != null) event.getModels().put(canister, FluidCanisterModel.install(canisterModel));
+        // Metal package shells use native static geometry, without the old canister window wrapper.
         var brassBox = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "composite_package"), "inventory");
         var brassBoxModel = event.getModels().get(brassBox);
-        if (brassBoxModel != null) event.getModels().put(brassBox, BrassBoxModel.install(brassBoxModel));
         var cargo = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_arm_cargo"), "inventory");
         var cargoModel = event.getModels().get(cargo);

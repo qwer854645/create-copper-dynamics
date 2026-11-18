@@ -24,7 +24,10 @@ public final class CompositePackageItem extends PackageItem {
     public static final int FLUID_CAPACITY = 8_000;
     public static final int MAX_FLUID_TYPES = 8;
     public CompositePackageItem(Properties properties) {
-        super(properties.stacksTo(1), new PackageStyles.PackageStyle("cardboard", 12, 12, 23F, false));
+        this(properties,12,12,23F);
+    }
+    public CompositePackageItem(Properties properties,int width,int height,float hook) {
+        super(properties.stacksTo(1), new PackageStyles.PackageStyle("cardboard", width, height, hook, false));
         PackageStyles.ALL_BOXES.remove(this);
         PackageStyles.STANDARD_BOXES.remove(this);
         PackageStyles.RARE_BOXES.remove(this);
@@ -65,7 +68,8 @@ public final class CompositePackageItem extends PackageItem {
         super.appendHoverText(stack, context, lines, flag);
         for (FluidStack fluid : fluids(stack)) lines.add(Component.translatable("ccd.composite.fluid_line",
             fluid.getHoverName(), CCDTooltip.amount(fluid.getAmount())).withStyle(ChatFormatting.GRAY));
-        if (!isValid(stack)) lines.add(Component.translatable("ccd.composite.invalid").withStyle(ChatFormatting.RED));
+        if (stack.has(CopperDynamics.COMPOSITE_FLUIDS.get()) && !isValid(stack))
+            lines.add(Component.translatable("ccd.composite.invalid").withStyle(ChatFormatting.RED));
     }
     @Override public InteractionResultHolder<ItemStack> open(Level level, Player player, InteractionHand hand) {
         ItemStack box = player.getItemInHand(hand);

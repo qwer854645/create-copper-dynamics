@@ -25,8 +25,11 @@ public class FluidPackageItem extends PackageItem {
     public static final int CAPACITY = 4_000;
 
     public FluidPackageItem(Properties properties) {
+        this(properties,12,12,23F);
+    }
+    public FluidPackageItem(Properties properties,int width,int height,float hook) {
         // Reuse a native rigging size; the model is CCD's own resource.
-        super(properties, new PackageStyles.PackageStyle("cardboard", 12, 12, 23F, false));
+        super(properties, new PackageStyles.PackageStyle("cardboard", width, height, hook, false));
         // The superclass registers every package as a random ordinary box style.
         // Remove only our own instance. Native recognition uses instanceof, while
         // ALL_BOXES also supplies the default ordinary package used by Create.
@@ -71,7 +74,8 @@ public class FluidPackageItem extends PackageItem {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> lines, TooltipFlag flags) {
         FluidStack fluid = contents(stack);
         if (fluid.isEmpty()) {
-            lines.add(Component.translatable("ccd.package.invalid").withStyle(ChatFormatting.RED));
+            if(stack.has(CopperDynamics.FLUID_CARGO.get()))
+                lines.add(Component.translatable("ccd.package.invalid").withStyle(ChatFormatting.RED));
         } else {
             lines.add(fluid.getHoverName().copy().withStyle(ChatFormatting.AQUA));
             lines.add(CCDTooltip.amount(fluid.getAmount()));

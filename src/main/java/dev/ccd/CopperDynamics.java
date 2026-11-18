@@ -317,6 +317,7 @@ public final class CopperDynamics {
             dev.ccd.content.HorizontalSmartTankBlockEntity::new, HORIZONTAL_SMART_TANK.get()).build(null));
 
     public CopperDynamics(IEventBus bus, ModContainer container) {
+        dev.ccd.content.MetalPackages.register();
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
         CCDFluids.register(bus);
         dev.ccd.compat.ProcessingMedia.register(bus);
@@ -358,11 +359,9 @@ public final class CopperDynamics {
                 output.accept(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET);
                 output.accept(HONEYCOMB_MOLD.get());
                 output.accept(FLUID_ATOMIZER_ITEM.get());
-                // A valid sample for inspecting/opening the carrier in creative mode.
-                var sampleItems = new net.neoforged.neoforge.items.ItemStackHandler(com.simibubi.create.content.logistics.box.PackageItem.SLOTS);
-                sampleItems.setStackInSlot(0, new ItemStack(net.minecraft.world.item.Items.IRON_INGOT));
-                output.accept(CompositePackageItem.containing(sampleItems, java.util.List.of(
-                    new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER, 1_000))));
+                output.accept(FLUID_PACKAGE.get());
+                output.accept(COMPOSITE_PACKAGE.get());
+                for(var variant:dev.ccd.content.MetalPackages.VARIANTS) output.accept(variant.item().get());
             }).build());
         TABS.register(bus);
         bus.addListener(this::registerCapabilities);
