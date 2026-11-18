@@ -24,35 +24,24 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
                 index=round(values.index(value)/(len(values)-1)*(len(ramp)-1))
                 image.putpixel((x,y),(*ramp[index],a))
         if name=='brass':
-            # Mechanical-arm style brown folds, confined to structural seams.
-            # Preserve paper-derived face grain and keep a narrow adjacent gold lip.
+            # Brass casing perimeter: brown outside fold, broad yellow inner lip.
+            # Preserve the native package center, handling marks and sealing tape.
+            casing=Image.open(BytesIO(z.read('assets/create/textures/block/brass_casing.png'))).convert('RGBA')
             for tile in range(5):
                 left,top=36,1+tile*12
-                # Original eye/handling-symbol side panels keep their native pixels.
-                # Do not run a dark strap through these faces.
-                if tile in (0,1):
-                    continue
-                if tile<3:
+                for y in range(12):
                     for x in range(12):
-                        image.putpixel((left+x,top+11),(*ramp[2],255))
-                    for x in range(12):
-                        image.putpixel((left+x,top+1),(*ramp[3],255))
-                    for y in range(12): image.putpixel((left+7,top+y),(*ramp[3],255))
-                else:
-                    for y in range(12): image.putpixel((left+7,top+y),(*ramp[3],255))
-                    for x in range(12):
-                        image.putpixel((left+x,top+5),(*ramp[3],255))
-                    # Continuous perimeter fold meets the vertical face bands at corners.
-                    for x in range(12):
-                        image.putpixel((left+x,top),(*ramp[3],255))
-                        image.putpixel((left+x,top+11),(*ramp[3],255))
-                    for y in range(12):
-                        image.putpixel((left,top+y),(*ramp[3],255))
-                        image.putpixel((left+11,top+y),(*ramp[3],255))
+                        depth=min(x,y,11-x,11-y)
+                        if depth>1: continue
+                        # Retain the original casing's two edge rows verbatim;
+                        # shorten only the long straight runs to fit the 12px face.
+                        sx=x if x<2 else x+4 if x>9 else 2+round((x-2)*11/7)
+                        sy=y if y<2 else y+4 if y>9 else 2+round((y-2)*11/7)
+                        image.putpixel((left+x,top+y),casing.getpixel((sx,sy)))
         image.save(A/f'textures/item/native_package_{name}.png')
         model=json.loads(json.dumps(native)); model['textures']['0']=f'ccd:item/native_package_{name}'
         model['textures']['particle']=model['textures']['0']
         (A/f'models/item/native_package_{name}_study.json').write_text(json.dumps(model,indent=2)+'\n')
         assert model['elements']==native['elements']
         image.resize((512,512),Image.Resampling.NEAREST).save(OUT/f'{name}-atlas.png')
-    (OUT/'source.txt').write_text('Create 6.0.10-280: cardboard_12x12 model and cardboard.png.\nPalette derivatives of Create artwork; not original CCD artwork. Geometry and UV unchanged.\nUnregistered preview models only; runtime fluid_package and composite_package remain unchanged.\n')
+    (OUT/'source.txt').write_text('Create 6.0.10-280: cardboard_12x12 model and cardboard.png.\nCopper: palette-only derivative. Brass: palette derivative with original brass_casing two-pixel perimeter adapted to 12px faces.\nCreate-derived artwork, not original CCD artwork. Geometry and UV unchanged.\nUnregistered preview models only; runtime fluid_package and composite_package remain unchanged.\n')

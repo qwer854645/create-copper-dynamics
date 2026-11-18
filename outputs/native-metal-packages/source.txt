@@ -1,3 +1,4 @@
 Create 6.0.10-280: cardboard_12x12 model and cardboard.png.
-Palette derivatives of Create artwork; not original CCD artwork. Geometry and UV unchanged.
+Copper: palette-only derivative. Brass: palette derivative with original brass_casing two-pixel perimeter adapted to 12px faces.
+Create-derived artwork, not original CCD artwork. Geometry and UV unchanged.
 Unregistered preview models only; runtime fluid_package and composite_package remain unchanged.
