@@ -299,6 +299,15 @@ public final class CopperDynamics {
         BLOCK_ENTITIES.register("fluid_bridge", () -> BlockEntityType.Builder.of(
             (pos,state) -> new dev.ccd.content.FluidAccessBlockEntity(CopperDynamics.FLUID_BRIDGE_BE.get(),pos,state), FLUID_BRIDGE.get()).build(null));
 
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.HorizontalSmartTankBlock> HORIZONTAL_SMART_TANK =
+        BLOCKS.register("horizontal_smart_fluid_tank", () -> new dev.ccd.content.HorizontalSmartTankBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_YELLOW).strength(3).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<Item, BlockItem> HORIZONTAL_SMART_TANK_ITEM =
+        ITEMS.register("horizontal_smart_fluid_tank", () -> new BlockItem(HORIZONTAL_SMART_TANK.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<dev.ccd.content.HorizontalSmartTankBlockEntity>> HORIZONTAL_SMART_TANK_BE =
+        BLOCK_ENTITIES.register("horizontal_smart_fluid_tank", () -> BlockEntityType.Builder.of(
+            dev.ccd.content.HorizontalSmartTankBlockEntity::new, HORIZONTAL_SMART_TANK.get()).build(null));
+
     public CopperDynamics(IEventBus bus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
         CCDFluids.register(bus);
@@ -329,6 +338,7 @@ public final class CopperDynamics {
                 output.accept(FLUID_HATCH_ITEM.get());
                 output.accept(SMART_FLUID_HATCH_ITEM.get());
                 output.accept(SMART_FLUID_TANK_ITEM.get());
+                output.accept(HORIZONTAL_SMART_TANK_ITEM.get());
                 output.accept(COPPER_WATER_BASIN_ITEM.get());
                 output.accept(COPPER_WATER_SUPPLY_ITEM.get());
                 output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
@@ -359,6 +369,7 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HORIZONTAL_SMART_TANK_BE.get(), (be,side)->be.inventory);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ACCESS_PORT_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_BRIDGE_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ATOMIZER_BE.get(), FluidAtomizerBlockEntity::fluidHandler);

@@ -46,7 +46,15 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
             direction->direction.getAxis()==getBlockState().getValue(FluidAccessBlock.FACING).getAxis()));
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip,boolean sneaking) {
-        containedFluidTooltip(tooltip,sneaking,handler);
+        var fluids = new java.util.ArrayList<FluidStack>();
+        for (int i=0;i<handler.getTanks();i++) {
+            var fluid=handler.getFluidInTank(i);
+            if (fluid.isEmpty()) continue;
+            var existing=fluids.stream().filter(f->FluidStack.isSameFluidSameComponents(f,fluid)).findFirst();
+            if(existing.isPresent()) existing.get().setAmount((int)Math.min(Integer.MAX_VALUE,(long)existing.get().getAmount()+fluid.getAmount()));
+            else fluids.add(fluid.copy());
+        }
+        for(var fluid:fluids) tooltip.add(fluid.getHoverName().copy().append(" · ").append(dev.ccd.CCDTooltip.amount(fluid.getAmount())));
         tooltip.add(Component.translatable("ccd.fluid_access.sources",sources().stream().map(FluidAccess.Source::identity).distinct().count()));
         tooltip.add(Component.translatable("ccd.fluid_access.no_storage"));
         return true;

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ccd:horizontal_smart_fluid_tank"
+    }
+  ],
+  "result": {
+    "id": "ccd:smart_fluid_tank",
+    "count": 1
+  }
+}

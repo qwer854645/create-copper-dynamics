@@ -30,6 +30,10 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
     public static final int LIMIT = 1_000;
     private int cooldown;
     protected boolean transferring;
+    private FluidStack flowing = FluidStack.EMPTY;
+    private int flowTicks, flowDistance=1;
+    public FluidStack flowingFluid() { return enabled() && flowTicks>0 ? flowing : FluidStack.EMPTY; }
+    public int flowDistance() { return flowDistance; }
     public FaucetBlockEntity(BlockPos pos, BlockState state) { this(CopperDynamics.FAUCET_BE.get(), pos, state); }
     protected FaucetBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) { super(type, pos, state); }
     protected boolean enabled() {
@@ -49,6 +53,10 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
             worldPosition.getY() + .5, worldPosition.getZ() + .5, FluidPackageItem.containingFluid(rest));
     }
     protected void splash(FluidStack fluid, int distance) {
+        flowing=fluid.copyWithAmount(1);
+        flowDistance=distance;
+        flowTicks=SpoutBlockEntity.FILLING_TIME;
+        notifyUpdate();
         if (level instanceof ServerLevel server) server.sendParticles(FluidFX.getFluidParticle(fluid),
             worldPosition.getX() + .5, worldPosition.getY() + .1 - (distance - 1), worldPosition.getZ() + .5,
             6, .04, .1, .04, .02);
@@ -60,6 +68,7 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
     }
     @Override public void tick() {
         super.tick();
+        if (flowTicks>0) flowTicks--;
         if (!(level instanceof ServerLevel) || transferring || isRemoved()) return;
         if (!enabled()) { cooldown = 0; return; }
         if (!allowContainerTransfer()) return;
@@ -114,6 +123,23 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
             next = current.setValue(LayeredCauldronBlock.LEVEL, amount + 1);
         } else return 0;
         return simulate || level.setBlockAndUpdate(pos, next) ? info.amount() : 0;
+    }
+    @Override protected void write(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries, boolean clientPacket) {
+        super.write(tag,registries,clientPacket);
+        if(clientPacket) {
+            tag.put("FlowingFluid",flowing.saveOptional(registries));
+            tag.putInt("FlowTicks",flowTicks); tag.putInt("FlowDistance",flowDistance);
+        }
+    }
+    @Override protected void read(net.minecraft.nbt.CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries, boolean clientPacket) {
+        super.read(tag,registries,clientPacket);
+        if(clientPacket) {
+            flowing=FluidStack.parseOptional(registries,tag.getCompound("FlowingFluid"));
+            flowTicks=tag.getInt("FlowTicks"); flowDistance=Math.clamp(tag.getInt("FlowDistance"),1,2);
+        }
+    }
+    @Override protected net.minecraft.world.phys.AABB createRenderBoundingBox() {
+        return new net.minecraft.world.phys.AABB(worldPosition).expandTowards(0,-2,0);
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         String mode = getBlockState().getValue(FaucetBlock.POWERED) ? "paused"

@@ -30,7 +30,7 @@ public final class CompositePackageItem extends PackageItem {
         PackageStyles.RARE_BOXES.remove(this);
     }
     @Override public String getDescriptionId() { return "item.ccd.composite_package"; }
-    @Override public boolean hasCustomEntity(ItemStack stack) { return !stack.getOrDefault(CopperDynamics.RECOVERED.get(), false); }
+    @Override public boolean hasCustomEntity(ItemStack stack) { return true; }
     public static boolean isComposite(ItemStack stack) { return stack.getItem() instanceof CompositePackageItem; }
     public static boolean isSealed(ItemStack stack) { return isComposite(stack) || FluidPackageItem.isFluidPackage(stack); }
     public static List<FluidStack> fluids(ItemStack stack) {

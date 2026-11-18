@@ -42,6 +42,9 @@ public final class FluidAccess {
                 return result.stream().filter(source -> identities.add(source.identity())).toList();
             }
             if (side == facing.getOpposite()) return List.of();
+            var attached = pos.relative(facing.getOpposite());
+            if (!level.hasChunkAt(attached) || level.getBlockEntity(attached) instanceof FluidAccessBlockEntity next
+                && !((FluidAccessBlock)next.getBlockState().getBlock()).isBridge()) return List.of();
             return resolve(level, pos.relative(facing.getOpposite()), facing, visited, depth+1, allowBridge);
         }
         var active = ACTIVE.get();

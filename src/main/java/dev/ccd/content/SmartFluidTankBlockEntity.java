@@ -20,7 +20,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 /** Native tank entity with controller-owned multi-fluid storage and multi-fluid migration hooks. */
-public final class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
+public class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
     private boolean syncQueued, fluidUpdatePending;
     private boolean splitPrepared;
     private static final ThreadLocal<Boolean> RESTRUCTURING = ThreadLocal.withInitial(() -> false);
@@ -30,8 +30,10 @@ public final class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
         () -> CCDConfig.SMART_TANK_MAX_FLUIDS.get(), this::contentsChanged);
     public final SmartTankClusterInventory inventory = new SmartTankClusterInventory(this);
     public SmartFluidTankBlockEntity(BlockPos pos, BlockState state) {
-        super(CopperDynamics.SMART_FLUID_TANK_BE.get(), pos, state);
+        this(CopperDynamics.SMART_FLUID_TANK_BE.get(), pos, state);
     }
+    protected SmartFluidTankBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type, BlockPos pos, BlockState state) { super(type,pos,state); }
+    public BlockPos structureOffset(int x,int y,int z) { return new BlockPos(x,y,z); }
     @Override protected SmartFluidTank createInventory() {
         // The parent's single-fluid field must not become a second owner or participate in connectivity migration.
         return new SmartFluidTank(0, fluid -> {});
@@ -73,7 +75,7 @@ public final class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
     private List<SmartFluidTankBlockEntity> linkedParts() {
         List<SmartFluidTankBlockEntity> parts = new ArrayList<>();
         for (int y = 0; y < height; y++) for (int x = 0; x < width; x++) for (int z = 0; z < width; z++) {
-            BlockPos pos = getController().offset(x, y, z);
+            BlockPos pos = getController().offset(structureOffset(x, y, z));
             if (level.getBlockEntity(pos) instanceof SmartFluidTankBlockEntity part
                 && getController().equals(part.getController())) parts.add(part);
         }

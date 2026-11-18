@@ -37,7 +37,7 @@ public class FluidPackageItem extends PackageItem {
 
     @Override public String getDescriptionId() { return "item.ccd.fluid_package"; }
     @Override public boolean hasCustomEntity(ItemStack stack) {
-        return !stack.getOrDefault(CopperDynamics.RECOVERED.get(), false);
+        return true;
     }
     public static boolean isFluidPackage(ItemStack stack) { return stack.getItem() instanceof FluidPackageItem; }
     public static FluidStack contents(ItemStack stack) {

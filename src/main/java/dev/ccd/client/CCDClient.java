@@ -59,10 +59,12 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_ACCESS_PORT_BE.get(), SmartBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_BRIDGE_BE.get(), SmartBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get(), RedstoneFluidValveRenderer::new);
-        event.registerBlockEntityRenderer(CopperDynamics.SMART_FAUCET_BE.get(), SmartBlockEntityRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.FAUCET_BE.get(), FaucetRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.SMART_FAUCET_BE.get(), FaucetRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_ARM_BE.get(), ArmRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FLUID_HATCH_BE.get(), SmartBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FLUID_TANK_BE.get(), SmartFluidTankRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.HORIZONTAL_SMART_TANK_BE.get(), SmartFluidTankRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_WATER_BASIN_BE.get(),
             CopperWaterBasinRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_WATER_SUPPLY_BE.get(), ConduitBoxRenderer::new);

@@ -41,6 +41,7 @@ abstract class PackageEntityMixin {
             ItemStack saved = box.copyWithCount(1);
             saved.set(dev.ccd.CopperDynamics.RECOVERED.get(), true);
             ItemEntity drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), saved);
+            drop.getPersistentData().putBoolean("CCDRecoveryDrop",true);
             drop.setDefaultPickUpDelay();
             level.addFreshEntity(drop);
         }

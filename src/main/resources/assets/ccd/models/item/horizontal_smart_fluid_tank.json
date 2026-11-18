@@ -1,0 +1,17 @@
+{
+  "parent": "ccd:block/smart_fluid_tank/block_single_window",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        90
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
+  }
+}

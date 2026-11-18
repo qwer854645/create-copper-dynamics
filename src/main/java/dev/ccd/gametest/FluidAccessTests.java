@@ -31,14 +31,16 @@ public final class FluidAccessTests {
         h.assertTrue(handler!=null && handler.fill(water(amount),FluidAction.EXECUTE)==amount,"Cannot initialize tank");
     }
     @GameTest(template="empty")
-    public static void portChainSimulationAndRemoval(GameTestHelper h) {
+    public static void portsCannotExtendPorts(GameTestHelper h) {
         tank(h,new BlockPos(1,2,1),2000);
         for(int z=2;z<=3;z++) h.setBlock(new BlockPos(1,2,z),CopperDynamics.FLUID_ACCESS_PORT.get().defaultBlockState().setValue(FluidAccessBlock.FACING,Direction.SOUTH));
         var pos=h.absolutePos(new BlockPos(1,2,3));
         var handler=h.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,pos,Direction.EAST);
-        h.assertTrue(handler!=null && handler.drain(700,FluidAction.SIMULATE).getAmount()==700,"Chain must expose source");
-        h.assertTrue(handler.getFluidInTank(0).getAmount()==2000,"Simulation consumed fluid");
-        h.assertTrue(handler.drain(700,FluidAction.EXECUTE).getAmount()==700,"Chain transfer failed");
+        h.assertTrue(handler!=null && handler.getTanks()==0,"Port must not extend another port");
+        var direct=h.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,h.absolutePos(new BlockPos(1,2,2)),Direction.EAST);
+        h.assertTrue(direct.drain(700,FluidAction.SIMULATE).getAmount()==700,"Direct port must expose source");
+        h.assertTrue(direct.getFluidInTank(0).getAmount()==2000,"Simulation consumed fluid");
+        h.assertTrue(direct.drain(700,FluidAction.EXECUTE).getAmount()==700,"Port transfer failed");
         h.setBlock(new BlockPos(1,2,2),net.minecraft.world.level.block.Blocks.AIR);
         h.assertTrue(handler.getTanks()==0 && handler.drain(100,FluidAction.EXECUTE).isEmpty(),"Stale chain retained access");
         h.succeed();

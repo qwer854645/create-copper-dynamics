@@ -80,7 +80,7 @@ public final class CopperBucketItem extends Item {
             ? FluidUtil.tryEmptyContainer(stack, target, CAPACITY, player, true)
             : FluidUtil.tryFillContainer(stack, target, CAPACITY, player, true);
         if (!result.isSuccess()) return InteractionResult.FAIL;
-        player.setItemInHand(context.getHand(), result.getResult());
+        player.setItemInHand(context.getHand(), player.isCreative() && player.isShiftKeyDown() ? stack : result.getResult());
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResult.CONSUME;
     }
@@ -98,6 +98,12 @@ public final class CopperBucketItem extends Item {
         if (fluid.getAmount() < WORLD_AMOUNT) return InteractionResultHolder.pass(stack);
         BlockHitResult hit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
         if (hit.getType() != HitResult.Type.BLOCK) return InteractionResultHolder.pass(stack);
+        return placeAtHit(level, player, hand, hit);
+    }
+    public InteractionResultHolder<ItemStack> placeAtHit(Level level, Player player, InteractionHand hand, BlockHitResult hit) {
+        ItemStack stack = player.getItemInHand(hand);
+        FluidStack fluid = contents(stack);
+        if (fluid.getAmount() < WORLD_AMOUNT) return InteractionResultHolder.fail(stack);
         PlacementTarget target = placementTarget(level, player, hit, fluid);
         if (target.container() || !canUse(level, player, stack, hit, target.pos())) return InteractionResultHolder.fail(stack);
         FluidStack placed = fluid.copyWithAmount(WORLD_AMOUNT);
@@ -105,10 +111,11 @@ public final class CopperBucketItem extends Item {
         if (level.isClientSide()) return InteractionResultHolder.sidedSuccess(stack, true);
         FluidActionResult result = FluidUtil.tryPlaceFluid(player, level, hand, target.pos(), stack, placed);
         if (!result.isSuccess()) return InteractionResultHolder.fail(stack);
-        player.setItemInHand(hand, result.getResult());
+        ItemStack remaining = player.isCreative() ? stack : result.getResult();
+        player.setItemInHand(hand, remaining);
         level.gameEvent(player, GameEvent.FLUID_PLACE, target.pos());
         player.awardStat(Stats.ITEM_USED.get(this));
-        return InteractionResultHolder.sidedSuccess(result.getResult(), false);
+        return InteractionResultHolder.sidedSuccess(remaining, false);
     }
     private record PlacementTarget(BlockPos pos, boolean container) {}
     private PlacementTarget placementTarget(Level level, Player player, BlockHitResult hit, FluidStack fluid) {

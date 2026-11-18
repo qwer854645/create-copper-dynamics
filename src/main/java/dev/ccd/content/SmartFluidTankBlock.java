@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** Native tank block, replacing only the entity type and multi-fluid removal transfer. */
-public final class SmartFluidTankBlock extends FluidTankBlock {
+public class SmartFluidTankBlock extends FluidTankBlock {
     public static final MapCodec<SmartFluidTankBlock> CODEC = simpleCodec(SmartFluidTankBlock::new);
     public SmartFluidTankBlock(Properties properties) { super(properties, false); }
     @Override protected MapCodec<? extends Block> codec() { return CODEC; }
