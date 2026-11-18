@@ -25,11 +25,23 @@ public final class CopperKitchenSinkBlock extends CopperWaterBasinBlock {
     public static final MapCodec<CopperKitchenSinkBlock> CODEC = simpleCodec(CopperKitchenSinkBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShaper SHAPE = VoxelShaper.forHorizontal(Shapes.or(
-        Block.box(0, 0, 0, 16, 2, 16), Block.box(0, 2, 0, 16, 8, 3),
-        Block.box(0, 2, 14, 16, 8, 16), Block.box(0, 2, 3, 2, 8, 14),
-        Block.box(14, 2, 3, 16, 8, 14), Block.box(6, 8, 0, 10, 9, 4),
-        Block.box(7, 9, 1, 9, 15, 3), Block.box(7, 13, 3, 9, 15, 7),
-        Block.box(7, 11, 6, 9, 13, 8)), Direction.SOUTH);
+        Block.box(1, 0, 1, 15, 1, 15),
+        Block.box(1, 1, 1, 15, 9, 15),
+        Block.box(0, 1, 0, 16, 15, 3),
+        Block.box(0, 1, 13, 16, 15, 16),
+        Block.box(0, 1, 3, 3, 15, 13),
+        Block.box(13, 1, 3, 16, 15, 13),
+        Block.box(0, 15, 0, 16, 16, 3),
+        Block.box(0, 15, 13, 16, 16, 16),
+        Block.box(0, 15, 3, 3, 16, 13),
+        Block.box(13, 15, 3, 16, 16, 13),
+        Block.box(6.5, 16, 0.5, 9.5, 17, 3.5),
+        Block.box(7.5, 17, 1.5, 8.5, 21, 2.5),
+        Block.box(7.5, 20, 2.5, 8.5, 21, 7),
+        Block.box(7.5, 18.5, 6, 8.5, 20, 7),
+        Block.box(9, 17, 1, 11, 17.75, 2),
+        Block.box(6, 7, 15.75, 6.75, 10, 16.25),
+        Block.box(9.25, 7, 15.75, 10, 10, 16.25)), Direction.SOUTH);
 
     public CopperKitchenSinkBlock(Properties properties) {
         super(properties);

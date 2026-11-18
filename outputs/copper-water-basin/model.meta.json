@@ -5,41 +5,54 @@
   ],
   "geometry": [
     {
-      "name": "bowl_floor",
+      "name": "recessed_plinth",
       "from": [
+        1,
         0,
-        0,
-        0
+        1
       ],
       "to": [
-        16,
-        2,
-        16
+        15,
+        1,
+        15
       ]
     },
     {
-      "name": "back_deck",
+      "name": "cabinet_and_bowl_floor",
+      "from": [
+        1,
+        1,
+        1
+      ],
+      "to": [
+        15,
+        9,
+        15
+      ]
+    },
+    {
+      "name": "back_wall",
       "from": [
         0,
-        2,
+        1,
         0
       ],
       "to": [
         16,
-        8,
+        15,
         3
       ]
     },
     {
-      "name": "front_wall",
+      "name": "front_cabinet",
       "from": [
         0,
-        2,
-        14
+        1,
+        13
       ],
       "to": [
         16,
-        8,
+        15,
         16
       ]
     },
@@ -47,87 +60,180 @@
       "name": "left_wall",
       "from": [
         0,
-        2,
+        1,
         3
       ],
       "to": [
-        2,
-        8,
-        14
+        3,
+        15,
+        13
       ]
     },
     {
       "name": "right_wall",
       "from": [
-        14,
-        2,
+        13,
+        1,
         3
       ],
       "to": [
         16,
-        8,
-        14
+        15,
+        13
+      ]
+    },
+    {
+      "name": "counter_back",
+      "from": [
+        0,
+        15,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        3
+      ]
+    },
+    {
+      "name": "counter_front",
+      "from": [
+        0,
+        15,
+        13
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "name": "counter_left",
+      "from": [
+        0,
+        15,
+        3
+      ],
+      "to": [
+        3,
+        16,
+        13
+      ]
+    },
+    {
+      "name": "counter_right",
+      "from": [
+        13,
+        15,
+        3
+      ],
+      "to": [
+        16,
+        16,
+        13
       ]
     },
     {
       "name": "tap_foot",
       "from": [
-        6,
-        8,
-        0
+        6.5,
+        16,
+        0.5
       ],
       "to": [
-        10,
-        9,
-        4
+        9.5,
+        17,
+        3.5
       ]
     },
     {
       "name": "tap_stem",
       "from": [
-        7,
-        9,
-        1
+        7.5,
+        17,
+        1.5
       ],
       "to": [
-        9,
-        15,
-        3
+        8.5,
+        21,
+        2.5
       ]
     },
     {
-      "name": "tap_spout",
+      "name": "tap_arch",
       "from": [
-        7,
-        13,
-        3
+        7.5,
+        20,
+        2.5
       ],
       "to": [
-        9,
-        15,
+        8.5,
+        21,
         7
       ]
     },
     {
       "name": "tap_nozzle",
       "from": [
-        7,
-        11,
+        7.5,
+        18.5,
         6
       ],
       "to": [
+        8.5,
+        20,
+        7
+      ]
+    },
+    {
+      "name": "mixer_lever",
+      "from": [
         9,
-        13,
-        8
+        17,
+        1
+      ],
+      "to": [
+        11,
+        17.75,
+        2
+      ]
+    },
+    {
+      "name": "left_cabinet_handle",
+      "from": [
+        6,
+        7,
+        15.75
+      ],
+      "to": [
+        6.75,
+        10,
+        16.25
+      ]
+    },
+    {
+      "name": "right_cabinet_handle",
+      "from": [
+        9.25,
+        7,
+        15.75
+      ],
+      "to": [
+        10,
+        10,
+        16.25
       ]
     }
   ],
   "front": "south",
   "facing": "four horizontal directions",
-  "rimHeight": 8,
-  "nativeWaterScaleY": 0.5,
-  "fullWaterSurfaceY": 6,
+  "rimHeight": 16,
+  "nativeWaterScaleY": 0.625,
+  "nativeWaterOffsetY": 6.5,
+  "fullWaterSurfaceY": 14,
   "waterRendering": "native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved",
   "inventoryAndInteraction": "unchanged infinite fixed water; ordinary right click fills, sneak disposes",
-  "artwork": "CCD original pixel textures derived from existing CCD faucet palette; no upstream artwork copied"
+  "reference": "https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json",
+  "artwork": "CCD original geometry and pixels; cabinet/countertop/inset-bowl composition references Cooking for Blockheads; no external model or texture copied"
 }

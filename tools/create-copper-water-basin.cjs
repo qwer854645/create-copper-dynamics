@@ -1,4 +1,4 @@
-// Kitchen sink: shallow copper bowl, flat rim and compact copper tap. Pixel artwork uses CCD's approved palette.
+// Modern cabinet sink: original CCD geometry and pixels, informed by Cooking for Blockheads proportions.
 // Usage: node tools/create-copper-water-basin.cjs <extracted Create source root>
 const fs=require('node:fs'),path=require('node:path'),sharp=require('sharp');
 const {mesh,render}=require('./preview-fluid-packager.cjs');
@@ -9,40 +9,55 @@ const save=(file,data)=>fs.writeFileSync(file,JSON.stringify(data,null,2)+'\n');
 const colors=[[96,46,31],[144,73,49],[154,80,56],[167,90,64],[178,98,71],[194,107,76],[214,123,91],[227,130,108]];
 const paint=(data,x,y,rgb)=>data.set([...rgb,255],(y*16+x)*4);
 function box(name,from,to,texture='outer'){
- const [x,y,z]=from,[X,Y,Z]=to,f=uv=>({texture:'#'+texture,uv});
- return {name,from,to,faces:{north:f([X,16-Y,x,16-y]),south:f([x,16-Y,X,16-y]),
-  east:f([Z,16-Y,z,16-y]),west:f([z,16-Y,Z,16-y]),up:f([x,z,X,Z]),down:f([x,Z,X,z])}};
+ const [x,y,z]=from,[X,Y,Z]=to,f=(u,v)=>({texture:'#'+texture,uv:[0,0,u,v]});
+ return {name,from,to,faces:{north:f(X-x,Y-y),south:f(X-x,Y-y),east:f(Z-z,Y-y),west:f(Z-z,Y-y),up:f(X-x,Z-z),down:f(X-x,Z-z)}};
 }
 async function main(){
  const {data,info}=await sharp(path.join(assets,'textures/block/faucet/body.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
  if(info.width!==16||info.height!==16)throw Error('Unexpected copper source texture');
- const outer=Buffer.from(data),inner=Buffer.from(data),rim=Buffer.from(data);
+ const outer=Buffer.from(data),front=Buffer.from(data),inner=Buffer.alloc(1024),rim=Buffer.alloc(1024),metal=Buffer.alloc(1024);
+ const steel=[[49,57,58],[78,90,91],[114,130,131],[147,163,161],[184,196,189],[215,223,209]];
  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
   const i=(y*16+x)*4,index=colors.findIndex(c=>c.every((v,n)=>v===data[i+n]));
   if(index<0)throw Error('Unexpected CCD copper palette');
-  paint(inner,x,y,colors[Math.max(1,index-1)]);
-  if(y===8)paint(outer,x,y,colors[x<7?6:5]);
-  if(y===9)paint(outer,x,y,colors[x<10?3:2]);
-  if(y===15)paint(outer,x,y,colors[1]);
-  if(x===0||y===0)paint(rim,x,y,colors[6]);
-  if(x===15||y===15)paint(rim,x,y,colors[2]);
+  if(x===0||x===15||y===0||y===15)paint(outer,x,y,colors[2]);
+  // Separate cabinet doors with folded borders, leaving the copper clusters intact.
+  if(x===0||x===7||x===8||x===15||y===0||y===15)paint(front,x,y,colors[0]);
+  else if(x===1||x===9||y===1)paint(front,x,y,colors[6]);
+  else if(x===6||x===14||y===14)paint(front,x,y,colors[2]);
+  const patch=(x<6&&y<4)||(x>9&&y>10)?1:0;
+  paint(inner,x,y,steel[2+patch]);
+  paint(metal,x,y,steel[x<5?4:x>11?2:3]);
+  paint(rim,x,y,steel[(x===0||y===0)?5:(x===15||y===15)?2:(x>9&&y>8)?3:4]);
  }
  const floor=Buffer.from(inner);
- for(let y=7;y<10;y++)for(let x=7;x<10;x++)paint(floor,x,y,x===8?[40,43,44]:[133,145,144]);
- for(const [name,pixels]of Object.entries({outer,inner,rim,floor}))
+ for(let y=6;y<10;y++)for(let x=6;x<10;x++)paint(floor,x,y,(x===7||x===8)&&(y===7||y===8)?steel[0]:steel[4]);
+ for(const [name,pixels]of Object.entries({outer,front,inner,rim,floor,metal}))
   await sharp(pixels,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
- const elements=[box('bowl_floor',[0,0,0],[16,2,16]),box('back_deck',[0,2,0],[16,8,3]),
-  box('front_wall',[0,2,14],[16,8,16]),box('left_wall',[0,2,3],[2,8,14]),box('right_wall',[14,2,3],[16,8,14]),
-  box('tap_foot',[6,8,0],[10,9,4],'rim'),box('tap_stem',[7,9,1],[9,15,3]),
-  box('tap_spout',[7,13,3],[9,15,7]),box('tap_nozzle',[7,11,6],[9,13,8],'metal')];
- elements[0].faces.up.texture='#floor';
- for(const e of elements.slice(1,5))e.faces.up.texture='#rim';
- for(const [index,side]of [[1,'south'],[2,'north'],[3,'east'],[4,'west']])elements[index].faces[side].texture='#inner';
- elements[8].faces.down.texture='#hole';
+ const elements=[
+  box('recessed_plinth',[1,0,1],[15,1,15],'metal'),
+  box('cabinet_and_bowl_floor',[1,1,1],[15,9,15]),
+  box('back_wall',[0,1,0],[16,15,3]),box('front_cabinet',[0,1,13],[16,15,16]),
+  box('left_wall',[0,1,3],[3,15,13]),box('right_wall',[13,1,3],[16,15,13]),
+  box('counter_back',[0,15,0],[16,16,3],'rim'),box('counter_front',[0,15,13],[16,16,16],'rim'),
+  box('counter_left',[0,15,3],[3,16,13],'rim'),box('counter_right',[13,15,3],[16,16,13],'rim'),
+  box('tap_foot',[6.5,16,0.5],[9.5,17,3.5],'metal'),
+  box('tap_stem',[7.5,17,1.5],[8.5,21,2.5],'metal'),
+  box('tap_arch',[7.5,20,2.5],[8.5,21,7],'metal'),
+  box('tap_nozzle',[7.5,18.5,6],[8.5,20,7],'metal'),
+  box('mixer_lever',[9,17,1],[11,17.75,2],'metal'),
+  box('left_cabinet_handle',[6,7,15.75],[6.75,10,16.25],'metal'),
+  box('right_cabinet_handle',[9.25,7,15.75],[10,10,16.25],'metal')];
+ elements[1].faces.up.texture='#floor';
+ elements[3].faces.south={texture:'#front',uv:[0,1,16,15]};
+ for(const [index,side]of [[2,'south'],[3,'north'],[4,'east'],[5,'west']])elements[index].faces[side].texture='#inner';
+ elements[13].faces.down.texture='#hole';
  const model={parent:'minecraft:block/block',textures:{particle:'ccd:block/copper_water_basin/outer',
-  outer:'ccd:block/copper_water_basin/outer',inner:'ccd:block/copper_water_basin/inner',floor:'ccd:block/copper_water_basin/floor',
-  rim:'ccd:block/copper_water_basin/rim',metal:'ccd:block/fluid_arm/metal',hole:'ccd:block/fluid_arm/core'},elements};
+  outer:'ccd:block/copper_water_basin/outer',front:'ccd:block/copper_water_basin/front',inner:'ccd:block/copper_water_basin/inner',
+  floor:'ccd:block/copper_water_basin/floor',rim:'ccd:block/copper_water_basin/rim',metal:'ccd:block/copper_water_basin/metal',hole:'ccd:block/fluid_arm/core'},elements};
  save(path.join(assets,'models/block/copper_water_basin.json'),model);
+ save(path.join(assets,'models/item/copper_water_basin.json'),{parent:'ccd:block/copper_water_basin',
+  display:{gui:{rotation:[25,225,0],translation:[0,-1,0],scale:[.55,.55,.55]}}});
  const variants={};for(const [facing,y]of [['south',0],['west',90],['north',180],['east',270]])
   variants['facing='+facing]={model:'ccd:block/copper_water_basin',...(y?{y}:{})};
  save(path.join(assets,'blockstates/copper_water_basin.json'),{variants});
@@ -52,21 +67,22 @@ async function main(){
   const stripe=(y===3&&x>=2&&x<=7)||(y===9&&x>=9&&x<=13)||(x===4&&y>=11&&y<=13);
   paint(waterData,x,y,stripe?[78,136,195]:[47,108,177]);
  }
- const surface={vertices:[[1.125,6,1.125],[1.125,6,14.875],[14.875,6,14.875],[14.875,6,1.125]],n:[0,1,0],
+ const surface={vertices:[[1.125,14,1.125],[1.125,14,14.875],[14.875,14,14.875],[14.875,14,1.125]],n:[0,1,0],
   uv:[[0,0],[0,16],[16,16],[16,0]],pixels:{data:waterData,info:{width:16,height:16,channels:4}}};
  const panels=[];
  for(const [i,faces,name,view]of [[0,[...shell,surface],'front',[25,24,34]],[1,shell,'empty',[25,30,34]],
   [2,[...shell,surface],'rear',[-26,24,-34]]]){
-  const buffer=await render(faces,500,510,view,{center:[8,7,8],scale:21});
+  const buffer=await render(faces,500,510,view,{center:[8,10,8],scale:18});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*500,top:95});
  }
- const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · 厨房水槽式样</text><text x="750" y="78" font-size="16">浅槽体 · 平整槽沿 · 铜龙头 · 灰色短出水嘴</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽结构与排水口细节</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 空槽仅用于查看结构；游戏内始终装水并沿用原生水面渲染 / 未启动游戏</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · 现代柜式水槽</text><text x="750" y="78" font-size="16">铜色双门柜体 · 灰色台面与内嵌金属槽盆 · 细金属龙头</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽结构与柜门细节</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 空槽仅用于查看结构；游戏内始终装水并沿用原生水面渲染 / 未启动游戏</text></g></svg>`);
  await sharp({create:{width:1500,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  save(path.join(output,'model.meta.json'),{textureSize:[16,16],geometry:elements.map(({name,from,to})=>({name,from,to})),
-  front:'south',facing:'four horizontal directions',rimHeight:8,nativeWaterScaleY:.5,fullWaterSurfaceY:6,
+  front:'south',facing:'four horizontal directions',rimHeight:16,nativeWaterScaleY:.625,nativeWaterOffsetY:6.5,fullWaterSurfaceY:14,
   waterRendering:'native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved',
   inventoryAndInteraction:'unchanged infinite fixed water; ordinary right click fills, sneak disposes',
-  artwork:'CCD original pixel textures derived from existing CCD faucet palette; no upstream artwork copied'});
+  reference:'https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json',
+  artwork:'CCD original geometry and pixels; cabinet/countertop/inset-bowl composition references Cooking for Blockheads; no external model or texture copied'});
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
