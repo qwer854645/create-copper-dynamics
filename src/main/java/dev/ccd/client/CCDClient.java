@@ -33,6 +33,7 @@ import com.simibubi.create.content.kinetics.mechanicalArm.ArmVisual;
 public final class CCDClient {
     /** Register before model baking; native package entities and conveyors use these maps. */
     public static void init() {
+        net.createmod.ponder.foundation.PonderIndex.addPlugin(new dev.ccd.client.ponder.CCDPonderPlugin());
         AtomizerModels.init();
         FluidPackagerRenderer.registerModels();
         FluidGaugeModel.registerModels();
