@@ -1,0 +1,19 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "type": "neoforge:single",
+      "fluid": "minecraft:water",
+      "amount": 1000
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "results": [
+    {
+      "id": "ccd:purifying_solution",
+      "amount": 1000
+    }
+  ]
+}

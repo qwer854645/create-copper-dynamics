@@ -1,4 +1,7 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "ccd:enriching_reagent",
+    "ccd:flowing_enriching_reagent"
+  ]
 }

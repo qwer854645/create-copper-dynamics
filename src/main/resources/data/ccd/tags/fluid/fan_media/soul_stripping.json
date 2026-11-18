@@ -1,4 +1,7 @@
 {
   "replace": false,
-  "values": []
+  "values": [
+    "ccd:soul_stripping_reagent",
+    "ccd:flowing_soul_stripping_reagent"
+  ]
 }

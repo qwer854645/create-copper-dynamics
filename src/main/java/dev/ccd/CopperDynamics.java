@@ -319,6 +319,7 @@ public final class CopperDynamics {
     public CopperDynamics(IEventBus bus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
         CCDFluids.register(bus);
+        dev.ccd.compat.ProcessingMedia.register(bus);
         CatnipServices.PLATFORM.executeOnClientOnly(() -> CCDClient::init);
         ITEMS.register(bus);
         BLOCKS.register(bus);
@@ -353,6 +354,7 @@ public final class CopperDynamics {
                 output.accept(SMART_COLLECTION_GRATE_ITEM.get());
                 output.accept(COPPER_BUCKET.get());
                 output.accept(QUICKSAND_BUCKET.get());
+                for(var medium:dev.ccd.compat.ProcessingMedia.ALL) output.accept(medium.bucket.get());
                 output.accept(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET);
                 output.accept(HONEYCOMB_MOLD.get());
                 output.accept(FLUID_ATOMIZER_ITEM.get());

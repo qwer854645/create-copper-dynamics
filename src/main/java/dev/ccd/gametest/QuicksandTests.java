@@ -18,6 +18,18 @@ import net.minecraft.world.item.ItemStack;
 @PrefixGameTestTemplate(false)
 public final class QuicksandTests {
     @GameTest(template="empty")
+    public static void processingMediaRecipesAndBuckets(GameTestHelper h) {
+        for(var medium:dev.ccd.compat.ProcessingMedia.ALL) {
+            var bucket=new ItemStack(medium.bucket.get());
+            var handler=bucket.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
+            h.assertTrue(handler!=null && handler.getFluidInTank(0).getFluid()==medium.source.get(),"Reagent bucket has wrong fluid: "+medium.id);
+            if(medium.id.equals("enriching_reagent") && !net.neoforged.fml.ModList.get().isLoaded("createnuclear")) continue;
+            var recipe=h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ccd","mixing/"+medium.id));
+            h.assertTrue(recipe.isPresent(),"Reagent mixing recipe failed to load: "+medium.id);
+        }
+        h.succeed();
+    }
+    @GameTest(template="empty")
     public static void optionalCompatDoesNotInventMissingTypes(GameTestHelper h) {
         h.assertTrue(dev.ccd.compat.FanCompat.find("ccd_missing_test","sanding")==null,"Missing optional mod must not resolve a fan type");
         h.assertTrue(dev.ccd.compat.FanCompat.select(new FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000))==null,"Compatibility layer unexpectedly replaced ordinary water");
