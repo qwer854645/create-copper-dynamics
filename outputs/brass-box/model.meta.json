@@ -54,7 +54,7 @@
     ]
   ],
   "artwork": "hand-drawn brass panel, independent pixel layout from the copper canister",
-  "windows": "two existing fluid color samples; no dynamic level or fluid texture added",
+  "windows": "two matching 3x5 panes with different pixel-glass reflections; existing fluid color samples",
   "sharedResources": [
     "fluid_canister/band",
     "fluid_canister/flat",

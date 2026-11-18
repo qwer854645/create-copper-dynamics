@@ -69,7 +69,9 @@ def main():
             window = 8 <= y <= 12 and (4 <= x <= 6 or 9 <= x <= 11)
             plane(f'front_{x}_{y}', x,y,1,3.02 if window else 3,
                   'window' if window else 'side', (0 if x < 8 else 1) if window else None)
-    for x,y in ((5,8),(4,9),(10,8),(9,9)):
+    # Equal window geometry, distinct reflections: left diagonal glints;
+    # right a short upper streak and a separate lower corner glint.
+    for x,y in ((5,8),(4,9),(10,9),(11,9),(9,12)):
         plane(f'glint_{x}_{y}',x,y,1,2.99,'glass')
     # Shared iron closure and glass resources deliberately match the copper canister.
     textures = {key:'ccd:item/fluid_canister/'+key for key in ('band','flat','cap','glass')}
@@ -144,7 +146,7 @@ def main():
     (OUT / 'model.meta.json').write_text(json.dumps(dict(name='Brass Box',model='ccd:item/composite_package',
         textureSize=[16,16],reference='Fluid Canister geometry; Create mechanical_arm and mechanical_arm_side brass',bounds=[12,12,12],palette=BRASS,
         artwork='hand-drawn brass panel, independent pixel layout from the copper canister',
-        windows='two existing fluid color samples; no dynamic level or fluid texture added',
+        windows='two matching 3x5 panes with different pixel-glass reflections; existing fluid color samples',
         sharedResources=['fluid_canister/band','fluid_canister/flat','fluid_canister/cap','fluid_canister/glass']),indent=2)+'\n')
 
 
