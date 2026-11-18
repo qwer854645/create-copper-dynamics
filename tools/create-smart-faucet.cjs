@@ -39,7 +39,7 @@ async function main(){
  save(path.join(assets,'blockstates/smart_faucet.json'),{multipart});
  const closed=loadModel('ccd:block/smart_faucet_closed');
  save(path.join(assets,'models/item/smart_faucet.json'),{parent:'ccd:block/smart_faucet_closed',render_type:'minecraft:cutout_mipped',
-  textures:{filter:'create:block/smart_pipe_2'},elements:[...closed.elements,panel]});
+  textures:{filter:'create:block/smart_pipe_2'},display:{gui:{rotation:[30,45,0],scale:[.625,.625,.625]}},elements:[...closed.elements,panel]});
  const panels=[];
  for(const [i,state,view]of [[0,'closed',[24,18,34]],[1,'open',[24,18,34]],[2,'open',[-24,18,-34]]]){
   const faces=[...await mesh('ccd:block/smart_faucet_'+state),...await mesh('ccd:block/smart_faucet_filter')];

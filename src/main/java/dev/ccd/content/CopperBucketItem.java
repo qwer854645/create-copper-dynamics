@@ -69,7 +69,9 @@ public final class CopperBucketItem extends Item {
         BlockPos pos = context.getClickedPos();
         // World liquid sources are handled below without requiring a registered filled-bucket item.
         if (player == null || level.getBlockState(pos).getBlock() instanceof LiquidBlock) return InteractionResult.PASS;
-        var target = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, context.getClickedFace());
+        var target = level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch
+            ? hatch.interactionHandler(context.getClickedFace())
+            : level.getCapability(Capabilities.FluidHandler.BLOCK, pos, context.getClickedFace());
         if (target == null) return InteractionResult.PASS;
         ItemStack stack = context.getItemInHand();
         if (!level.mayInteract(player, pos) || !player.mayUseItemAt(pos, context.getClickedFace(), stack)) return InteractionResult.FAIL;

@@ -1,3 +1,17 @@
 {
-  "parent": "ccd:block/faucet_closed"
+  "parent": "ccd:block/faucet_closed",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
+  }
 }

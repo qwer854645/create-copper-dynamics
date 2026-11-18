@@ -108,7 +108,8 @@ public final class CCDClient {
         for (var state : CopperDynamics.REDSTONE_FLUID_VALVE.get().getStateDefinition().getPossibleStates()) {
             var location = BlockModelShaper.stateToModelLocation(state);
             var baked = event.getModels().get(location);
-            if (baked != null) event.getModels().put(location, PipeAttachmentModel.withAO(baked));
+            // The inset sealed copper faces need flat lighting instead of interpolated corner AO.
+            if (baked != null) event.getModels().put(location, PipeAttachmentModel.withoutAO(baked));
         }
         // Reuse the native four-slot model and its active/passive panel variants.
         for (var state : CopperDynamics.FLUID_GAUGE.get().getStateDefinition().getPossibleStates()) {

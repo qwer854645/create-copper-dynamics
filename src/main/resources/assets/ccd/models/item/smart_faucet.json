@@ -4,6 +4,20 @@
   "textures": {
     "filter": "create:block/smart_pipe_2"
   },
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
+  },
   "elements": [
     {
       "name": "native_rim_connector_north_0",

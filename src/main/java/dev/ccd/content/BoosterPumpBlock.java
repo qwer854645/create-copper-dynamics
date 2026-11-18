@@ -2,8 +2,6 @@ package dev.ccd.content;
 
 import com.simibubi.create.content.fluids.pump.PumpBlock;
 import com.simibubi.create.content.fluids.pump.PumpBlockEntity;
-import com.simibubi.create.content.fluids.pipes.FluidPipeBlock;
-import com.simibubi.create.content.kinetics.base.IRotate;
 import dev.ccd.CopperDynamics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -11,7 +9,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -30,34 +27,7 @@ public final class BoosterPumpBlock extends PumpBlock {
 
     @Override public boolean isSmallCog() { return false; }
 
-    @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockState state = super.getStateForPlacement(context);
-        if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) return state;
-        var level = context.getLevel();
-        var pos = context.getClickedPos();
-        Direction fluidSide = null;
-        int[] shafts = new int[Direction.Axis.values().length];
-        for (Direction side : context.getNearestLookingDirections()) {
-            BlockPos adjacent = pos.relative(side);
-            if (!level.hasChunkAt(adjacent)) continue;
-            BlockState neighbour = level.getBlockState(adjacent);
-            if (FluidPipeBlock.canConnectTo(level, adjacent, neighbour, side)) {
-                if (side.getAxis() == state.getValue(FACING).getAxis()) return state;
-                if (fluidSide == null) fluidSide = side;
-            }
-            if (neighbour.getBlock() instanceof IRotate kinetic
-                && kinetic.hasShaftTowards(level, adjacent, neighbour, side.getOpposite()))
-                shafts[side.getAxis().ordinal()]++;
-        }
-        if (fluidSide != null) return state.setValue(FACING, fluidSide);
-        // With no pipe to align to, keep the fluid axis away from existing shaft connections.
-        Direction facing = state.getValue(FACING);
-        for (Direction side : context.getNearestLookingDirections()) {
-            if (shafts[side.getAxis().ordinal()] < shafts[facing.getAxis().ordinal()])
-                facing = side.getOpposite();
-        }
-        return state.setValue(FACING, facing);
-    }
+    // PumpBlock supplies placement, waterlogging and wrench reversal without CCD overrides.
 
     @Override public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return Shapes.block();

@@ -59,6 +59,28 @@ const rotate=(v,axis,angle,point)=>{
  return q.map(n=>n+(point?8:0));
 };
 const transform=(faces,axis,angle)=>faces.map(f=>({...f,vertices:f.vertices.map(v=>rotate(v,axis,angle,true)),n:rotate(f.n,axis,angle,false)}));
+const faceVertices=(from,to,side)=>{
+ const [x,y,z]=from,[X,Y,Z]=to;
+ return {north:[[X,Y,z],[X,y,z],[x,y,z],[x,Y,z]],south:[[x,Y,Z],[x,y,Z],[X,y,Z],[X,Y,Z]],
+  west:[[x,Y,z],[x,y,z],[x,y,Z],[x,Y,Z]],east:[[X,Y,Z],[X,y,Z],[X,y,z],[X,Y,z]],
+  up:[[x,Y,z],[x,Y,Z],[X,Y,Z],[X,Y,z]],down:[[x,y,Z],[x,y,z],[X,y,z],[X,y,Z]]}[side];
+};
+function inventoryShaft(source,yaw){
+ const e=structuredClone(source),normals={north:[0,0,-1],south:[0,0,1],east:[1,0,0],west:[-1,0,0],up:[0,1,0],down:[0,-1,0]};
+ const turn=p=>rotate(p,'y',yaw,true).map(v=>Math.round(v*1e6)/1e6);
+ const corners=[turn(source.from),turn(source.to)];
+ e.from=[0,1,2].map(k=>Math.min(...corners.map(p=>p[k])));e.to=[0,1,2].map(k=>Math.max(...corners.map(p=>p[k])));
+ e.name='inventory_shaft_'+yaw;e.faces={};delete e.rotation;
+ for(const [side,f]of Object.entries(source.faces)){
+  const n=rotate(normals[side],'y',yaw,false).map(Math.round);
+  const target=Object.keys(normals).find(key=>normals[key].every((v,k)=>v===n[k]));
+  const vertices=faceVertices(source.from,source.to,side).map(turn),first=faceVertices(e.from,e.to,target)[0];
+  const shift=vertices.findIndex(p=>p.every((v,k)=>Math.abs(v-first[k])<1e-5));
+  if(shift<0)throw Error('Unmatched native shaft UV corner');
+  e.faces[target]={...f,texture:f.texture==='#0'?'#shaft_side':'#shaft_end',rotation:((f.rotation||0)+shift*90)%360};
+ }
+ return e;
+}
 async function main(){
  // Create's gearbox/encased-shaft aperture is an opaque dark circular recess, not an alpha cutout.
  // Preserve the native hole and wall pixels; replace the old casing's brown corner pixels with copper.
@@ -74,11 +96,20 @@ async function main(){
   opening.copy(shaftFace,i,i,i+4);
  }
  if(casingPixelsReplaced!==4)throw Error('Unexpected native gearbox casing pixels');
- for(const [name,data]of Object.entries({body,shaft_face:shaftFace}))
-  await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
+ await sharp(body,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'body.png'));
+ const marked=await sharp(shaftFace,{raw:{width:16,height:16,channels:4}})
+  .resize(32,32,{kernel:'nearest'}).raw().toBuffer();
+ // Two tiny up-pointing stamps on each of the four shaft faces, outside the central shaft aperture.
+ const arrow=['010','111','010','010'];
+ for(const cy of [6,26])for(let y=0;y<4;y++)for(let x=0;x<3;x++)if(arrow[y][x]==='1')
+  marked.set([123,61,41,255],((cy-2+y)*32+15+x)*4);
+ await sharp(marked,{raw:{width:32,height:32,channels:4}}).png().toFile(path.join(textures,'shaft_face.png'));
  fs.writeFileSync(path.join(assets,'models/block/booster_pump.json'),JSON.stringify(model,null,2)+'\n');
- const shell=await mesh('ccd:block/booster_pump'),shaft=await mesh('create:block/shaft_half');
- const full=[...shell,...shaft,...transform(shaft,'y',180),...transform(shaft,'y',90),...transform(shaft,'y',-90)];
+ const nativeShaft=loadModel('create:block/shaft_half');
+ const item={parent:'ccd:block/booster_pump',textures:{shaft_side:nativeShaft.textures['0'],shaft_end:nativeShaft.textures['1']},
+  elements:[...elements,...[0,90,180,270].flatMap(yaw=>nativeShaft.elements.map(e=>inventoryShaft(e,yaw)))]};
+ fs.writeFileSync(path.join(assets,'models/item/booster_pump.json'),JSON.stringify(item,null,2)+'\n');
+ const full=await mesh('ccd:item/booster_pump');
  const horizontal=transform(full,'x',90),panels=[];
  for(const [i,faces,view]of [[0,horizontal,[26,20,-34]],[1,horizontal,[-26,20,34]],[2,full,[26,20,-34]]]){
   const buffer=await render(faces,500,480,view,{center:[8,8,8],scale:23});
@@ -97,7 +128,8 @@ async function main(){
   fluidAxis:'y before blockstate rotation',nativePipeModels:nativeParts,nativePipeTexture:'create:block/pipes',
   nativeShaftModel:'create:block/shaft_half',shaftOpeningTexture:'Create gearbox.png crop [4,4,12,12], brown casing corners replaced by copper',
   shaftOpeningCasingPixelsReplaced:casingPixelsReplaced,
-  shaftOpeningFaces:4,customBearings:0,rivets:0,previewOnlyShafts:true},null,2)+'\n');
+  shaftOpeningFaces:4,customBearings:0,rivets:0,itemShafts:4,shaftFaceSize:[32,32],
+  arrows:{perFace:2,faces:4,direction:'local +Y, follows FACING and native wrench reversal',glyph:arrow}},null,2)+'\n');
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,textures:2}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

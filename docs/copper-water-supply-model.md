@@ -10,6 +10,8 @@ body、cap、glass 均为 CCD 自绘 16×16 贴图，铜色阶延续已认可的
 
 物品模型使用原生 cage / open_eye 纹理与对应 UV，提供静态核心外观，四个方向都有眼睛，避免背包及掉落实体显示空箱。世界方块模型不含静态核心，避免与动态渲染重复。原版 blocks atlas 已包含 entity/conduit 目录，不需要额外复制纹理到 CCD。世界和物品共用 `block/copper_water_supply/water` 子模型；物品按框架与核心、透明水体的顺序绘制。
 
+物品 GUI 旋转改为 [20,25,0]、比例 .7，避免默认对角视角中前角铜柱挡住核心；只改变物品的显示变换。按同角度读取实际物品模型的离线图见 `outputs/client-fixes/item-models.png`。
+
 生成器为 `tools/create-copper-water-supply.cjs`，参数为本地 Create 源码与资源根目录（含本地解包的原版 entity/conduit 和 block/water_still 参考纹理）。离线预览读取实际外壳和水体子模型 JSON，核心则用原生几何、贴图和一帧水流作定格示意；预览不是客户端截图，游戏中核心由原生渲染器绘制。离线绘制器新增可选的逐像素深度排序与透明混合，水体不会被原来的 cutout 阈值丢弃，其他工具默认绘制路径不改。临时水流预览模型在 finally 中删除，不进入项目资源。`outputs/copper-water-supply/preview.png` 展示正面、背面、顶面；`textures.png` 为三张 CCD 自绘贴图的最近邻放大。
 
 保留现有注册 ID 和供水实现，本次不改变配方、容量、速率、能力缓存、红石暂停与容器交互。此前讨论的“接触有效容器的面显示原生流体接口”仍待后续接入。旧八棱罐身的 band 和 flat 贴图已移除。

@@ -93,7 +93,10 @@ async function main(){
  }
  const coreMaterial={...material,cage:'minecraft:entity/conduit/cage',eye:'minecraft:entity/conduit/open_eye'};
  save(path.join(assets,'models/item/copper_water_supply_frame.json'),{...base,textures:coreMaterial,elements:[...elements,cage,...eyes]});
- save(path.join(assets,'models/item/copper_water_supply.json'),composite('ccd:item/copper_water_supply_frame'));
+ const item=composite('ccd:item/copper_water_supply_frame');
+ // Looking exactly along a corner hides the centred core behind the front post.
+ item.display={gui:{rotation:[20,25,0],scale:[.7,.7,.7]}};
+ save(path.join(assets,'models/item/copper_water_supply.json'),item);
 
  // The world renderer delegates to ConduitRenderer. Preview shows a frozen native animation frame.
  const shellFaces=await mesh('ccd:block/copper_water_supply/frame'),itemFaces=await mesh('ccd:item/copper_water_supply_frame');

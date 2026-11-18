@@ -57,7 +57,7 @@
 - 已核对实际依赖 NeoForge 的 `BlockCapabilityCache` 创建参数、有效性与失效回调约束，以及 Create 的机械合成配方格式。供水调用标准有向 `IFluidHandler.fill`，先模拟再执行，不另写管道压力或网络搜索。
 - 方块和实体分别继承铜水槽对应类，只开放实体类型构造参数。固定纯水库存仍继承原生 `CreativeSmartFluidTank`；手持操作、原生同步／移除和六面被动抽水完全共用。内部显示原版激活核心与清淡的透明水体；水体由 NeoForge 原生 composite 模型合并，以原版 water_still 改色纹理保留动画。动画只影响客户端外观，不增加服务端 tick 或邻居扫描。
 - 每个方向持有一个 `BlockCapabilityCache`，缓存包含 null 能力。失效回调只唤醒供水时间，不查询世界或立即重建；位置或维度改变时重新建缓存，移除时释放引用。回调有效性检查方块实体与原位置，缓存按 API 自动处理区块卸载，不强制加载。
-- 每 5 tick 运行一次六面供水，无接收量则延长至 20 tick；没有每 tick 的邻居能力扫描。供水轮次中检查原生控制器身份，CCD 舱口代理通过现有解析器识别实时后方容器，防止重复配额；空目标不进行额外方块实体查询。
+- 每 5 tick 运行一次六面供水，无接收量则延长至 20 tick；没有每 tick 的邻居能力扫描。供水轮次中检查原生控制器身份以防重复配额，不经舱口访问容器；空目标不进行额外方块实体查询。
 - 配置 `[waterSupply] rate` 默认 1000 mB/t，每轮配额按 5 tick 折算，0 关闭，-1 取消本机配额。无限模式汇总可接收水的槽位余量后有限注水，支持总容量超过 int 的多槽接口，并在目标只接受部分时停止本轮，避免对吞液口或限流接口无界循环。原生创造罐及 CCD 无限源直接跳过。
 - 注册了方块、物品、能力、5×5 原生机械合成配方、普通本体掉落、镐标签与中英文护目镜信息。仅做静态检查，未编译、运行或进行性能实测。
 
@@ -71,7 +71,7 @@
 
 ## 智能储罐
 
-- `SmartFluidTankBlock extends FluidTankBlock`、`SmartFluidTankBlockEntity extends FluidTankBlockEntity`、`SmartFluidTankRenderer extends FluidTankRenderer`，物品也使用原生 `FluidTankItem`。方块状态、碰撞、放置、窗口扳手操作、声音、比较器入口、实体 tick、位置变化、同步节流及窗口布局沿用父类，不重新实现储罐方块体系。
+- `SmartFluidTankBlock extends FluidTankBlock`、`SmartFluidTankBlockEntity extends FluidTankBlockEntity`、`SmartFluidTankRenderer extends FluidTankRenderer`，物品也使用原生 `FluidTankItem`。 整层放置保留其原始 tryMultiPlace，仅对 CCD 物品调整其中的储罐种类判断和 ConnectivityHandler.partAt 的实体类型，支持在已有 2×2/3×3 结构的上下方续放整层，遵守潜行、空间、数量和对称法杖条件。方块状态、碰撞、放置、窗口扳手操作、声音、比较器入口、实体 tick、位置变化、同步节流及窗口布局沿用父类，不重新实现储罐方块体系。
 - updateConnectivity 直接包装调用 super.updateConnectivity，父类更新路径继续调用原生连接器；仅在原生控制器设置／移除回调中执行多流体库存转移。正常合罐集中到控制器并清空成员原库存，拆分时按原生遍历顺序分配到独立储罐，再由连接器重新组罐。原生单流体迁移分支关闭，防止只转移第一种流体；其兼容字段不拥有实际液体，也不写入 TankContent。
 - `SmartTankInventory` 是控制器唯一实际库存；所有成员的 `SmartTankClusterInventory` 仅转接到它。共享容量由原生尺寸乘单罐容量计算。类型和完整组件相同时合并，普通填充检查种类数和共享余量，指定抽取跨同身份的存储项扣除。合罐转移不受构建期间的临时单块容量限制，最终容量取父类结构尺寸；拆分按剩余容量分配，超量消失，不会产生第二份资源。
 - 只在控制器写完整 Fluids；成员使用父类原生 Controller 结构引用，尺寸、窗口及位置等字段也由父类读写。不再写独立的 Width／StorageVersion 或添加旧版分块存档迁移。蓝图安全数据不包含实际液体。
@@ -81,30 +81,24 @@
 
 ## 流体舱口
 
-- 先阅读 `ItemHatchBlock`／`ItemHatchBlockEntity`／`ItemHatchHandler`／`HatchFilterSlot`、`FluidTankBlock`／`FluidTankBlockEntity`、`FluidHelper`、`GenericItemEmptying`／`GenericItemFilling`、`PortableFluidInterfaceBlockEntity`、`FluidPipeBlock`／`FluidPropagator` 和 `IHaveGoggleInformation`。仅使用 Create 源码及 NeoForge API，没有读取三个流体附属的实现代码。
-- `FluidHatchBlock extends ItemHatchBlock`，直接复用水平侧面安装、含水状态、扳手行为及移除方块实体逻辑；手动取放保留音效，不触发开合或延时复位。普通版模型改为 12×12、厚 2 的铜板，中央直接平移接入原生流体管口，选取与碰撞通过原生 VoxelShaper 按四个水平方向旋转，指定 `cutout_mipped` 渲染层。端面固定使用原生深色管孔，不设置灰色内盖或开合，不更改流体代理逻辑，详见 `docs/fluid-hatch-model.md`；智能版采用同类黄铜平板结构。
-- `FluidHatchBlockEntity extends ItemHatchBlockEntity`，普通版覆盖 `addBehaviours` 和 `clearContent`，不创建原生物品过滤行为、物品库存或流体储罐。原生护目镜的 `containedFluidTooltip` 显示的是后方容器实时内容。
-- 通过 NeoForge `Capabilities.FluidHandler.BLOCK` 注册正面及无方向的代理；每次操作查询背后容器朝向舱口面的能力。`FACING` 沿用原生定义，指向容器；正面与被查询容器面均为其反方向。代理保留填充／抽取、模拟／执行和流体组件，不调用无方向的后方接口来绕开面限制。
-- 手动取放直接调用原生 `FluidHelper.tryEmptyItemIntoBE`／`tryFillItemFromBE`，优先灌入，再尝试取出，兼容其玻璃瓶、药水及标准流体容器路径。原生取出方法只检查显示存量、不模拟源端抽取，因此该次交互期间根据 `GenericItemFilling.getRequiredAmountForItem` 取得本次容器所需数量，仅向它显示经精确 `drain(SIMULATE)` 确认可取出的流体，避免绕过只读、限流或定量抽取限制；普通能力读取和护目镜仍显示原始库存。临时容器副本只在该次调用期间使用，finally 清除，不存档、不对外提供库存。执行偏离模拟等接口违约情况没有另建缓冲或事务机制。
-- 原生 `ItemHatchHandler` 只匹配 Create 注册的普通舱口，因此增加限定 CCD 舱口、流体容器且未明确禁止方块交互的潜行交互钩子；扳手操作不拦截。手动交互沿用原生不接受 FakePlayer 的规则，自动化通过流体能力操作。
-- 稳定代理重新解析后方目标，不保留过期容器能力；逐方向代理每次复核朝向，旋转时也调用原生能力失效通知。每次查询检查区块加载及实体有效性，线程内调用链最多 64 层并拒绝重入，防止舱口或第三方代理循环递归。
-- `FluidInventoryBehaviour` 在取得物流库存身份前解析 CCD 舱口链，再沿用 Create 储罐控制器归一化，避免经舱口重复统计同一库存。第三方自有代理的身份归一化范围没有扩大。
-- 已补齐注册、创造栏、模型、配方、掉落、镐标签及中英文提示。仅做静态检查，没有构建或游戏运行结论。
+- `FluidHatchBlock extends ItemHatchBlock`，复用水平侧面安装、含水、扳手及移除逻辑。普通版是薄铜板和原生管口，智能版是黄铜薄板、原生管口与过滤面板；交互只播放音效，不开合。
+- 舱口不注册 `Capabilities.FluidHandler.BLOCK`。管道、打包机、供水箱等机器不能通过正面或无方向查询转接后方容器，也不支持串联舱口；移除原舱口链的物流身份解析。
+- `interactionHandler` 只供手持与 CCD 移液臂显式调用，每次重新查询背后容器朝向舱口的有向接口，复核加载与实体有效性；不保存库存或过期的后方能力。保留第三方代理递归的线程内重入保护。
+- 手动交换仍调用原生 `FluidHelper.tryEmptyItemIntoBE`／`tryFillItemFromBE`。限定这两个方法接收 CCD 舱口时，以 Mixin 向原生流程提供显式处理器；其余方块继续原有能力查询。继续用 GenericItemFilling 的所需量和精确 drain(SIMULATE) 检查可取数量，保留瓶、药水及通用容器行为。
+- 铜桶与移液臂的目标选择、模拟和执行使用显式舱口处理器。其他容器仍通过标准有向能力访问，移液臂的直接容器配置仍生效。普通方块交互仍保留 FakePlayer 限制及原生潜行使用手中容器规则。
+- 护目镜沿用原生 containedFluidTooltip，显示后方真实库存；没有独立物品或流体库存。仅静态检查，未构建或游戏验证。
 
 ## 智能流体舱口
 
-- 阅读原生 `SmartFluidPipeBlockEntity`、`FilteringBehaviour`、`FilterItemStack`、`HatchFilterSlot`、`ValueSettingsInputHandler` 和 `SmartBlockEntityRenderer`，直接接入 `FilteringBehaviour.forFluids()` 与原生 `ValueBoxTransform.Sided`（原 HatchFilterSlot 已替换为对齐平板的正面面板坐标），不另写过滤匹配、配置网络或保存格式。父类构造期间的行为注册使用继承自 `ItemHatchBlockEntity` 的 `filtering` 字段，避免子类字段初始化覆盖行为实例。
-- `SmartFluidHatchBlock`／`SmartFluidHatchBlockEntity` 继承普通舱口，父类增加带类型的构造及流体接收、按数量抽取扩展点。公共流体能力在 `isFluidValid`、`fill` 和指定流体的 `drain` 入口统一检查过滤；不指定流体的 `drain` 遍历匹配罐，先模拟再执行指定流体抽取。普通版保留直接委托的行为。
-- 智能版未配置过滤时明确拒绝进出，这是相对原生空过滤器的唯一默认语义调整。读取库存仍返回后方真实数据，保留物理库存身份去重；手动取液所使用的临时视图同时检查过滤和精确抽取量，防止原生装瓶方法绕过限制。模拟和执行均不通过无过滤的后方能力提供额外入口。
-- 过滤变更失效能力缓存并从正面相邻实际管路传播压力变化；紧邻泵时使用其 `updatePressureChange`。旧代理每次仍检查当前过滤，移液臂到达前改变过滤后也必须重新验证。串联舱口逐层执行各自过滤，不绕开中间代理。
-- 移液臂的舱口类型检查和物流身份解析使用基类 `instanceof`，因此智能子类直接兼容默认舱口交互限制和实际容器身份归一化。客户端注册原生 `SmartBlockEntityRenderer` 绘制过滤图标；模型采用黄铜平板、下方原生铜管口及上方原生智能管道过滤面板；图标和点击中心为模型坐标 [8,13,3.05]，仅 FACING 的反向可配置过滤，缩放 .375，碰撞同步改为平板结构，见 `docs/smart-fluid-hatch-model.md`。
-- 已补齐注册、创造栏、配方、掉落、模型、镐标签和中英文提示。仅做静态检查，未构建或运行。
+- 使用继承的 filtering 字段与原生 FilteringBehaviour.forFluids、ValueBoxTransform.Sided、匹配、保存和同步。未配置过滤时明确拒绝进出；isFluidValid、fill 和指定流体 drain 共用过滤，不指定流体时遍历后方罐位并模拟匹配流体的抽取。
+- 修改过滤后，手持交互与移液臂每次重新检查当前条件。由于不再连接管路，删除过滤变化唤醒正面泵、传播管网压力和串联舱口相关逻辑。
+- SmartBlockEntityRenderer 继续显示原生过滤图标；正面面板的图标及点击中心为 [8,13,3.05]，比例 .375，四向位置、几何及碰撞保持既有平板方案。模型详见 docs/smart-fluid-hatch-model.md。
 
 ## 动力移液臂
 
 - 已阅读 `ArmBlock`、`ArmItem`、`ArmBlockEntity`、`ArmInteractionPoint`／`Type`／`Handler`、`ArmPlacementPacket`、`ArmRenderer`／`ArmVisual` 及 Create 的交互点注册表。原生目标选择物品判断硬编码了普通动力臂，取放与货载使用 ItemStack，因此保留原生机械部分并专门适配流体选择和交互点。
 - `FluidArmBlock extends ArmBlock`、`FluidArmBlockEntity extends ArmBlockEntity`。状态机 tick、输入和输出搜索、三种输出策略、转速影响、动画角度、红石锁与持货存档直接复用；手动卸货时将液囊转换成普通流体罐，拆除则清空爪端流体后调用父类销毁，不生成恢复包裹。
-- `FluidArmPoint` 将每个输入的流体罐视作一个可查询槽位，明确保存点击面，通过标准有向流体能力取放。`FluidArmCargoItem` 继承 CCD 流体罐，以现有流体组件桥接原生货载，但用独立液囊模型呈现，并且不加入配方、创造栏或原生随机包裹池。它保存已从源移出的真实在途流体，不对外暴露库存或流体能力。每次最多 1000 mB，目标暂时拒收后仍由原生 heldItem 保存剩余量。卸货转换复制完整组件；读取旧版普通包裹货载时转换为液囊。
+- `FluidArmPoint` 将每个输入的流体罐视作一个可查询槽位，明确保存点击面，通过显式舱口入口或标准有向流体能力取放。`FluidArmCargoItem` 继承 CCD 流体罐，以现有流体组件桥接原生货载，但用独立液囊模型呈现，并且不加入配方、创造栏或原生随机包裹池。它保存已从源移出的真实在途流体，不对外暴露库存或流体能力。每次最多 1000 mB，目标暂时拒收后仍由原生 heldItem 保存剩余量。卸货转换复制完整组件；读取旧版普通包裹货载时转换为液囊。
 - 覆盖 `getDistributableAmount` 将原生物品数量计算换成真实 mB 接收量。预检使用单个有效输出的最大接收量，不累加可能重叠的能力视图；实际交付与部分接收继续走原生输出调度及自定义交互点。`collectItem` 仅在原生取货后追加空货载检查，处理流体接口模拟成功、执行为空时的阶段恢复；不替换原生取货调度。
 - 原生交互点反序列化没有机械臂调用者参数，全球目标选择又与普通物品动力臂共享。因此将 fluid_arm_point 类型注册用于原生序列化，但不加入普通臂的可选目标；流体子类通过专用加载器验证类型、数量、相对距离、点击面和已加载区块，构造输入输出列表。保留原生 writeInteractionPoints 和相对坐标格式，结构变换同时旋转目标相对位置及接触面。
 - 一个 `FluidArmAccessor` 暴露原生包可见状态，供目标初始化和配置时安全重置当前阶段使用，没有替换原生调度方法。客户端收包后刷新目标列表，避免目标数量相同但面或模式已改变时沿用旧数据。

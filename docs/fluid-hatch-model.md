@@ -12,6 +12,8 @@
 
 智能版沿用平板设计，上方配置过滤、下方设置管口；同样不进行开合。普通版生成器不覆盖智能版模型。
 
+两种舱口的管口均用于表现手持与移液臂交互位置，不提供管道/机器的世界流体能力，不通过贴壁结构远程转接到后方容器；显式交互仍遵守后方容器的有向接口和智能过滤。详见 `docs/client-fixes.md`。
+
 生成器为 `tools/create-fluid-hatch.cjs`，参数为解压后的 Create 源码根目录。`outputs/fluid-hatch/preview.png` 展示原生舱口、CCD 正面和侧面，`textures.png` 展示铜色框架图集，`model.meta.json` 记录资源来源与变换。仅静态检查与离线渲染，未构建、测试或启动游戏；离线预览不是游戏内验证。
 
 铜板几何与贴图为 CCD 自有资源。原生管口几何、UV、贴图和舱口物品显示变换归 The Create Team / The Creators of Create 所有，不将上游美术标为 CCD 原创或 MIT 资源；许可见 [Create LICENSE.md](https://github.com/Creators-of-Create/Create/blob/mc1.21.1/dev/LICENSE.md)。

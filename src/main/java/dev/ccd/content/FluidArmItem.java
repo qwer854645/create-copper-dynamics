@@ -23,7 +23,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.capabilities.Capabilities;
 
 /** Server-authoritative preselection through the normal item-use packet, before a container opens. */
 public final class FluidArmItem extends BlockItem {
@@ -70,7 +69,7 @@ public final class FluidArmItem extends BlockItem {
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
         Direction face = context.getClickedFace();
-        if (level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face) == null) return InteractionResult.PASS;
+        if (FluidArmPoint.interactionHandler(level, pos, face) == null) return InteractionResult.PASS;
         if (!FluidArmPoint.canTarget(level, pos)) {
             if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.fluid_arm.hatch_required").withStyle(ChatFormatting.YELLOW), true);
             return InteractionResult.sidedSuccess(level.isClientSide());

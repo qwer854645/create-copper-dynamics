@@ -12,6 +12,8 @@
     "BoosterPumpConnectionMixin",
     "BoosterPumpDiscoveryMixin",
     "BoosterPumpShaftMixin",
+    "SmartFluidTankPlacementMixin",
+    "FluidHatchHandheldMixin",
     "FluidValvePointerAccessor",
     "ThreeWayValveEndpointMixin",
     "FluidArmAccessor",

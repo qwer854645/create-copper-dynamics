@@ -27,7 +27,7 @@ async function main(){
  for(const orientation of ['horizontal','vertical'])for(const state of ['closed','open']){
   const name='block_'+orientation+'_'+state,id='create:block/fluid_valve/'+name,native=loadModel(id);
   fs.writeFileSync(path.join(assets,'models/block/redstone_fluid_valve/'+name+'.json'),
-   JSON.stringify({parent:id,render_type:'minecraft:cutout_mipped',
+   JSON.stringify({parent:id,ambientocclusion:false,render_type:'minecraft:cutout_mipped',
     textures:{copper:'create:block/copper_underside'},elements:sealShaftFaces(native)},null,2)+'\n');
  }
  for(const state of ['closed','open'])fs.writeFileSync(path.join(assets,'models/block/redstone_fluid_valve/dial_'+state+'.json'),
@@ -35,7 +35,7 @@ async function main(){
  const nativeItem=loadModel('create:block/fluid_valve/item'),nativePointer=loadModel('create:block/fluid_valve/pointer');
  const pointerElements=JSON.parse(JSON.stringify(nativePointer.elements));
  for(const e of pointerElements){e.name='outer_native_pointer';for(const endpoint of [e.from,e.to])endpoint[1]=8+(endpoint[1]-8)*6.02/5.5;}
- const item={parent:'create:block/fluid_valve/item',render_type:'minecraft:cutout_mipped',textures:{...nativeItem.textures,
+ const item={parent:'create:block/fluid_valve/item',ambientocclusion:false,render_type:'minecraft:cutout_mipped',textures:{...nativeItem.textures,
   copper:'create:block/copper_underside',dial:'create:block/valve_open'},
   elements:[...sealShaftFaces(nativeItem).filter(e=>e.name!=='Axis'),...planes('#dial'),...transformPointerElements(pointerElements)]};
  fs.writeFileSync(path.join(assets,'models/item/redstone_fluid_valve.json'),JSON.stringify(item,null,2)+'\n');

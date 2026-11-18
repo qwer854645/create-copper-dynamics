@@ -65,12 +65,9 @@ public final class CopperWaterSupplyBlockEntity extends CopperWaterBasinBlockEnt
         for (var target : targets) {
             IFluidHandler handler = target.cache.getCapability();
             if (handler == null || !handlers.add(handler)) continue;
-            // Resolve proxy identity at operation time: a hatch can change its backing container without changing its own capability.
+            // Deduplicate the current native tank controller before spending this endpoint's quota.
             BlockPos endpoint = target.cache.pos();
             if (!server.hasChunkAt(endpoint)) continue;
-            if (server.getBlockEntity(endpoint) instanceof FluidHatchBlockEntity)
-                endpoint = FluidHatchBlockEntity.resolveContainer(server, endpoint, target.cache.context());
-            if (endpoint == null || !server.hasChunkAt(endpoint)) continue;
             var entity = server.getBlockEntity(endpoint);
             // Do not spend supply work on another infinite source or creative fluid sink.
             if (entity instanceof CopperWaterBasinBlockEntity || entity instanceof CreativeFluidTankBlockEntity

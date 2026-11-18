@@ -1,8 +1,6 @@
 package dev.ccd.content;
 
 import java.util.List;
-import com.simibubi.create.content.fluids.FluidPropagator;
-import com.simibubi.create.content.fluids.pump.PumpBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
@@ -32,8 +30,7 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
             @Override protected boolean isSideActive(BlockState state, Direction side) {
                 return side == state.getValue(FluidHatchBlock.FACING).getOpposite();
             }
-        }).forFluids()
-            .withCallback(this::filterChanged));
+        }).forFluids());
     }
     @Override public void clearContent() { filtering.setFilter(ItemStack.EMPTY); }
     @Override protected boolean acceptsFluid(FluidStack fluid) {
@@ -52,15 +49,6 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
             return target.drain(planned.copyWithAmount(Math.min(wanted.getAmount(), planned.getAmount())), action);
         }
         return FluidStack.EMPTY;
-    }
-    private void filterChanged(ItemStack stack) {
-        if (level == null || level.isClientSide()) return;
-        invalidateCapabilities();
-        var front = getBlockState().getValue(FluidHatchBlock.FACING).getOpposite();
-        BlockPos neighbour = worldPosition.relative(front);
-        if (!level.hasChunkAt(neighbour)) return;
-        if (level.getBlockEntity(neighbour) instanceof PumpBlockEntity pump) pump.updatePressureChange();
-        else FluidPropagator.propagateChangedPipe(level, neighbour, level.getBlockState(neighbour));
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);

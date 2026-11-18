@@ -8,6 +8,7 @@ import dev.ccd.CCDConfig;
 import dev.ccd.content.FluidArmBlockEntity;
 import dev.ccd.content.FluidArmCargoItem;
 import dev.ccd.content.FluidHatchBlock;
+import dev.ccd.content.FluidHatchBlockEntity;
 import dev.ccd.content.FluidPackageItem;
 import dev.ccd.content.FluidCargo;
 import net.minecraft.core.BlockPos;
@@ -39,7 +40,13 @@ public final class FluidArmPoint extends ArmInteractionPoint {
             || CCDConfig.ARM_ALLOW_DIRECT_CONTAINER_INTERACTION.get());
     }
     @Nullable private IFluidHandler handler() {
-        return canTarget(level, pos) ? level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face) : null;
+        return canTarget(level, pos) ? interactionHandler(level, pos, face) : null;
+    }
+    /** Hatches are arm/handheld interfaces, not pipe or machine forwarding capabilities. */
+    @Nullable public static IFluidHandler interactionHandler(Level level, BlockPos pos, Direction face) {
+        if (!level.hasChunkAt(pos)) return null;
+        if (level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch) return hatch.interactionHandler(face);
+        return level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face);
     }
     private boolean allowed(ArmBlockEntity arm) {
         return arm instanceof FluidArmBlockEntity && !arm.isRemoved() && level == arm.getLevel()

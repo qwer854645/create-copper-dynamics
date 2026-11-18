@@ -53,7 +53,7 @@ public class FluidHatchBlock extends ItemHatchBlock {
         }
         if (level.isClientSide() || player instanceof FakePlayer) return ItemInteractionResult.SUCCESS;
         if (!(level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch)) return ItemInteractionResult.SUCCESS;
-        if (hatch.fluidHandler(null).getTanks() == 0) {
+        if (hatch.interactionHandler(null).getTanks() == 0) {
             player.displayClientMessage(Component.translatable("ccd.fluid_hatch.no_container").withStyle(ChatFormatting.RED), true);
             return ItemInteractionResult.SUCCESS;
         }

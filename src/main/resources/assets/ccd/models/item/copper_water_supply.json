@@ -16,5 +16,19 @@
   "item_render_order": [
     "frame",
     "water"
-  ]
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        20,
+        25,
+        0
+      ],
+      "scale": [
+        0.7,
+        0.7,
+        0.7
+      ]
+    }
+  }
 }

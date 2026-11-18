@@ -8,6 +8,8 @@
 
 智能龙头通过父模型引用继承这套几何；其正面过滤面板、黄铜像素贴图与交互位置对齐另见 `docs/smart-faucet-model.md`。
 
+两种龙头的物品 GUI 旋转单独设为 [30,45,0]，比例 .625，使喷嘴和智能版的过滤面板朝前展示，修正默认物品角度下背面朝前的问题。世界模型与放置朝向不变。
+
 `tools/create-faucet.cjs` 接收解压的 Create 源码根目录，生成两种状态、两张贴图及 `outputs/faucet/preview.png`，展示关闭、开启及下方喷嘴。`textures.png` 展示铜面与手柄。只做静态检查和离线渲染，没有构建或启动游戏。
 
 原生管口、分液池喷嘴模型及其贴图归 The Create Team / The Creators of Create 所有，不标注为 CCD 原创；美术许可见 [Create LICENSE.md](https://github.com/Creators-of-Create/Create/blob/mc1.21.1/dev/LICENSE.md)。

@@ -23,5 +23,20 @@
   "shaftOpeningFaces": 4,
   "customBearings": 0,
   "rivets": 0,
-  "previewOnlyShafts": true
+  "itemShafts": 4,
+  "shaftFaceSize": [
+    32,
+    32
+  ],
+  "arrows": {
+    "perFace": 2,
+    "faces": 4,
+    "direction": "local +Y, follows FACING and native wrench reversal",
+    "glyph": [
+      "010",
+      "111",
+      "010",
+      "010"
+    ]
+  }
 }

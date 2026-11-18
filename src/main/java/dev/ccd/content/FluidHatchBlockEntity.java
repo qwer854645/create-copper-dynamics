@@ -18,7 +18,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -63,24 +62,9 @@ public class FluidHatchBlockEntity extends ItemHatchBlockEntity implements IHave
     private boolean accessible(@Nullable Direction side) {
         return side == null || side == getBlockState().getValue(FluidHatchBlock.FACING).getOpposite();
     }
-    @Nullable public IFluidHandler fluidHandler(@Nullable Direction side) {
+    /** Explicit handheld/arm access only; deliberately not registered as a world fluid capability. */
+    @Nullable public IFluidHandler interactionHandler(@Nullable Direction side) {
         return !accessible(side) ? null : side == null ? unsided : sides[side.get3DDataValue()];
-    }
-
-    /** Resolve CCD forwarding faces for logistics identity; the hatch must not count as another tank. */
-    @Nullable public static BlockPos resolveContainer(Level level, BlockPos pos, @Nullable Direction side) {
-        Set<BlockPos> visited = new HashSet<>();
-        for (int depth = 0; depth <= 64; depth++) {
-            if (!level.hasChunkAt(pos)) return null;
-            if (!(level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch)) {
-                return level.getCapability(Capabilities.FluidHandler.BLOCK, pos, side) == null ? null : pos;
-            }
-            if (depth == 64 || !hatch.accessible(side) || !visited.add(pos)) return null;
-            Direction towardContainer = hatch.getBlockState().getValue(FluidHatchBlock.FACING);
-            pos = pos.relative(towardContainer);
-            side = towardContainer.getOpposite();
-        }
-        return null;
     }
 
     private <T> T access(@Nullable Direction side, Function<IFluidHandler, T> operation, T unavailable) {

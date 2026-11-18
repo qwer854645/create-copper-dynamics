@@ -48,6 +48,8 @@ async function main(){
  for(const [name,data]of Object.entries({body,handle}))await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  for(const [state,open]of [['open',true],['closed',false]])
   fs.writeFileSync(path.join(assets,'models/block/faucet_'+state+'.json'),JSON.stringify(model(open),null,2)+'\n');
+ fs.writeFileSync(path.join(assets,'models/item/faucet.json'),JSON.stringify({parent:'ccd:block/faucet_closed',
+  display:{gui:{rotation:[30,45,0],scale:[.625,.625,.625]}}},null,2)+'\n');
  const panels=[];
  for(const [i,state,view]of [[0,'closed',[24,18,34]],[1,'open',[24,18,34]],[2,'open',[24,-18,34]]]){
   const buffer=await render(await mesh('ccd:block/faucet_'+state),500,480,view,{center:[8,7.5,7],scale:28});

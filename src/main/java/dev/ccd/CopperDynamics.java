@@ -346,10 +346,6 @@ public final class CopperDynamics {
         // Use the native handler so frogports also recognize the direct packager path.
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, FLUID_PACKAGER_BE.get(),
             (be, side) -> be.inventory);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_HATCH_BE.get(),
-            FluidHatchBlockEntity::fluidHandler);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SMART_FLUID_HATCH_BE.get(),
-            SmartFluidHatchBlockEntity::fluidHandler);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SMART_FLUID_TANK_BE.get(),
             (be, side) -> be.inventory);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COPPER_WATER_BASIN_BE.get(),

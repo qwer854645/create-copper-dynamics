@@ -6,7 +6,7 @@
 
 黄铜贴图是 CCD 已有 `smart_faucet/body` 的 16×16 像素簇，加一像素亮边和暗边；按 pixel-art 工作流直接修改整数像素，不做渐变或抗锯齿。
 
-`FilteringBehaviour.forFluids()`、原生过滤匹配、存档、同步、配置与 `SmartBlockEntityRenderer` 图标绘制保持使用。用原生 `ValueBoxTransform.Sided` 将显示与点击中心放在 [8,13,3.05]，比例 .375，对应 6 模型单位；仅 FACING 的反向启用，四向旋转由原生 Sided 处理。中心比面板端面向外偏移 .05，避免图标与面板重叠闪烁。未配置过滤时仍拒绝进出，流体代理、移液臂支持和实际容器身份不变。
+`FilteringBehaviour.forFluids()`、原生过滤匹配、存档、同步、配置与 `SmartBlockEntityRenderer` 图标绘制保持使用。用原生 `ValueBoxTransform.Sided` 将显示与点击中心放在 [8,13,3.05]，比例 .375，对应 6 模型单位；仅 FACING 的反向启用，四向旋转由原生 Sided 处理。中心比面板端面向外偏移 .05，避免图标与面板重叠闪烁。未配置过滤时仍拒绝进出；只允许手持容器和移液臂显式交互，不再向管道或机器提供流体能力。
 
 智能版碰撞为薄板、下方端圈及上方面板三个长方体的并集，由原生 VoxelShaper.forHorizontal 负责朝向；普通版保留自己的 12×12 平板形状。两者仍不创建独立储罐，交互成功只播放音效。
 
