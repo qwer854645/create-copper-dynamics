@@ -15,13 +15,14 @@ media=[
 ('purifying_solution','净化液','Purifying Solution','minecraft:glowstone_dust','create_more_catalysts','fan_catalysts/purifying')]
 for id,zh,en,ingredient,mod,tag in media:
     save(ROOT/f'assets/ccd/blockstates/{id}.json',{'variants':{'':{'model':'minecraft:block/water'}}})
-    save(ROOT/f'assets/ccd/models/item/{id}_bucket.json',{'parent':'neoforge:item/bucket','loader':'neoforge:fluid_container','fluid':'ccd:'+id})
+    save(ROOT/f'assets/ccd/models/item/{id}_bucket.json',{'parent':'minecraft:item/generated','textures':{'layer0':'ccd:item/'+id+'_bucket'}})
     save(ROOT/f'data/{mod}/tags/fluid/{tag}.json',{'replace':False,'values':['ccd:'+id,'ccd:flowing_'+id]})
     recipe={'type':'create:mixing','ingredients':[{'type':'neoforge:single','fluid':'minecraft:water','amount':1000},
         {'tag':ingredient[1:]} if ingredient.startswith('#') else {'item':ingredient}],
         'results':[{'id':'ccd:'+id,'amount':1000}]}
     if id=='seething_reagent': recipe['heat_requirement']='superheated'
-    if id=='enriching_reagent': recipe['neoforge:conditions']=[{'type':'neoforge:mod_loaded','modid':'createnuclear'}]
+    required={'seething_reagent':'dndesires','enriching_reagent':'createnuclear','soul_stripping_reagent':'createnetherindustry'}.get(id,'create_more_catalysts')
+    recipe['neoforge:conditions']=[{'type':'neoforge:mod_loaded','modid':required}]
     save(ROOT/f'data/ccd/recipe/mixing/{id}.json',recipe)
     for locale,name in [('zh_cn',zh),('en_us',en)]:
         p=ROOT/f'assets/ccd/lang/{locale}.json'; d=json.loads(p.read_text(encoding='utf-8'))

@@ -43,6 +43,15 @@ public final class ProcessingMedia {
             bucket=CopperDynamics.ITEMS.register(id+"_bucket",()->new BucketItem(source.get(),new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
         }
         private BaseFlowingFluid.Properties properties() { return new BaseFlowingFluid.Properties(type,source,flowing).block(block).bucket(bucket).tickRate(10); }
+        public boolean available() { return net.neoforged.fml.ModList.get().isLoaded(requiredMod(id)); }
+    }
+    public static String requiredMod(String id) {
+        return switch(id) {
+            case "seething_reagent" -> "dndesires";
+            case "enriching_reagent" -> "createnuclear";
+            case "soul_stripping_reagent" -> "createnetherindustry";
+            default -> "create_more_catalysts";
+        };
     }
     public static final List<Medium> ALL=List.of(
         new Medium("seething_reagent",0xff74b9e8,1300),

@@ -23,9 +23,8 @@ public final class QuicksandTests {
             var bucket=new ItemStack(medium.bucket.get());
             var handler=bucket.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
             h.assertTrue(handler!=null && handler.getFluidInTank(0).getFluid()==medium.source.get(),"Reagent bucket has wrong fluid: "+medium.id);
-            if(medium.id.equals("enriching_reagent") && !net.neoforged.fml.ModList.get().isLoaded("createnuclear")) continue;
             var recipe=h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ccd","mixing/"+medium.id));
-            h.assertTrue(recipe.isPresent(),"Reagent mixing recipe failed to load: "+medium.id);
+            h.assertTrue(recipe.isPresent()==medium.available(),"Reagent recipe visibility differs from optional mod: "+medium.id);
         }
         h.succeed();
     }

@@ -1,5 +1,6 @@
 {
-  "parent": "neoforge:item/bucket",
-  "loader": "neoforge:fluid_container",
-  "fluid": "ccd:seething_reagent"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ccd:item/seething_reagent_bucket"
+  }
 }

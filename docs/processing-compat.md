@@ -1,5 +1,9 @@
 # 可选批量加工兼容
 
+最新显示规则：七种可选加工介质只在对应模组存在时加入 CCD 创造栏并加载搅拌配方；注册仍固定保留，以免卸载附属导致旧存档流体 ID 丢失。超热对应 D&D，富集对应 Nuclear，剥魂对应 Nether Industry，其余四种对应 More Catalysts。未实现 JEI／EMI 专用隐藏，命令和旧存档内容仍可访问。
+
+所有 CCD 专用装液桶已使用单帧静态 PNG 和原生 generated 物品模型，不再使用动态流体容器加载器。通用铜桶使用固定铜壳图标，实际内容由提示和容量条显示；原版细雪桶不变。新静态桶图标沿用 Mojang 桶轮廓并改绘液体颜色，不标为 CCD 完全原创美术。
+
 ## CCD 默认介质
 
 新增七种可桶装、管道输送及世界放置的流体：`seething_reagent`（超热介质）、`enriching_reagent`（富集介质）、`soul_stripping_reagent`（剥魂液）、`explosive_slurry`（爆破浆液）、`resonant_solution`（共鸣溶液）、`sculk_suspension`（幽匿悬液）、`purifying_solution`（净化液），均有对应 `flowing_` ID 和 `_bucket` 物品。加上细雪、流沙，目前共九种流体、十八个源／流动流体 ID。

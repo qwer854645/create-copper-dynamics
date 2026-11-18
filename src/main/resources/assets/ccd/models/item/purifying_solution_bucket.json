@@ -1,5 +1,6 @@
 {
-  "parent": "neoforge:item/bucket",
-  "loader": "neoforge:fluid_container",
-  "fluid": "ccd:purifying_solution"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ccd:item/purifying_solution_bucket"
+  }
 }

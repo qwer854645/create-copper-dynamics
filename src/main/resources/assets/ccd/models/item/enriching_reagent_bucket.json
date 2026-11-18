@@ -1,5 +1,6 @@
 {
-  "parent": "neoforge:item/bucket",
-  "loader": "neoforge:fluid_container",
-  "fluid": "ccd:enriching_reagent"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ccd:item/enriching_reagent_bucket"
+  }
 }

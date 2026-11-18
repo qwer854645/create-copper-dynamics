@@ -1,5 +1,6 @@
 {
-  "parent": "neoforge:item/bucket",
-  "loader": "neoforge:fluid_container",
-  "fluid": "ccd:soul_stripping_reagent"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ccd:item/soul_stripping_reagent_bucket"
+  }
 }

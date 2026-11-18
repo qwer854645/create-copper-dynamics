@@ -8,7 +8,7 @@ def save(path,data):
     path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 save(R/'data/ccd/recipe/mixing/quicksand.json',{'type':'create:mixing','ingredients':[{'item':'minecraft:sand'}],
     'results':[{'id':'ccd:quicksand','amount':1000}],'processing_time':100})
-save(R/'assets/ccd/models/item/quicksand_bucket.json',{'parent':'neoforge:item/bucket','loader':'neoforge:fluid_container','fluid':'ccd:quicksand'})
+save(R/'assets/ccd/models/item/quicksand_bucket.json',{'parent':'minecraft:item/generated','textures':{'layer0':'ccd:item/quicksand_bucket'}})
 save(R/'assets/ccd/blockstates/quicksand.json',{'variants':{'':{'model':'minecraft:block/water'}}})
 for name,size in [('quicksand_still',16),('quicksand_flow',32)]:
     image=Image.new('RGBA',(size,size*4))

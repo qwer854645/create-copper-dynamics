@@ -1,5 +1,6 @@
 {
-  "parent": "neoforge:item/bucket",
-  "loader": "neoforge:fluid_container",
-  "fluid": "ccd:resonant_solution"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ccd:item/resonant_solution_bucket"
+  }
 }

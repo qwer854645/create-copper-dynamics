@@ -16,5 +16,11 @@
       "amount": 1000
     }
   ],
-  "heat_requirement": "superheated"
+  "heat_requirement": "superheated",
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "dndesires"
+    }
+  ]
 }

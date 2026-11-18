@@ -23,6 +23,7 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
     save(A/'models/block/fluid_atomizer/propeller.json',rotor)
     for kind in ['block','item']:
         model=json.loads(z.read(f'assets/create/models/block/encased_fan/{kind}.json'))
+        model['render_type']='minecraft:cutout_mipped'
         model['textures'].update(fan_side='create:block/copper_casing',back='ccd:block/fluid_atomizer/back',particle='create:block/copper_casing')
         if kind=='item':
             model['textures']['2']='ccd:block/fluid_atomizer/back'
