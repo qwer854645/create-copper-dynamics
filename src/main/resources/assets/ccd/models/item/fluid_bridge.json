@@ -1,3 +1,17 @@
 {
-  "parent": "ccd:block/fluid_bridge"
+  "parent": "ccd:block/fluid_bridge",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        45,
+        0
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ]
+    }
+  }
 }

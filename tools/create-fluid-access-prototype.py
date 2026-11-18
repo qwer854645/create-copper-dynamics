@@ -1,5 +1,6 @@
 """Functional prototype resources, using existing Create materials without custom art."""
 import json
+import runpy
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -40,3 +41,6 @@ for locale,entries in {
 }.items():
     file=RES/f'assets/ccd/lang/{locale}.json'
     language=json.loads(file.read_text(encoding='utf-8')); language.update(entries); save(file,language)
+
+# Regenerating functional resources must preserve the current art models.
+runpy.run_path(str(ROOT/'tools/create-fluid-access-art.py'),run_name='__main__')

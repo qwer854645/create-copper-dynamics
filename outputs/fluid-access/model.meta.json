@@ -1,0 +1,10 @@
+{
+  "reference": "Create stock link socket structure; native fluid pipe rim and smart pipe filter",
+  "textures": "CCD hand-drawn 16x16 copper/brass panels and metal socket seats",
+  "upstreamResources": [
+    "create:block/pipes",
+    "create:block/smart_pipe_2"
+  ],
+  "connectedAssetsCopied": false,
+  "preview": "actual model geometry, offline lighting; no client validation"
+}

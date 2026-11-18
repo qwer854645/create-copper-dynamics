@@ -39,7 +39,8 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         if (!((FluidAccessBlock)getBlockState().getBlock()).isBridge()) return;
         behaviours.add(filters=new SidedFilteringBehaviour(this,new ValueBoxTransform.Sided() {
-            @Override protected Vec3 getSouthLocation() { return new Vec3(.5,.75,1.01); }
+            @Override protected Vec3 getSouthLocation() { return new Vec3(.5,13/16d,16.75/16d); }
+            @Override public float getScale() { return .3f; }
             @Override protected boolean isSideActive(BlockState state,Direction side) { return side.getAxis()==state.getValue(FluidAccessBlock.FACING).getAxis(); }
         },(direction,filter)->filter.forFluids().withCallback(stack->{ if(level!=null) level.invalidateCapabilities(worldPosition); }),
             direction->direction.getAxis()==getBlockState().getValue(FluidAccessBlock.FACING).getAxis()));
