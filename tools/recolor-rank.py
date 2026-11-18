@@ -41,8 +41,28 @@ metrics = _cm.metrics
 ROOT = Path(__file__).resolve().parents[1]
 TEXTURES = ROOT / "src/main/resources/assets/ccd/textures/block/smart_fluid_tank"
 
-# 8 step brass ladder shared with tools/copper-material.py
-TARGET = BRASS
+# The tank is dressed like a brass casing: bright gold frame bands, recessed panels in neutral
+# metal. Two reasons it is not just a brass palette:
+#
+#   * create:block/brass_casing gets its depth from #442B15 / #53381A, warm browns that read as
+#     dark wood. The recesses here come from industrial_iron_block's neutral greys instead, so
+#     nothing in the tank looks wooden.
+#   * a straight copper->brass rank map stretches the tone span from 63 to 95 and turns Create's
+#     quiet tank ribs into noise (measured std 30.5 against Create's 18.7).
+#
+# Create's fluid_tank.png has exactly the right structure for it: bright bands on rows 0..2 /
+# 4 / 13..14, dark seams on rows 3 / 12 / 15, and a mid body. The four darkest tones become the
+# neutral recess, the four brightest become gold.
+TARGET = [
+    (0x2B, 0x2B, 0x2E),   # industrial_iron_block, darkest
+    (0x35, 0x34, 0x38),
+    (0x3F, 0x3E, 0x42),
+    (0x49, 0x48, 0x48),
+    (0xBF, 0x8E, 0x55),   # brass_block, gold body -> highlight
+    (0xCE, 0xA0, 0x5A),
+    (0xE4, 0xB7, 0x63),
+    (0xF7, 0xCB, 0x6C),
+]
 
 
 def is_warm(c):
@@ -68,6 +88,13 @@ def load_create(src: Path, name: str) -> Image.Image | None:
     return Image.open(p).convert("RGBA") if p.exists() else None
 
 
+def _as_rgb(entry):
+    """TARGET entries may be 'RRGGBB' or an (r, g, b) tuple."""
+    if isinstance(entry, str):
+        return tuple(int(entry[i : i + 2], 16) for i in (0, 2, 4))
+    return tuple(entry)
+
+
 def rank_map(img: Image.Image, target):
     """Rebuild `img` with every warm tone replaced by its rank counterpart in `target`."""
     warm = sorted({c[:3] for c in img.getdata() if c[3] > 0 and is_warm(c)}, key=luminance)
@@ -80,7 +107,7 @@ def rank_map(img: Image.Image, target):
             idx = steps // 2
         else:
             idx = round(k * (steps - 1) / (len(warm) - 1))
-        table[c] = tuple(int(target[idx][i : i + 2], 16) for i in (0, 2, 4))
+        table[c] = _as_rgb(target[idx])
     out = img.copy()
     px = out.load()
     for y in range(out.height):

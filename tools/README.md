@@ -50,6 +50,19 @@ Create 的贴图：
 一块黄色指示面板和箭头标记，用 `copper_underside` 2×2 铺贴会把指示器整个覆盖掉，箭头还会正好
 压在铺贴接缝上变成一坨十字。这三张连同模型里的 `body` 键都已回退到返修前的版本。
 
+### 智能储罐（黄铜机壳）
+
+`recolor-rank.py` 把 Create 储罐的 8 个铜色阶分两段映射，而不是整体换色板：
+
+| 源色阶 | 目标 | 取自 |
+|---|---|---|
+| 最暗 4 阶 | `#2B2B2E` → `#494848` 中性灰 | `industrial_iron_block` |
+| 最亮 4 阶 | `#BF8E55` → `#F7CB6C` 黄铜金 | `brass_block` |
+
+两个坑：**① 别用整体换色板**——Create 铜色跨亮度 63、8 阶黄铜跨 95，同一个秩映射会把
+Create 细腻的肋纹放大成噪点（std 30.5 vs 原版 18.7）。**② 暗部不能用 `brass_casing` 的
+`#442B15`/`#53381A`**——那是低饱和暖褐，小尺寸下就是深色木板；改用中性灰才不发木。
+
 ### 流体舱口（继承 Create 物品舱口模型）
 
 `6e4f834` 之后两个舱口模型只有一行 `{"parent": "create:block/item_hatch/block_closed"}`，
@@ -116,7 +129,7 @@ Create 原图里是透明像素。
 | `copper-material.py` | 上面 3 张派生贴图；色板与 `metrics`/`symmetry` 工具 | Python + Pillow + Create 源 |
 | `create-collection-grate-textures.py` | 集液栅 4 张贴图，按模型的 UV 分带排布 | Python + Pillow |
 | `create-fluid-hatch-textures.py` | 两个流体舱口各 2 张（housing / flap） | Python + Pillow + Create 源 |
-| `recolor-rank.py` | 智能储罐 4 张按「秩」重新映射到黄铜（从 Create 像素出发） | Python + Pillow + Create 源 |
+| `recolor-rank.py` | 智能储罐 4 张按「秩」重映射成黄铜机壳（暗部中性灰 + 亮部黄铜金，从 Create 像素出发） | Python + Pillow + Create 源 |
 | `repaint-smart-tank.py` | `recolor-rank.py` 的旧入口包装 | 同上 |
 | `symmetrize-fluid-housings.py` | 增压泵轴孔的原生细节合成 | 同上 |
 
