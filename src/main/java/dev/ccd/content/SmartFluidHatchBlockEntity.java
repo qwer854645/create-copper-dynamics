@@ -1,18 +1,16 @@
 package dev.ccd.content;
 
 import java.util.List;
-import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
+import com.simibubi.create.content.logistics.itemHatch.HatchFilterSlot;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import dev.ccd.CopperDynamics;
 import dev.ccd.CCDTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
@@ -24,13 +22,7 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
     }
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-        behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform.Sided() {
-            @Override protected Vec3 getSouthLocation() { return new Vec3(.5, 13 / 16d, 3.05 / 16d); }
-            @Override public float getScale() { return .375f; }
-            @Override protected boolean isSideActive(BlockState state, Direction side) {
-                return side == state.getValue(FluidHatchBlock.FACING).getOpposite();
-            }
-        }).forFluids());
+        behaviours.add(filtering = new FilteringBehaviour(this, new HatchFilterSlot()).forFluids());
     }
     @Override public void clearContent() { filtering.setFilter(ItemStack.EMPTY); }
     @Override protected boolean acceptsFluid(FluidStack fluid) {
