@@ -13,11 +13,12 @@
 
 现在的做法是 **能引用 Create 原生贴图就不自己画**：
 
-- 12 个「平铜/黄铜/机件面」在模型里直接指向 `create:block/copper_underside`、`brass_block`、
+- 11 个「平铜/黄铜/机件面」在模型里直接指向 `create:block/copper_underside`、`brass_block`、
   `industrial_iron_block`，CCD 里对应的 png **已删除**；
-- 只有 6 张因为像素布局承载语义（轴孔、箭头、同心凹槽、32×32 面）必须保留，且全部由
-  Create 的像素派生，**没有引入新调色板**；
-- 智能储罐 4 张从 Create 的 `fluid_tank*` 出发，只做色阶换色。
+- 只有 4 张因为像素布局承载语义（轴孔、同心凹槽、32×32 面）必须保留，且全部由
+  Create 的像素派生或按几何生成，**没有引入新调色板**；
+- 智能储罐 4 张从 Create 的 `fluid_tank*` 出发，只做色阶换色；
+- **流体传讯器 3 张已回退**到返修前的设计，理由见 §9。
 
 ---
 
@@ -38,6 +39,9 @@ assert image.tobytes()==image.transpose(ROTATE_90).tobytes()
 16×16 有 256 个像素，折两次只剩 **10 个自由像素**。实测 `booster_pump/body.png` 与
 `fluid_transmitter/body.png` 的 `LR/UD/R180/R90` 差异**全部 0.0%** —— 四向完全对称，
 读起来是模糊的径向渐变而不是金属板；断言还顺带禁止了左上打光。
+
+（`booster_pump/body` 已改为引用 Create；`fluid_transmitter/body` 连同它的 side/top 一起回退
+到原设计，见 §9 —— 那三张靠四角铆钉和黄色指示面板撑住了可读性，不是纯粹的糊面。）
 
 ### 2.2 换色用绝对亮度阈值，把 8 阶压成 3~4 阶
 
@@ -99,23 +103,23 @@ Create `fluid_tank.png` 的 8 个铜色亮度是 86.4 / 94.0 / 104.5 / 113.1 / 1
 | CCD 面 | 引用的 Create 贴图 |
 |---|---|
 | 龙头、三通阀、水槽、集液栅、水盆外侧、流体访问口 | `create:block/copper_underside` |
-| 增压泵 body、流体传讯器 body | `create:block/copper_underside` |
+| 增压泵 body | `create:block/copper_underside` |
 | 流体舱口 plate | `create:block/copper_underside` |
 | 智能龙头 body、智能舱口 plate | `create:block/brass_block` |
 | 智能集液栅 body（32×32） | `create:block/brass_block` 2×2 铺贴 |
 | 移液臂金属件 | `create:block/industrial_iron_block` |
 
-涉及的模型文件共 23 个、45 处引用（`models/block/*`、`models/block/**/*`、`models/item/*`）。
+> `fluid_transmitter/body` 已回退成 `ccd:block/fluid_transmitter/body`，不再引用 Create，见 §9。
+
+涉及的模型文件共 22 个、44 处引用（`models/block/*`、`models/block/**/*`、`models/item/*`）。
 
 ---
 
-## 5. 保留的 6 张派生贴图
+## 5. 保留的 4 张派生贴图
 
 | 文件 | 派生方式 | std / flat / tones |
 |---|---|---|
 | `block/booster_pump/shaft_face` | `copper_underside` + 原生 gearbox 8×8 轴孔 | 42.1 / 20.7% / 19 |
-| `block/fluid_transmitter/side` | `copper_underside` 2×2 + CCD 箭头 | 19.6 / 24.4% / 9 |
-| `block/fluid_transmitter/top` | 同上 | 19.6 / 24.2% / 9 |
 | `block/smart_collection_grate/body` | `brass_block` 2×2 | 42.6 / 20.3% / 13 |
 | `block/copper_water_supply/cap` | 同心凹槽按环几何生成，落在 Create 8 阶铜色上 | 18.3 / 24.2% / 7 |
 | `block/fluid_arm/core` | 深色轴孔按环几何生成，落在深色阶上 | 9.6 / 34.8% / 5 |
@@ -158,7 +162,7 @@ python tools/copper-material.py src/main/resources/assets $jar --verify   # 比�
 # 智能储罐换色
 python tools/recolor-rank.py $jar
 
-# 增压泵 / 传讯器原生细节
+# 增压泵原生轴孔
 python tools/symmetrize-fluid-housings.py
 ```
 
@@ -181,3 +185,24 @@ python tools/symmetrize-fluid-housings.py
    是因为删掉会改变模型生成流程，而本机跑不了 `sharp` 无法验证；改成在文件头声明归属。
 5. **未构建、未启动游戏**。全部为离线像素与资源校验：166 个 JSON 全部可解析、
    0 处悬空贴图引用、0 个 blockstate 指向不存在的模型。
+
+---
+
+## 9. 流体传讯器：已回退
+
+第一版把这个方块的 32×32 面也换成了 `copper_underside` 2×2 铺贴，用户反馈「有点丑」，回退。
+原因是那次替换除了观感，还丢了一个功能特征：
+
+| | 返修前（现恢复） | 第一版（已废弃） |
+|---|---|---|
+| 32×32 面的中心 | **黄色指示面板** + 深色描边、四角铆钉 | 无，被铜板覆盖 |
+| 箭头标记 | 位于设计好的位置 | 压在 2×2 铺贴接缝上，读成一坨十字 |
+| `side` / `top` 的 std | 39.1（16 色） | 19.6（9 色） |
+
+已回退的文件：`block/fluid_transmitter/{body,side,top}.png` 与
+`models/block/fluid_transmitter.json` 的 `body` 键，全部恢复到 `f6e8ff2` 的版本。
+`tools/copper-material.py` 与 `tools/symmetrize-fluid-housings.py` 里对传讯器的派生逻辑已删除，
+不会再被重跑覆盖。
+
+**结论性教训**：带指示灯、刻度、箭头这类「信息像素」的面，不能套通用金属板；
+`copper_underside` 只适合纯结构面。

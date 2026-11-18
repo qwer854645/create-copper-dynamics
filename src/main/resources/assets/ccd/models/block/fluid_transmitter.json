@@ -2,11 +2,11 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "create:block/copper_underside",
+    "body": "ccd:block/fluid_transmitter/body",
     "side": "ccd:block/fluid_transmitter/side",
     "top": "ccd:block/fluid_transmitter/top",
     "pipe": "create:block/pipes",
-    "particle": "create:block/copper_underside"
+    "particle": "ccd:block/fluid_transmitter/body"
   },
   "elements": [
     {

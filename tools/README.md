@@ -10,7 +10,7 @@ Create 的贴图：
 
 | 用途 | 引用的 Create 贴图 |
 |---|---|
-| 平铜面（龙头、三通阀、水槽、集液栅、水盆、流体访问口、增压泵、传讯器、流体舱口） | `create:block/copper_underside` |
+| 平铜面（龙头、三通阀、水槽、集液栅、水盆、流体访问口、增压泵、流体舱口） | `create:block/copper_underside` |
 | 平黄铜面（智能龙头、智能舱口） | `create:block/brass_block` |
 | 灰色机件（移液臂金属件） | `create:block/industrial_iron_block` |
 
@@ -18,16 +18,18 @@ Create 的贴图：
 
 ## 还剩下的自绘贴图
 
-只保留 6 张，且全部由 Create 的像素派生（没有新调色板、没有手绘笔触）：
+只保留 4 张派生贴图，全部由 Create 的像素派生或按几何生成（没有新调色板）：
 
 | 贴图 | 来源 |
 |---|---|
 | `block/booster_pump/shaft_face.png` | Create `copper_underside` + 原生 gearbox 轴孔 |
-| `block/fluid_transmitter/side.png` | Create `copper_underside` 2×2 铺贴 + CCD 箭头 |
-| `block/fluid_transmitter/top.png` | 同上 |
 | `block/smart_collection_grate/body.png` | Create `brass_block` 2×2 铺贴（32×32 面） |
-| `block/copper_water_supply/cap.png` | 保留同心凹槽形状，重新打光到 Create 的 8 阶铜色 |
-| `block/fluid_arm/core.png` | 保留深色轴孔形状，重新打光到深色阶 |
+| `block/copper_water_supply/cap.png` | 同心凹槽按环几何生成，落在 Create 的 8 阶铜色 |
+| `block/fluid_arm/core.png` | 深色轴孔按环几何生成，落在深色阶 |
+
+另外 `block/fluid_transmitter/{body,side,top}` **保持原设计，不参与派生**：那两张 32×32 面带
+一块黄色指示面板和箭头标记，用 `copper_underside` 2×2 铺贴会把指示器整个覆盖掉，箭头还会正好
+压在铺贴接缝上变成一坨十字。这三张连同模型里的 `body` 键都已回退到返修前的版本。
 
 ## 生成器
 

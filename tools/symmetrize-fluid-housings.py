@@ -1,4 +1,4 @@
-"""Finish the two rimmed housings. Kept as an entry point for tools/create-booster-pump.cjs.
+"""Finish the booster pump housing. Kept as an entry point for tools/create-booster-pump.cjs.
 
 History: this script used to build the 16x16 body panel from a 6x6 PATCH by reflecting it
 across both axes *and* the diagonal, then assert that symmetry:
@@ -11,12 +11,15 @@ blur rather than sheet metal, and the assertion also forbade the top-left light 
 that Create's machine faces all use.
 
 The body panel is now `create:block/copper_underside` referenced straight from the model, so
-this script only has to rebuild the two textures that still need pixels of their own:
-block/booster_pump/shaft_face and block/fluid_transmitter/{side,top}. Both are derived from
-Create's own copper in tools/copper-material.py.
+this script only rebuilds block/booster_pump/shaft_face (Create copper + the native gearbox
+aperture) in tools/copper-material.py.
+
+It no longer touches block/fluid_transmitter: those 32x32 faces carry a yellow indicator panel
+and CCD arrow marks, and routing them through the shared copper plate dropped the indicator,
+so they keep their own designed artwork.
 
 Usage:
-    python tools/symmetrize-fluid-housings.py [booster_pump|fluid_transmitter] [create-source]
+    python tools/symmetrize-fluid-housings.py [booster_pump] [create-source]
 """
 from __future__ import annotations
 
@@ -58,7 +61,6 @@ def main(argv):
     built = cm.derive(ASSETS, source)
     wanted = {
         "booster_pump": ["block/booster_pump/shaft_face.png"],
-        "fluid_transmitter": ["block/fluid_transmitter/side.png", "block/fluid_transmitter/top.png"],
     }
     written = 0
     for name, rels in wanted.items():

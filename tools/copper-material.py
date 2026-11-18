@@ -6,16 +6,20 @@ Everything that was only "a copper plate" now points straight at Create in the m
 That removed the hand-drawn material that read as flat plastic, and it cannot drift when
 Create updates.
 
-Five textures still have to exist because their *pixel layout* carries meaning:
+Four textures still have to exist because their *pixel layout* carries meaning:
 
     block/booster_pump/shaft_face        Create copper_underside + the native gearbox aperture
-    block/fluid_transmitter/side|top     Create copper_underside 2x2 + the CCD arrow marks
     block/smart_collection_grate/body    Create brass_block 2x2 (32x32 face, brass)
-    block/copper_water_supply/cap        concentric recess, re-lit onto Create's copper ramp
-    block/fluid_arm/core                 dark shaft recess, re-lit onto a dark ramp
+    block/copper_water_supply/cap        concentric recess, drawn on Create's copper ramp
+    block/fluid_arm/core                 dark shaft recess, drawn on a dark ramp
 
-All five are built *from* Create's own pixels or from Create's own eight copper tones; none
+All four are built *from* Create's own pixels or from Create's own eight copper tones; none
 of them introduces a new palette.
+
+NOTE: block/fluid_transmitter/{body,side,top} are deliberately NOT generated here. Those
+32x32 faces carry a yellow indicator panel plus CCD arrow marks; tiling copper_underside over
+them dropped the indicator and put the arrow on a tiling seam, which read as a stray cross.
+They stay as the original hand-designed textures.
 
 Usage:
     python tools/copper-material.py <ccd-assets-root> <create-source> [--check|--verify|--preview <png>]
@@ -194,11 +198,8 @@ def relight(src: Image.Image, palette, keep_shape=0.55, light=0.55, bevel=1):
     return out
 
 
-ARROW = ["0000100", "0000110", "1111111", "0000110", "0000100"]
-
-
 def derive(assets: Path, create_src: Path):
-    """Return {relative path: PIL image} for the five textures that must exist."""
+    """Return {relative path: PIL image} for the four textures that must exist."""
     tex = assets / "textures"
     copper_underside = load_create(create_src, "copper_underside.png")
     brass_block = load_create(create_src, "brass_block.png")
@@ -214,21 +215,6 @@ def derive(assets: Path, create_src: Path):
         face = copper_underside.copy()
         face.paste(old.crop((4, 4, 12, 12)), (4, 4))
         out["block/booster_pump/shaft_face.png"] = face
-
-    # Create copper tiled 2x2 for the 32 px transmitter faces, with the CCD arrow marks
-    # stamped back on top.
-    for name, horizontal in (("side", True), ("top", False)):
-        path = tex / f"block/fluid_transmitter/{name}.png"
-        if not path.exists():
-            continue
-        old = Image.open(path).convert("RGBA")
-        panel = tile(copper_underside, 2)
-        for y, row in enumerate(ARROW):
-            for x, value in enumerate(row):
-                if value == "1":
-                    u, v = (12 + x, 2 + y) if horizontal else (2 + y, 12 + x)
-                    panel.putpixel((u, v), old.getpixel((u, v)))
-        out[f"block/fluid_transmitter/{name}.png"] = panel
 
     # 32 px brass body: Create brass tiled 2x2, which reads as four joined brass plates.
     out["block/smart_collection_grate/body.png"] = tile(brass_block, 2)
