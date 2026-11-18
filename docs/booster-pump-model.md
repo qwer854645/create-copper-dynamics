@@ -13,3 +13,6 @@
 `tools/create-booster-pump.cjs` 接收解压的 Create 源码根目录，生成资源及 `outputs/booster-pump/preview.png`。预览读取包含静态半轴的实际物品模型，展示水平正反面与竖直摆放。`textures.png` 左侧为自绘铜壳，右侧为加入原生轴孔的动力面；方向标记单独引用原版图集。
 
 本次只进行静态资源检查和离线模型渲染，没有构建或启动游戏。
+# 铜壳对称调整
+
+铜壳底纹通过 `tools/symmetrize-fluid-housings.py` 使用原有铜色色阶重新组织连续像素簇，验证左右／上下镜像及 90° 旋转对称。原生 8×8 轴孔像素、流向标记和几何不变；这些原生细节仍有自身明暗方向。最新结果见 `outputs/booster-pump/textures.png`，既有三维预览未重新生成。未构建或运行客户端。

@@ -13,3 +13,6 @@
 本次只修改模型与贴图；前后定向转移、四面过滤、红石暂停、同向链式转移和无内部储液的实现不变，不添加 UI 或逻辑代码。继续使用现有原生 `SmartBlockEntityRenderer` 显示过滤图标。
 
 `tools/create-fluid-transmitter.cjs` 接收解压的 Create 源码根目录，生成资源及 `outputs/fluid-transmitter/preview.png`，展示输入侧、输出侧和竖直摆放。`textures.png` 顺序为铜壳、左右侧、上下侧。仅静态检查与离线渲染，未构建或启动游戏。
+# 铜壳对称调整
+
+铜壳底纹通过 `tools/symmetrize-fluid-housings.py` 使用原有铜色色阶重新组织连续像素簇，验证左右／上下镜像及 90° 旋转对称。过滤面板的原生像素和指向出口的箭头保留，整张面板图不强求镜像对称。最新结果见 `outputs/fluid-transmitter/textures.png`，既有三维预览未重新生成。未构建或运行客户端。

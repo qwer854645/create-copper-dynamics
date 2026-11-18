@@ -64,7 +64,8 @@ async function main(){
   }
   await sharp(pixels,{raw:{width:32,height:32,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  }
- fs.writeFileSync(path.join(assets,'models/block/fluid_transmitter.json'),JSON.stringify(model,null,2)+'\n');
+  require('node:child_process').execFileSync('py',[path.join(root,'tools/symmetrize-fluid-housings.py'),'fluid_transmitter'],{stdio:'inherit'});
+  fs.writeFileSync(path.join(assets,'models/block/fluid_transmitter.json'),JSON.stringify(model,null,2)+'\n');
  const faces=await mesh('ccd:block/fluid_transmitter'),panels=[];
  for(const [i,viewFaces,view]of [[0,faces,[26,20,-34]],[1,faces,[-26,20,34]],[2,transform(faces,'x',-90),[26,20,-34]]]){
   const buffer=await render(viewFaces,500,480,view,{center:[8,8,8],scale:22});

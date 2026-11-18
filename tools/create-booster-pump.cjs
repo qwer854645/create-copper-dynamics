@@ -106,7 +106,8 @@ async function main(){
  }
  if(casingPixelsReplaced!==4)throw Error('Unexpected native gearbox casing pixels');
  await sharp(body,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'body.png'));
- await sharp(shaftFace,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'shaft_face.png'));
+  await sharp(shaftFace,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'shaft_face.png'));
+  require('node:child_process').execFileSync('py',[path.join(root,'tools/symmetrize-fluid-housings.py'),'booster_pump'],{stdio:'inherit'});
  fs.writeFileSync(path.join(assets,'models/block/booster_pump.json'),JSON.stringify(model,null,2)+'\n');
  const nativeShaft=loadModel('create:block/shaft_half');
  const item={parent:'ccd:block/booster_pump',textures:{shaft_side:nativeShaft.textures['0'],shaft_end:nativeShaft.textures['1']},
