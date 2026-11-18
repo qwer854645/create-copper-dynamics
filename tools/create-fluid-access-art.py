@@ -28,16 +28,30 @@ def save(path,data):
     path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
-def texture(name,ramp,socket=False):
+def texture(name,ramp,socket=False,band=False):
     c=Canvas(16,16)
     for y,row in enumerate(PANEL):
         for x,index in enumerate(row): c.set(x,y,ramp[int(index)])
     if socket:
         # A stepped, grey-green metal seat recalls stock_link, with no redstone center.
-        for lo,hi,index in [(1,14,0),(2,13,2),(3,12,1)]:
+        for lo,hi,index in [(3,12,0),(4,11,2),(5,10,3),(6,9,0)]:
             c.rect(lo,lo,hi-lo+1,hi-lo+1,IRON[index])
-        c.line_h(2,13,2,IRON[4]); c.line_v(2,3,13,IRON[3])
-        c.line_h(3,13,13,IRON[1]); c.line_v(13,3,13,IRON[1])
+        c.line_h(4,11,4,IRON[4]); c.line_v(4,5,11,IRON[3])
+        c.line_h(5,11,11,IRON[1]); c.line_v(11,5,11,IRON[1])
+        c.rect(6,6,4,4,'#252c2b')
+        c.line_h(6,8,6,'#404c49'); c.line_v(6,7,8,'#35403d')
+    if band:
+        # Connected-like broad recessed side strap, redrawn in dark copper.
+        top,bottom=(5,10) if name=='bridge_band' else (8,12)
+        c.rect(1,top,14,bottom-top+1,'#493022')
+        c.line_h(1,14,top,'#694531')
+        c.line_h(1,14,bottom,'#32241c')
+        for x,y,w in [(2,8,3),(7,9,4),(11,8,2),(4,10,2)]:
+            c.line_h(x,x+w-1,y if name=='bridge_band' else y+1,'#593b28')
+        # Small dark indicator recesses, not false lit connection states.
+        if name=='bridge_band':
+            c.rect(5,3,6,2,'#502a22'); c.rect(5,11,6,2,'#502a22')
+        else: c.rect(6,5,4,3,'#502a22')
     path=ASSETS/f'textures/block/fluid_access/{name}.png'
     path.parent.mkdir(parents=True,exist_ok=True); c.save(str(path))
 
@@ -70,16 +84,22 @@ def main():
     OUT.mkdir(parents=True,exist_ok=True)
     for material,ramp in [('copper',COPPER),('brass',BRASS)]:
         texture(material,ramp); texture(material+'_socket',ramp,True)
+    texture('copper_band',COPPER,band=True)
+    texture('bridge_band',COPPER,band=True)
     models=[]
     with ZipFile(JAR) as archive:
-        for name,bridge,material in [('fluid_access_port',False,'copper'),('fluid_bridge',True,'brass')]:
+        for name,bridge,material in [('fluid_access_port',False,'copper'),('fluid_bridge',True,'copper')]:
             elements=[cube('casing',[0,0,0],[16,16,16],'body')]
+            for side in ['east','west']:
+                elements[0]['faces'][side]['texture']='#band'
             # Recessed sockets at source ends, kept inside a single block.
             ends=['south','north'] if bridge else ['south']
             for end in ends:
                 elements[0]['faces'][end]['texture']='#socket'
                 # Native pipe mouth at the surface; the narrow collar is inset into the case.
-                elements.extend(pipe(12.2,end=='north',archive))
+                # Connected-like raised square connector; no additional pipe flange.
+                lo,hi=([3,3,16],[13,13,18]) if end=='south' else ([3,3,-2],[13,13,0])
+                elements.append(cube('raised_socket_'+end,lo,hi,'socket'))
             if bridge:
                 # Small native smart-pipe filter panel at the existing interaction position.
                 source=json.loads(archive.read('assets/create/models/block/smart_fluid_pipe/block.json'))
@@ -93,7 +113,7 @@ def main():
                         p=panel[key]
                         e[key]=[6+(p[0]-original_lo[0])*4/(original_hi[0]-original_lo[0]),
                                 11+(p[1]-original_lo[1])*4/(original_hi[1]-original_lo[1]),
-                                16.25+(p[2]-original_lo[2])*.5/(original_hi[2]-original_lo[2])]
+                                18.05+(p[2]-original_lo[2])*.5/(original_hi[2]-original_lo[2])]
                     for f in e['faces'].values(): f['texture']='#filter'; f.pop('cullface',None)
                     e['faces']['south']['uv']=[8,8,16,16]
                     if end=='north':
@@ -102,30 +122,20 @@ def main():
                         e['faces']={({'north':'south','south':'north'}.get(s,s)):f for s,f in e['faces'].items()}
                     elements.append(e)
             textures={'body':f'ccd:block/fluid_access/{material}','socket':f'ccd:block/fluid_access/{material}_socket',
+                      'band':'ccd:block/fluid_access/'+('bridge_band' if bridge else 'copper_band'),
                       'pipe':'create:block/pipes','filter':'create:block/smart_pipe_2','particle':'#body'}
             model={'parent':'minecraft:block/block','ambientocclusion':False,'textures':textures,'elements':elements}
-            # Remove the underlying casing faces behind actual open copper mouths.
-            for end in ends:
-                del elements[0]['faces'][end]
-                z=0 if end=='north' else 16
-                # Open middle 6x6, visible stock-link styled seat surrounding the native ring.
-                for lo,hi in [([0,0,z],[16,4,z]),([0,12,z],[16,16,z]),([0,4,z],[4,12,z]),([12,4,z],[16,12,z])]:
-                    e=cube('socket_frame_'+end,lo,hi,'socket')
-                    e['faces']={end:e['faces'][end]}; elements.append(e)
-                e=cube('dark_pipe_recess',[5,5,z+(.12 if end=='north' else -.12)],[11,11,z+(.12 if end=='north' else -.12)],'dark')
-                e['faces']={end:e['faces'][end]}; elements.append(e)
-            model['textures']['dark']='ccd:item/fluid_canister/fluid'
             save(ASSETS/f'models/block/{name}.json',model)
             save(ASSETS/f'models/item/{name}.json',{'parent':f'ccd:block/{name}','display':{'gui':{'rotation':[30,45,0],'scale':[.65,.65,.65]}}})
             models.append(model)
         render_preview(models,archive)
     atlas=Image.new('RGBA',(64,16))
-    for i,name in enumerate(['copper','copper_socket','brass','brass_socket']):
+    for i,name in enumerate(['copper','copper_socket','copper_band','bridge_band']):
         atlas.alpha_composite(Image.open(ASSETS/f'textures/block/fluid_access/{name}.png'),(i*16,0))
     atlas.save(OUT/'textures-source.png'); atlas.resize((1024,256),Image.Resampling.NEAREST).save(OUT/'textures.png')
-    save(OUT/'model.meta.json',{'reference':'Create stock link socket structure; native fluid pipe rim and smart pipe filter',
-         'textures':'CCD hand-drawn 16x16 copper/brass panels and metal socket seats',
-         'upstreamResources':['create:block/pipes','create:block/smart_pipe_2'],
+    save(OUT/'model.meta.json',{'reference':'Connected full casing, raised end sockets and broad side band; Create stock-link metal shading and native filter',
+         'textures':'CCD hand-drawn 16x16 copper panels, dark copper band and grey metal socket seats',
+         'upstreamResources':['create:block/smart_pipe_2'],
          'connectedAssetsCopied':False,'preview':'actual model geometry, offline lighting; no client validation'})
 
 def render_preview(models,archive):
@@ -167,7 +177,7 @@ def render_preview(models,archive):
     sheet=Image.new('RGBA',(1260,960),'#e5e8e2'); draw=ImageDraw.Draw(sheet)
     font=ImageFont.truetype(r'C:\Windows\Fonts\msyh.ttc',20)
     for row,model in enumerate(models):
-        draw.text((630,row*480+24),'流体扩展端口 · 铜壳' if row==0 else '流体桥接器 · 黄铜壳与双端过滤',font=font,fill='#303535',anchor='mm')
+        draw.text((630,row*480+24),'流体扩展端口 · 铜壳与单端连接座' if row==0 else '流体桥接器 · 铜壳与双端连接座',font=font,fill='#303535',anchor='mm')
         for col,(view,label) in enumerate([([25,17,34],'连接面'),([-30,18,-32],'另一侧'),([0,0,40],'端面')]):
             sheet.alpha_composite(render(model,view),(col*420,row*480+35))
             draw.text((col*420+210,row*480+456),label,font=font,fill='#303535',anchor='mm')

@@ -34,6 +34,6 @@ CCD 参考其“真实来源身份”和“限制代理嵌套”的设计动机�
 
 新增 GameTest 覆盖端口链模拟／执行、断链后旧接口失效、双端过滤及过滤变更、环路、直接容器与桥接聚合库存重叠。`runGameTestServer --offline` 通过全部 18 项测试。
 
-外观使用完整铜／黄铜方块壳、灰铁连接座和原生铜管口。16×16 机壳及灰铁座由 pixel-art Canvas 逐像素绘制，结构参考 Create 存量转信器的套框；原生 `fluid_pipe/rim_connector/south`、`fluid_pipe/rim/south` 几何及 `pipes` 材质沿用 Create，桥接器两端过滤面板复用 `smart_pipe_2`。原生资源及衍生几何权利归上游，不标为 CCD 原创；未使用 Connected 美术。
+外观按用户要求仿照 Connected 的完整方块壳、单／双凸出连接座与侧面深色横带构图，两种设备均为铜色。16×16 机壳、灰铁方框和横带由 pixel-art Canvas 逐像素重绘，没有导入或改色 Connected 原图／模型。灰铁连接座参考 Create 存量转信器的材质表达，中央为暗色方孔，不再叠加额外铜管法兰。侧面暗色凹位目前是静态装饰，不代表实时连接状态。桥接器两端过滤面板仍复用原生 `smart_pipe_2`，上游资源及衍生几何权利归 Create，不标为 CCD 原创。
 
 生成器为 `tools/create-fluid-access-art.py`；功能资源生成器最后也调用它以避免覆盖美术。`outputs/fluid-access/preview.png` 是实际模型离线预览，贴图拼图为 `textures-source.png` 和最近邻放大的 `textures.png`。过滤行为的位置与新面板中心对齐。此轮只静态检查及离线预览，未构建、测试或启动客户端验证显示效果。

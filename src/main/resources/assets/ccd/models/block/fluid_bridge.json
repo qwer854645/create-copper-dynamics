@@ -2,12 +2,12 @@
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
   "textures": {
-    "body": "ccd:block/fluid_access/brass",
-    "socket": "ccd:block/fluid_access/brass_socket",
+    "body": "ccd:block/fluid_access/copper",
+    "socket": "ccd:block/fluid_access/copper_socket",
+    "band": "ccd:block/fluid_access/bridge_band",
     "pipe": "create:block/pipes",
     "filter": "create:block/smart_pipe_2",
-    "particle": "#body",
-    "dark": "ccd:item/fluid_canister/fluid"
+    "particle": "#body"
   },
   "elements": [
     {
@@ -23,8 +23,26 @@
         16
       ],
       "faces": {
+        "north": {
+          "texture": "#socket",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#socket",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
         "east": {
-          "texture": "#body",
+          "texture": "#band",
           "uv": [
             0,
             0,
@@ -33,7 +51,7 @@
           ]
         },
         "west": {
-          "texture": "#body",
+          "texture": "#band",
           "uv": [
             0,
             0,
@@ -62,267 +80,153 @@
       }
     },
     {
-      "name": "native_rim_connector",
-      "from": [
-        4,
-        4,
-        12.2
-      ],
-      "to": [
-        12,
-        12,
-        16.2
-      ],
-      "faces": {
-        "east": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        }
-      }
-    },
-    {
+      "name": "raised_socket_south",
       "from": [
         3,
         3,
-        14.2
+        16
       ],
       "to": [
         13,
         13,
-        16.2
+        18
       ],
       "faces": {
         "north": {
+          "texture": "#socket",
           "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "east": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "texture": "#pipe"
+            3,
+            3,
+            13,
+            13
+          ]
         },
         "south": {
+          "texture": "#socket",
           "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
+            3,
+            3,
+            13,
+            13
+          ]
         },
-        "west": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        }
-      },
-      "name": "native_rim"
-    },
-    {
-      "name": "native_rim_connector",
-      "from": [
-        4,
-        4,
-        -0.1999999999999993
-      ],
-      "to": [
-        12,
-        12,
-        3.8000000000000007
-      ],
-      "faces": {
         "east": {
+          "texture": "#socket",
           "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
+            -2,
+            3,
+            0,
+            13
+          ]
         },
         "west": {
+          "texture": "#socket",
           "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
+            16,
+            3,
+            18,
+            13
+          ]
         },
         "up": {
+          "texture": "#socket",
           "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
+            3,
+            16,
+            13,
+            18
+          ]
         },
         "down": {
+          "texture": "#socket",
           "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
+            3,
+            -2,
+            13,
+            0
+          ]
         }
       }
     },
     {
+      "name": "raised_socket_north",
       "from": [
         3,
         3,
-        -0.1999999999999993
+        -2
       ],
       "to": [
         13,
         13,
-        1.8000000000000007
+        0
       ],
       "faces": {
-        "south": {
+        "north": {
+          "texture": "#socket",
           "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#socket",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
         },
         "east": {
+          "texture": "#socket",
           "uv": [
-            9.5,
             16,
-            10.5,
-            11
-          ],
-          "texture": "#pipe"
-        },
-        "north": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
+            3,
+            18,
+            13
+          ]
         },
         "west": {
+          "texture": "#socket",
           "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe"
+            -2,
+            3,
+            0,
+            13
+          ]
         },
         "up": {
+          "texture": "#socket",
           "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
+            3,
+            -2,
+            13,
+            0
+          ]
         },
         "down": {
+          "texture": "#socket",
           "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
+            3,
+            16,
+            13,
+            18
+          ]
         }
-      },
-      "name": "native_rim"
+      }
     },
     {
       "from": [
         6.0,
         11.0,
-        16.25
+        18.05
       ],
       "to": [
         10.0,
         15.0,
-        16.75
+        18.55
       ],
       "faces": {
         "north": {
@@ -389,12 +293,12 @@
       "from": [
         6.0,
         11.0,
-        -0.75
+        -2.5500000000000007
       ],
       "to": [
         10.0,
         15.0,
-        -0.25
+        -2.0500000000000007
       ],
       "faces": {
         "south": {
@@ -456,246 +360,6 @@
         }
       },
       "name": "native_filter_north"
-    },
-    {
-      "name": "socket_frame_south",
-      "from": [
-        0,
-        0,
-        16
-      ],
-      "to": [
-        16,
-        4,
-        16
-      ],
-      "faces": {
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            12,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "socket_frame_south",
-      "from": [
-        0,
-        12,
-        16
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
-      "faces": {
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            0,
-            16,
-            4
-          ]
-        }
-      }
-    },
-    {
-      "name": "socket_frame_south",
-      "from": [
-        0,
-        4,
-        16
-      ],
-      "to": [
-        4,
-        12,
-        16
-      ],
-      "faces": {
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            4,
-            4,
-            12
-          ]
-        }
-      }
-    },
-    {
-      "name": "socket_frame_south",
-      "from": [
-        12,
-        4,
-        16
-      ],
-      "to": [
-        16,
-        12,
-        16
-      ],
-      "faces": {
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            12,
-            4,
-            16,
-            12
-          ]
-        }
-      }
-    },
-    {
-      "name": "dark_pipe_recess",
-      "from": [
-        5,
-        5,
-        15.88
-      ],
-      "to": [
-        11,
-        11,
-        15.88
-      ],
-      "faces": {
-        "south": {
-          "texture": "#dark",
-          "uv": [
-            5,
-            5,
-            11,
-            11
-          ]
-        }
-      }
-    },
-    {
-      "name": "socket_frame_north",
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        4,
-        0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            12,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "socket_frame_north",
-      "from": [
-        0,
-        12,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            0,
-            16,
-            4
-          ]
-        }
-      }
-    },
-    {
-      "name": "socket_frame_north",
-      "from": [
-        0,
-        4,
-        0
-      ],
-      "to": [
-        4,
-        12,
-        0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#socket",
-          "uv": [
-            12,
-            4,
-            16,
-            12
-          ]
-        }
-      }
-    },
-    {
-      "name": "socket_frame_north",
-      "from": [
-        12,
-        4,
-        0
-      ],
-      "to": [
-        16,
-        12,
-        0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            4,
-            4,
-            12
-          ]
-        }
-      }
-    },
-    {
-      "name": "dark_pipe_recess",
-      "from": [
-        5,
-        5,
-        0.12
-      ],
-      "to": [
-        11,
-        11,
-        0.12
-      ],
-      "faces": {
-        "north": {
-          "texture": "#dark",
-          "uv": [
-            5,
-            5,
-            11,
-            11
-          ]
-        }
-      }
     }
   ]
 }
