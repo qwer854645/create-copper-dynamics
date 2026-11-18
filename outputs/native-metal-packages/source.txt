@@ -1,0 +1,3 @@
+Create 6.0.10-280: cardboard_12x12 model and cardboard.png.
+Palette derivatives of Create artwork; not original CCD artwork. Geometry and UV unchanged.
+Unregistered preview models only; runtime fluid_package and composite_package remain unchanged.
