@@ -55,7 +55,6 @@ public final class SmartCollectionGrateBlockEntity extends CopperCollectionGrate
         CCDTooltip.heading(tooltip, "ccd.gui.goggles.collection");
         CCDTooltip.line(tooltip, automaticEnabled() ? ChatFormatting.AQUA : ChatFormatting.YELLOW,
             automaticEnabled() ? "ccd.smart_collection_grate.active" : "ccd.smart_collection_grate.paused");
-        CCDTooltip.line(tooltip, filtering.getFilter().isEmpty() ? "ccd.smart_collection_grate.unfiltered" : "ccd.smart_collection_grate.filtered");
         return true;
     }
 }

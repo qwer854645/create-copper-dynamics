@@ -44,8 +44,8 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
-        CCDTooltip.line(tooltip, filtering.getFilter().isEmpty() ? ChatFormatting.YELLOW : ChatFormatting.GRAY,
-            filtering.getFilter().isEmpty() ? "ccd.smart_fluid_hatch.unconfigured" : "ccd.smart_fluid_hatch.filtered");
+        if (filtering.getFilter().isEmpty())
+            CCDTooltip.line(tooltip, ChatFormatting.YELLOW, "ccd.smart_fluid_hatch.unconfigured");
         return true;
     }
 }

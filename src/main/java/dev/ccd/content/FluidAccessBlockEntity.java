@@ -65,7 +65,6 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
             com.simibubi.create.foundation.utility.CreateLang.fluidName(fluid).style(net.minecraft.ChatFormatting.GRAY).forGoggles(tooltip,1);
             com.simibubi.create.foundation.utility.CreateLang.builder().add(dev.ccd.CCDTooltip.amount(fluid.getAmount())).forGoggles(tooltip,1);
         }
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.fluid_access.sources",dev.ccd.CCDTooltip.number(sources().stream().map(FluidAccess.Source::identity).distinct().count()));
         return true;
     }
 }

@@ -145,7 +145,6 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
         String status = workStatus();
         CCDTooltip.line(tooltip, status.equals("redstone") ? ChatFormatting.YELLOW : ChatFormatting.GRAY,
             "ccd.fluid_arm.status", Component.translatable("ccd.fluid_arm.status." + status));
-        CCDTooltip.line(tooltip, "ccd.fluid_arm.points", CCDTooltip.number(state().ccd$inputs().size()), CCDTooltip.number(state().ccd$outputs().size()));
         return true;
     }
     private String workStatus() {

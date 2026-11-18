@@ -179,11 +179,8 @@ public class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
             return true;
         }
         CCDTooltip.fluidContents(tooltip, view.fluids(), view.capacity());
-        var root = getControllerBE();
         if (sneaking) {
             CCDTooltip.line(tooltip, "ccd.smart_tank.types", CCDTooltip.number(view.kinds()), CCDTooltip.number(CCDConfig.SMART_TANK_MAX_FLUIDS.get()));
-            CCDTooltip.line(tooltip, "ccd.smart_tank.structure", CCDTooltip.number(root.getWidth()),
-                CCDTooltip.number(root.getHeight()), CCDTooltip.number(view.blocks()));
         }
         return true;
     }
