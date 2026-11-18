@@ -108,8 +108,6 @@ describe('item.ccd.copper_bucket',('可携带_4000 mB_的通用铜桶，一次�
     (('从世界取放时','When Used in the World'),('每次取放_1000 mB_，只收取源液体；创造模式放液不扣存量。','Picks up or places _1000 mB_ at a time. Collects source fluid only; creative placement preserves contents.'))],
     [(('对容器右击','R-Click a Container'),('从点击面_取液_，尽量装满。','_Fills_ from the clicked face, up to capacity.')),
      (('潜行右击','Sneak + R-Click'),('向容器_倒液_，或强制进入世界放液模式。','_Empties_ into a container or forces world placement.'))])
-describe('item.ccd.honeycomb_mold',('将蜂蜜压成_蜜脾_的可重复使用模具。','A reusable mold for pressing honey into _honeycomb_.'),[
-    (('与蜂蜜一起放入工作盆时','In a Basin with Honey'),('动力冲压机每次使用_250 mB_蜂蜜，完成后_返还模具_。','A Mechanical Press uses _250 mB_ of honey per operation and _returns the mold_.'))])
 describe('item.minecraft.powder_snow_bucket',('细雪也可作为_流体_储存、泵送和打包，每桶_1000 mB_。','Powder snow can be _stored, pumped and packaged as fluid_, with _1000 mB_ per bucket.'),[
     (('装入雾化器时','When Supplied to an Atomizer'),('已安装支持冷冻加工的附属时，可作为_冷冻媒介_。','Acts as a _freezing medium_ when a compatible processing addon is installed.'))])
 describe('item.ccd.quicksand_bucket',('由沙子搅拌得到的_喷砂媒介_，可桶装、泵送和运输。','A _sanding medium_ made by mixing sand. Can be bucketed, pumped and transported.'),[

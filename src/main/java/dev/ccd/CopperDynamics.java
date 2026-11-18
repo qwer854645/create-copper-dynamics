@@ -35,7 +35,6 @@ import dev.ccd.content.CopperCollectionGrateBlockEntity;
 import dev.ccd.content.SmartCollectionGrateBlock;
 import dev.ccd.content.SmartCollectionGrateBlockEntity;
 import dev.ccd.content.CopperBucketItem;
-import dev.ccd.content.HoneycombMoldItem;
 import dev.ccd.content.FluidAtomizerBlock;
 import dev.ccd.content.FluidAtomizerBlockEntity;
 import dev.ccd.atomizing.AtomizingRecipe;
@@ -118,8 +117,6 @@ public final class CopperDynamics {
             .persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC).build());
     public static final DeferredHolder<Item, CopperBucketItem> COPPER_BUCKET =
         ITEMS.register("copper_bucket", () -> new CopperBucketItem(new Item.Properties().stacksTo(1)));
-    public static final DeferredHolder<Item, HoneycombMoldItem> HONEYCOMB_MOLD =
-        ITEMS.register("honeycomb_mold", () -> new HoneycombMoldItem(new Item.Properties().stacksTo(1)));
     public static final DeferredHolder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.LiquidBlock> QUICKSAND_BLOCK =
         BLOCKS.register("quicksand", () -> new net.minecraft.world.level.block.LiquidBlock(CCDFluids.QUICKSAND.get(),
             BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.WATER)));
@@ -357,7 +354,6 @@ public final class CopperDynamics {
                 output.accept(QUICKSAND_BUCKET.get());
                 for(var medium:dev.ccd.compat.ProcessingMedia.ALL) if(medium.available()) output.accept(medium.bucket.get());
                 output.accept(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET);
-                output.accept(HONEYCOMB_MOLD.get());
                 output.accept(FLUID_ATOMIZER_ITEM.get());
                 output.accept(FLUID_PACKAGE.get());
                 output.accept(COMPOSITE_PACKAGE.get());

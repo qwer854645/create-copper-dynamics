@@ -1,8 +1,0 @@
-{
-  "type": "create:compacting",
-  "ingredients": [
-    {"item": "ccd:honeycomb_mold"},
-    {"type": "neoforge:tag", "tag": "c:honey", "amount": 250}
-  ],
-  "results": [{"id": "minecraft:honeycomb"}]
-}

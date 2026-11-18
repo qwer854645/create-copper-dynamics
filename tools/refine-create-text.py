@@ -18,7 +18,7 @@ def put(key, zh, en):
 
 
 def tip(name, section, zh, en):
-    put(('item.' if name in ('copper_bucket', 'honeycomb_mold', 'fluid_stock', 'fluid_package', 'composite_package') else 'block.')
+    put(('item.' if name in ('copper_bucket', 'fluid_stock', 'fluid_package', 'composite_package') else 'block.')
         + 'ccd.' + name + '.tooltip.' + section, zh, en)
 
 
@@ -45,7 +45,6 @@ summaries = {
     'fluid_bridge': ('将两端容器接到同一个_流体存取口_。', 'Combines two containers into a single _Fluid Access Point_.'),
     'fluid_atomizer': ('将储存的流体雾化，用于_气流加工_。', 'Atomizes stored fluids for _Bulk Processing_ with air currents.'),
     'copper_bucket': ('可携带_四桶_同种流体的大容量铜桶。', 'A large bucket that holds _Four Buckets_ of a single fluid.'),
-    'honeycomb_mold': ('配合动力冲压机，将蜂蜜制成_蜜脾_。可重复使用。', 'Shapes Honey into _Honeycomb_ using a Mechanical Press. Reusable.'),
     'fluid_stock': ('在物流订单中代表_流体_，每份对应_1 mB_。', 'Represents _Fluids_ in logistics orders. Each unit represents _1 mB_.'),
     'fluid_package': ('在物流系统中_运输流体_的密封包裹。', 'A sealed package for _Transporting Fluids_ through logistics systems.'),
     'composite_package': ('在同一包裹中运输_物品和流体_。', 'Transports _Items and Fluids_ in the same package.'),
