@@ -189,131 +189,105 @@
     {
       "name": "tap_mount",
       "from": [
-        6.5,
+        7,
         16,
-        0
+        0.5
       ],
       "to": [
-        9.5,
-        16.5,
-        2
+        9,
+        16.25,
+        2.5
       ]
     },
     {
       "name": "tap_riser",
       "from": [
-        7,
-        16.5,
-        0.25
+        7.25,
+        16.25,
+        0.75
       ],
       "to": [
-        9,
-        21.5,
-        1.75
-      ]
-    },
-    {
-      "name": "scaled_faucet_native_rim_connector_north_0",
-      "from": [
-        6,
-        19,
-        1.5
-      ],
-      "to": [
-        10,
-        23,
-        3.5
-      ]
-    },
-    {
-      "name": "scaled_faucet_native_rim_north_0",
-      "from": [
-        5.5,
-        18.5,
-        1.5
-      ],
-      "to": [
-        10.5,
-        23.5,
-        2.5
+        8.75,
+        20.25,
+        2.25
       ]
     },
     {
       "name": "scaled_faucet_copper_neck",
       "from": [
-        7,
-        20.5,
-        3
+        7.25,
+        19.125,
+        2.125
       ],
       "to": [
-        9,
-        22.5,
-        6.5
+        8.75,
+        20.625,
+        4.75
       ]
     },
     {
       "name": "scaled_faucet_copper_elbow",
       "from": [
-        7,
-        20,
-        4.5
+        7.25,
+        18.75,
+        3.25
       ],
       "to": [
-        9,
-        21,
-        6.5
+        8.75,
+        19.5,
+        4.75
       ]
     },
     {
       "name": "scaled_faucet_native_spout_middle_0",
       "from": [
-        6.5,
-        19,
-        4
+        6.875,
+        18,
+        2.875
       ],
       "to": [
-        9.5,
-        20,
-        7
+        9.125,
+        18.75,
+        5.125
       ]
     },
     {
       "name": "scaled_faucet_native_spout_bottom_0",
       "from": [
-        7,
-        17.5,
-        4.5
+        7.25,
+        16.875,
+        3.25
       ],
       "to": [
-        9,
-        19,
-        6.5
+        8.75,
+        18,
+        4.75
       ]
     },
     {
       "name": "scaled_faucet_valve_stem",
       "from": [
-        7.5,
-        22.5,
-        5
+        7.625,
+        20.625,
+        3.625
       ],
       "to": [
-        8.5,
-        23,
-        6
+        8.375,
+        21,
+        4.375
       ]
     },
     {
       "name": "scaled_faucet_handle_open",
       "from": [
-        6,
-        23,
-        5
+        6.5,
+        21,
+        3.625
       ],
       "to": [
-        10,
-        24,
-        6
+        9.5,
+        21.75,
+        4.375
       ]
     }
   ],
@@ -340,18 +314,18 @@
   "countertopUV": "one continuous 16x16 X/Z layout, four strips use absolute UVs",
   "faucet": {
     "source": "ccd:block/faucet_open",
-    "scale": 0.5,
+    "scale": 0.375,
     "offset": [
-      4,
-      17,
-      1.5
+      5,
+      16.5,
+      1
     ],
-    "geometry": "all source elements uniformly scaled; UVs unchanged; embedded mouth cullfaces removed",
+    "geometry": "six exposed source elements uniformly scaled; rear pipe rims omitted; UVs unchanged",
     "state": "fixed open appearance"
   },
   "waterRendering": "native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved",
   "inventoryAndInteraction": "unchanged infinite fixed water; ordinary right click fills, sneak disposes",
   "reference": "new user-directed structure; vanilla iron-ingot palette/bevel inspiration only",
-  "artwork": "CCD sink artwork plus existing CCD faucet; native pipe mouth and spout art retain Create ownership",
+  "artwork": "CCD sink artwork plus existing CCD faucet; native spout art retains Create ownership",
   "pixelStyle": "plain copper clusters without seams or doors; neutral silver-white iron-ingot-style bevel; four original 16x16 textures"
 }

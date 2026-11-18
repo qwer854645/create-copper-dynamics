@@ -39,16 +39,14 @@ public final class CopperKitchenSinkBlock extends CopperWaterBasinBlock {
         Block.box(2, 9, 13, 14, 11, 14),
         Block.box(2, 9, 3, 3, 11, 13),
         Block.box(13, 9, 3, 14, 11, 13),
-        Block.box(6.5, 16, 0, 9.5, 16.5, 2),
-        Block.box(7, 16.5, 0.25, 9, 21.5, 1.75),
-        Block.box(6, 19, 1.5, 10, 23, 3.5),
-        Block.box(5.5, 18.5, 1.5, 10.5, 23.5, 2.5),
-        Block.box(7, 20.5, 3, 9, 22.5, 6.5),
-        Block.box(7, 20, 4.5, 9, 21, 6.5),
-        Block.box(6.5, 19, 4, 9.5, 20, 7),
-        Block.box(7, 17.5, 4.5, 9, 19, 6.5),
-        Block.box(7.5, 22.5, 5, 8.5, 23, 6),
-        Block.box(6, 23, 5, 10, 24, 6)), Direction.SOUTH);
+        Block.box(7, 16, 0.5, 9, 16.25, 2.5),
+        Block.box(7.25, 16.25, 0.75, 8.75, 20.25, 2.25),
+        Block.box(7.25, 19.125, 2.125, 8.75, 20.625, 4.75),
+        Block.box(7.25, 18.75, 3.25, 8.75, 19.5, 4.75),
+        Block.box(6.875, 18, 2.875, 9.125, 18.75, 5.125),
+        Block.box(7.25, 16.875, 3.25, 8.75, 18, 4.75),
+        Block.box(7.625, 20.625, 3.625, 8.375, 21, 4.375),
+        Block.box(6.5, 21, 3.625, 9.5, 21.75, 4.375)), Direction.SOUTH);
 
     public CopperKitchenSinkBlock(Properties properties) {
         super(properties);
