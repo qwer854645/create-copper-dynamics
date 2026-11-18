@@ -71,15 +71,61 @@ def zone_ring(x, y, w, h, width, seam=0, seam_row=None):
     return "copper"
 
 
+# ---------------------------------------------------------------------------
+# The 64 px `*_connected` CT sheets are NOT a 4x4 grid of 16 px tiles. Create lays each one out
+# as a single 48x48 panel (a 3x3 nine-slice of the connected structure) at x16..63 / y0..47,
+# plus the plain 16x16 face at x0..15 / y48..63, with the rest transparent. Treating them as a
+# tile grid put a brass ring around every 16 px cell and turned one continuous panel into a
+# visible 3x3 grid - which is exactly what the multi-block tower showed.
+CONN_REGION = (16, 0, 48, 48)
+CONN_PLAIN = (0, 48, 16, 16)
+
+# Rib rows of the connected side panel, read off Create's art: bright rib tops and dark seams.
+SIDE48_BAND = {0, 1, 2, 4, 9, 25, 41, 45}
+SIDE48_SEAM = {3, 8, 24, 40, 44, 47}
+
+
+def zone_connected_side(x, y, width=2):
+    rx, ry, rw, rh = CONN_REGION
+    if rx <= x < rx + rw and ry <= y < ry + rh:
+        sx, sy = x - rx, y - ry
+        if sy in SIDE48_BAND:
+            return "brass"
+        if sy in SIDE48_SEAM:
+            return "seam"
+        return "brass" if min(sx, sy, rw - 1 - sx, rh - 1 - sy) < width else "copper"
+    if y >= CONN_PLAIN[1]:
+        return zone_side(x, y)          # the plain 16x16 face keeps the standalone grammar
+    return "copper"
+
+
+def zone_connected_ring(width, seam):
+    def f(x, y):
+        rx, ry, rw, rh = CONN_REGION
+        if rx <= x < rx + rw and ry <= y < ry + rh:
+            lx, ly, w, h = x - rx, y - ry, rw, rh
+        elif y >= CONN_PLAIN[1]:
+            lx, ly, w, h = x, y - CONN_PLAIN[1], 16, 16
+        else:
+            return "copper"
+        d = min(lx, ly, w - 1 - lx, h - 1 - ly)
+        if d < width:
+            return "brass"
+        if seam and d < width + seam:
+            return "seam"
+        return "copper"
+    return f
+
+
 # The lid gets a full brass casing as well: 2 px of frame plus a 1 px shadow so it reads like the
-# side bands, instead of the single-pixel line it had before. The 64 px CT sheets scale 4x.
+# side bands, instead of the single-pixel line it had before.
 ZONES = {
     "fluid_tank": (zone_side, None),
-    "fluid_tank_connected": (zone_side, None),
+    "fluid_tank_connected": (zone_connected_side, None),
     "fluid_tank_top": (lambda x, y, w=16, h=16: zone_ring(x, y, w, h, 2, seam=1), None),
-    "fluid_tank_top_connected": (lambda x, y, w=64, h=64: zone_ring(x, y, w, h, 8, seam=4), None),
+    "fluid_tank_top_connected": (zone_connected_ring(2, 1), None),
     "fluid_tank_inner": (lambda x, y, w=16, h=16: zone_ring(x, y, w, h, 1, seam_row=15), None),
-    "fluid_tank_inner_connected": (lambda x, y, w=64, h=64: zone_ring(x, y, w, h, 4), None),
+    "fluid_tank_inner_connected": (zone_connected_ring(1, 0), None),
     # glass windows: Create's own, kept verbatim
     "fluid_tank_window": (None, "copy"),
     "fluid_tank_window_single": (None, "copy"),
