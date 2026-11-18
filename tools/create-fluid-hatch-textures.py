@@ -194,18 +194,20 @@ def swap_material(src: Image.Image, ramp, keep_silver=True, keep_black=True, war
 # The arm's dark end (#724731, #854A34, #875137) is not used: on this hatch it made the body read
 # too dark, because Create's hatch body carries more low-mid tones than the arm's flat panels do.
 # The slice now starts at #8E5B3D.
-EDGE_JUMP = 14.0          # luminance step that counts as an edge in the source
-BEVEL = 2                 # ramp steps added above an edge / removed below it
+EDGE_JUMP = 30.0          # luminance step that counts as an edge; high, so only real edges count
+BEVEL = 1                 # ramp steps added above an edge
 
 
 def bevel_details(src: Image.Image, ramp):
-    """Re-fill the body with a lit pixel on the upper side of every edge, shadow on the lower side.
+    """Re-fill the body with a single lit pixel above each *strong* edge.
 
-    Pure recolouring looked muddy because Create's item hatch is a GREY design built from gentle
-    value shifts, and a flat grey->brass map preserves that mushiness. Pixel art metalwork needs
-    hard bevels instead, so this reuses the edges Create already drew - silhouette, panel border,
-    every louvre slat - and puts a highlight above and a shadow below. The layout is untouched:
-    no edge moves, nothing is added or removed, only the value of pixels that already exist.
+    Two earlier versions bracket this one and both were rejected: a plain recolour read as flat,
+    and bevelling every edge at +-2 steps read as noise ("太乱了"). Create's item hatch has a lot
+    of one-pixel detailing, so bevelling all of it doubles the detail density.
+
+    This only touches edges with a big luminance jump and only lifts the upper side, by one step.
+    Nothing moves or is added - the value of pixels that already exist is nudged, so the frame and
+    the louvre keep Create's exact layout.
     """
     px = src.load()
     out = src.copy()
@@ -230,14 +232,10 @@ def bevel_details(src: Image.Image, ramp):
             if not ok:
                 continue
             idx = round(rank[(r, g, b)] * steps)
-            for dy, sign in ((-1, 1), (1, -1)):
-                ny = y + dy
-                if not (0 <= ny < h) or not px[x, ny][3]:
-                    continue
-                nok, nL = body(px[x, ny][:3])
-                if nok and nL - L > EDGE_JUMP:
-                    idx = max(0, min(steps, idx + sign * BEVEL))
-                    break
+            if y > 0 and px[x, y - 1][3]:
+                up_ok, up_L = body(px[x, y - 1][:3])
+                if up_ok and up_L - L > EDGE_JUMP:
+                    idx = min(steps, idx + BEVEL)
             op[x, y] = ramp[idx] + (a,)
     return out
 
