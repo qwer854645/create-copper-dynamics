@@ -14,6 +14,8 @@ const clusters=[
  '6655556555555566','5555555555555555','4544555555555554','4544555555556654',
  '5554555555566655','6555555555566556','6655555555555566','6555566555555556',
  '5555666555555555','5555665555555555','5555555555555555','5555555555555555'];
+// Keep the approved copper ramp, but use two lower steps for a deeper copper frame.
+const copperTone=shade=>copper[Math.max(0,shade-2)];
 const paint=(data,x,y,rgb)=>data.set([...rgb,255],(y*16+x)*4);
 const face=(texture,uv)=>({texture:'#'+texture,uv});
 function box(name,from,to,texture){
@@ -35,13 +37,13 @@ async function main(){
  const body=Buffer.alloc(1024),cap=Buffer.alloc(1024),glass=Buffer.alloc(1024);
  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
   const shade=Number(clusters[y][x]);
-  paint(body,x,y,copper[shade]);
+  paint(body,x,y,copperTone(shade));
   // The previous atlas baked a strong upper-left -> lower-right light gradient into every face.
   // Use the same fold values at all four corners; let Minecraft provide directional lighting.
   const border=Math.min(x,y,15-x,15-y);
   let top=border===0?4:border===1?6:shade;
   if((x===3||y===3||x===12||y===12)&&x>=3&&x<=12&&y>=3&&y<=12)top=4;
-  paint(cap,x,y,copper[top]);
+  paint(cap,x,y,copperTone(top));
  }
  // Clear centres with a few stepped reflection marks, leaving the conduit readable.
  for(const [x,y]of [[3,4],[3,5],[4,3],[4,4],[5,3],[10,12],[11,11],[12,10]])
@@ -133,7 +135,8 @@ async function main(){
   input:await sharp(path.join(textures,name+'.png')).resize(192,192,{kernel:'nearest'}).png().toBuffer(),left:i*208,top:0});
  await sharp({create:{width:608,height:192,channels:4,background:'#e5e8e2'}}).composite(swatches).png().toFile(path.join(output,'textures.png'));
  save(path.join(output,'model.meta.json'),{stage:'Conduit Box with clear water',textureSize:[16,16],frameElements:6,glassElements:4,
-  copperLighting:'neutral midtone clusters, equal corner colors and symmetric fold values; all composite parts retain AO disabled',
+  copperLighting:'deeper copper using two lower palette steps, equal corner colors and symmetric fold values; all composite parts retain AO disabled',
+  copperBaseRGB:copperTone(5),
   geometry:elements.map(({name,from,to})=>({name,from,to})),coreScale:.55,
   water:{from:water.from,to:water.to,sideAlpha:54,surfaceAlpha:92,waterlineAlpha:96,textureSize:[waterInfo.width,waterInfo.height],
    rendering:'NeoForge native composite: cutout frame/core, translucent water; same water model in world and item'},

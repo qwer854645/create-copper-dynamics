@@ -6,7 +6,12 @@
   ],
   "frameElements": 6,
   "glassElements": 4,
-  "copperLighting": "neutral midtone clusters, equal corner colors and symmetric fold values; all composite parts retain AO disabled",
+  "copperLighting": "deeper copper using two lower palette steps, equal corner colors and symmetric fold values; all composite parts retain AO disabled",
+  "copperBaseRGB": [
+    167,
+    90,
+    64
+  ],
   "geometry": [
     {
       "name": "copper_base",
