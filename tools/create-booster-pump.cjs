@@ -50,8 +50,17 @@ for(const side of ['up','down'])for(const part of ['rim_connector','rim']){
   elements.push(element);
  }
 }
+// Use the original pump end-band artwork and exact face UV/rotation instead of a custom glyph.
+const nativePump=loadModel('create:block/mechanical_pump/block');
+for(const [end,y,Y]of [['inlet',2,4],['outlet',12,14]])for(const side of ['north','south','east','west']){
+ const [from,to]={north:[[2,y,1.99],[14,Y,1.99]],south:[[2,y,14.01],[14,Y,14.01]],
+  west:[[1.99,y,2],[1.99,Y,14]],east:[[14.01,y,2],[14.01,Y,14]]}[side];
+ elements.push({name:'native_pump_mark_'+end+'_'+side,from,to,
+  faces:{[side]:{...nativePump.elements[0].faces[side],texture:'#native_pump'}}});
+}
 const model={parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',
- textures:{body:'ccd:block/booster_pump/body',shaft_face:'ccd:block/booster_pump/shaft_face',pipe:'create:block/pipes'},elements};
+ textures:{body:'ccd:block/booster_pump/body',shaft_face:'ccd:block/booster_pump/shaft_face',pipe:'create:block/pipes',
+  native_pump:'create:block/pump'},elements};
 model.textures.particle=model.textures.body;
 const rotate=(v,axis,angle,point)=>{
  const a=angle*Math.PI/180,c=Math.cos(a),s=Math.sin(a),p=v.map(n=>n-(point?8:0)),q=[...p];
@@ -97,13 +106,7 @@ async function main(){
  }
  if(casingPixelsReplaced!==4)throw Error('Unexpected native gearbox casing pixels');
  await sharp(body,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'body.png'));
- const marked=await sharp(shaftFace,{raw:{width:16,height:16,channels:4}})
-  .resize(32,32,{kernel:'nearest'}).raw().toBuffer();
- // Two tiny up-pointing stamps on each of the four shaft faces, outside the central shaft aperture.
- const arrow=['010','111','010','010'];
- for(const cy of [6,26])for(let y=0;y<4;y++)for(let x=0;x<3;x++)if(arrow[y][x]==='1')
-  marked.set([123,61,41,255],((cy-2+y)*32+15+x)*4);
- await sharp(marked,{raw:{width:32,height:32,channels:4}}).png().toFile(path.join(textures,'shaft_face.png'));
+ await sharp(shaftFace,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'shaft_face.png'));
  fs.writeFileSync(path.join(assets,'models/block/booster_pump.json'),JSON.stringify(model,null,2)+'\n');
  const nativeShaft=loadModel('create:block/shaft_half');
  const item={parent:'ccd:block/booster_pump',textures:{shaft_side:nativeShaft.textures['0'],shaft_end:nativeShaft.textures['1']},
@@ -116,7 +119,7 @@ async function main(){
   await sharp(buffer).toFile(path.join(output,['horizontal-front','horizontal-rear','vertical'][i]+'.png'));
   panels.push({input:buffer,left:i*500,top:100});
  }
- const labels=Buffer.from(`<svg width="1500" height="660" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="42" font-size="29">增压泵 · 轴孔与铜面调整</text><text x="750" y="78" font-size="16">原生机器轴孔 · 不规则铜色纹理 · 原生流体管口与半轴</text><text x="250" y="612" font-size="18">水平管路 · 正面</text><text x="750" y="612" font-size="18">水平管路 · 背面</text><text x="1250" y="612" font-size="18">竖直管路</text><text x="750" y="644" font-size="14" fill="#677070">实际模型离线渲染 / 铜壳手工像素布局，轴孔复用 Create 齿轮箱纹理</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="660" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei, sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="42" font-size="29">增压泵 · 原版机械泵方向标记</text><text x="750" y="78" font-size="16">直接使用原版两端贴图与 UV · 四侧共八处 · 原生轴孔、管口与半轴</text><text x="250" y="612" font-size="18">水平管路 · 正面</text><text x="750" y="612" font-size="18">水平管路 · 背面</text><text x="1250" y="612" font-size="18">竖直管路</text><text x="750" y="644" font-size="14" fill="#677070">实际模型离线渲染 / 方向标记引用 create:block/pump，不再绘制替代箭头</text></g></svg>`);
  await sharp({create:{width:1500,height:660,channels:4,background:'#e5e8e2'}})
   .composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  await sharp({create:{width:528,height:256,channels:4,background:'#e5e8e2'}}).composite([
@@ -128,8 +131,10 @@ async function main(){
   fluidAxis:'y before blockstate rotation',nativePipeModels:nativeParts,nativePipeTexture:'create:block/pipes',
   nativeShaftModel:'create:block/shaft_half',shaftOpeningTexture:'Create gearbox.png crop [4,4,12,12], brown casing corners replaced by copper',
   shaftOpeningCasingPixelsReplaced:casingPixelsReplaced,
-  shaftOpeningFaces:4,customBearings:0,rivets:0,itemShafts:4,shaftFaceSize:[32,32],
-  arrows:{perFace:2,faces:4,direction:'local +Y, follows FACING and native wrench reversal',glyph:arrow}},null,2)+'\n');
+  shaftOpeningFaces:4,customBearings:0,rivets:0,itemShafts:4,shaftFaceSize:[16,16],
+  arrows:{perFace:2,faces:4,direction:'local +Y, follows FACING and native wrench reversal',
+   sourceModel:'create:block/mechanical_pump/block',sourceTexture:'create:block/pump',
+   sourceUV:[8,0,6.5,6],sourceRotation:270,stampSize:[12,2],planeOffset:.01}},null,2)+'\n');
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length,textures:2}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

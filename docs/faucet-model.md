@@ -10,6 +10,10 @@
 
 两种龙头的物品 GUI 旋转单独设为 [30,45,0]，比例 .625，使喷嘴和智能版的过滤面板朝前展示，修正默认物品角度下背面朝前的问题。世界模型与放置朝向不变。
 
+普通版的选取、碰撞和交互形状由实际模型七个固定构件与开/关手柄合并，不再使用默认整格方块。以朝南为原始几何，用 Catnip VoxelShaper.forHorizontal 旋转四向；OPEN 且未 POWERED 时选择横向开启手柄，其余状态与模型一样使用关闭手柄。智能版在这两套形状上加入 [4.9,4.9,9.8]..[11.1,11.1,11.2] 的过滤面板，复用同一朝向和状态选择。
+
+开关按原版 LeverBlock 的普通方块交互方式处理：useWithoutItem 不检查主手必须为空，让手持普通物品时的默认方块交互也能切换。智能过滤面板的原生设置处理及扳手继续优先，不增加物品消耗或容器转移路径。
+
 `tools/create-faucet.cjs` 接收解压的 Create 源码根目录，生成两种状态、两张贴图及 `outputs/faucet/preview.png`，展示关闭、开启及下方喷嘴。`textures.png` 展示铜面与手柄。只做静态检查和离线渲染，没有构建或启动游戏。
 
 原生管口、分液池喷嘴模型及其贴图归 The Create Team / The Creators of Create 所有，不标注为 CCD 原创；美术许可见 [Create LICENSE.md](https://github.com/Creators-of-Create/Create/blob/mc1.21.1/dev/LICENSE.md)。

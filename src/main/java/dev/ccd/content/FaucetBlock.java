@@ -5,12 +5,14 @@ import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import dev.ccd.CopperDynamics;
+import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -23,18 +25,44 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FaucetBlock extends HorizontalDirectionalBlock
     implements IBE<FaucetBlockEntity>, IWrenchable, ProperWaterloggedBlock {
     public static final MapCodec<FaucetBlock> CODEC = simpleCodec(FaucetBlock::new);
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    private static final VoxelShape BODY = Shapes.or(
+        Block.box(4, 4, 0, 12, 12, 4), Block.box(3, 3, 0, 13, 13, 2),
+        Block.box(6, 7, 3, 10, 11, 10), Block.box(6, 6, 6, 10, 8, 10),
+        Block.box(5, 4, 5, 11, 6, 11), Block.box(6, 1, 6, 10, 4, 10),
+        Block.box(7, 11, 7, 9, 12, 9));
+    protected static final VoxelShape CLOSED_SHAPE = Shapes.or(BODY, Block.box(7, 12, 4, 9, 14, 12));
+    protected static final VoxelShape OPEN_SHAPE = Shapes.or(BODY, Block.box(4, 12, 7, 12, 14, 9));
+    private static final VoxelShaper CLOSED_SHAPES = VoxelShaper.forHorizontal(CLOSED_SHAPE, Direction.SOUTH);
+    private static final VoxelShaper OPEN_SHAPES = VoxelShaper.forHorizontal(OPEN_SHAPE, Direction.SOUTH);
     public FaucetBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(FACING, Direction.NORTH)
             .setValue(OPEN, false).setValue(POWERED, false).setValue(WATERLOGGED, false));
     }
     @Override protected MapCodec<? extends HorizontalDirectionalBlock> codec() { return CODEC; }
+    protected VoxelShaper modelShaper(boolean open) { return open ? OPEN_SHAPES : CLOSED_SHAPES; }
+    private VoxelShape modelShape(BlockState state) {
+        boolean open = state.getValue(OPEN) && !state.getValue(POWERED);
+        return modelShaper(open).get(state.getValue(FACING));
+    }
+    @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return modelShape(state);
+    }
+    @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return modelShape(state);
+    }
+    @Override public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) {
+        return modelShape(state);
+    }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(FACING, OPEN, POWERED, WATERLOGGED);
     }
@@ -46,7 +74,7 @@ public class FaucetBlock extends HorizontalDirectionalBlock
     }
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
         Player player, BlockHitResult hit) {
-        if (!player.getMainHandItem().isEmpty()) return InteractionResult.PASS;
+        // Like the native lever, also allow the normal item-use fallback to operate the handle.
         if (!level.isClientSide()) level.setBlockAndUpdate(pos, state.cycle(OPEN));
         return InteractionResult.sidedSuccess(level.isClientSide());
     }

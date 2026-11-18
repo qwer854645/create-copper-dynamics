@@ -8,12 +8,12 @@ const textures=path.join(assets,'textures/block/copper_water_supply'),output=pat
 for(const dir of [textures,output])fs.mkdirSync(dir,{recursive:true});
 for(const dir of ['models/block/copper_water_supply','models/item'])fs.mkdirSync(path.join(assets,dir),{recursive:true});
 const save=(p,d)=>fs.writeFileSync(p,JSON.stringify(d,null,2)+'\n');
-const copper=[[63,32,22],[96,46,31],[123,61,41],[144,73,49],[167,90,64],[194,107,76],[214,123,91],[227,130,108],[239,156,128]];
+const copper=[[70,32,24],[144,73,49],[154,80,56],[167,90,64],[178,98,71],[194,107,76],[200,116,86],[214,123,91],[227,130,108]];
 const clusters=[
- '5667777766665554','6667777666655544','6777776666555443','7777766665554433',
- '7776666555544433','6766665555544333','6666655555444332','6666555554444332',
- '6655555444443332','6555554444433332','6555544444433322','5555444554433322',
- '5554445555433222','5444455554433221','4444555544332211','3333444333222111'];
+ '5555555555555555','5555555666555555','6555556666555556','6655556665555566',
+ '6655556555555566','5555555555555555','4544555555555554','4544555555556654',
+ '5554555555566655','6555555555566556','6655555555555566','6555566555555556',
+ '5555666555555555','5555665555555555','5555555555555555','5555555555555555'];
 const paint=(data,x,y,rgb)=>data.set([...rgb,255],(y*16+x)*4);
 const face=(texture,uv)=>({texture:'#'+texture,uv});
 function box(name,from,to,texture){
@@ -34,12 +34,13 @@ async function main(){
  if(clusters.length!==16||clusters.some(row=>row.length!==16))throw Error('Invalid pixel cluster rows');
  const body=Buffer.alloc(1024),cap=Buffer.alloc(1024),glass=Buffer.alloc(1024);
  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
-  let shade=Number(clusters[y][x]);
-  if(x===0||y===0)shade=5;else if(x===15||y===15)shade=1;
+  const shade=Number(clusters[y][x]);
   paint(body,x,y,copper[shade]);
-  let top=Math.min(7,Number(clusters[y][x])+1);
-  if(x===0||y===0)top=6;else if(x===15||y===15)top=2;
-  if((x===3||y===3||x===12||y===12)&&x>=3&&x<=12&&y>=3&&y<=12)top=3;
+  // The previous atlas baked a strong upper-left -> lower-right light gradient into every face.
+  // Use the same fold values at all four corners; let Minecraft provide directional lighting.
+  const border=Math.min(x,y,15-x,15-y);
+  let top=border===0?4:border===1?6:shade;
+  if((x===3||y===3||x===12||y===12)&&x>=3&&x<=12&&y>=3&&y<=12)top=4;
   paint(cap,x,y,copper[top]);
  }
  // Clear centres with a few stepped reflection marks, leaving the conduit readable.
@@ -132,6 +133,7 @@ async function main(){
   input:await sharp(path.join(textures,name+'.png')).resize(192,192,{kernel:'nearest'}).png().toBuffer(),left:i*208,top:0});
  await sharp({create:{width:608,height:192,channels:4,background:'#e5e8e2'}}).composite(swatches).png().toFile(path.join(output,'textures.png'));
  save(path.join(output,'model.meta.json'),{stage:'Conduit Box with clear water',textureSize:[16,16],frameElements:6,glassElements:4,
+  copperLighting:'neutral midtone clusters, equal corner colors and symmetric fold values; all composite parts retain AO disabled',
   geometry:elements.map(({name,from,to})=>({name,from,to})),coreScale:.55,
   water:{from:water.from,to:water.to,sideAlpha:54,surfaceAlpha:92,waterlineAlpha:96,textureSize:[waterInfo.width,waterInfo.height],
    rendering:'NeoForge native composite: cutout frame/core, translucent water; same water model in world and item'},

@@ -8,7 +8,7 @@
     "Create pump",
     "Create copper_casing"
   ],
-  "elements": 5,
+  "elements": 13,
   "fluidAxis": "y before blockstate rotation",
   "nativePipeModels": [
     "create:block/fluid_pipe/rim_connector/up",
@@ -25,18 +25,26 @@
   "rivets": 0,
   "itemShafts": 4,
   "shaftFaceSize": [
-    32,
-    32
+    16,
+    16
   ],
   "arrows": {
     "perFace": 2,
     "faces": 4,
     "direction": "local +Y, follows FACING and native wrench reversal",
-    "glyph": [
-      "010",
-      "111",
-      "010",
-      "010"
-    ]
+    "sourceModel": "create:block/mechanical_pump/block",
+    "sourceTexture": "create:block/pump",
+    "sourceUV": [
+      8,
+      0,
+      6.5,
+      6
+    ],
+    "sourceRotation": 270,
+    "stampSize": [
+      12,
+      2
+    ],
+    "planeOffset": 0.01
   }
 }

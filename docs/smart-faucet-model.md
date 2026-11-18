@@ -11,3 +11,5 @@
 `tools/create-smart-faucet.cjs` 接收解压的 Create 源码根目录，生成黄铜贴图、两个继承模型、面板模型、状态和物品资源，以及 `outputs/smart-faucet/preview.png`。仅静态检查及离线渲染，未构建或启动游戏；过滤图标的实际交互和运行时显示尚未实测。
 
 Create 原生管口、喷嘴及过滤面板资源归 The Create Team / The Creators of Create 所有，不标注为 CCD 原创；许可见 [Create LICENSE.md](https://github.com/Creators-of-Create/Create/blob/mc1.21.1/dev/LICENSE.md)。
+
+碰撞、选中和交互形状复用基础龙头的当前手柄形状，再合并上述过滤槽包围盒，统一按 FACING 旋转。右击非过滤槽区域可切换开关，普通手持物品同样支持；过滤槽继续由原生 FilteringBehaviour 处理。
