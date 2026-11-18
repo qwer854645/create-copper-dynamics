@@ -1,4 +1,4 @@
-// Shared CCD collection bowl, brass recoloring and Create's native filter bezel UVs.
+// Copper collection bowl with a brass top lip and Create's native brass filter bezel.
 // Usage: node tools/create-smart-collection-grate.cjs <extracted Create source root>
 const fs=require('node:fs'),path=require('node:path'),sharp=require('sharp');
 const {mesh,render,model:loadModel}=require('./preview-fluid-packager.cjs');
@@ -25,8 +25,13 @@ async function main(){
   }
   await sharp(pixels,{raw:{width:info.width,height:info.height,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  }
+ const shared=loadModel('ccd:block/copper_collection_grate');
+ const smartElements=structuredClone(shared.elements);
+ for(const e of smartElements.filter(e=>e.name.startsWith('raised_copper_lip')))
+  for(const f of Object.values(e.faces))if(f.texture==='#copper')f.texture='#brass';
  save(path.join(assets,'models/block/smart_collection_grate.json'),{parent:'ccd:block/copper_collection_grate',textures:{
-  copper:'ccd:block/smart_collection_grate/body',rim:'ccd:block/smart_collection_grate/rim',particle:'ccd:block/smart_collection_grate/body'}});
+  brass:'ccd:block/smart_collection_grate/body',rim:'ccd:block/smart_collection_grate/rim',
+  particle:'ccd:block/copper_collection_grate/body'},elements:smartElements});
  save(path.join(assets,'models/block/smart_collection_grate_filter.json'),{parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',
   textures:{filter:'create:block/smart_pipe_2'},elements:[panel]});
  const multipart=[];
@@ -57,15 +62,16 @@ async function main(){
   const buffer=await render(fluid?[...faces,...waterFaces]:faces,500,440,view,{center:[8,4,8],scale:20,alphaBlend:fluid});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*500,top:90});
  }
- const labels=Buffer.from(`<svg width="1500" height="620" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">智能集液栅 · 黄铜槽体与前侧过滤</text><text x="750" y="77" font-size="16">沿用半格集液斗 · 灰色栅条 · 原生过滤面板 · 四向放置</text><text x="250" y="566" font-size="19">正面过滤面板</text><text x="750" y="566" font-size="19">存液示意</text><text x="1250" y="566" font-size="19">背面</text><text x="750" y="605" font-size="14" fill="#677070">实际模型离线预览 / 当前未设置过滤，游戏内由原生行为显示过滤图标 / 未构建或启动客户端</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="620" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">智能集液栅 · 铜槽体与黄铜边框</text><text x="750" y="77" font-size="16">铜壳为主 · 顶部边框和过滤槽保留黄铜 · 灰色栅条</text><text x="250" y="566" font-size="19">正面过滤面板</text><text x="750" y="566" font-size="19">存液示意</text><text x="1250" y="566" font-size="19">背面</text><text x="750" y="605" font-size="14" fill="#677070">实际模型离线预览 / 当前未设置过滤，游戏内由原生行为显示过滤图标 / 未构建或启动客户端</text></g></svg>`);
  await sharp({create:{width:1500,height:620,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  const comparison=[];
  for(const [i,part]of [await mesh('ccd:block/copper_collection_grate'),faces].entries())comparison.push({
   input:await render(part,500,440,[20,18,38],{center:[8,4,8],scale:20}),left:i*500,top:50});
- const comparisonLabels=Buffer.from(`<svg width="1000" height="550" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" fill="#303535" text-anchor="middle"><text x="500" y="35" font-size="24">集液栅 · 沿用已认可的增压泵材质风格</text><text x="250" y="505" font-size="19">普通版 · 铜壳</text><text x="750" y="505" font-size="19">智能版 · 黄铜壳与前侧过滤</text><text x="500" y="538" font-size="13" fill="#677070">同角度实际模型离线预览 / 铜面沿用 CCD 增压泵原贴图布局，灰色栅条复用 Create 工业铁材质</text></g></svg>`);
+ const comparisonLabels=Buffer.from(`<svg width="1000" height="550" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" fill="#303535" text-anchor="middle"><text x="500" y="35" font-size="24">集液栅 · 铜壳为主，黄铜区分智能版</text><text x="250" y="505" font-size="19">普通版 · 铜壳</text><text x="750" y="505" font-size="19">智能版 · 黄铜顶框与过滤槽</text><text x="500" y="538" font-size="13" fill="#677070">同角度实际模型离线预览 / 铜面沿用 CCD 增压泵原贴图布局，灰色栅条复用 Create 工业铁材质</text></g></svg>`);
  await sharp({create:{width:1000,height:550,channels:4,background:'#e5e8e2'}}).composite([...comparison,{input:comparisonLabels,left:0,top:0}]).png().toFile(path.join(output,'comparison.png'));
  await sharp(path.join(textures,'body.png')).resize(256,256,{kernel:'nearest'}).png().toFile(path.join(output,'texture.png'));
  save(path.join(output,'model.meta.json'),{textureSize:[16,16],base:'ccd:block/copper_collection_grate',panel:[panel.from,panel.to],
+  materials:{body:'copper',topLip:'brass on all faces of the four lip elements',filter:'native brass bezel',bars:'native grey iron'},
   panelFaceCenter:[8,4.5,15.5],interactionCenter:[8,4.5,15.5625],filterScale:.25,
   filter:'native FilteringBehaviour.forFluids and ValueBoxTransform.Sided, front only',
   facingRotations:{south:0,north:180,east:270,west:90},capacity:2000,

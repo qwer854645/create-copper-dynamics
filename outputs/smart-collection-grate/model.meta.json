@@ -16,6 +16,12 @@
       15.5
     ]
   ],
+  "materials": {
+    "body": "copper",
+    "topLip": "brass on all faces of the four lip elements",
+    "filter": "native brass bezel",
+    "bars": "native grey iron"
+  },
   "panelFaceCenter": [
     8,
     4.5,
