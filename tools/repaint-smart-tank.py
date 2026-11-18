@@ -1,4 +1,4 @@
-"""Smart tank brass repaint - thin wrapper around tools/recolor-rank.py.
+"""Smart tank repaint - thin wrapper around tools/create-smart-tank-textures.py.
 
 This script used to duplicate the recolour loop with its own absolute-threshold ladder:
 
@@ -11,8 +11,8 @@ imported `pxl.Canvas` from a local pixel-art skill that is not part of this repo
 it could not run here at all, and it repainted every `*.png` in the folder rather than only
 the fluid tank faces.
 
-The logic now lives in one place. This wrapper keeps the old entry point working and
-restricts it to the four tank body textures handled by tools/recolor-rank.py.
+The logic now lives in tools/create-smart-tank-textures.py. This wrapper keeps the old entry
+point working.
 """
 from __future__ import annotations
 
@@ -31,7 +31,7 @@ def _load(name, filename):
 
 
 def main(argv):
-    rank = _load("recolor_rank", "recolor-rank.py")
+    tool = _load("smart_tank_textures", "create-smart-tank-textures.py")
     positional = [a for a in argv[1:] if not a.startswith("--")]
     source = positional[0] if positional else None
     if source is None:
@@ -45,10 +45,10 @@ def main(argv):
         print("no Create jar given and none found in the Gradle cache; "
               "pass one: python tools/repaint-smart-tank.py <create.jar>")
         return 2
-    args = ["recolor-rank.py", source]
+    args = ["create-smart-tank-textures.py", str(ROOT / "src/main/resources/assets/ccd"), source]
     if "--check" in argv:
         args.append("--check")
-    return rank.main(args)
+    return tool.main(args)
 
 
 if __name__ == "__main__":

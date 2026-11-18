@@ -396,10 +396,27 @@ Create 的 `fluid_tank.png` 结构本身就是机壳式的：
 
 ### 取舍
 
-`std` 从 30.5 升到 **56.7**，看着是变大了，但这是**刻意的结构对比**而不是噪点——暗部是平坦中性灰，
-亮部是黄铜带，两者边界清晰。这一点和前面"把渐变压成噪点"的情况本质不同。
+第一版做成了**整块黄铜 + 中性灰暗板**（std 56.7），看着像黄铜机壳，但用户澄清想要的是
+**"有黄铜机壳的铜储罐"**——铜身要保留，只有框是黄铜。
 
-预览：`outputs/texture-rework/smart-fluid-tank.png`（Create 原版 / 智能储罐 × 3 视角）。
+### 最终做法：按行分区，铜身不动
+
+Create 的 `fluid_tank.png` 行结构正好能分区：
+
+| 行（16px 侧板） | 区域 | 材质 |
+|---|---|---|
+| 0~2 / 4 / 13~14 | 横向框带 | 黄铜金（`brass_block` 金段） |
+| 3 / 12 / 15 | 板缝 | 中性灰（`industrial_iron_block`） |
+| 5~11 | 板面 | **Create 原铜色，一像素不动** |
+
+顶盖与内壁改用外圈环（1px；64px 的 CT 图用 4px）。玻璃窗贴图直接保留 Create 原样。
+
+板缝试了三档灰度，最深那档像黑洞，取中间档（`#353438`..`#4F4F4F`）读作阴影。
+
+工具从 `recolor-rank.py` 改名为 `create-smart-tank-textures.py`——它已经不是"按秩换色板"了。
+`repaint-smart-tank.py` 仍是它的旧入口包装。
+
+预览：`outputs/texture-rework/smart-fluid-tank.png`（Create 原版 / 铜身+黄铜框 × 3 视角）。
 
 模型文件只加 `textures` 覆盖，几何与 UV 未动：
 
