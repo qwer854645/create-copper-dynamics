@@ -59,17 +59,25 @@ def zone_side(x, y):
     return "brass" if r in SIDE_BAND else ("seam" if r in SIDE_SEAM else "copper")
 
 
-def zone_ring(x, y, w, h, width, seam_row=None):
+def zone_ring(x, y, w, h, width, seam=0, seam_row=None):
+    """Outer `width` px = brass casing, the next `seam` px = neutral shadow, rest copper."""
     if seam_row is not None and y == seam_row:
         return "seam"
-    return "brass" if min(x, y, w - 1 - x, h - 1 - y) < width else "copper"
+    d = min(x, y, w - 1 - x, h - 1 - y)
+    if d < width:
+        return "brass"
+    if seam and d < width + seam:
+        return "seam"
+    return "copper"
 
 
+# The lid gets a full brass casing as well: 2 px of frame plus a 1 px shadow so it reads like the
+# side bands, instead of the single-pixel line it had before. The 64 px CT sheets scale 4x.
 ZONES = {
     "fluid_tank": (zone_side, None),
     "fluid_tank_connected": (zone_side, None),
-    "fluid_tank_top": (lambda x, y, w=16, h=16: zone_ring(x, y, w, h, 1, seam_row=15), None),
-    "fluid_tank_top_connected": (lambda x, y, w=64, h=64: zone_ring(x, y, w, h, 4), None),
+    "fluid_tank_top": (lambda x, y, w=16, h=16: zone_ring(x, y, w, h, 2, seam=1), None),
+    "fluid_tank_top_connected": (lambda x, y, w=64, h=64: zone_ring(x, y, w, h, 8, seam=4), None),
     "fluid_tank_inner": (lambda x, y, w=16, h=16: zone_ring(x, y, w, h, 1, seam_row=15), None),
     "fluid_tank_inner_connected": (lambda x, y, w=64, h=64: zone_ring(x, y, w, h, 4), None),
     # glass windows: Create's own, kept verbatim
