@@ -6,6 +6,7 @@ const root=path.resolve(__dirname,'..'),assets=path.join(root,'src/main/resource
 const reference=path.resolve(process.argv[2]);
 const textures=path.join(assets,'textures/block/copper_water_supply'),output=path.join(root,'outputs/copper-water-supply');
 for(const dir of [textures,output])fs.mkdirSync(dir,{recursive:true});
+for(const dir of ['models/block/copper_water_supply','models/item'])fs.mkdirSync(path.join(assets,dir),{recursive:true});
 const save=(p,d)=>fs.writeFileSync(p,JSON.stringify(d,null,2)+'\n');
 const copper=[[63,32,22],[96,46,31],[123,61,41],[144,73,49],[167,90,64],[194,107,76],[214,123,91],[227,130,108],[239,156,128]];
 const clusters=[
@@ -47,6 +48,20 @@ async function main(){
  for(let i=2;i<=13;i++)for(const [x,y]of [[i,2],[i,13],[2,i],[13,i]])paint(glass,x,y,[115,164,166]);
  for(const [name,data]of Object.entries({body,cap,glass}))
   await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
+ // Preserve every native water animation frame, with a pale tint and controlled opacity.
+ const waterSource=path.join(reference,'assets/minecraft/textures/block/water_still.png');
+ const {data:waterPixels,info:waterInfo}=await sharp(waterSource).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ for(const [name,alpha]of [['water',54],['water_surface',92]]){
+  const pixels=Buffer.from(waterPixels);
+  for(let i=0;i<pixels.length;i+=4){
+   const shade=waterPixels[i];
+   pixels[i]=Math.round(45+shade*.2);pixels[i+1]=Math.round(125+shade*.22);pixels[i+2]=Math.round(180+shade*.23);
+   const isWaterline=name==='water'&&Math.floor(i/4/waterInfo.width)%waterInfo.width===0;
+   pixels[i+3]=waterPixels[i+3] ? (isWaterline?96:alpha) : 0;
+  }
+  await sharp(pixels,{raw:{width:waterInfo.width,height:waterInfo.height,channels:4}}).png().toFile(path.join(textures,name+'.png'));
+  fs.copyFileSync(waterSource+'.mcmeta',path.join(textures,name+'.png.mcmeta'));
+ }
  const bottom=box('copper_base',[0,0,0],[16,2,16],'body');bottom.faces.up.texture='#cap';
  const top=box('copper_top',[0,14,0],[16,16,16],'body');top.faces.up.texture='#cap';
  const elements=[bottom,top];
@@ -56,7 +71,18 @@ async function main(){
  const material={body:'ccd:block/copper_water_supply/body',cap:'ccd:block/copper_water_supply/cap',
   glass:'ccd:block/copper_water_supply/glass',particle:'ccd:block/copper_water_supply/body'};
  const base={parent:'minecraft:block/block',render_type:'minecraft:cutout',ambientocclusion:false,textures:material,elements};
- save(path.join(assets,'models/block/copper_water_supply.json'),base);
+ save(path.join(assets,'models/block/copper_water_supply/frame.json'),base);
+ const water=box('clear_water_volume',[1.125,2.0625,1.125],[14.875,12.75,14.875],'water');
+ for(const side of ['north','south','east','west']){water.faces[side].uv[1]=0;water.faces[side].uv[3]=16;}
+ water.faces.up.texture='#water_surface';
+ const waterModel={parent:'minecraft:block/block',render_type:'minecraft:translucent',ambientocclusion:false,
+  textures:{water:'ccd:block/copper_water_supply/water',water_surface:'ccd:block/copper_water_supply/water_surface',
+   particle:material.particle},elements:[water]};
+ save(path.join(assets,'models/block/copper_water_supply/water.json'),waterModel);
+ function composite(frame){return {parent:'minecraft:block/block',loader:'neoforge:composite',ambientocclusion:false,
+  textures:{particle:material.particle},children:{frame:{parent:frame},water:{parent:'ccd:block/copper_water_supply/water'}},
+  item_render_order:['frame','water']};}
+ save(path.join(assets,'models/block/copper_water_supply.json'),composite('ccd:block/copper_water_supply/frame'));
  save(path.join(assets,'blockstates/copper_water_supply.json'),{variants:{'':{model:'ccd:block/copper_water_supply'}}});
  const cage=nativeCube('native_active_cage',8,'cage',32,16,.55);
  cage.rotation={origin:[8,8,8],axis:'y',angle:22.5};
@@ -66,10 +92,15 @@ async function main(){
   e.faces={[side]:face('eye',[0,0,8,8])};eyes.push(e);
  }
  const coreMaterial={...material,cage:'minecraft:entity/conduit/cage',eye:'minecraft:entity/conduit/open_eye'};
- save(path.join(assets,'models/item/copper_water_supply.json'),{...base,textures:coreMaterial,elements:[...elements,cage,...eyes]});
+ save(path.join(assets,'models/item/copper_water_supply_frame.json'),{...base,textures:coreMaterial,elements:[...elements,cage,...eyes]});
+ save(path.join(assets,'models/item/copper_water_supply.json'),composite('ccd:item/copper_water_supply_frame'));
 
  // The world renderer delegates to ConduitRenderer. Preview shows a frozen native animation frame.
- const shellFaces=await mesh('ccd:block/copper_water_supply'),itemFaces=await mesh('ccd:item/copper_water_supply');
+ const shellFaces=await mesh('ccd:block/copper_water_supply/frame'),itemFaces=await mesh('ccd:item/copper_water_supply_frame');
+ const waterFaces=await mesh('ccd:block/copper_water_supply/water');
+ for(const f of waterFaces){
+  const {data,info}=f.pixels;f.pixels={data:data.subarray(0,info.width*info.width*4),info:{...info,height:info.width}};
+ }
  const cageFaces=itemFaces.slice(shellFaces.length,shellFaces.length+6),eyeFaces=itemFaces.slice(shellFaces.length+6);
  const wind=nativeCube('native_wind_preview',16,'wind',64,32,.55);
  const scratch=path.join(assets,'models/block/copper_water_supply_wind_preview.json');
@@ -89,19 +120,21 @@ async function main(){
   const up=[unit[1]*right[2],unit[2]*right[0]-unit[0]*right[2],-unit[1]*right[0]];
   const eye={...eyeFaces[0],n:unit,uv:[[0,0],[0,8],[8,8],[8,0]],
    vertices:[[-1,1],[-1,-1],[1,-1],[1,1]].map(([x,y])=>[0,1,2].map(k=>8+1.4667*(right[k]*x+up[k]*y)))};
-  const buffer=await render([...shellFaces,...cageFaces,...windFaces,eye],500,510,view,{center:[8,8,8],scale:20});
+  const buffer=await render([...shellFaces,...cageFaces,...windFaces,eye,...waterFaces],500,510,view,{center:[8,8,8],scale:20,alphaBlend:true});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*500,top:95});
  }
- const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">潮涌箱 · 铜框与四面玻璃</text><text x="750" y="78" font-size="16">铜底座与顶框 · 通透观察窗 · 中央悬浮的原版激活核心</text><text x="250" y="647" font-size="19">正面</text><text x="750" y="647" font-size="19">背面</text><text x="1250" y="647" font-size="19">顶面</text><text x="750" y="683" font-size="14" fill="#677070">离线预览为原版核心的定格示意 / 游戏内复用原版旋转、水流和眼睛渲染 / 未构建或启动客户端</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">潮涌箱 · 清水中的激活核心</text><text x="750" y="78" font-size="16">铜框与四面玻璃 · 淡水色与可见水线 · 保持核心清晰</text><text x="250" y="647" font-size="19">正面</text><text x="750" y="647" font-size="19">背面</text><text x="1250" y="647" font-size="19">顶面</text><text x="750" y="683" font-size="14" fill="#677070">离线透明混合预览 / 水纹保留原版动画帧，核心为定格示意 / 未构建或启动客户端</text></g></svg>`);
  await sharp({create:{width:1500,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  const swatches=[];for(const [i,name]of ['body','cap','glass'].entries())swatches.push({
   input:await sharp(path.join(textures,name+'.png')).resize(192,192,{kernel:'nearest'}).png().toBuffer(),left:i*208,top:0});
  await sharp({create:{width:608,height:192,channels:4,background:'#e5e8e2'}}).composite(swatches).png().toFile(path.join(output,'textures.png'));
- save(path.join(output,'model.meta.json'),{stage:'Conduit Box',textureSize:[16,16],frameElements:6,glassElements:4,
+ save(path.join(output,'model.meta.json'),{stage:'Conduit Box with clear water',textureSize:[16,16],frameElements:6,glassElements:4,
   geometry:elements.map(({name,from,to})=>({name,from,to})),coreScale:.55,
+  water:{from:water.from,to:water.to,sideAlpha:54,surfaceAlpha:92,waterlineAlpha:96,textureSize:[waterInfo.width,waterInfo.height],
+   rendering:'NeoForge native composite: cutout frame/core, translucent water; same water model in world and item'},
   core:'native ConduitRenderer, active and open eye, presentation only; static native cage and four eyes in item model',
   behavior:'supply, cache, rate, redstone and collision unchanged; adjacent-container interfaces deferred',
-  artwork:'CCD original copper/glass pixels and frame; native conduit geometry, animation and textures belong to Mojang'});
+  artwork:'CCD copper/glass pixels and frame; water recolored from native Minecraft water_still, preserving animation; native conduit geometry, animation and textures belong to Mojang'});
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),frameElements:elements.length}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

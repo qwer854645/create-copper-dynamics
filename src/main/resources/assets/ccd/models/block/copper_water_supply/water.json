@@ -1,0 +1,81 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:translucent",
+  "ambientocclusion": false,
+  "textures": {
+    "water": "ccd:block/copper_water_supply/water",
+    "water_surface": "ccd:block/copper_water_supply/water_surface",
+    "particle": "ccd:block/copper_water_supply/body"
+  },
+  "elements": [
+    {
+      "name": "clear_water_volume",
+      "from": [
+        1.125,
+        2.0625,
+        1.125
+      ],
+      "to": [
+        14.875,
+        12.75,
+        14.875
+      ],
+      "faces": {
+        "north": {
+          "texture": "#water",
+          "uv": [
+            1.125,
+            0,
+            14.875,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#water",
+          "uv": [
+            1.125,
+            0,
+            14.875,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#water",
+          "uv": [
+            1.125,
+            0,
+            14.875,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#water",
+          "uv": [
+            1.125,
+            0,
+            14.875,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#water_surface",
+          "uv": [
+            1.125,
+            1.125,
+            14.875,
+            14.875
+          ]
+        },
+        "down": {
+          "texture": "#water",
+          "uv": [
+            1.125,
+            1.125,
+            14.875,
+            14.875
+          ]
+        }
+      }
+    }
+  ]
+}

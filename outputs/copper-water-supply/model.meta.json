@@ -1,5 +1,5 @@
 {
-  "stage": "Conduit Box",
+  "stage": "Conduit Box with clear water",
   "textureSize": [
     16,
     16
@@ -139,7 +139,27 @@
     }
   ],
   "coreScale": 0.55,
+  "water": {
+    "from": [
+      1.125,
+      2.0625,
+      1.125
+    ],
+    "to": [
+      14.875,
+      12.75,
+      14.875
+    ],
+    "sideAlpha": 54,
+    "surfaceAlpha": 92,
+    "waterlineAlpha": 96,
+    "textureSize": [
+      16,
+      512
+    ],
+    "rendering": "NeoForge native composite: cutout frame/core, translucent water; same water model in world and item"
+  },
   "core": "native ConduitRenderer, active and open eye, presentation only; static native cage and four eyes in item model",
   "behavior": "supply, cache, rate, redstone and collision unchanged; adjacent-container interfaces deferred",
-  "artwork": "CCD original copper/glass pixels and frame; native conduit geometry, animation and textures belong to Mojang"
+  "artwork": "CCD copper/glass pixels and frame; water recolored from native Minecraft water_still, preserving animation; native conduit geometry, animation and textures belong to Mojang"
 }

@@ -80,6 +80,8 @@ function render(faces,width,height,view,options={}) {
   const scale=options.scale || 15.5, center=options.center || [8,7,8];
   const project=p=>{const d=sub(p,center);return [width/2+dot(d,right)*scale,height/2-dot(d,up)*scale,dot(d,camera)];};
   const rgba=Buffer.alloc(width*height*4), depth=new Float64Array(width*height).fill(-Infinity);
+  // Opt-in sorted alpha compositing for glass/water studies; existing opaque previews stay unchanged.
+  const layers=options.alphaBlend ? new Array(width*height) : null;
   const edge=(a,b,x,y)=>(x-a[0])*(b[1]-a[1])-(y-a[1])*(b[0]-a[0]);
   for (const f of faces) {
     if (dot(f.n,camera)<=0.00001) continue;
@@ -93,16 +95,34 @@ function render(faces,width,height,view,options={}) {
         const w0=edge(b,c,x+.5,y+.5)/area, w1=edge(c,a,x+.5,y+.5)/area, w2=1-w0-w1;
         if (Math.min(w0,w1,w2)<-1e-7) continue;
         const z=w0*a[2]+w1*b[2]+w2*c[2], index=y*width+x;
-        if (z<=depth[index]) continue;
+        if (!layers && z<=depth[index]) continue;
         const weights=[w0,w1,w2], coords=[0,1].map(axis=>weights.reduce((sum,w,j)=>sum+w*f.uv[ids[j]][axis],0));
         const info=f.pixels.info, tx=Math.max(0,Math.min(info.width-1,Math.floor(coords[0]/16*info.width)));
         const ty=Math.max(0,Math.min(info.height-1,Math.floor(coords[1]/16*info.height))), src=(ty*info.width+tx)*4;
-        if (f.pixels.data[src+3]<128) continue;
+        const alpha=f.pixels.data[src+3];
+        if (!alpha || (!layers && alpha<128)) continue;
+        if (layers) {
+          (layers[index] ||= []).push([z,...[0,1,2].map(channel=>Math.round(f.pixels.data[src+channel]*light)),alpha]);
+          continue;
+        }
         depth[index]=z;
         for(let channel=0;channel<3;channel++) rgba[index*4+channel]=Math.round(f.pixels.data[src+channel]*light);
         rgba[index*4+3]=255;
       }
     }
+  }
+  if (layers) for(let index=0;index<layers.length;index++) {
+    const fragments=layers[index];if(!fragments)continue;
+    fragments.sort((a,b)=>a[0]-b[0]);
+    let last=-Infinity,a=0,color=[0,0,0];
+    for(const [z,r,g,b,alpha] of fragments) {
+      // Both triangles of a quad can cover their shared edge; blend it only once.
+      if(Math.abs(z-last)<1e-7)continue;last=z;
+      const opacity=alpha/255,out=opacity+a*(1-opacity);
+      color=[r,g,b].map((v,c)=>(v*opacity+color[c]*a*(1-opacity))/out);a=out;
+    }
+    for(let c=0;c<3;c++)rgba[index*4+c]=Math.round(color[c]);
+    rgba[index*4+3]=Math.round(a*255);
   }
   return sharp(rgba,{raw:{width,height,channels:4}}).png().toBuffer();
 }
