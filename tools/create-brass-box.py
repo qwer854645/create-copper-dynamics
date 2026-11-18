@@ -61,7 +61,7 @@ def main():
     del elements[0]['faces']['south']
     del elements[0]['faces']['east']
     del elements[0]['faces']['west']
-    cube('bottom_rim', [2,0,2], [14,1,14], 'band', 'flat')
+    cube('bottom_rim', [2,0,2], [14,1,14], 'bottom_band', 'bottom_flat')
     cube('lid', [2,10,2], [14,11,14], 'band', 'flat')
     cube('lid_grip', [6,11,6], [10,12,10], 'band', 'cap')
     def plane(name, x, y, width, z, texture, tint=None, face='north'):
@@ -93,6 +93,7 @@ def main():
                                  faces={face:dict(texture='#glass',uv=[z,y,z+1,y+1])}))
     # Shared iron closure and glass resources deliberately match the copper canister.
     textures = {key:'ccd:item/fluid_canister/'+key for key in ('band','flat','cap','glass')}
+    textures.update({key:'ccd:item/brass_box/'+key for key in ('bottom_band','bottom_flat')})
     textures.update(side='ccd:item/brass_box/side', back='ccd:item/brass_box/back', backing='ccd:item/fluid_canister/fluid', window='minecraft:block/white_concrete', particle='ccd:item/brass_box/side')
     model = dict(parent='create:item/package_transforms', render_type='minecraft:solid', textures=textures,
                  elements=[{('from' if k == 'from_' else k):v for k,v in e.items()} for e in elements],

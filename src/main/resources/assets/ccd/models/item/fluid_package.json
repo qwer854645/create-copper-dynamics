@@ -10,7 +10,9 @@
     "flat": "ccd:item/fluid_canister/flat",
     "fluid": "ccd:item/fluid_canister/fluid",
     "glass": "ccd:item/fluid_canister/glass",
-    "particle": "ccd:item/fluid_canister/side"
+    "particle": "ccd:item/fluid_canister/side",
+    "bottom_band": "ccd:item/fluid_canister/bottom_band",
+    "bottom_flat": "ccd:item/fluid_canister/bottom_flat"
   },
   "elements": [
     {
@@ -87,7 +89,7 @@
       ],
       "faces": {
         "north": {
-          "texture": "#band",
+          "texture": "#bottom_band",
           "uv": [
             2,
             15,
@@ -96,7 +98,7 @@
           ]
         },
         "south": {
-          "texture": "#band",
+          "texture": "#bottom_band",
           "uv": [
             2,
             15,
@@ -105,7 +107,7 @@
           ]
         },
         "east": {
-          "texture": "#band",
+          "texture": "#bottom_band",
           "uv": [
             2,
             15,
@@ -114,7 +116,7 @@
           ]
         },
         "west": {
-          "texture": "#band",
+          "texture": "#bottom_band",
           "uv": [
             2,
             15,
@@ -123,7 +125,7 @@
           ]
         },
         "up": {
-          "texture": "#flat",
+          "texture": "#bottom_flat",
           "uv": [
             2,
             2,
@@ -132,7 +134,7 @@
           ]
         },
         "down": {
-          "texture": "#flat",
+          "texture": "#bottom_flat",
           "uv": [
             2,
             2,

@@ -78,7 +78,7 @@ function cube(name,from,to,sideTexture,topTexture){
  }});
 }
 cube('copper_body',[3,1,3],[13,10,13],'body','side');
-cube('bottom_rim',[2,0,2],[14,1,14],'band','flat');
+cube('bottom_rim',[2,0,2],[14,1,14],'bottom_band','bottom_flat');
 cube('lid',[2,10,2],[14,11,14],'band','flat');
 cube('sealed_cap',[6,11,6],[10,12,10],'band','cap');
 // Cut the front wall geometrically. Solid native package rendering never depends on alpha discard.
@@ -103,6 +103,8 @@ const model={parent:'create:item/package_transforms',render_type:'minecraft:soli
  elements,display:{gui:{rotation:[25,35,0],translation:[0,1,0],scale:[.95,.95,.95]},
  ground:{translation:[0,3,0],scale:[.5,.5,.5]},fixed:{rotation:[0,0,0],translation:[0,0,0],scale:[.5,.5,.5]}}};
 model.textures.particle=model.textures.side;
+model.textures.bottom_band='ccd:item/fluid_canister/bottom_band';
+model.textures.bottom_flat='ccd:item/fluid_canister/bottom_flat';
 async function main(){
  for(const [name,data]of Object.entries({side,front,back,band,cap,flat,fluid,glass}))
   await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
