@@ -6,6 +6,7 @@
     "side": "ccd:block/smart_fluid_hatch/side_clipped",
     "front_copper": "create:block/fluid_tank",
     "filter": "create:block/smart_pipe_2",
+    "brass_edge": "ccd:block/smart_fluid_hatch/brass_edge",
     "pipe": "create:block/pipes",
     "particle": "create:block/brass_block"
   },
@@ -45,10 +46,10 @@
           "uv": [
             0,
             0,
-            16,
+            2,
             16
           ],
-          "texture": "#0"
+          "texture": "#brass_edge"
         },
         "south": {
           "uv": [
@@ -63,28 +64,30 @@
           "uv": [
             0,
             0,
-            16,
+            2,
             16
           ],
-          "texture": "#0"
+          "texture": "#brass_edge"
         },
         "up": {
           "uv": [
             0,
             0,
-            16,
-            16
+            14,
+            2
           ],
-          "texture": "#0"
+          "texture": "#brass_edge",
+          "rotation": 90
         },
         "down": {
           "uv": [
             0,
             0,
-            16,
-            16
+            14,
+            2
           ],
-          "texture": "#0"
+          "texture": "#brass_edge",
+          "rotation": 90
         }
       }
     },
@@ -122,37 +125,39 @@
           "uv": [
             0,
             0,
-            16,
+            2,
             16
           ],
-          "texture": "#0"
+          "texture": "#brass_edge"
         },
         "west": {
           "uv": [
             0,
             0,
-            16,
+            2,
             16
           ],
-          "texture": "#0"
+          "texture": "#brass_edge"
         },
         "up": {
           "uv": [
             0,
             0,
-            16,
-            16
+            14,
+            2
           ],
-          "texture": "#0"
+          "texture": "#brass_edge",
+          "rotation": 90
         },
         "down": {
           "uv": [
             0,
             0,
-            16,
-            16
+            14,
+            2
           ],
-          "texture": "#0"
+          "texture": "#brass_edge",
+          "rotation": 90
         }
       }
     },

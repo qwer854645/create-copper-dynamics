@@ -6,6 +6,7 @@
     "side": "ccd:block/fluid_hatch/side_clipped",
     "front_copper": "create:block/fluid_tank",
     "filter": "create:block/smart_pipe_2",
+    "brass_edge": "create:block/fluid_tank",
     "pipe": "create:block/pipes",
     "particle": "create:block/fluid_tank"
   },
