@@ -14,15 +14,15 @@ ROOT=Path(__file__).resolve().parents[1]
 ASSETS=ROOT/'src/main/resources/assets/ccd'
 OUT=ROOT/'outputs/fluid-access'
 JAR=next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar'))
-COPPER=['#703a29','#904931','#a75a40','#b26247','#c26b4c','#c87456','#d67b5b','#e3826c']
+COPPER=['#663525','#83432d','#a15437','#b56343','#c57450','#d48760','#e49a73','#f0b28a']
 BRASS=['#724731','#a46b47','#af794f','#c79758','#d7aa5e','#e4b763','#f7cb6c','#fbdc7d']
 IRON=['#353438','#4f4f4f','#686d65','#818783','#b4b5a7']
 # Original panel clusters. Edge folds and small broad highlights, no tiled noise.
 PANEL=[
- '0122222222222210','1677666666655661','1655544556655541','1655444555665541',
- '1554445555665441','1544455554455441','1544556654455541','1555566555445541',
- '1555565544455541','1544555444556441','1544455555666541','1554445555665441',
- '1655444555555441','1555544445555541','1233333333333321','0011111111111100']
+ '0122222222222210','1677776666555661','1656654455666541','1655443345665541',
+ '1554333455665441','1543345554433441','1544556654334541','1555666543345541',
+ '1556654433456541','1545543334566441','1544334556665541','1553345566544341',
+ '1654455665443341','1555544443334441','1233333333333321','0011111111111100']
 
 def save(path,data):
     path.parent.mkdir(parents=True,exist_ok=True)
@@ -33,13 +33,23 @@ def texture(name,ramp,socket=False,band=False):
     for y,row in enumerate(PANEL):
         for x,index in enumerate(row): c.set(x,y,ramp[int(index)])
     if socket:
-        # A stepped, grey-green metal seat recalls stock_link, with no redstone center.
-        for lo,hi,index in [(3,12,0),(4,11,2),(5,10,3),(6,9,0)]:
-            c.rect(lo,lo,hi-lo+1,hi-lo+1,IRON[index])
-        c.line_h(4,11,4,IRON[4]); c.line_v(4,5,11,IRON[3])
-        c.line_h(5,11,11,IRON[1]); c.line_v(11,5,11,IRON[1])
-        c.rect(6,6,4,4,'#252c2b')
-        c.line_h(6,8,6,'#404c49'); c.line_v(6,7,8,'#35403d')
+        # Original 10x10 socket face: folded metal, recessed inner wall,
+        # connected highlight clusters and a clean dark central opening.
+        metal=['#292b2b','#414642','#5c655e','#7d877b','#abb19e','#d0d0b9']
+        socket_rows=[
+            '0124444430',
+            '1455433321',
+            '2431111231',
+            '2310000131',
+            '2310000121',
+            '2310000121',
+            '2310000131',
+            '2321111231',
+            '1233222210',
+            '0111111100',
+        ]
+        for y,row in enumerate(socket_rows,3):
+            for x,index in enumerate(row,3): c.set(x,y,metal[int(index)])
     if band:
         # Connected-like broad recessed side strap, redrawn in dark copper.
         top,bottom=(5,10) if name=='bridge_band' else (8,12)
