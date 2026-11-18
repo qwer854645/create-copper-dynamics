@@ -90,7 +90,10 @@ def zone_side(x, y):
             return ("gold_range", POST_HI_LO, POST_HI_HI)
         if lx in (1, 14):
             return ("gold_range", POST_LO_LO, POST_LO_HI)
-        if lx in (2, 13):
+        # column 3 / 12 is normally copper (the innermost pixel of the strip), but on a seam row it
+        # has to continue the black line - otherwise the seam stopped one pixel short of the post
+        # and left a copper dot at each end ("黑线两端还有铜")
+        if lx in (2, 13) or ly in SIDE_SEAM:
             return "seam"
         return "copper"
     if top_or_bot:
