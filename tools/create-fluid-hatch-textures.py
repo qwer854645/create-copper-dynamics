@@ -172,21 +172,25 @@ def swap_material(src: Image.Image, ramp, keep_silver=True, keep_black=True, war
 # If a stronger fluid cue is ever wanted, put a small droplet badge in a corner instead of
 # replacing the door.
 
-# The visible front panel is this window of the 32 px atlas.
-PANEL = (3, 3, 15, 17)
+# The two visible windows of the 32 px atlas:
+#   FRAME_WIN  element 1 (the protruding frame) north face  uv [1.5,1.5]-[7.5,8.5]
+#   WALL_WIN   element 0 (the wall) north *and* south faces uv [1,1]-[8,9]
+# The frame side is the one that ends up against the container, so decorating only FRAME_WIN
+# looked right in a model preview and did nothing in game. WALL_WIN is the face players see.
+FRAME_WIN = (3, 3, 15, 17)
+WALL_WIN = (2, 2, 15, 17)   # x16 / y18 are transparent in Create's sheet, hence 15..17
 
 
-def bezel(im, thickness=1, bright=None, dark=None):
-    """Ring the front panel the way Create's brass casings are built: lit gold rim, dark seam.
+def bezel(im, win, bright=None, dark=None):
+    """Ring a window the way Create's brass casings are built: lit gold rim, dark seam.
 
     Only the smart hatch gets this. Create's brass parts are never a flat brass sheet - they are
-    a bright gold frame around a recessed dark face (`brass_casing` is the extreme version of
-    it). Without a real bezel the smart hatch was just the copper hatch recoloured, with nothing
-    that reads as brass hardware.
+    a bright gold frame around a recessed face (`brass_casing` is the extreme version). Without
+    a real bezel the smart hatch was just the copper hatch recoloured.
     """
     bright = bright if bright is not None else BRASS_BODY[10]   # #FBDC7D
     dark = dark if dark is not None else BRASS_BODY[0]          # #724731
-    x0, y0, x1, y1 = PANEL
+    x0, y0, x1, y1 = win
     out = im.copy()
     px = out.load()
     for y in range(y0, y1 + 1):
@@ -194,7 +198,7 @@ def bezel(im, thickness=1, bright=None, dark=None):
             edge = min(x - x0, y - y0, x1 - x, y1 - y)
             if edge == 0:
                 px[x, y] = bright + (255,)
-            elif edge == 1 and thickness >= 2:
+            elif edge == 1:
                 px[x, y] = dark + (255,)
     return out
 
@@ -207,7 +211,9 @@ def derive(assets: Path, create_src: Path):
         ramp = TINT[key]
         housing = swap_material(housing_src, ramp)
         if key == "brass":
-            housing = bezel(housing, thickness=2)
+            # both windows: the visible wall face, and the frame face in case the hatch is
+            # ever placed the other way round
+            housing = bezel(bezel(housing, FRAME_WIN), WALL_WIN)
         out[f"block/{material}/housing.png"] = housing
         out[f"block/{material}/flap.png"] = swap_material(flap_src, ramp)
     return out
