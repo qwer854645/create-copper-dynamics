@@ -29,32 +29,6 @@ public class FluidHatchBlock extends ItemHatchBlock {
 
     public FluidHatchBlock(Properties properties) { super(properties); }
 
-    private static final net.createmod.catnip.math.VoxelShaper TROUGH_SHAPE = troughShape();
-    private static net.createmod.catnip.math.VoxelShaper troughShape() {
-        var shape = net.minecraft.world.phys.shapes.Shapes.or(
-            box(1, 0, 1, 3, 16, 3), box(13, 0, 1, 15, 16, 3),
-            box(3, 0, 1, 13, 3, 3), box(3, 13, 1, 13, 16, 3),
-            box(3, 3, 0, 13, 13, 2), box(4, 4, 0, 12, 12, 4));
-        for (int z = 3; z < 14; z++) {
-            int top = 15 - z;
-            shape = net.minecraft.world.phys.shapes.Shapes.or(shape,
-                box(2, 1, z, 3, top, z + 1), box(13, 1, z, 14, top, z + 1));
-        }
-        // Thin staircase follows the inclined trough floor without filling its cavity.
-        for (int z = 5; z < 14; z++) {
-            double y = 14.65 - z;
-            shape = net.minecraft.world.phys.shapes.Shapes.or(shape, box(3, y - 1.5, z, 13, y, z + 1));
-        }
-        return net.createmod.catnip.math.VoxelShaper.forHorizontal(shape, Direction.NORTH);
-    }
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,
-        net.minecraft.world.level.BlockGetter level, BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext context) {
-        return TROUGH_SHAPE.get(state.getValue(FACING));
-    }
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,
-        net.minecraft.world.level.BlockGetter level, BlockPos pos, net.minecraft.world.phys.shapes.CollisionContext context) {
-        return getShape(state, level, pos, context);
-    }
 
 
     public static boolean isFluidContainer(Level level, ItemStack stack) {
