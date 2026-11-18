@@ -2,9 +2,9 @@
   "reference": "Connected full casing, raised end sockets and broad side band; Create stock-link metal shading and native filter",
   "textures": "CCD hand-drawn 16x16 copper panels, dark copper band and grey metal socket seats",
   "upstreamResources": [
-    "Connected inventory_access_port_front and inventory_bridge_front (AGPL-3.0 plus additional terms)",
-    "create:block/smart_pipe_2"
+    "Connected inventory_access_port_front and inventory_bridge_front (AGPL-3.0 plus additional terms)"
   ],
+  "filterPosition": "center of each connector face; no separate panel geometry",
   "connectedAssetsCopied": true,
   "preview": "actual model geometry, offline lighting; no client validation"
 }

@@ -127,30 +127,9 @@ def main():
                 seat=cube('raised_socket_'+end,lo,hi,'socket')
                 seat['faces'][end]={'texture':'#socket','uv':[3,3,13,13]}
                 elements.append(seat)
-            if bridge:
-                # Small native smart-pipe filter panel at the existing interaction position.
-                source=json.loads(archive.read('assets/create/models/block/smart_fluid_pipe/block.json'))
-                panel=source['elements'][2]
-                for end in ends:
-                    e=json.loads(json.dumps(panel)); e['name']='native_filter_'+end
-                    e.pop('rotation',None)
-                    # Fit the original panel to 5x5, centered on y=12, aligned to the native filter transform.
-                    original_lo=panel['from']; original_hi=panel['to']
-                    for key in ['from','to']:
-                        p=panel[key]
-                        e[key]=[6+(p[0]-original_lo[0])*4/(original_hi[0]-original_lo[0]),
-                                11+(p[1]-original_lo[1])*4/(original_hi[1]-original_lo[1]),
-                                18.05+(p[2]-original_lo[2])*.5/(original_hi[2]-original_lo[2])]
-                    for f in e['faces'].values(): f['texture']='#filter'; f.pop('cullface',None)
-                    e['faces']['south']['uv']=[8,8,16,16]
-                    if end=='north':
-                        for key in ['from','to']: e[key][2]=16-e[key][2]
-                        e['from'][2],e['to'][2]=sorted([e['from'][2],e['to'][2]])
-                        e['faces']={({'north':'south','south':'north'}.get(s,s)):f for s,f in e['faces'].items()}
-                    elements.append(e)
             textures={'body':f'ccd:block/fluid_access/{material}','socket':'ccd:block/fluid_access/'+('connected_bridge' if bridge else 'connected_port'),
                       'band':'ccd:block/fluid_access/'+('bridge_band' if bridge else 'copper_band'),
-                      'pipe':'create:block/pipes','filter':'create:block/smart_pipe_2','particle':'#body'}
+                       'particle':'#body'}
             model={'parent':'minecraft:block/block','ambientocclusion':False,'textures':textures,'elements':elements}
             save(ASSETS/f'models/block/{name}.json',model)
             save(ASSETS/f'models/item/{name}.json',{'parent':f'ccd:block/{name}','display':{'gui':{'rotation':[30,45,0],'scale':[.65,.65,.65]}}})
@@ -162,7 +141,8 @@ def main():
     atlas.save(OUT/'textures-source.png'); atlas.resize((1024,256),Image.Resampling.NEAREST).save(OUT/'textures.png')
     save(OUT/'model.meta.json',{'reference':'Connected full casing, raised end sockets and broad side band; Create stock-link metal shading and native filter',
          'textures':'CCD hand-drawn 16x16 copper panels, dark copper band and grey metal socket seats',
-          'upstreamResources':['Connected inventory_access_port_front and inventory_bridge_front (AGPL-3.0 plus additional terms)','create:block/smart_pipe_2'],
+           'upstreamResources':['Connected inventory_access_port_front and inventory_bridge_front (AGPL-3.0 plus additional terms)'],
+           'filterPosition':'center of each connector face; no separate panel geometry',
           'connectedAssetsCopied':True,'preview':'actual model geometry, offline lighting; no client validation'})
 
 def render_preview(models,archive):

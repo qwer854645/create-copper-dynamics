@@ -5,8 +5,6 @@
     "body": "ccd:block/fluid_access/copper",
     "socket": "ccd:block/fluid_access/connected_port",
     "band": "ccd:block/fluid_access/copper_band",
-    "pipe": "create:block/pipes",
-    "filter": "create:block/smart_pipe_2",
     "particle": "#body"
   },
   "elements": [
