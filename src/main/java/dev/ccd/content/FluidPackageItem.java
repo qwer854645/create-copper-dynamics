@@ -39,6 +39,9 @@ public class FluidPackageItem extends PackageItem {
     @Override public boolean hasCustomEntity(ItemStack stack) {
         return true;
     }
+    @Override public net.minecraft.world.entity.Entity createEntity(Level level, net.minecraft.world.entity.Entity original, ItemStack stack) {
+        return original.getPersistentData().getBoolean("CCDRecoveryDrop") ? null : super.createEntity(level, original, stack);
+    }
     public static boolean isFluidPackage(ItemStack stack) { return stack.getItem() instanceof FluidPackageItem; }
     public static FluidStack contents(ItemStack stack) {
         if (!isFluidPackage(stack)) return FluidStack.EMPTY;

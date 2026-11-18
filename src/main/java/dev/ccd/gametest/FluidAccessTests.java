@@ -24,6 +24,22 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder(CopperDynamics.ID)
 @PrefixGameTestTemplate(false)
 public final class FluidAccessTests {
+    @GameTest(template="empty")
+    public static void bridgeFillsDirectContainerWhenPortSourceRejects(GameTestHelper h) {
+        // Two different fluid types: the working port's lava source cannot receive water.
+        var direct=new BlockPos(1,2,2); var bridgePos=new BlockPos(2,2,2); var portPos=new BlockPos(3,2,2); var sourcePos=new BlockPos(4,2,2);
+        tank(h,direct,0);
+        h.setBlock(sourcePos,com.simibubi.create.AllBlocks.FLUID_TANK.get());
+        var source=h.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,h.absolutePos(sourcePos),Direction.WEST);
+        source.fill(new FluidStack(Fluids.LAVA,1000),FluidAction.EXECUTE);
+        h.setBlock(portPos,CopperDynamics.FLUID_ACCESS_PORT.get().defaultBlockState().setValue(FluidAccessBlock.FACING,Direction.WEST));
+        h.setBlock(bridgePos,CopperDynamics.FLUID_BRIDGE.get().defaultBlockState().setValue(FluidAccessBlock.FACING,Direction.EAST));
+        var handler=h.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,h.absolutePos(bridgePos),Direction.NORTH);
+        h.assertTrue(handler.fill(water(1000),FluidAction.SIMULATE)==1000,"Port source blocked direct container simulation");
+        h.assertTrue(handler.fill(water(1000),FluidAction.EXECUTE)==1000,"Port source blocked direct container execution");
+        h.assertTrue(h.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,h.absolutePos(direct),Direction.EAST).drain(water(1000),FluidAction.SIMULATE).getAmount()==1000,"Direct container received no water");
+        h.succeed();
+    }
     private static FluidStack water(int amount) { return new FluidStack(Fluids.WATER,amount); }
     private static void tank(GameTestHelper h,BlockPos pos,int amount) {
         h.setBlock(pos,CopperDynamics.SMART_FLUID_TANK.get());

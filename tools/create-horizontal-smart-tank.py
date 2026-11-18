@@ -12,8 +12,7 @@ for axis in ['x','z']:
         for top in [False,True]:
             for shape in ['plain','window','window_ne','window_nw','window_se','window_sw']:
                 part='single' if bottom and top else 'bottom' if bottom else 'top' if top else 'middle'
-                # Single-window segments avoid vertical CT rules on a horizontal structure.
-                model='block_single_window' if shape!='plain' else 'block_'+part
+                model='block_'+part+('' if shape=='plain' else '_'+shape)
                 variants[f'axis={axis},bottom={str(bottom).lower()},shape={shape},top={str(top).lower()}']={
                     'model':f'ccd:block/smart_fluid_tank/{model}','x':90,'y':90 if axis=='x' else 0}
 save(RES/'assets/ccd/blockstates/horizontal_smart_fluid_tank.json',{'variants':variants})

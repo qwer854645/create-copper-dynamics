@@ -18,6 +18,41 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class ClientFeedbackTests {
     @GameTest(template="empty")
+    public static void brassBoxOpeningPreservesReturnedHand(GameTestHelper h) {
+        var player=net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
+        player.getInventory().clearContent();
+        var items=new net.neoforged.neoforge.items.ItemStackHandler(9);
+        items.setStackInSlot(0,new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.DIAMOND,17));
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,CompositePackageItem.containing(items,java.util.List.of(new FluidStack(Fluids.WATER,5000))));
+        var result=CopperDynamics.COMPOSITE_PACKAGE.get().open(h.getLevel(),player,net.minecraft.world.InteractionHand.MAIN_HAND);
+        // Mirror ServerPlayerGameMode's write-back after Item.use returns.
+        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,result.getObject());
+        int diamonds=0,water=0;
+        for(var item:player.getInventory().items) {
+            if(item.is(net.minecraft.world.item.Items.DIAMOND)) diamonds+=item.getCount();
+            if(FluidPackageItem.isFluidPackage(item)) water+=FluidPackageItem.contents(item).getAmount();
+        }
+        h.assertTrue(diamonds==17 && water==5000,"Opening or result write-back swallowed contents");
+        player.getInventory().clearContent();
+        h.succeed();
+    }
+    @GameTest(template="empty")
+    public static void sealedPackagesBreakOnceWithoutReappearing(GameTestHelper h) {
+        var pos=net.minecraft.world.phys.Vec3.atCenterOf(h.absolutePos(new BlockPos(1,3,1)));
+        var stack=FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,1000));
+        var entity=PackageEntity.fromItemStack(h.getLevel(),pos,stack);
+        h.getLevel().addFreshEntity(entity);
+        entity.hurt(h.getLevel().damageSources().generic(),1);
+        h.assertTrue(entity.isRemoved(),"Canister resisted normal package damage");
+        h.runAfterDelay(3,()->{
+            var bounds=new net.minecraft.world.phys.AABB(pos,pos).inflate(2);
+            h.assertTrue(h.getLevel().getEntitiesOfClass(PackageEntity.class,bounds,e->FluidPackageItem.isFluidPackage(e.box)).isEmpty(),"Broken canister respawned as package");
+            var drops=h.getLevel().getEntitiesOfClass(ItemEntity.class,bounds,e->FluidPackageItem.isFluidPackage(e.getItem()));
+            h.assertTrue(drops.size()==1 && FluidPackageItem.contents(drops.getFirst().getItem()).getAmount()==1000,"Breaking duplicated or lost sealed fluid");
+            h.succeed();
+        });
+    }
+    @GameTest(template="empty")
     public static void creativeCopperBucketWorldPlacementPreservesContents(GameTestHelper h) {
         var player=net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
         player.setGameMode(net.minecraft.world.level.GameType.CREATIVE);

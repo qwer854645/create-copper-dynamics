@@ -88,7 +88,10 @@ public final class FluidAccess {
                         boolean has=false; for(int i=0;i<s.handler().getTanks();i++) if(FluidStack.isSameFluidSameComponents(fluid,s.handler().getFluidInTank(i))) has=true;
                         if(has!=matching) continue;
                         int filled=s.handler().fill(fluid.copyWithAmount(remaining),action);
-                        if(filled>0) { remaining-=Math.min(remaining,filled); used.add(s.identity()); }
+                        // Visit each source once even when an active endpoint changes
+                        // its displayed contents between simulation and execution.
+                        used.add(s.identity());
+                        if(filled>0) remaining-=Math.min(remaining,filled);
                     }
                     return fluid.getAmount()-remaining;
                 } finally { active.remove(); }

@@ -6,7 +6,7 @@ const root=path.resolve(__dirname,'..'),ref=path.resolve(process.argv[2]),assets
 const textures=path.join(assets,'textures/block/smart_fluid_tank'),models=path.join(assets,'models/block/smart_fluid_tank'),output=path.join(root,'outputs/smart-fluid-tank');
 for(const dir of [textures,models,output])fs.mkdirSync(dir,{recursive:true});
 const save=(p,d)=>fs.writeFileSync(p,JSON.stringify(d,null,2)+'\n');
-const brass=[[68,50,42],[114,71,49],[158,105,71],[175,121,79],[191,142,85],[206,160,90],[228,183,99],[247,203,108],[255,235,140]];
+const brass=[[114,71,49],[164,107,71],[175,121,79],[199,151,88],[215,170,94],[228,183,99],[247,203,108],[251,220,125],[255,235,140]];
 const thresholds=[35,55,75,90,108,128,150,180];
 const names=['fluid_tank','fluid_tank_top','fluid_tank_connected','fluid_tank_top_connected','fluid_tank_inner','fluid_tank_inner_connected','fluid_tank_window','fluid_tank_window_single'];
 const moved=(faces,dy)=>faces.map(f=>({...f,vertices:f.vertices.map(v=>[v[0],v[1]+dy,v[2]])}));

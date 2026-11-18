@@ -31,6 +31,9 @@ public final class CompositePackageItem extends PackageItem {
     }
     @Override public String getDescriptionId() { return "item.ccd.composite_package"; }
     @Override public boolean hasCustomEntity(ItemStack stack) { return true; }
+    @Override public net.minecraft.world.entity.Entity createEntity(Level level, net.minecraft.world.entity.Entity original, ItemStack stack) {
+        return original.getPersistentData().getBoolean("CCDRecoveryDrop") ? null : super.createEntity(level, original, stack);
+    }
     public static boolean isComposite(ItemStack stack) { return stack.getItem() instanceof CompositePackageItem; }
     public static boolean isSealed(ItemStack stack) { return isComposite(stack) || FluidPackageItem.isFluidPackage(stack); }
     public static List<FluidStack> fluids(ItemStack stack) {
@@ -89,6 +92,8 @@ public final class CompositePackageItem extends PackageItem {
         player.setItemInHand(hand, ItemStack.EMPTY);
         for (ItemStack content : contents) player.getInventory().placeItemBackInInventory(content);
         com.simibubi.create.AllSoundEvents.PACKAGE_POP.playOnServer(level, player.blockPosition());
-        return InteractionResultHolder.success(ItemStack.EMPTY);
+        // The returned stack is written back by the caller: the freed hand slot may
+        // already contain one of the unpacked items.
+        return InteractionResultHolder.success(player.getItemInHand(hand));
     }
 }

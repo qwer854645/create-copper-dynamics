@@ -94,6 +94,11 @@ public final class CCDClient {
             .factory(ArmVisual::new).neverSkipVanillaRender().apply());
     }
     @SubscribeEvent public static void models(ModelEvent.ModifyBakingResult event) {
+        for(var state:CopperDynamics.HORIZONTAL_SMART_TANK.get().getStateDefinition().getPossibleStates()) {
+            var location=BlockModelShaper.stateToModelLocation(state);
+            var baked=event.getModels().get(location);
+            if(baked!=null) event.getModels().put(location,SmartFluidTankModels.wrapHorizontal(baked));
+        }
         var canister = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_package"), "inventory");
         var canisterModel = event.getModels().get(canister);

@@ -21,9 +21,7 @@ public final class HorizontalSmartTankBlockEntity extends SmartFluidTankBlockEnt
             if(!level.hasChunkAt(pos) || !(level.getBlockEntity(pos) instanceof HorizontalSmartTankBlockEntity part)
                 || !getController().equals(part.getController())) continue;
             part.window=enabled;
-            level.setBlock(pos,part.getBlockState().setValue(HorizontalSmartTankBlock.SHAPE,
-                enabled?com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW:com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.PLAIN),6);
-            part.sendData();
+            part.notifyMultiUpdated();
         }
     }
     @Override public void notifyMultiUpdated() {
@@ -31,8 +29,21 @@ public final class HorizontalSmartTankBlockEntity extends SmartFluidTankBlockEnt
         if(level==null || level.isClientSide()) return;
         int coordinate=getMainConnectionAxis().choose(worldPosition.getX(),worldPosition.getY(),worldPosition.getZ());
         int start=getMainConnectionAxis().choose(getController().getX(),getController().getY(),getController().getZ());
+        // Shape quadrants are expressed in the upright model's local X/Z plane.
+        // The blockstate rotates that plane onto the horizontal cross-section.
+        var delta=worldPosition.subtract(getController());
+        int localX=getMainConnectionAxis()==Direction.Axis.X?delta.getZ():delta.getX();
+        int localZ=width-1-delta.getY();
+        var shape=com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.PLAIN;
+        if(window) {
+            if(width==1) shape=com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW;
+            else if(localX==0 && localZ==0) shape=com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_NW;
+            else if(localX==width-1 && localZ==0) shape=com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_NE;
+            else if(localX==0 && localZ==width-1) shape=com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_SW;
+            else if(localX==width-1 && localZ==width-1) shape=com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_SE;
+        }
         level.setBlock(worldPosition,getBlockState().setValue(HorizontalSmartTankBlock.BOTTOM,coordinate==start)
-            .setValue(HorizontalSmartTankBlock.TOP,coordinate==start+height-1),6);
+            .setValue(HorizontalSmartTankBlock.TOP,coordinate==start+height-1).setValue(HorizontalSmartTankBlock.SHAPE,shape),6);
         sendData(); setChanged();
     }
     @Override protected AABB createRenderBoundingBox() {

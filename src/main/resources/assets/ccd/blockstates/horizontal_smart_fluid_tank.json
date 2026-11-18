@@ -6,27 +6,27 @@
       "y": 90
     },
     "axis=x,bottom=false,shape=window,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_ne,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_ne",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_nw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_nw",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_se,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_se",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_sw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_sw",
       "x": 90,
       "y": 90
     },
@@ -36,27 +36,27 @@
       "y": 90
     },
     "axis=x,bottom=false,shape=window,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_ne,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_ne",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_nw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_nw",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_se,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_se",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=false,shape=window_sw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_sw",
       "x": 90,
       "y": 90
     },
@@ -66,27 +66,27 @@
       "y": 90
     },
     "axis=x,bottom=true,shape=window,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=true,shape=window_ne,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_ne",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=true,shape=window_nw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_nw",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=true,shape=window_se,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_se",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=true,shape=window_sw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_sw",
       "x": 90,
       "y": 90
     },
@@ -101,22 +101,22 @@
       "y": 90
     },
     "axis=x,bottom=true,shape=window_ne,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_ne",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=true,shape=window_nw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_nw",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=true,shape=window_se,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_se",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom=true,shape=window_sw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_sw",
       "x": 90,
       "y": 90
     },
@@ -126,27 +126,27 @@
       "y": 0
     },
     "axis=z,bottom=false,shape=window,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_ne,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_ne",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_nw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_nw",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_se,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_se",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_sw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_middle_window_sw",
       "x": 90,
       "y": 0
     },
@@ -156,27 +156,27 @@
       "y": 0
     },
     "axis=z,bottom=false,shape=window,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_ne,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_ne",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_nw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_nw",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_se,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_se",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=false,shape=window_sw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_top_window_sw",
       "x": 90,
       "y": 0
     },
@@ -186,27 +186,27 @@
       "y": 0
     },
     "axis=z,bottom=true,shape=window,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=true,shape=window_ne,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_ne",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=true,shape=window_nw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_nw",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=true,shape=window_se,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_se",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=true,shape=window_sw,top=false": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_bottom_window_sw",
       "x": 90,
       "y": 0
     },
@@ -221,22 +221,22 @@
       "y": 0
     },
     "axis=z,bottom=true,shape=window_ne,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_ne",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=true,shape=window_nw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_nw",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=true,shape=window_se,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_se",
       "x": 90,
       "y": 0
     },
     "axis=z,bottom=true,shape=window_sw,top=true": {
-      "model": "ccd:block/smart_fluid_tank/block_single_window",
+      "model": "ccd:block/smart_fluid_tank/block_single_window_sw",
       "x": 90,
       "y": 0
     }
