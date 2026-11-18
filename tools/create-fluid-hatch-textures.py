@@ -103,37 +103,61 @@ def tint(src: Image.Image, ramp):
     return out
 
 
-# ---------------------------------------------------------------- front port
+# ---------------------------------------------------------------- material swap
+# Create's hatch art is three distinct materials, not one grey ramp:
+#   lum <= 56    the black recesses            (11% of the atlas)
+#   56 < lum < 145  the industrial iron body   (78%)
+#   lum >= 145   the bare silver highlights    (8%)
+# Remapping all of it onto one copper ramp is what made it look like a photo filter.
+# Only the middle band is swapped for copper/brass; the blacks and the silver hardware are
+# left exactly as Create drew them, which is also how Create does its own brass machines.
+BLACK_MAX = 56.0
+SILVER_MIN = 145.0
+
+
+def swap_material(src: Image.Image, ramp, keep_silver=True, keep_black=True, warm_black=None):
+    px = src.load()
+    out = src.copy()
+    op = out.load()
+    span = (SILVER_MIN - BLACK_MAX) or 1.0
+    steps = len(ramp) - 1
+    for y in range(src.height):
+        for x in range(src.width):
+            r, g, b, a = px[x, y]
+            if not a:
+                continue
+            L = 0.2126 * r + 0.7152 * g + 0.0722 * b
+            if L <= BLACK_MAX:
+                if keep_black:
+                    continue
+                if warm_black is not None:
+                    t = L / BLACK_MAX
+                    idx = max(0, min(len(warm_black) - 1, round(t * (len(warm_black) - 1))))
+                    op[x, y] = warm_black[idx] + (a,)
+                continue
+            if L >= SILVER_MIN:
+                if keep_silver:
+                    continue
+                continue
+            t = (L - BLACK_MAX) / span
+            op[x, y] = ramp[max(0, min(steps, round(t * steps)))] + (a,)
+    return out
+
+
+# ---------------------------------------------------------------- why there is no port
 # The hatch's visible front is NOT the flap. A probe (paint key 0 magenta, key 1 cyan) shows
-# the flap `#1` only on the slanted door's top face; the whole front panel is key `#0`, the
-# housing atlas, sampled through the frame's north uv [1.5,1.5]-[7.5,8.5], i.e. x3..15 y3..17
-# of the 32 px sheet.
+# the flap `#1` only on the slanted door; the whole front panel is key `#0`, the housing
+# atlas, sampled through the frame's north uv [1.5,1.5]-[7.5,8.5], i.e. x3..15 y3..17 of the
+# 32 px sheet.
 #
-# That window's interior is Create's louvred item door (x5..12, y5..14). For a fluid hatch it
-# becomes a recessed port: bright surround, one pixel of lip, dark bore.
-PORT = [
-    "66666666",
-    "61111116",
-    "61000016",
-    "61000016",
-    "61000016",
-    "61000016",
-    "61000216",   # the bore's floor catches a little light, so it reads recessed
-    "61111116",
-    "66666666",
-    "55555555",   # closes off the leftover louvre row underneath
-]
-PORT_X, PORT_Y = 5, 5
-
-
-def stamp_port(im, palette, x0=PORT_X, y0=PORT_Y):
-    px = im.load()
-    for dy, row in enumerate(PORT):
-        for dx, ch in enumerate(row):
-            x, y = x0 + dx, y0 + dy
-            if 0 <= x < im.width and 0 <= y < im.height:
-                px[x, y] = palette[int(ch)] + (255,)
-    return im
+# An earlier revision stamped a recessed pipe port into x5..12/y5..14 of that window. It was
+# dropped: that window is Create's louvred item door, and a stamped hole destroyed the louvre
+# and read as a hole cut through a copper plate. Material-swapping the body and keeping the
+# louvre, the blacks and the silver reads far better, and a fluid hatch that keeps the hatch
+# form is what reusing this model is asking for.
+#
+# If a stronger fluid cue is ever wanted, put a small droplet badge in a corner instead of
+# replacing the door.
 
 
 def derive(assets: Path, create_src: Path):
@@ -142,11 +166,8 @@ def derive(assets: Path, create_src: Path):
     out = {}
     for material, key in (("fluid_hatch", "copper"), ("smart_fluid_hatch", "brass")):
         ramp = TINT[key]
-        housing = tint(housing_src, ramp)
-        stamp_port(housing, _cm.PAL_COPPER if key == "copper" else _cm.PAL_BRASS)
-        out[f"block/{material}/housing.png"] = housing
-        # The flap is only visible as the slanted door's top face, so a tint is enough.
-        out[f"block/{material}/flap.png"] = tint(flap_src, ramp)
+        out[f"block/{material}/housing.png"] = swap_material(housing_src, ramp)
+        out[f"block/{material}/flap.png"] = swap_material(flap_src, ramp)
     return out
 
 
