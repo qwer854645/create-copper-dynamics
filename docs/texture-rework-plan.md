@@ -493,7 +493,8 @@ Create 的 `fluid_tank.png` 行结构正好能分区：
 
 竖直棱的深度靠三像素渐变 + 一道暗缝做出倒角，平涂一条亮色会显得贴上去。
 
-48×48 连接面板同一逻辑：外圈 2 列亮金、上下 2 行暗金、再一圈暗缝。
+48×48 连接面板按 **16 行分节**重复同一套包边（它覆盖 3 个方块高）。只画面板最外圈的话，
+中间每一节都是光铜板——这就是「底座一格搭高后没有包边」的成因。
 
 预览：`smart-fluid-tank.png`、`smart-fluid-tank-multiblock.png`、
 `smart-fluid-tank-ct.png`（另 `1×1×5` 长柱见 `E:\ds\preview\tank_column.png`）。

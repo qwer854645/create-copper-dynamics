@@ -81,6 +81,24 @@ def _lum(c):
     return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
 
 
+def _band_step(ly):
+    """How far inside a band a row is: 0 = the lit lip, growing inwards.
+
+    The casing look comes from this falloff - bright lip, one step of body, then a dimmer row -
+    rather than one flat colour per band.
+    """
+    d_top = ly - min(H_BAND_TOP) if ly in H_BAND_TOP else 99
+    d_bot = max(H_BAND_BOT) - ly if ly in H_BAND_BOT else 99
+    return min(d_top, d_bot)
+
+
+# Per-step gold windows. Each is a two-entry range so Create's own shading still varies inside the
+# step instead of filling it with one flat value.
+BAND_STEPS = ((POST_HI_LO, POST_HI_HI),      # 0: lit lip
+              (POST_LO_LO, POST_LO_HI),      # 1: body
+              (EDGE_LO, EDGE_HI))            # 2: dimmer inner row
+
+
 def zone_side(x, y):
     lx, ly = x % 16, y % 16
     top_or_bot = ly in H_BAND_TOP or ly in H_BAND_BOT
@@ -97,7 +115,8 @@ def zone_side(x, y):
             return "seam"
         return "copper"
     if top_or_bot:
-        return ("gold_range", EDGE_LO, EDGE_HI)
+        lo, hi = BAND_STEPS[min(_band_step(ly), len(BAND_STEPS) - 1)]
+        return ("gold_range", lo, hi)
     if ly in SIDE_SEAM:
         return "seam"
     return "copper"
@@ -129,19 +148,29 @@ SIDE48_BAND = {0, 1, 2, 4, 9, 25, 41, 45}
 # same adjustment as SIDE_SEAM: the seams nearest the rim bands were pulled in to touch them
 SIDE48_SEAM = {2, 8, 24, 40, 45, 47}
 
+# The 48 px panel covers three blocks stacked, so the structure's face has a block boundary every
+# 16 rows. Banding only the panel's own outer rows left every middle segment as bare copper - the
+# "no edging once you build taller" report. Repeating the band at each boundary fixes it, and the
+# same three-step falloff as the 16 px sheet keeps the light/dark bevel.
+CONN_TILE = 16
+
 
 def zone_connected_side(x, y):
     rx, ry, rw, rh = CONN_REGION
     if rx <= x < rx + rw and ry <= y < ry + rh:
         sx, sy = x - rx, y - ry
-        # the 48 px panel is the whole tank's face: same grammar, scaled to its own bands
+        # vertical corner posts belong to the structure, not to each block
         if sx in (0, rw - 1):
             return ("gold_range", POST_HI_LO, POST_HI_HI)
         if sx in (1, rw - 2):
             return ("gold_range", POST_LO_LO, POST_LO_HI)
-        if sy in (0, 1, rh - 2, rh - 1):
-            return ("gold_range", EDGE_LO, EDGE_HI)
         if sx in (2, rw - 3):
+            return "seam"
+        ly = sy % CONN_TILE
+        if ly in H_BAND_TOP or ly in H_BAND_BOT:
+            lo, hi = BAND_STEPS[min(_band_step(ly), len(BAND_STEPS) - 1)]
+            return ("gold_range", lo, hi)
+        if ly in SIDE_SEAM:
             return "seam"
         if sy in SIDE48_SEAM:
             return "seam"
