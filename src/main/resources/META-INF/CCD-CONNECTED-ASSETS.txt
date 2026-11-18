@@ -1,0 +1,14 @@
+Connected connector artwork attribution
+
+Source: Create: Connected, hlysine and contributors
+https://github.com/hlysine/create_connected
+Original files: inventory_access_port_front.png, inventory_bridge_front.png
+License: GNU Affero General Public License v3, with the additional terms in
+LICENSE-Connected.txt supplied alongside this notice.
+
+Modified 2026-11-18 for CCD: surrounding brass colors changed to copper.
+The connector's central 10x10 pixels are unchanged. These derivative textures
+are not CCD original artwork and are not covered by CCD's All Rights Reserved
+statement. Their source images and modification script are in
+tools/references/connected/ and tools/create-fluid-access-art.py.
+This is a CCD development prototype, not an official Connected release.

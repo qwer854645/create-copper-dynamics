@@ -3,8 +3,7 @@
   "ambientocclusion": false,
   "textures": {
     "body": "ccd:block/fluid_access/copper",
-    "socket": "ccd:block/fluid_access/copper_socket",
-    "stock_link": "create:block/stock_link",
+    "socket": "ccd:block/fluid_access/connected_port",
     "band": "ccd:block/fluid_access/copper_band",
     "pipe": "create:block/pipes",
     "filter": "create:block/smart_pipe_2",
@@ -103,12 +102,12 @@
           ]
         },
         "south": {
-          "texture": "#stock_link",
+          "texture": "#socket",
           "uv": [
-            0,
-            0,
-            8,
-            8
+            3,
+            3,
+            13,
+            13
           ]
         },
         "east": {

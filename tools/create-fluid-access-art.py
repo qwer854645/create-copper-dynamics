@@ -97,6 +97,20 @@ def main():
         texture(material,ramp); texture(material+'_socket',ramp,True)
     texture('copper_band',COPPER,band=True)
     texture('bridge_band',COPPER,band=True)
+    # User-requested direct reuse: retain Connected's connector pixels exactly.
+    # Recolor only its surrounding brass; source assets and license are retained.
+    for source,target in [('inventory_access_port_front','connected_port'),('inventory_bridge_front','connected_bridge')]:
+        original=Image.open(ROOT/f'tools/references/connected/{source}.png').convert('RGBA')
+        converted=original.copy()
+        for y in range(16):
+            for x in range(16):
+                if 3<=x<=12 and 3<=y<=12: continue
+                r,g,b,a=original.getpixel((x,y))
+                if r>g and g>b:
+                    index=min(7,max(0,round((r-75)/180*7)))
+                    color=COPPER[index]
+                    converted.putpixel((x,y),tuple(bytes.fromhex(color[1:]))+(a,))
+        converted.save(ASSETS/f'textures/block/fluid_access/{target}.png')
     models=[]
     with ZipFile(JAR) as archive:
         for name,bridge,material in [('fluid_access_port',False,'copper'),('fluid_bridge',True,'copper')]:
@@ -111,9 +125,7 @@ def main():
                 # Connected-like raised square connector; no additional pipe flange.
                 lo,hi=([3,3,16],[13,13,18]) if end=='south' else ([3,3,-2],[13,13,0])
                 seat=cube('raised_socket_'+end,lo,hi,'socket')
-                # Direct reference to the original stock-link connector region (32x32 atlas).
-                # Preserve its complete pixel layout and native colors, without repainting.
-                seat['faces'][end]={'texture':'#stock_link','uv':[0,0,8,8]}
+                seat['faces'][end]={'texture':'#socket','uv':[3,3,13,13]}
                 elements.append(seat)
             if bridge:
                 # Small native smart-pipe filter panel at the existing interaction position.
@@ -136,8 +148,7 @@ def main():
                         e['from'][2],e['to'][2]=sorted([e['from'][2],e['to'][2]])
                         e['faces']={({'north':'south','south':'north'}.get(s,s)):f for s,f in e['faces'].items()}
                     elements.append(e)
-            textures={'body':f'ccd:block/fluid_access/{material}','socket':f'ccd:block/fluid_access/{material}_socket',
-                      'stock_link':'create:block/stock_link',
+            textures={'body':f'ccd:block/fluid_access/{material}','socket':'ccd:block/fluid_access/'+('connected_bridge' if bridge else 'connected_port'),
                       'band':'ccd:block/fluid_access/'+('bridge_band' if bridge else 'copper_band'),
                       'pipe':'create:block/pipes','filter':'create:block/smart_pipe_2','particle':'#body'}
             model={'parent':'minecraft:block/block','ambientocclusion':False,'textures':textures,'elements':elements}
@@ -146,13 +157,13 @@ def main():
             models.append(model)
         render_preview(models,archive)
     atlas=Image.new('RGBA',(64,16))
-    for i,name in enumerate(['copper','copper_socket','copper_band','bridge_band']):
+    for i,name in enumerate(['copper','connected_port','connected_bridge','bridge_band']):
         atlas.alpha_composite(Image.open(ASSETS/f'textures/block/fluid_access/{name}.png'),(i*16,0))
     atlas.save(OUT/'textures-source.png'); atlas.resize((1024,256),Image.Resampling.NEAREST).save(OUT/'textures.png')
     save(OUT/'model.meta.json',{'reference':'Connected full casing, raised end sockets and broad side band; Create stock-link metal shading and native filter',
          'textures':'CCD hand-drawn 16x16 copper panels, dark copper band and grey metal socket seats',
-         'upstreamResources':['create:block/stock_link (original connector UV 0,0,8,8)','create:block/smart_pipe_2'],
-         'connectedAssetsCopied':False,'preview':'actual model geometry, offline lighting; no client validation'})
+          'upstreamResources':['Connected inventory_access_port_front and inventory_bridge_front (AGPL-3.0 plus additional terms)','create:block/smart_pipe_2'],
+          'connectedAssetsCopied':True,'preview':'actual model geometry, offline lighting; no client validation'})
 
 def render_preview(models,archive):
     def texture(id):

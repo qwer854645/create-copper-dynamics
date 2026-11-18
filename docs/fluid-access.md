@@ -43,3 +43,5 @@ CCD 参考其“真实来源身份”和“限制代理嵌套”的设计动机�
 最新重绘直接核对 Create `copper_casing`、`pump` 和 `stock_link` 原始贴图：铜面改用机械泵的八级原生铜色，重画不规则连续像素簇，去除上一版自定义浅粉高光；接口采用存量转信器的七级暖灰铁色，重画亮银折边、灰绿孔壁及炭灰内孔。未复制原版像素布局，模型与功能均未更改。
 
 接口最终按用户要求改为直接引用 `create:block/stock_link` 原生连接座区域，UV 为 `[0,0,8,8]`（32×32 图集左上 16×16 像素），完整保留原图颜色和像素，不再使用自绘接口正面。铜机壳不变。该接口美术归 Create 上游，CCD 不标为原创；通过资源引用使用，不另存原图副本。
+
+上述 `stock_link` 截图区域选择错误，已由本次修改替换。用户确认要的是 Connected 的原接口：现使用其 `inventory_access_port_front` / `inventory_bridge_front` 图片，中央 `[3,3,13,13]` 的灰铁框与红色中心逐像素保留，只将外围黄铜改色为铜。两张源图及完整上游 LICENSE 存于 `tools/references/connected/`，运行资源附有 `META-INF/CCD-CONNECTED-ASSETS.txt` 和 `LICENSE-Connected.txt`。这些资源为 Connected 衍生美术，不能再标注为 CCD 原创或纳入 All Rights Reserved；此处记录开发原型的来源，并不替代正式发布前对组合分发许可的处理。没有复制 Connected 实现代码。
