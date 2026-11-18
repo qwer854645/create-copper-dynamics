@@ -1,5 +1,9 @@
 # 客户端反馈修正
 
+## 横向智能储罐连接纹理崩溃
+
+用户报告 `crash-2026-11-19_01.50.59-client.txt`：区块网格构建经过 Create `ConnectedTextureBehaviour.Base.getDataType` 时，原生代码以 null sprite 查询连接纹理类型。CCD 横罐 getShift 未处理该合法查询，调用 sprite.contents() 导致空指针。已增加空值判断，查询阶段按面轴选择同为 RECTANGLE 的连接类型；实际贴图阶段仍识别内壁。报告涉及 (38,0,58) 的横罐，不是报告头部 Sable 提示或 FluidLogistics 本身的异常。尚未在用户的完整 Sodium／Iris／Copycats 环境复现验证。
+
 ## 智能储罐与包裹后续修正
 
 - 智能储罐材质使用动力臂实际黄铜色阶重新映射，保留原生 UV、连接图集和玻璃透明度。生成器 `tools/repaint-smart-tank.py` 从 Create 原图重建，避免重复运行导致色阶漂移。横向版共用材质。

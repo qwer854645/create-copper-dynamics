@@ -24,7 +24,9 @@ public final class SmartFluidTankModels {
         return new CTModel(original,new FluidTankCTBehaviour(shift("fluid_tank"),shift("fluid_tank_top"),shift("fluid_tank_inner")) {
             @Override public CTSpriteShiftEntry getShift(net.minecraft.world.level.block.state.BlockState state,
                 net.minecraft.core.Direction face,net.minecraft.client.renderer.texture.TextureAtlasSprite sprite) {
-                if(sprite.contents().name().getPath().endsWith("fluid_tank_inner")) return shift("fluid_tank_inner");
+                // Create's Base.getDataType queries getShift with a null sprite
+                // while gathering CT model data, before any face texture is selected.
+                if(sprite != null && sprite.contents().name().getPath().endsWith("fluid_tank_inner")) return shift("fluid_tank_inner");
                 return face.getAxis()==state.getValue(dev.ccd.content.HorizontalSmartTankBlock.AXIS)?shift("fluid_tank_top"):shift("fluid_tank");
             }
             @Override public boolean connectsTo(net.minecraft.world.level.block.state.BlockState state,
