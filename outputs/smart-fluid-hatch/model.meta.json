@@ -1,0 +1,45 @@
+{
+  "source": "Create 6.0.10-280",
+  "textureSize": [
+    16,
+    16
+  ],
+  "plate": [
+    [
+      1,
+      0,
+      0
+    ],
+    [
+      15,
+      16,
+      2
+    ]
+  ],
+  "nativePipe": "basic fluid hatch native mouth translated Y=-3",
+  "filterTexture": "create:block/smart_pipe_2",
+  "filterUVs": "native smart-pipe bezel, north/south swapped",
+  "panel": [
+    [
+      5,
+      10,
+      2
+    ],
+    [
+      11,
+      16,
+      3
+    ]
+  ],
+  "interactionCenter": [
+    8,
+    13,
+    3.05
+  ],
+  "interactionScale": 0.375,
+  "activeFace": "FACING opposite",
+  "filterRulesUnchanged": true,
+  "storage": "none",
+  "openClose": "none",
+  "artwork": "CCD brass plate; Create native pipe and filter art retain upstream ownership"
+}

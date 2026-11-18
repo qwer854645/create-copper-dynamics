@@ -80,7 +80,7 @@
 ## 流体舱口
 
 - 先阅读 `ItemHatchBlock`／`ItemHatchBlockEntity`／`ItemHatchHandler`／`HatchFilterSlot`、`FluidTankBlock`／`FluidTankBlockEntity`、`FluidHelper`、`GenericItemEmptying`／`GenericItemFilling`、`PortableFluidInterfaceBlockEntity`、`FluidPipeBlock`／`FluidPropagator` 和 `IHaveGoggleInformation`。仅使用 Create 源码及 NeoForge API，没有读取三个流体附属的实现代码。
-- `FluidHatchBlock extends ItemHatchBlock`，直接复用水平侧面安装、含水状态、扳手行为及移除方块实体逻辑；手动取放保留音效，不触发开合或延时复位。普通版模型改为 12×12、厚 2 的铜板，中央直接平移接入原生流体管口，选取与碰撞通过原生 VoxelShaper 按四个水平方向旋转，指定 `cutout_mipped` 渲染层。端面固定使用原生深色管孔，不设置灰色内盖或开合，不更改流体代理逻辑，详见 `docs/fluid-hatch-model.md`；智能版保留原有外观。
+- `FluidHatchBlock extends ItemHatchBlock`，直接复用水平侧面安装、含水状态、扳手行为及移除方块实体逻辑；手动取放保留音效，不触发开合或延时复位。普通版模型改为 12×12、厚 2 的铜板，中央直接平移接入原生流体管口，选取与碰撞通过原生 VoxelShaper 按四个水平方向旋转，指定 `cutout_mipped` 渲染层。端面固定使用原生深色管孔，不设置灰色内盖或开合，不更改流体代理逻辑，详见 `docs/fluid-hatch-model.md`；智能版采用同类黄铜平板结构。
 - `FluidHatchBlockEntity extends ItemHatchBlockEntity`，普通版覆盖 `addBehaviours` 和 `clearContent`，不创建原生物品过滤行为、物品库存或流体储罐。原生护目镜的 `containedFluidTooltip` 显示的是后方容器实时内容。
 - 通过 NeoForge `Capabilities.FluidHandler.BLOCK` 注册正面及无方向的代理；每次操作查询背后容器朝向舱口面的能力。`FACING` 沿用原生定义，指向容器；正面与被查询容器面均为其反方向。代理保留填充／抽取、模拟／执行和流体组件，不调用无方向的后方接口来绕开面限制。
 - 手动取放直接调用原生 `FluidHelper.tryEmptyItemIntoBE`／`tryFillItemFromBE`，优先灌入，再尝试取出，兼容其玻璃瓶、药水及标准流体容器路径。原生取出方法只检查显示存量、不模拟源端抽取，因此该次交互期间根据 `GenericItemFilling.getRequiredAmountForItem` 取得本次容器所需数量，仅向它显示经精确 `drain(SIMULATE)` 确认可取出的流体，避免绕过只读、限流或定量抽取限制；普通能力读取和护目镜仍显示原始库存。临时容器副本只在该次调用期间使用，finally 清除，不存档、不对外提供库存。执行偏离模拟等接口违约情况没有另建缓冲或事务机制。
@@ -91,11 +91,11 @@
 
 ## 智能流体舱口
 
-- 阅读原生 `SmartFluidPipeBlockEntity`、`FilteringBehaviour`、`FilterItemStack`、`HatchFilterSlot`、`ValueSettingsInputHandler` 和 `SmartBlockEntityRenderer`，直接接入 `FilteringBehaviour.forFluids()` 与 `HatchFilterSlot`，不另写过滤匹配、配置网络或保存格式。父类构造期间的行为注册使用继承自 `ItemHatchBlockEntity` 的 `filtering` 字段，避免子类字段初始化覆盖行为实例。
+- 阅读原生 `SmartFluidPipeBlockEntity`、`FilteringBehaviour`、`FilterItemStack`、`HatchFilterSlot`、`ValueSettingsInputHandler` 和 `SmartBlockEntityRenderer`，直接接入 `FilteringBehaviour.forFluids()` 与原生 `ValueBoxTransform.Sided`（原 HatchFilterSlot 已替换为对齐平板的正面面板坐标），不另写过滤匹配、配置网络或保存格式。父类构造期间的行为注册使用继承自 `ItemHatchBlockEntity` 的 `filtering` 字段，避免子类字段初始化覆盖行为实例。
 - `SmartFluidHatchBlock`／`SmartFluidHatchBlockEntity` 继承普通舱口，父类增加带类型的构造及流体接收、按数量抽取扩展点。公共流体能力在 `isFluidValid`、`fill` 和指定流体的 `drain` 入口统一检查过滤；不指定流体的 `drain` 遍历匹配罐，先模拟再执行指定流体抽取。普通版保留直接委托的行为。
 - 智能版未配置过滤时明确拒绝进出，这是相对原生空过滤器的唯一默认语义调整。读取库存仍返回后方真实数据，保留物理库存身份去重；手动取液所使用的临时视图同时检查过滤和精确抽取量，防止原生装瓶方法绕过限制。模拟和执行均不通过无过滤的后方能力提供额外入口。
 - 过滤变更失效能力缓存并从正面相邻实际管路传播压力变化；紧邻泵时使用其 `updatePressureChange`。旧代理每次仍检查当前过滤，移液臂到达前改变过滤后也必须重新验证。串联舱口逐层执行各自过滤，不绕开中间代理。
-- 移液臂的舱口类型检查和物流身份解析使用基类 `instanceof`，因此智能子类直接兼容默认舱口交互限制和实际容器身份归一化。客户端注册原生 `SmartBlockEntityRenderer` 绘制过滤图标；几何和过滤槽位置沿用普通舱口及 Create，材质改为黄铜机壳。
+- 移液臂的舱口类型检查和物流身份解析使用基类 `instanceof`，因此智能子类直接兼容默认舱口交互限制和实际容器身份归一化。客户端注册原生 `SmartBlockEntityRenderer` 绘制过滤图标；模型采用黄铜平板、下方原生铜管口及上方原生智能管道过滤面板；图标和点击中心为模型坐标 [8,13,3.05]，仅 FACING 的反向可配置过滤，缩放 .375，碰撞同步改为平板结构，见 `docs/smart-fluid-hatch-model.md`。
 - 已补齐注册、创造栏、配方、掉落、模型、镐标签和中英文提示。仅做静态检查，未构建或运行。
 
 ## 动力移液臂

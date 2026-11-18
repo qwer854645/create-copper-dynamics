@@ -38,9 +38,7 @@ public class FluidHatchBlock extends ItemHatchBlock {
     public FluidHatchBlock(Properties properties) { super(properties); }
 
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        // The smart hatch still uses the native sloped housing and filter position.
-        return state.is(CopperDynamics.FLUID_HATCH.get())
-            ? FLAT_SHAPE.get(state.getValue(FACING).getOpposite()) : super.getShape(state, level, pos, context);
+        return FLAT_SHAPE.get(state.getValue(FACING).getOpposite());
     }
 
     public static boolean isFluidContainer(Level level, ItemStack stack) {

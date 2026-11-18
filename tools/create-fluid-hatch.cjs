@@ -51,9 +51,6 @@ async function main(){
    variants['facing='+facing]={model:'ccd:block/'+prefix+'fluid_hatch_closed',...(y?{y}:{})};
   save(path.join(assets,'blockstates/'+prefix+'fluid_hatch.json'),{variants});
  }
- // Keep the smart hatch on its previous native geometry until its own art pass.
- save(path.join(assets,'models/block/smart_fluid_hatch_closed.json'),{parent:'create:block/item_hatch/block_closed',
-  render_type:'minecraft:cutout_mipped',textures:{'0':'create:block/brass_casing',particle:'create:block/brass_casing'}});
  const panels=[];
  for(const [i,id,name,view]of [
   [0,'create:block/item_hatch/block_closed','original',[24,20,34]],

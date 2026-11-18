@@ -1,0 +1,54 @@
+// Flat brass fluid hatch, native pipe mouth and native smart-pipe filter bezel.
+// Usage: node tools/create-smart-fluid-hatch.cjs <extracted Create source root>
+const fs=require('node:fs'),path=require('node:path'),sharp=require('sharp');
+const {mesh,render,model:loadModel}=require('./preview-fluid-packager.cjs');
+const root=path.resolve(__dirname,'..'),assets=path.join(root,'src/main/resources/assets/ccd');
+const textures=path.join(assets,'textures/block/smart_fluid_hatch'),output=path.join(root,'outputs/smart-fluid-hatch');
+for(const dir of [textures,output])fs.mkdirSync(dir,{recursive:true});
+const save=(file,data)=>fs.writeFileSync(file,JSON.stringify(data,null,2)+'\n');
+async function main(){
+ const {data,info}=await sharp(path.join(assets,'textures/block/smart_faucet/body.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ if(info.width!==16||info.height!==16)throw Error('Unexpected CCD brass texture');
+ const plate=Buffer.from(data);
+ for(let y=0;y<16;y++)for(let x=1;x<15;x++){
+  if(x===1||y===0)plate.set([247,203,108,255],(y*16+x)*4);
+  if(x===14||y===15)plate.set([158,105,71,255],(y*16+x)*4);
+ }
+ await sharp(plate,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,'plate.png'));
+ const base=loadModel('ccd:block/fluid_hatch_closed'),elements=JSON.parse(JSON.stringify(base.elements));
+ elements[0]={name:'thin_brass_plate',from:[1,0,0],to:[15,16,2],faces:{}};
+ for(const [side,uv]of Object.entries({north:[15,0,1,16],south:[1,0,15,16],east:[1,0,3,16],west:[1,0,3,16],up:[1,0,15,2],down:[1,14,15,16]}))
+  elements[0].faces[side]={texture:'#plate',uv};
+ for(const e of elements.slice(1)){
+  e.from[1]-=3;e.to[1]-=3;if(e.rotation)e.rotation.origin[1]-=3;
+ }
+ const nativeFilter=loadModel('create:block/smart_fluid_pipe/block').elements[2];
+ const panel={name:'front_filter_panel',from:[5,10,2],to:[11,16,3],faces:{}};
+ for(const [side,face]of Object.entries(nativeFilter.faces)){
+  const target=side==='north'?'south':side==='south'?'north':side;
+  panel.faces[target]={...face,texture:'#filter'};
+ }
+ elements.push(panel);
+ save(path.join(assets,'models/block/smart_fluid_hatch_closed.json'),{parent:'ccd:block/fluid_hatch_closed',
+  textures:{plate:'ccd:block/smart_fluid_hatch/plate',particle:'ccd:block/smart_fluid_hatch/plate',filter:'create:block/smart_pipe_2'},elements});
+ const variants={};
+ for(const [facing,y]of [['north',0],['east',90],['south',180],['west',270]])
+  variants['facing='+facing]={model:'ccd:block/smart_fluid_hatch_closed',...(y?{y}:{})};
+ save(path.join(assets,'blockstates/smart_fluid_hatch.json'),{variants});
+ const panels=[];
+ for(const [i,id,name,view]of [[0,'ccd:block/fluid_hatch_closed','basic',[24,18,34]],
+  [1,'ccd:block/smart_fluid_hatch_closed','front',[24,18,34]],
+  [2,'ccd:block/smart_fluid_hatch_closed','side',[-34,16,24]]]){
+  const buffer=await render(await mesh(id),480,510,view,{center:[8,8,3],scale:25});
+  await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*480,top:95});
+ }
+ const labels=Buffer.from(`<svg width="1440" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="720" y="40" font-size="29">智能流体舱口 · 黄铜薄板与正面过滤</text><text x="720" y="78" font-size="16">上方原生过滤面板 · 下方原生管口 · 无斜面、无开合</text><text x="240" y="643" font-size="19">普通版</text><text x="720" y="643" font-size="19">智能版 · 正面</text><text x="1200" y="643" font-size="19">智能版 · 侧面</text><text x="720" y="683" font-size="14" fill="#677070">实际模型离线预览 / 过滤未设置；游戏内原生渲染器显示过滤图标 / 未构建或启动游戏</text></g></svg>`);
+ await sharp({create:{width:1440,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
+ await sharp(path.join(textures,'plate.png')).resize(320,320,{kernel:'nearest'}).png().toFile(path.join(output,'texture.png'));
+ save(path.join(output,'model.meta.json'),{source:'Create 6.0.10-280',textureSize:[16,16],plate:[[1,0,0],[15,16,2]],
+  nativePipe:'basic fluid hatch native mouth translated Y=-3',filterTexture:'create:block/smart_pipe_2',filterUVs:'native smart-pipe bezel, north/south swapped',
+  panel:[panel.from,panel.to],interactionCenter:[8,13,3.05],interactionScale:.375,activeFace:'FACING opposite',
+  filterRulesUnchanged:true,storage:'none',openClose:'none',artwork:'CCD brass plate; Create native pipe and filter art retain upstream ownership'});
+ console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length}));
+}
+main().catch(e=>{console.error(e);process.exitCode=1;});
