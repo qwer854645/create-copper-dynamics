@@ -34,11 +34,13 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
         elements[2]['faces'][side]['texture']='#side'
     if name=='smart_fluid_hatch':
         # The outward face sits just behind HatchFilterSlot's (8,5.15,9.5)
-        # origin, with its native -45 degree tilt. Icon and hitbox stay unchanged.
+        # origin. NORTH hatch orientation turns the native filter transform's
+        # local -45 degree tilt into +45 degrees on the model's south face.
+        # Icon and hitbox stay unchanged.
         elements.append({
             'name':'smart_pipe_filter_slot',
             'from':[4,1.15,9.28],'to':[12,9.15,9.48],
-            'rotation':{'angle':-45,'axis':'x','origin':[8,5.15,9.5]},
+            'rotation':{'angle':45,'axis':'x','origin':[8,5.15,9.5]},
             'faces':{
                 'south':{'texture':'#filter','uv':[8,8,16,16]},
                 'north':{'texture':'#filter','uv':[0,8,8,16]},
