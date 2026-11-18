@@ -56,27 +56,28 @@ def main():
             'down':dict(texture='#'+top, uv=[x,z,X,Z])}))
     cube('brass_body', [3,1,3], [13,10,13], 'side', 'side')
     del elements[0]['faces']['north']
+    del elements[0]['faces']['south']
     cube('bottom_rim', [2,0,2], [14,1,14], 'band', 'flat')
     cube('lid', [2,10,2], [14,11,14], 'band', 'flat')
     cube('lid_grip', [6,11,6], [10,12,10], 'band', 'cap')
-    def plane(name, x, y, width, z, texture, tint=None):
+    def plane(name, x, y, width, z, texture, tint=None, face='north'):
         spec = dict(texture='#'+texture, uv=[x+width,y,x,y+1])
         if tint is not None:
             spec['tintindex'] = tint
-        elements.append(dict(name=name, from_=[x,15-y,z], to=[x+width,16-y,z], faces={'north':spec}))
-    for y in range(6,15):
-        for x in range(3,13):
-            window = 8 <= y <= 12 and (4 <= x <= 6 or 9 <= x <= 11)
-            plane(f'front_{x}_{y}', x,y,1,3.02 if window else 3,
-                  'window' if window else 'side', (0 if x < 8 else 1) if window else None)
-    # Equal window geometry, distinct reflections: left diagonal glints;
-    # right a short upper streak and a separate lower corner glint.
-    for x,y in ((5,8),(4,9),(10,9),(11,9),(9,12)):
-        plane(f'glint_{x}_{y}',x,y,1,2.99,'glass')
+        elements.append(dict(name=name, from_=[x,15-y,z], to=[x+width,16-y,z], faces={face:spec}))
+    for face,tint,z,texture in (('north',0,3,'side'),('south',1,13,'back')):
+        for y in range(6,15):
+            for x in range(3,13):
+                window = 7 <= y <= 13 and 4 <= x <= 11
+                depth = z + (.02 if face=='north' else -.02) if window else z
+                plane(f'{face}_{x}_{y}', x,y,1,depth,
+                      'window' if window else texture, tint if window else None,face)
+        glints = ((5,8),(4,9)) if face=='north' else ((10,8),(11,9))
+        for x,y in glints:
+            plane(f'{face}_glint_{x}_{y}',x,y,1,z+(-.01 if face=='north' else .01),'glass',face=face)
     # Shared iron closure and glass resources deliberately match the copper canister.
     textures = {key:'ccd:item/fluid_canister/'+key for key in ('band','flat','cap','glass')}
     textures.update(side='ccd:item/brass_box/side', back='ccd:item/brass_box/back', window='minecraft:block/white_concrete', particle='ccd:item/brass_box/side')
-    elements[0]['faces']['south']['texture'] = '#back'
     model = dict(parent='create:item/package_transforms', render_type='minecraft:solid', textures=textures,
                  elements=[{('from' if k == 'from_' else k):v for k,v in e.items()} for e in elements],
                  display=json.loads((ASSETS / 'models/item/fluid_package.json').read_text())['display'])
@@ -146,7 +147,7 @@ def main():
     (OUT / 'model.meta.json').write_text(json.dumps(dict(name='Brass Box',model='ccd:item/composite_package',
         textureSize=[16,16],reference='Fluid Canister geometry; Create mechanical_arm and mechanical_arm_side brass',bounds=[12,12,12],palette=BRASS,
         artwork='hand-drawn brass panel, independent pixel layout from the copper canister',
-        windows='two matching 3x5 panes with different pixel-glass reflections; existing fluid color samples',
+        windows='one centered 8x7 pane on each of the opposite north/south faces; existing fluid color samples',
         sharedResources=['fluid_canister/band','fluid_canister/flat','fluid_canister/cap','fluid_canister/glass']),indent=2)+'\n')
 
 
