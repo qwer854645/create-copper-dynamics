@@ -14,8 +14,10 @@ public final class CopperCollectionGrateRenderer extends SmartBlockEntityRendere
         super.renderSafe(grate, partialTicks, pose, buffer, light, overlay);
         var segment = grate.tankBehaviour().getPrimaryTank();
         if (segment.isEmpty(partialTicks)) return;
-        float height = Math.clamp(segment.getFluidLevel().getValue(partialTicks), 0f, 1f) * .11f;
+        // Keep the surface below the recessed bars, inside the ten-pixel-wide bowl.
+        float height = Math.clamp(segment.getFluidLevel().getValue(partialTicks), 0f, 1f) * (2.75f / 16);
         NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(segment.getRenderedFluid(),
-            .07f, .065f, .07f, .93f, .065f + height, .93f, buffer, pose, light, false, true);
+            3.0625f / 16, 3.0625f / 16, 3.0625f / 16,
+            12.9375f / 16, (3.0625f / 16) + height, 12.9375f / 16, buffer, pose, light, false, true);
     }
 }

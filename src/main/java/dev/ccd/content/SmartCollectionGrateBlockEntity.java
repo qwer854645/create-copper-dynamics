@@ -29,7 +29,7 @@ public final class SmartCollectionGrateBlockEntity extends CopperCollectionGrate
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform() {
-            @Override public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) { return new Vec3(.5, .26, .5); }
+            @Override public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) { return new Vec3(.5, .51, .5); }
             @Override public void rotate(LevelAccessor level, BlockPos pos, BlockState state, PoseStack pose) { pose.mulPose(Axis.XP.rotationDegrees(90)); }
             @Override public float getScale() { return .3f; }
         }).forFluids().withCallback(this::filterChanged));

@@ -1,0 +1,321 @@
+{
+  "stage": "half-height bowl study",
+  "height": 8,
+  "barTop": 7,
+  "lipTop": 8,
+  "innerBounds": [
+    3,
+    13
+  ],
+  "liquidBounds": {
+    "from": [
+      3.0625,
+      3.0625,
+      3.0625
+    ],
+    "to": [
+      12.9375,
+      5.8125,
+      12.9375
+    ]
+  },
+  "textureSize": [
+    16,
+    16
+  ],
+  "nativeParts": [
+    "create:block/fluid_pipe/rim_connector/down",
+    "create:block/fluid_pipe/rim/down"
+  ],
+  "geometry": [
+    {
+      "name": "floor_north",
+      "from": [
+        2,
+        2,
+        2
+      ],
+      "to": [
+        14,
+        3,
+        6
+      ]
+    },
+    {
+      "name": "floor_south",
+      "from": [
+        2,
+        2,
+        10
+      ],
+      "to": [
+        14,
+        3,
+        14
+      ]
+    },
+    {
+      "name": "floor_west",
+      "from": [
+        2,
+        2,
+        6
+      ],
+      "to": [
+        6,
+        3,
+        10
+      ]
+    },
+    {
+      "name": "floor_east",
+      "from": [
+        10,
+        2,
+        6
+      ],
+      "to": [
+        14,
+        3,
+        10
+      ]
+    },
+    {
+      "name": "lower_bowl_north",
+      "from": [
+        2,
+        3,
+        2
+      ],
+      "to": [
+        14,
+        5,
+        3
+      ]
+    },
+    {
+      "name": "lower_bowl_south",
+      "from": [
+        2,
+        3,
+        13
+      ],
+      "to": [
+        14,
+        5,
+        14
+      ]
+    },
+    {
+      "name": "lower_bowl_west",
+      "from": [
+        2,
+        3,
+        3
+      ],
+      "to": [
+        3,
+        5,
+        13
+      ]
+    },
+    {
+      "name": "lower_bowl_east",
+      "from": [
+        13,
+        3,
+        3
+      ],
+      "to": [
+        14,
+        5,
+        13
+      ]
+    },
+    {
+      "name": "upper_bowl_north",
+      "from": [
+        1,
+        5,
+        1
+      ],
+      "to": [
+        15,
+        7,
+        3
+      ]
+    },
+    {
+      "name": "upper_bowl_south",
+      "from": [
+        1,
+        5,
+        13
+      ],
+      "to": [
+        15,
+        7,
+        15
+      ]
+    },
+    {
+      "name": "upper_bowl_west",
+      "from": [
+        1,
+        5,
+        3
+      ],
+      "to": [
+        3,
+        7,
+        13
+      ]
+    },
+    {
+      "name": "upper_bowl_east",
+      "from": [
+        13,
+        5,
+        3
+      ],
+      "to": [
+        15,
+        7,
+        13
+      ]
+    },
+    {
+      "name": "raised_copper_lip_north",
+      "from": [
+        0,
+        7,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        2
+      ]
+    },
+    {
+      "name": "raised_copper_lip_south",
+      "from": [
+        0,
+        7,
+        14
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ]
+    },
+    {
+      "name": "raised_copper_lip_west",
+      "from": [
+        0,
+        7,
+        2
+      ],
+      "to": [
+        2,
+        8,
+        14
+      ]
+    },
+    {
+      "name": "raised_copper_lip_east",
+      "from": [
+        14,
+        7,
+        2
+      ],
+      "to": [
+        16,
+        8,
+        14
+      ]
+    },
+    {
+      "name": "recessed_grate_3",
+      "from": [
+        3,
+        6,
+        3
+      ],
+      "to": [
+        4,
+        7,
+        13
+      ]
+    },
+    {
+      "name": "recessed_grate_6",
+      "from": [
+        6,
+        6,
+        3
+      ],
+      "to": [
+        7,
+        7,
+        13
+      ]
+    },
+    {
+      "name": "recessed_grate_9",
+      "from": [
+        9,
+        6,
+        3
+      ],
+      "to": [
+        10,
+        7,
+        13
+      ]
+    },
+    {
+      "name": "recessed_grate_12",
+      "from": [
+        12,
+        6,
+        3
+      ],
+      "to": [
+        13,
+        7,
+        13
+      ]
+    },
+    {
+      "name": "native_rim_connector_down_0",
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        4,
+        12
+      ]
+    },
+    {
+      "name": "native_rim_down_0",
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        2,
+        13
+      ]
+    }
+  ],
+  "smart": "inherits geometry, brass override and updated top filter height; front panel styling deferred",
+  "behavior": "capacity, collection, search and draining unchanged; outline and fluid rendering follow new geometry",
+  "artwork": "CCD copper/liner/grate textures; native pipe geometry and texture belong to Create, preview water to Mojang"
+}

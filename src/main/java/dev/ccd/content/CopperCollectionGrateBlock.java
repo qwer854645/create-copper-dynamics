@@ -23,6 +23,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags;
 
@@ -30,10 +31,22 @@ import net.neoforged.neoforge.common.Tags;
 public class CopperCollectionGrateBlock extends CauldronBlock implements IBE<CopperCollectionGrateBlockEntity>, IWrenchable {
     // CauldronBlock's codec return type is invariant; the factory still creates this grate subtype.
     public static final MapCodec<CauldronBlock> CODEC = simpleCodec(CopperCollectionGrateBlock::new);
-    private static final VoxelShape SHAPE = box(0, 0, 0, 16, 4, 16);
+    private static final VoxelShape SHAPE = Shapes.or(
+        box(3, 0, 3, 13, 2, 13), box(4, 0, 4, 12, 4, 12),
+        ring(2, 14, 6, 10, 2, 3), ring(2, 14, 3, 13, 3, 5),
+        ring(1, 15, 3, 13, 5, 7), ring(0, 16, 2, 14, 7, 8),
+        box(3, 6, 3, 4, 7, 13), box(6, 6, 3, 7, 7, 13),
+        box(9, 6, 3, 10, 7, 13), box(12, 6, 3, 13, 7, 13));
+    private static VoxelShape ring(int outerMin, int outerMax, int innerMin, int innerMax, int bottom, int top) {
+        return Shapes.or(box(outerMin, bottom, outerMin, outerMax, top, innerMin),
+            box(outerMin, bottom, innerMax, outerMax, top, outerMax),
+            box(outerMin, bottom, innerMin, innerMin, top, innerMax),
+            box(innerMax, bottom, innerMin, outerMax, top, innerMax));
+    }
     public CopperCollectionGrateBlock(Properties properties) { super(properties); }
     @Override public MapCodec<CauldronBlock> codec() { return CODEC; }
     @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return SHAPE; }
+    @Override public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) { return SHAPE; }
     @Override public VoxelShape getInteractionShape(BlockState state, BlockGetter level, BlockPos pos) { return SHAPE; }
     @Override public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
         return level.getBlockEntity(pos) instanceof CopperCollectionGrateBlockEntity grate
