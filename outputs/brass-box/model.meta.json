@@ -54,7 +54,8 @@
     ]
   ],
   "artwork": "hand-drawn brass panel, independent pixel layout from the copper canister",
-  "windows": "one centered 8x7 pane on each of the opposite north/south faces; existing fluid color samples",
+  "windows": "opposite north/south 8x7 panes; actual fluid sprite and tint, stable random content samples",
+  "itemWindows": "opposite east/west 6x6 panes; runtime displays sampled actual item models",
   "sharedResources": [
     "fluid_canister/band",
     "fluid_canister/flat",

@@ -2,6 +2,8 @@
 import json
 import math
 import sys
+from io import BytesIO
+from zipfile import ZipFile
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -57,6 +59,8 @@ def main():
     cube('brass_body', [3,1,3], [13,10,13], 'side', 'side')
     del elements[0]['faces']['north']
     del elements[0]['faces']['south']
+    del elements[0]['faces']['east']
+    del elements[0]['faces']['west']
     cube('bottom_rim', [2,0,2], [14,1,14], 'band', 'flat')
     cube('lid', [2,10,2], [14,11,14], 'band', 'flat')
     cube('lid_grip', [6,11,6], [10,12,10], 'band', 'cap')
@@ -75,9 +79,21 @@ def main():
         glints = ((5,8),(4,9)) if face=='north' else ((10,8),(11,9))
         for x,y in glints:
             plane(f'{face}_glint_{x}_{y}',x,y,1,z+(-.01 if face=='north' else .01),'glass',face=face)
+    for face,axis in (('west',3),('east',13)):
+        for y in range(6,15):
+            for z in range(3,13):
+                window = 8 <= y <= 13 and 5 <= z <= 10
+                depth = axis + (.04 if face=='west' else -.04) if window else axis
+                spec = dict(texture='#backing' if window else '#side', uv=[z,y,z+1,y+1])
+                elements.append(dict(name=f'{face}_{z}_{y}',from_=[depth,15-y,z],to=[depth,16-y,z+1],faces={face:spec}))
+        # Small, different glass reflections sit in front of each actual item display.
+        for z,y in (((6,8),(5,9)) if face=='west' else ((9,8),(10,9))):
+            depth = axis + (-.01 if face=='west' else .01)
+            elements.append(dict(name=f'{face}_glint_{z}_{y}',from_=[depth,15-y,z],to=[depth,16-y,z+1],
+                                 faces={face:dict(texture='#glass',uv=[z,y,z+1,y+1])}))
     # Shared iron closure and glass resources deliberately match the copper canister.
     textures = {key:'ccd:item/fluid_canister/'+key for key in ('band','flat','cap','glass')}
-    textures.update(side='ccd:item/brass_box/side', back='ccd:item/brass_box/back', window='minecraft:block/white_concrete', particle='ccd:item/brass_box/side')
+    textures.update(side='ccd:item/brass_box/side', back='ccd:item/brass_box/back', backing='ccd:item/fluid_canister/fluid', window='minecraft:block/white_concrete', particle='ccd:item/brass_box/side')
     model = dict(parent='create:item/package_transforms', render_type='minecraft:solid', textures=textures,
                  elements=[{('from' if k == 'from_' else k):v for k,v in e.items()} for e in elements],
                  display=json.loads((ASSETS / 'models/item/fluid_package.json').read_text())['display'])
@@ -88,6 +104,10 @@ def main():
             atlas[key] = Image.new('RGBA',(16,16),'white')
         else:
             atlas[key] = Image.open(ASSETS / ('textures/'+value.split(':')[1]+'.png')).convert('RGBA')
+    jar = next((ROOT / 'build/moddev/artifacts').glob('*minecraft-resources.jar'))
+    with ZipFile(jar) as resources:
+        item_samples = {face:Image.open(BytesIO(resources.read(f'assets/minecraft/textures/item/{item}.png'))).convert('RGBA')
+                        for face,item in (('west','iron_ingot'),('east','gold_ingot'))}
     def render(view):
         length = math.sqrt(sum(v*v for v in view))
         camera = [v/length for v in view]
@@ -121,6 +141,9 @@ def main():
                         tx = max(0,min(15,math.floor(u+(U-u)*(col+.5)/cols)))
                         ty = max(0,min(15,math.floor(v+(V-v)*(row+.5)/rows)))
                         color = atlas[spec['texture'][1:]].getpixel((tx,ty))
+                        if spec['texture'] == '#backing':
+                            sample = item_samples[side].getpixel((min(15,int((tx-5+.5)*16/6)),min(15,int((ty-8+.5)*16/6))))
+                            if sample[3]: color = sample
                         if 'tintindex' in spec:
                             color = ((53,111,175,255),(211,118,44,255))[spec['tintindex']]
                         light = {'up':1,'north':.88,'south':.75,'east':.72,'west':.85,'down':.6}[side]
@@ -137,7 +160,7 @@ def main():
     for i,(view,label) in enumerate([([24,16,-34],'正面斜视'),([0,8,-40],'正面'),([-24,20,34],'背面斜视')]):
         preview.alpha_composite(render(view),(i*400,48))
         draw.text((i*400+200,443),label,font=font,fill='#303535',anchor='mm')
-    draw.text((600,478),'实际模型离线预览 · 窗口颜色为示意',font=ImageFont.truetype(r'C:\Windows\Fonts\msyh.ttc',14),fill='#677070',anchor='mm')
+    draw.text((600,478),'模型离线预览 · 流体颜色与铁锭／金锭为示例内容',font=ImageFont.truetype(r'C:\Windows\Fonts\msyh.ttc',14),fill='#677070',anchor='mm')
     preview.save(OUT / 'preview.png')
     pixels = Image.new('RGBA',(32,16))
     pixels.alpha_composite(Image.open(TEXTURES/'side.png'),(0,0))
@@ -147,7 +170,8 @@ def main():
     (OUT / 'model.meta.json').write_text(json.dumps(dict(name='Brass Box',model='ccd:item/composite_package',
         textureSize=[16,16],reference='Fluid Canister geometry; Create mechanical_arm and mechanical_arm_side brass',bounds=[12,12,12],palette=BRASS,
         artwork='hand-drawn brass panel, independent pixel layout from the copper canister',
-        windows='one centered 8x7 pane on each of the opposite north/south faces; existing fluid color samples',
+        windows='opposite north/south 8x7 panes; actual fluid sprite and tint, stable random content samples',
+        itemWindows='opposite east/west 6x6 panes; runtime displays sampled actual item models',
         sharedResources=['fluid_canister/band','fluid_canister/flat','fluid_canister/cap','fluid_canister/glass']),indent=2)+'\n')
 
 

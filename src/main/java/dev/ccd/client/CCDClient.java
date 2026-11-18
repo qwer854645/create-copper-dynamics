@@ -94,6 +94,10 @@ public final class CCDClient {
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_package"), "inventory");
         var canisterModel = event.getModels().get(canister);
         if (canisterModel != null) event.getModels().put(canister, FluidCanisterModel.install(canisterModel));
+        var brassBox = new net.minecraft.client.resources.model.ModelResourceLocation(
+            ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "composite_package"), "inventory");
+        var brassBoxModel = event.getModels().get(brassBox);
+        if (brassBoxModel != null) event.getModels().put(brassBox, BrassBoxModel.install(brassBoxModel));
         var cargo = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_arm_cargo"), "inventory");
         var cargoModel = event.getModels().get(cargo);
@@ -126,6 +130,7 @@ public final class CCDClient {
     }
     @SubscribeEvent public static void modelsReady(ModelEvent.BakingCompleted event) {
         FluidCanisterModel.rebuildTransportVariants();
+        BrassBoxModel.rebuildTransportVariants();
     }
     @SubscribeEvent public static void colors(RegisterColorHandlersEvent.Item event) {
         var bucketColors = new net.neoforged.neoforge.client.model.DynamicFluidContainerModel.Colors();
