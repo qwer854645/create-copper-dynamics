@@ -80,7 +80,7 @@
 ## 流体舱口
 
 - 先阅读 `ItemHatchBlock`／`ItemHatchBlockEntity`／`ItemHatchHandler`／`HatchFilterSlot`、`FluidTankBlock`／`FluidTankBlockEntity`、`FluidHelper`、`GenericItemEmptying`／`GenericItemFilling`、`PortableFluidInterfaceBlockEntity`、`FluidPipeBlock`／`FluidPropagator` 和 `IHaveGoggleInformation`。仅使用 Create 源码及 NeoForge API，没有读取三个流体附属的实现代码。
-- `FluidHatchBlock extends ItemHatchBlock`，直接复用水平侧面安装、含水状态、形状、扳手行为、10 tick 定时关闭及移除方块实体逻辑。模型保留原生舱口几何，在铜色斜面框架中央加入原生流体管口，指定 `cutout_mipped` 渲染层。开合仍通过端面贴图切换表达，不更改流体逻辑，详见 `docs/fluid-hatch-model.md`；智能版保留原有外观。
+- `FluidHatchBlock extends ItemHatchBlock`，直接复用水平侧面安装、含水状态、形状、扳手行为及移除方块实体逻辑；手动取放保留音效，不触发开合或延时复位。模型保留原生舱口几何，在铜色斜面框架中央加入原生流体管口，指定 `cutout_mipped` 渲染层。端面固定使用原生深色管孔，不设置灰色内盖或开合，不更改流体代理逻辑，详见 `docs/fluid-hatch-model.md`；智能版保留原有外观。
 - `FluidHatchBlockEntity extends ItemHatchBlockEntity`，普通版覆盖 `addBehaviours` 和 `clearContent`，不创建原生物品过滤行为、物品库存或流体储罐。原生护目镜的 `containedFluidTooltip` 显示的是后方容器实时内容。
 - 通过 NeoForge `Capabilities.FluidHandler.BLOCK` 注册正面及无方向的代理；每次操作查询背后容器朝向舱口面的能力。`FACING` 沿用原生定义，指向容器；正面与被查询容器面均为其反方向。代理保留填充／抽取、模拟／执行和流体组件，不调用无方向的后方接口来绕开面限制。
 - 手动取放直接调用原生 `FluidHelper.tryEmptyItemIntoBE`／`tryFillItemFromBE`，优先灌入，再尝试取出，兼容其玻璃瓶、药水及标准流体容器路径。原生取出方法只检查显示存量、不模拟源端抽取，因此该次交互期间根据 `GenericItemFilling.getRequiredAmountForItem` 取得本次容器所需数量，仅向它显示经精确 `drain(SIMULATE)` 确认可取出的流体，避免绕过只读、限流或定量抽取限制；普通能力读取和护目镜仍显示原始库存。临时容器副本只在该次调用期间使用，finally 清除，不存档、不对外提供库存。执行偏离模拟等接口违约情况没有另建缓冲或事务机制。

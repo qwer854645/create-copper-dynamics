@@ -5,7 +5,7 @@
     "0": "ccd:block/fluid_hatch/frame",
     "1": "ccd:block/faucet/body",
     "pipe": "create:block/pipes",
-    "port": "ccd:block/fluid_hatch/pipe_cap",
+    "port": "create:block/pipes",
     "particle": "ccd:block/fluid_hatch/frame"
   },
   "elements": [

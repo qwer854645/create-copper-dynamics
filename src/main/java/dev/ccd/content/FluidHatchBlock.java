@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
-/** Native hatch placement, geometry, waterlogging, wrenching and timed closing; fluid interaction only. */
+/** Native hatch placement, waterlogging and wrenching; fixed fluid access without lid feedback. */
 public class FluidHatchBlock extends ItemHatchBlock {
     public static final MapCodec<FluidHatchBlock> CODEC = simpleCodec(FluidHatchBlock::new);
 
@@ -47,8 +47,6 @@ public class FluidHatchBlock extends ItemHatchBlock {
         // Reuse the same generic container handling as Create's tank, including bottles and potions.
         if (hatch.exchangeWith(player, hand, stack)) {
             AllSoundEvents.ITEM_HATCH.playOnServer(level, pos);
-            level.setBlockAndUpdate(pos, state.setValue(OPEN, true));
-            level.scheduleTick(pos, this, 10);
         } else player.displayClientMessage(Component.translatable("ccd.fluid_hatch.rejected").withStyle(ChatFormatting.RED), true);
         // Consume failed fluid-container interactions so a bucket cannot place its fluid into the world instead.
         return ItemInteractionResult.SUCCESS;

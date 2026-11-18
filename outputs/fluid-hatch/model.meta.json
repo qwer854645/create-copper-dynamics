@@ -13,13 +13,6 @@
       ],
       "recoloredPixels": 535,
       "alpha": "unchanged"
-    },
-    "pipeCap": {
-      "size": [
-        32,
-        32
-      ],
-      "changedBorePixels": 32
     }
   },
   "portFrontCenter": [
@@ -33,7 +26,7 @@
   },
   "nativePortUVs": "unchanged",
   "nativePortCullFaces": "removed for internal angled mount",
-  "openState": "native timed interaction feedback; does not gate the fluid capability",
+  "openState": "inherited property unused; all states use one fixed model; no interaction state changes or scheduled reset",
   "preserved": [
     "placement",
     "four horizontal rotations",
@@ -41,8 +34,7 @@
     "collision",
     "fluid proxy",
     "container interaction",
-    "timed closing",
-    "smart hatch appearance"
+    "smart hatch geometry and filter"
   ],
-  "artwork": "Create hatch/pipe derived textures and geometry; existing CCD copper fascia; upstream artwork remains owned by Create"
+  "artwork": "Create hatch derived texture and hatch/pipe geometry; existing CCD copper fascia; upstream artwork remains owned by Create"
 }

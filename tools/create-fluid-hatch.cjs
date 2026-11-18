@@ -43,52 +43,41 @@ async function main(){
  }
  for(let i=3;i<frame.length;i+=4)if(frame[i]!==native.data[i])throw Error('Native hatch alpha changed');
  await sharp(frame,{raw:{width:32,height:32,channels:4}}).png().toFile(path.join(textures,'frame.png'));
- const pipe=await sharp(source('pipes')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
- if(pipe.info.width!==32||pipe.info.height!==32)throw Error('Unexpected native pipe atlas');
- const cap=Buffer.from(pipe.data);let shutterPixels=0;
- for(let y=22;y<32;y++)for(let x=22;x<32;x++){
-  const i=(y*32+x)*4;
-  // Only the native dark bore changes; the copper rim stays byte-identical.
-  if(pipe.data[i]!==61||pipe.data[i+1]!==22||pipe.data[i+2]!==30)continue;
-  const u=x-22,v=y-22;
-  const rgb=v===4?[53,52,56]:v<4?[159,163,153]:u<5?[103,108,105]:[79,84,83];
-  cap.set(rgb,i);shutterPixels++;
- }
- if(shutterPixels!==32)throw Error('Unexpected native pipe bore mask');
- await sharp(cap,{raw:{width:32,height:32,channels:4}}).png().toFile(path.join(textures,'pipe_cap.png'));
  const nativeModel=loadModel('create:block/item_hatch/block_closed');
  const elements=JSON.parse(JSON.stringify(nativeModel.elements));
  const portElements=port();
  const closed={parent:'create:block/item_hatch/block_closed',render_type:'minecraft:cutout_mipped',textures:{
   '0':'ccd:block/fluid_hatch/frame','1':'ccd:block/faucet/body',pipe:'create:block/pipes',
-  port:'ccd:block/fluid_hatch/pipe_cap',particle:'ccd:block/fluid_hatch/frame'},elements:[...elements,...portElements]};
+  port:'create:block/pipes',particle:'ccd:block/fluid_hatch/frame'},elements:[...elements,...portElements]};
  save(path.join(assets,'models/block/fluid_hatch_closed.json'),closed);
- save(path.join(assets,'models/block/fluid_hatch_open.json'),{parent:'ccd:block/fluid_hatch_closed',textures:{port:'create:block/pipes'}});
+ for(const prefix of ['', 'smart_']){
+  const variants={};
+  for(const [facing,y]of [['north',0],['east',90],['south',180],['west',270]])
+   variants['facing='+facing]={model:'ccd:block/'+prefix+'fluid_hatch_closed',...(y?{y}:{})};
+  save(path.join(assets,'blockstates/'+prefix+'fluid_hatch.json'),{variants});
+ }
  // Keep the smart hatch on its previous native geometry until its own art pass.
  save(path.join(assets,'models/block/smart_fluid_hatch_closed.json'),{parent:'create:block/item_hatch/block_closed',
   render_type:'minecraft:cutout_mipped',textures:{'0':'create:block/brass_casing',particle:'create:block/brass_casing'}});
  const panels=[];
  for(const [i,id,name,view]of [
   [0,'create:block/item_hatch/block_closed','original',[24,20,34]],
-  [1,'ccd:block/fluid_hatch_closed','closed',[24,20,34]],
-  [2,'ccd:block/fluid_hatch_open','open',[24,20,34]],
-  [3,'ccd:block/fluid_hatch_open','side',[-34,16,24]],
+  [1,'ccd:block/fluid_hatch_closed','front',[24,20,34]],
+  [2,'ccd:block/fluid_hatch_closed','side',[-34,16,24]],
  ]){
   const buffer=await render(await mesh(id),480,510,view,{center:[8,8,4],scale:25});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));
   panels.push({input:buffer,left:i*480,top:95});
  }
- const labels=Buffer.from(`<svg width="1920" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="960" y="40" font-size="29">流体舱口 · 铜框与斜面管口</text><text x="960" y="78" font-size="16">沿用原生舱口轮廓 · 复用原生管口 · 灰色内盖 / 深色开口</text><text x="240" y="643" font-size="19">Create 物品舱口</text><text x="720" y="643" font-size="19">CCD · 关闭</text><text x="1200" y="643" font-size="19">CCD · 交互开启</text><text x="1680" y="643" font-size="19">侧面</text><text x="960" y="683" font-size="14" fill="#677070">实际模型离线预览 / 开合沿用原生贴图切换；流体代理和定时复位逻辑不变 / 未构建或启动游戏</text></g></svg>`);
- await sharp({create:{width:1920,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
- const swatches=[];
- for(const [i,name]of ['frame','pipe_cap'].entries())swatches.push({input:await sharp(path.join(textures,name+'.png')).resize(320,320,{kernel:'nearest'}).png().toBuffer(),left:i*336,top:0});
- await sharp({create:{width:656,height:320,channels:4,background:'#e5e8e2'}}).composite(swatches).png().toFile(path.join(output,'textures.png'));
+ const labels=Buffer.from(`<svg width="1440" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="720" y="40" font-size="29">流体舱口 · 固定流体访问口</text><text x="720" y="78" font-size="16">铜色框架 · 原生管口 · 无盖板、无开合</text><text x="240" y="643" font-size="19">Create 物品舱口</text><text x="720" y="643" font-size="19">CCD · 正面</text><text x="1200" y="643" font-size="19">CCD · 侧面</text><text x="720" y="683" font-size="14" fill="#677070">实际模型离线预览 / 交互保留音效，不切换模型或安排复位 tick / 未构建或启动游戏</text></g></svg>`);
+ await sharp({create:{width:1440,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
+ await sharp(path.join(textures,'frame.png')).resize(320,320,{kernel:'nearest'}).png().toFile(path.join(output,'textures.png'));
  save(path.join(output,'model.meta.json'),{source:'Create 6.0.10-280',nativeHatchElements:elements.length,nativeParts:imported,
-  textures:{frame:{size:[32,32],recoloredPixels:recolored,alpha:'unchanged'},pipeCap:{size:[32,32],changedBorePixels:shutterPixels}},
+  textures:{frame:{size:[32,32],recoloredPixels:recolored,alpha:'unchanged'}},
   portFrontCenter:target,portRotation:{axis:'x',angle:-45},nativePortUVs:'unchanged',nativePortCullFaces:'removed for internal angled mount',
-  openState:'native timed interaction feedback; does not gate the fluid capability',
-  preserved:['placement','four horizontal rotations','waterlogging','collision','fluid proxy','container interaction','timed closing','smart hatch appearance'],
-  artwork:'Create hatch/pipe derived textures and geometry; existing CCD copper fascia; upstream artwork remains owned by Create'});
- console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:closed.elements.length,recoloredPixels:recolored,shutterPixels}));
+  openState:'inherited property unused; all states use one fixed model; no interaction state changes or scheduled reset',
+  preserved:['placement','four horizontal rotations','waterlogging','collision','fluid proxy','container interaction','smart hatch geometry and filter'],
+  artwork:'Create hatch derived texture and hatch/pipe geometry; existing CCD copper fascia; upstream artwork remains owned by Create'});
+ console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:closed.elements.length,recoloredPixels:recolored}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
