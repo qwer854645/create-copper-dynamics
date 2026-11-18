@@ -61,8 +61,8 @@ SIDE_SEAM = {3, 12}
 # The two axes still get different values, because the horizontal edge is shared with the block
 # above/below: bright brass there turns a tall tank into a stack of stripes.
 V_STRIP = {0, 1, 2, 3, 12, 13, 14, 15}     # columns of the vertical strips
-H_BAND_TOP = {0, 1, 2}                       # dim brass rim rows (top end)
-H_BAND_BOT = {13, 14, 15}                    # dim brass rim rows (bottom end)
+H_BAND_TOP = {0, 1}                          # dim brass rim rows (top end)
+H_BAND_BOT = {14, 15}                        # dim brass rim rows (bottom end)
 
 # Bands and posts map the source tone into a NARROW gold range instead of a single pinned colour.
 # A pinned colour filled the whole band/plate with one flat value, which read as a big dead colour
