@@ -1,5 +1,3 @@
-Create 6.0.10-280 cardboard_12x12 geometry and UV unchanged.
-Visible 12x12 panels redrawn with pixel-art Canvas: Create pump/copper casing palette; mechanical arm brass palette.
-Original folded box concept retained, paper grain replaced by metal clusters, folded rims and sealing bands.
-Unused atlas regions retain palette-derived Create artwork; geometry belongs to Create.
-Unregistered preview models only; runtime carrier models unchanged.
+Create 6.0.10-280: cardboard_12x12 model and cardboard.png.
+Palette derivatives of Create artwork; not original CCD artwork. Geometry and UV unchanged.
+Unregistered preview models only; runtime fluid_package and composite_package remain unchanged.
