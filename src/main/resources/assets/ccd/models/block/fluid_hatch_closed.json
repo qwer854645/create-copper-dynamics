@@ -3,8 +3,10 @@
   "textures": {
     "0": "create:block/fluid_tank",
     "1": "create:block/copper_underside",
+    "side": "ccd:block/fluid_hatch/side_clipped",
     "particle": "create:block/fluid_tank"
   },
+  "render_type": "minecraft:cutout_mipped",
   "elements": [
     {
       "from": [
@@ -174,12 +176,13 @@
       "faces": {
         "east": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            9.5,
+            15,
+            15,
+            9.5
           ],
-          "texture": "#0"
+          "rotation": 90,
+          "texture": "#side"
         },
         "south": {
           "uv": [
@@ -192,12 +195,13 @@
         },
         "west": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            9.5,
+            9.5,
+            15,
+            15
           ],
-          "texture": "#0"
+          "rotation": 90,
+          "texture": "#side"
         },
         "down": {
           "uv": [
