@@ -1,1 +1,19 @@
-{"variants":{"":{"model":"ccd:block/copper_water_basin"}}}
+{
+  "variants": {
+    "facing=south": {
+      "model": "ccd:block/copper_water_basin"
+    },
+    "facing=west": {
+      "model": "ccd:block/copper_water_basin",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ccd:block/copper_water_basin",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "ccd:block/copper_water_basin",
+      "y": 270
+    }
+  }
+}

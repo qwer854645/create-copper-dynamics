@@ -1,45 +1,634 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {"particle": "minecraft:block/copper_block", "copper": "minecraft:block/copper_block"},
+  "textures": {
+    "particle": "ccd:block/copper_water_basin/outer",
+    "outer": "ccd:block/copper_water_basin/outer",
+    "inner": "ccd:block/copper_water_basin/inner",
+    "floor": "ccd:block/copper_water_basin/floor",
+    "rim": "ccd:block/copper_water_basin/rim",
+    "metal": "ccd:block/fluid_arm/metal",
+    "hole": "ccd:block/fluid_arm/core"
+  },
   "elements": [
     {
-      "from": [0, 0, 0], "to": [16, 4, 16],
+      "name": "bowl_floor",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        2,
+        16
+      ],
       "faces": {
-        "down": {"texture": "#copper"}, "up": {"texture": "#copper"},
-        "north": {"texture": "#copper"}, "south": {"texture": "#copper"},
-        "west": {"texture": "#copper"}, "east": {"texture": "#copper"}
+        "north": {
+          "texture": "#outer",
+          "uv": [
+            16,
+            14,
+            0,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            14,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#outer",
+          "uv": [
+            16,
+            14,
+            0,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            14,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#floor",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            16,
+            16,
+            0
+          ]
+        }
       }
     },
     {
-      "from": [0, 4, 0], "to": [16, 14, 1],
+      "name": "back_deck",
+      "from": [
+        0,
+        2,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        3
+      ],
       "faces": {
-        "down": {"texture": "#copper"}, "up": {"texture": "#copper"},
-        "north": {"texture": "#copper"}, "south": {"texture": "#copper"},
-        "west": {"texture": "#copper"}, "east": {"texture": "#copper"}
+        "north": {
+          "texture": "#outer",
+          "uv": [
+            16,
+            8,
+            0,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#inner",
+          "uv": [
+            0,
+            8,
+            16,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#outer",
+          "uv": [
+            3,
+            8,
+            0,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            8,
+            3,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#rim",
+          "uv": [
+            0,
+            0,
+            16,
+            3
+          ]
+        },
+        "down": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            3,
+            16,
+            0
+          ]
+        }
       }
     },
     {
-      "from": [0, 4, 15], "to": [16, 14, 16],
+      "name": "front_wall",
+      "from": [
+        0,
+        2,
+        14
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
       "faces": {
-        "down": {"texture": "#copper"}, "up": {"texture": "#copper"},
-        "north": {"texture": "#copper"}, "south": {"texture": "#copper"},
-        "west": {"texture": "#copper"}, "east": {"texture": "#copper"}
+        "north": {
+          "texture": "#inner",
+          "uv": [
+            16,
+            8,
+            0,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            8,
+            16,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#outer",
+          "uv": [
+            16,
+            8,
+            14,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#outer",
+          "uv": [
+            14,
+            8,
+            16,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#rim",
+          "uv": [
+            0,
+            14,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            16,
+            16,
+            14
+          ]
+        }
       }
     },
     {
-      "from": [0, 4, 1], "to": [1, 14, 15],
+      "name": "left_wall",
+      "from": [
+        0,
+        2,
+        3
+      ],
+      "to": [
+        2,
+        8,
+        14
+      ],
       "faces": {
-        "down": {"texture": "#copper"}, "up": {"texture": "#copper"},
-        "north": {"texture": "#copper"}, "south": {"texture": "#copper"},
-        "west": {"texture": "#copper"}, "east": {"texture": "#copper"}
+        "north": {
+          "texture": "#outer",
+          "uv": [
+            2,
+            8,
+            0,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            8,
+            2,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#inner",
+          "uv": [
+            14,
+            8,
+            3,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#outer",
+          "uv": [
+            3,
+            8,
+            14,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#rim",
+          "uv": [
+            0,
+            3,
+            2,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#outer",
+          "uv": [
+            0,
+            14,
+            2,
+            3
+          ]
+        }
       }
     },
     {
-      "from": [15, 4, 1], "to": [16, 14, 15],
+      "name": "right_wall",
+      "from": [
+        14,
+        2,
+        3
+      ],
+      "to": [
+        16,
+        8,
+        14
+      ],
       "faces": {
-        "down": {"texture": "#copper"}, "up": {"texture": "#copper"},
-        "north": {"texture": "#copper"}, "south": {"texture": "#copper"},
-        "west": {"texture": "#copper"}, "east": {"texture": "#copper"}
+        "north": {
+          "texture": "#outer",
+          "uv": [
+            16,
+            8,
+            14,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#outer",
+          "uv": [
+            14,
+            8,
+            16,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#outer",
+          "uv": [
+            14,
+            8,
+            3,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#inner",
+          "uv": [
+            3,
+            8,
+            14,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#rim",
+          "uv": [
+            14,
+            3,
+            16,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#outer",
+          "uv": [
+            14,
+            14,
+            16,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "name": "tap_foot",
+      "from": [
+        6,
+        8,
+        0
+      ],
+      "to": [
+        10,
+        9,
+        4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            7,
+            6,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            6,
+            7,
+            10,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            4,
+            7,
+            0,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            0,
+            7,
+            4,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#rim",
+          "uv": [
+            6,
+            0,
+            10,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#rim",
+          "uv": [
+            6,
+            4,
+            10,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "name": "tap_stem",
+      "from": [
+        7,
+        9,
+        1
+      ],
+      "to": [
+        9,
+        15,
+        3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#outer",
+          "uv": [
+            9,
+            1,
+            7,
+            7
+          ]
+        },
+        "south": {
+          "texture": "#outer",
+          "uv": [
+            7,
+            1,
+            9,
+            7
+          ]
+        },
+        "east": {
+          "texture": "#outer",
+          "uv": [
+            3,
+            1,
+            1,
+            7
+          ]
+        },
+        "west": {
+          "texture": "#outer",
+          "uv": [
+            1,
+            1,
+            3,
+            7
+          ]
+        },
+        "up": {
+          "texture": "#outer",
+          "uv": [
+            7,
+            1,
+            9,
+            3
+          ]
+        },
+        "down": {
+          "texture": "#outer",
+          "uv": [
+            7,
+            3,
+            9,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "tap_spout",
+      "from": [
+        7,
+        13,
+        3
+      ],
+      "to": [
+        9,
+        15,
+        7
+      ],
+      "faces": {
+        "north": {
+          "texture": "#outer",
+          "uv": [
+            9,
+            1,
+            7,
+            3
+          ]
+        },
+        "south": {
+          "texture": "#outer",
+          "uv": [
+            7,
+            1,
+            9,
+            3
+          ]
+        },
+        "east": {
+          "texture": "#outer",
+          "uv": [
+            7,
+            1,
+            3,
+            3
+          ]
+        },
+        "west": {
+          "texture": "#outer",
+          "uv": [
+            3,
+            1,
+            7,
+            3
+          ]
+        },
+        "up": {
+          "texture": "#outer",
+          "uv": [
+            7,
+            3,
+            9,
+            7
+          ]
+        },
+        "down": {
+          "texture": "#outer",
+          "uv": [
+            7,
+            7,
+            9,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "name": "tap_nozzle",
+      "from": [
+        7,
+        11,
+        6
+      ],
+      "to": [
+        9,
+        13,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#metal",
+          "uv": [
+            9,
+            3,
+            7,
+            5
+          ]
+        },
+        "south": {
+          "texture": "#metal",
+          "uv": [
+            7,
+            3,
+            9,
+            5
+          ]
+        },
+        "east": {
+          "texture": "#metal",
+          "uv": [
+            8,
+            3,
+            6,
+            5
+          ]
+        },
+        "west": {
+          "texture": "#metal",
+          "uv": [
+            6,
+            3,
+            8,
+            5
+          ]
+        },
+        "up": {
+          "texture": "#metal",
+          "uv": [
+            7,
+            6,
+            9,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#hole",
+          "uv": [
+            7,
+            8,
+            9,
+            6
+          ]
+        }
       }
     }
   ]

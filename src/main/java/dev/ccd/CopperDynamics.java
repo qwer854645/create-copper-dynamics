@@ -26,6 +26,7 @@ import dev.ccd.content.SmartFluidHatchBlockEntity;
 import dev.ccd.content.SmartFluidTankBlock;
 import dev.ccd.content.SmartFluidTankBlockEntity;
 import dev.ccd.content.CopperWaterBasinBlock;
+import dev.ccd.content.CopperKitchenSinkBlock;
 import dev.ccd.content.CopperWaterBasinBlockEntity;
 import dev.ccd.content.CopperWaterSupplyBlock;
 import dev.ccd.content.CopperWaterSupplyBlockEntity;
@@ -234,7 +235,7 @@ public final class CopperDynamics {
             SmartFluidTankBlockEntity::new, SMART_FLUID_TANK.get()).build(null));
 
     public static final DeferredHolder<net.minecraft.world.level.block.Block, CopperWaterBasinBlock> COPPER_WATER_BASIN =
-        BLOCKS.register("copper_water_basin", () -> new CopperWaterBasinBlock(BlockBehaviour.Properties.of()
+        BLOCKS.register("copper_water_basin", () -> new CopperKitchenSinkBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.COLOR_ORANGE).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()
             .sound(net.minecraft.world.level.block.SoundType.COPPER)));
     public static final DeferredHolder<Item, BlockItem> COPPER_WATER_BASIN_ITEM =
