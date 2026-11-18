@@ -51,10 +51,10 @@ public final class FluidAtomizerBlock extends EncasedFanBlock {
         if (stack.is(Tags.Items.TOOLS_WRENCH) || !FluidHatchBlock.isFluidContainer(level, stack))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (!(level.getBlockEntity(pos) instanceof FluidAtomizerBlockEntity atomizer)) return ItemInteractionResult.FAIL;
-        // A front outlet or rear shaft must not bypass the sided capability through native unsided item helpers.
-        if (!atomizer.isFluidSide(hit.getDirection())) return ItemInteractionResult.SUCCESS;
-        if (player.isShiftKeyDown()) FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, atomizer);
-        else FluidHelper.tryFillItemFromBE(level, player, hand, stack, atomizer);
+        if (level.isClientSide()) return ItemInteractionResult.SUCCESS;
+        // Handheld access works on every face; machine capabilities remain side-only.
+        if (!FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, atomizer))
+            FluidHelper.tryFillItemFromBE(level, player, hand, stack, atomizer);
         return ItemInteractionResult.SUCCESS;
     }
     @Override public BlockEntityType<? extends FluidAtomizerBlockEntity> getBlockEntityType() {

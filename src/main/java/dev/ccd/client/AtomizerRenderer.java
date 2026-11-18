@@ -17,12 +17,12 @@ public final class AtomizerRenderer extends EncasedFanRenderer {
         var facing=entity.getBlockState().getValue(FluidAtomizerBlock.FACING);
         float x=.14f,X=.86f,y=.14f,Y=.86f,z=.14f,Z=.86f;
         switch(facing) {
-            case NORTH -> Z=.38f;
-            case SOUTH -> z=.62f;
-            case WEST -> X=.38f;
-            case EAST -> x=.62f;
-            case UP -> y=.62f;
-            case DOWN -> Y=.38f;
+            case NORTH -> Z=.50f;
+            case SOUTH -> z=.50f;
+            case WEST -> X=.50f;
+            case EAST -> x=.50f;
+            case UP -> y=.50f;
+            case DOWN -> Y=.50f;
         }
         Y=y+(Y-y)*Math.min(1f,fluid.getAmount()/(float)FluidAtomizerBlockEntity.CAPACITY);
         if(Y>y) NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(fluid,x,y,z,X,Y,Z,buffer,pose,light,false,true);

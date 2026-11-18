@@ -18,8 +18,8 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
     target=A/'textures/block/fluid_atomizer/back.png'; target.parent.mkdir(parents=True,exist_ok=True); image.save(target)
     rotor=json.loads(z.read('assets/create/models/block/encased_fan/propeller.json'))
     for e in rotor['elements']:
-        for k in ['from','to']: e[k][2]+=4
-        if 'rotation' in e: e['rotation']['origin'][2]+=4
+        for k in ['from','to']: e[k][2]+=6
+        if 'rotation' in e: e['rotation']['origin'][2]+=6
     save(A/'models/block/fluid_atomizer/propeller.json',rotor)
     for kind in ['block','item']:
         model=json.loads(z.read(f'assets/create/models/block/encased_fan/{kind}.json'))
@@ -28,6 +28,6 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
             model['textures']['2']='ccd:block/fluid_atomizer/back'
             for e in model['elements']:
                 if e.get('name','').lower() in ['fan','shaft']:
-                    for k in ['from','to']: e[k][2]+=4
-                    if 'rotation' in e: e['rotation']['origin'][2]+=4
+                    for k in ['from','to']: e[k][2]+=6
+                    if 'rotation' in e: e['rotation']['origin'][2]+=6
         save(A/('models/block/fluid_atomizer.json' if kind=='block' else 'models/item/fluid_atomizer.json'),model)

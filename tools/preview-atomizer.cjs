@@ -9,7 +9,7 @@ async function main(){
  const faces=[...shell,...rotor.map(f=>({...f,vertices:f.vertices.map(turn),n:[f.n[0],-f.n[2],f.n[1]]}))];
  const liquid={data:Buffer.alloc(1024),info:{width:16,height:16,channels:4}};
  for(let i=0;i<256;i++)liquid.data.set([48,108,176,255],i*4);
- const l=2.24,h=13.76,y=2.24,Y=9.5,z=2.24,Z=6.08;
+ const l=2.24,h=13.76,y=2.24,Y=9.5,z=2.24,Z=8;
  const fluid=[{vertices:[[l,Y,z],[l,Y,Z],[h,Y,Z],[h,Y,z]],n:[0,1,0]},
  {vertices:[[h,Y,z],[h,y,z],[l,y,z],[l,Y,z]],n:[0,0,-1]},
  {vertices:[[h,Y,Z],[h,y,Z],[h,y,z],[h,Y,z]],n:[1,0,0]}].map(f=>({...f,uv:[[0,0],[0,16],[16,16],[16,0]],pixels:liquid}));

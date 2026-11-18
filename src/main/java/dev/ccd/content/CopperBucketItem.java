@@ -71,6 +71,7 @@ public final class CopperBucketItem extends Item {
         if (player == null || level.getBlockState(pos).getBlock() instanceof LiquidBlock) return InteractionResult.PASS;
         var target = level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch
             ? hatch.interactionHandler(context.getClickedFace())
+            : level.getBlockEntity(pos) instanceof FluidAtomizerBlockEntity atomizer ? atomizer.fluidHandler(null)
             : level.getCapability(Capabilities.FluidHandler.BLOCK, pos, context.getClickedFace());
         if (target == null) return InteractionResult.PASS;
         ItemStack stack = context.getItemInHand();
