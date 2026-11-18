@@ -1,5 +1,5 @@
 {
-  "itemGroup.ccd": "机械动力：铜流工程",
+  "itemGroup.ccd": "机械动力：流体工程",
   "block.ccd.smart_fluid_tank": "智能储罐",
   "ccd.smart_tank.structure": "截面宽 %s 格，长度 %s 格，共 %s 格",
   "ccd.smart_tank.unavailable": "储罐结构暂不可用",
