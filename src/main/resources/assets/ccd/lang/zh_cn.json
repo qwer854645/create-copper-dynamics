@@ -285,5 +285,11 @@
   "block.ccd.copper_water_supply.tooltip.control1": "手持容器右击",
   "block.ccd.copper_water_supply.tooltip.action1": "为容器_装水_，不会覆盖已有的其他流体。",
   "block.ccd.copper_water_supply.tooltip.control2": "手持装液容器潜行右击",
-  "block.ccd.copper_water_supply.tooltip.action2": "将其中的流体倒入潮涌箱并_清除_。"
+  "block.ccd.copper_water_supply.tooltip.action2": "将其中的流体倒入潮涌箱并_清除_。",
+  "block.ccd.fluid_access_port": "流体扩展端口",
+  "block.ccd.fluid_bridge": "流体桥接器",
+  "ccd.fluid_access.sources": "已连接 %s 个容器",
+  "ccd.fluid_access.no_storage": "无内部储液；由外部设备驱动存取",
+  "block.ccd.fluid_access_port.tooltip.summary": "扩展后方容器的_流体访问面_，不主动输送或储液。",
+  "block.ccd.fluid_bridge.tooltip.summary": "通过侧面访问两端容器，端面过滤限制_流体读写_。"
 }

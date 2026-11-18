@@ -282,6 +282,23 @@ public final class CopperDynamics {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidAtomizerBlockEntity>> FLUID_ATOMIZER_BE =
         BLOCK_ENTITIES.register("fluid_atomizer", () -> BlockEntityType.Builder.of(FluidAtomizerBlockEntity::new, FLUID_ATOMIZER.get()).build(null));
 
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.FluidAccessBlock> FLUID_ACCESS_PORT =
+        BLOCKS.register("fluid_access_port", () -> new dev.ccd.content.FluidAccessBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_ORANGE).strength(2).requiresCorrectToolForDrops(), false));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.FluidAccessBlock> FLUID_BRIDGE =
+        BLOCKS.register("fluid_bridge", () -> new dev.ccd.content.FluidAccessBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_YELLOW).strength(2).requiresCorrectToolForDrops(), true));
+    public static final DeferredHolder<Item, BlockItem> FLUID_ACCESS_PORT_ITEM =
+        ITEMS.register("fluid_access_port", () -> new BlockItem(FLUID_ACCESS_PORT.get(), new Item.Properties()));
+    public static final DeferredHolder<Item, BlockItem> FLUID_BRIDGE_ITEM =
+        ITEMS.register("fluid_bridge", () -> new BlockItem(FLUID_BRIDGE.get(), new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<dev.ccd.content.FluidAccessBlockEntity>> FLUID_ACCESS_PORT_BE =
+        BLOCK_ENTITIES.register("fluid_access_port", () -> BlockEntityType.Builder.of(
+            (pos,state) -> new dev.ccd.content.FluidAccessBlockEntity(CopperDynamics.FLUID_ACCESS_PORT_BE.get(),pos,state), FLUID_ACCESS_PORT.get()).build(null));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<dev.ccd.content.FluidAccessBlockEntity>> FLUID_BRIDGE_BE =
+        BLOCK_ENTITIES.register("fluid_bridge", () -> BlockEntityType.Builder.of(
+            (pos,state) -> new dev.ccd.content.FluidAccessBlockEntity(CopperDynamics.FLUID_BRIDGE_BE.get(),pos,state), FLUID_BRIDGE.get()).build(null));
+
     public CopperDynamics(IEventBus bus, ModContainer container) {
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
         CCDFluids.register(bus);
@@ -302,6 +319,8 @@ public final class CopperDynamics {
                 output.accept(FLUID_GAUGE_ITEM.get());
                 output.accept(BOOSTER_PUMP_ITEM.get());
                 output.accept(FLUID_TRANSMITTER_ITEM.get());
+                output.accept(FLUID_ACCESS_PORT_ITEM.get());
+                output.accept(FLUID_BRIDGE_ITEM.get());
                 output.accept(REDSTONE_FLUID_VALVE_ITEM.get());
                 output.accept(THREE_WAY_VALVE_ITEM.get());
                 output.accept(FAUCET_ITEM.get());
@@ -340,6 +359,8 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ACCESS_PORT_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_BRIDGE_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ATOMIZER_BE.get(), FluidAtomizerBlockEntity::fluidHandler);
         event.registerItem(Capabilities.FluidHandler.ITEM,
             (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.CAPACITY), COPPER_BUCKET.get());

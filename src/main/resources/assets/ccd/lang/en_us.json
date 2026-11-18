@@ -285,5 +285,11 @@
   "block.ccd.copper_water_supply.tooltip.control1": "R-Click with a Container",
   "block.ccd.copper_water_supply.tooltip.action1": "_Fills_ it with water without replacing another fluid.",
   "block.ccd.copper_water_supply.tooltip.control2": "Sneak + R-Click with a Filled Container",
-  "block.ccd.copper_water_supply.tooltip.action2": "_Discards_ the fluid poured into the Conduit Box."
+  "block.ccd.copper_water_supply.tooltip.action2": "_Discards_ the fluid poured into the Conduit Box.",
+  "block.ccd.fluid_access_port": "Fluid Access Port",
+  "block.ccd.fluid_bridge": "Fluid Bridge",
+  "ccd.fluid_access.sources": "Connected containers: %s",
+  "ccd.fluid_access.no_storage": "No internal storage; external devices perform transfers",
+  "block.ccd.fluid_access_port.tooltip.summary": "Extends the attached container's _fluid access faces_ without pumping or storage.",
+  "block.ccd.fluid_bridge.tooltip.summary": "Access both end containers from the sides. End filters restrict _fluid reads and transfers_."
 }

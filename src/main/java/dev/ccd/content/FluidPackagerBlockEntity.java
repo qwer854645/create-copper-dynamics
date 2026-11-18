@@ -50,6 +50,8 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public InventorySummary getAvailableItems() {
+        var scoped = dev.ccd.logistics.FluidStockScope.summarize(this);
+        if (scoped != null) return scoped;
         InventorySummary next = new InventorySummary();
         var handler = targetFluidHandler();
         if (handler != null) for (int tank = 0; tank < handler.getTanks(); tank++) {
@@ -93,6 +95,10 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
     @Override public boolean isTargetingSameInventory(@Nullable IdentifiedInventory other) {
         var own = targetInventory.getIdentifiedInventory();
+        if (other != null && own != null
+            && own.identifier() instanceof FluidInventoryBehaviour.AccessId a
+            && other.identifier() instanceof FluidInventoryBehaviour.AccessId b)
+            return a.dimension().equals(b.dimension()) && !a.sources().isEmpty() && b.sources().containsAll(a.sources());
         return other != null && own != null && own.identifier() != null && own.identifier().equals(other.identifier());
     }
 

@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ccd:block/fluid_access_port",
+      "x": 0,
+      "y": 0
+    },
+    "facing=south": {
+      "model": "ccd:block/fluid_access_port",
+      "x": 0,
+      "y": 180
+    },
+    "facing=east": {
+      "model": "ccd:block/fluid_access_port",
+      "x": 0,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "ccd:block/fluid_access_port",
+      "x": 0,
+      "y": 270
+    },
+    "facing=up": {
+      "model": "ccd:block/fluid_access_port",
+      "x": 270,
+      "y": 0
+    },
+    "facing=down": {
+      "model": "ccd:block/fluid_access_port",
+      "x": 90,
+      "y": 0
+    }
+  }
+}

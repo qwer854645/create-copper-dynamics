@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "create:brass_casing"
+    },
+    {
+      "item": "ccd:fluid_access_port"
+    },
+    {
+      "item": "ccd:fluid_access_port"
+    },
+    {
+      "item": "create:electron_tube"
+    },
+    {
+      "item": "create:electron_tube"
+    }
+  ],
+  "result": {
+    "id": "ccd:fluid_bridge",
+    "count": 1
+  }
+}

@@ -8,6 +8,7 @@
     "RepackagerMixin",
     "PackageEntityMixin",
     "FluidGaugeRestockMixin",
+    "FluidAccessLogisticsMixin",
     "BoosterPumpPressureMixin",
     "BoosterPumpConnectionMixin",
     "BoosterPumpDiscoveryMixin",

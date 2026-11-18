@@ -44,8 +44,13 @@ public final class FluidInventoryBehaviour extends InvManipulationBehaviour {
         if (!hasInventory()) return null;
         var level = packager.getLevel();
         BlockPos target = packager.targetFluidPos();
-        if (level.getBlockEntity(target) instanceof FluidTankBlockEntity tank) target = tank.getController();
-        return new IdentifiedInventory(new StorageId(level.dimension(), target), view);
+        var sources = FluidAccess.resolve(level, target,
+            packager.getBlockState().getValue(com.simibubi.create.content.logistics.packager.PackagerBlock.FACING));
+        var identities = sources.stream().map(FluidAccess.Source::identity).collect(java.util.stream.Collectors.toSet());
+        return new IdentifiedInventory(new AccessId(level.dimension(), identities, packager.getBlockPos()), view);
+    }
+    public record AccessId(ResourceKey<Level> dimension, java.util.Set<BlockPos> sources, BlockPos access) implements InventoryIdentifier {
+        @Override public boolean contains(BlockFace face) { return sources.contains(face.getPos()); }
     }
     public record StorageId(ResourceKey<Level> dimension, BlockPos pos) implements InventoryIdentifier {
         @Override public boolean contains(BlockFace face) { return pos.equals(face.getPos()); }
