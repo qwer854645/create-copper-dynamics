@@ -2,7 +2,10 @@
   "parent": "create:block/fluid_tank/block_top_window_se",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "particle": "create:block/brass_casing",
-    "0": "create:block/brass_casing"
+    "0": "ccd:block/smart_fluid_tank/fluid_tank_top",
+    "1": "ccd:block/smart_fluid_tank/fluid_tank",
+    "3": "ccd:block/smart_fluid_tank/fluid_tank_window",
+    "4": "ccd:block/smart_fluid_tank/fluid_tank_inner",
+    "particle": "ccd:block/smart_fluid_tank/fluid_tank"
   }
 }

@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "ccd:block/smart_fluid_tank/fluid_tank_connected"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "ccd:block/smart_fluid_tank/fluid_tank_top_connected"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "ccd:block/smart_fluid_tank/fluid_tank_inner_connected"
+    }
+  ]
+}

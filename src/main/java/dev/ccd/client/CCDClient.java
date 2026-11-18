@@ -36,6 +36,7 @@ public final class CCDClient {
         FluidPackagerRenderer.registerModels();
         FluidGaugeModel.registerModels();
         FluidArmModels.registerModels();
+        SmartFluidTankModels.registerModels();
         RedstoneFluidValveRenderer.registerModels();
         registerPackageModel("fluid_package");
         registerPackageModel("fluid_arm_cargo");
@@ -96,6 +97,11 @@ public final class CCDClient {
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_arm_cargo"), "inventory");
         var cargoModel = event.getModels().get(cargo);
         if (cargoModel != null) event.getModels().put(cargo, new FluidArmCargoModel(cargoModel));
+        for (var state : CopperDynamics.SMART_FLUID_TANK.get().getStateDefinition().getPossibleStates()) {
+            var location = BlockModelShaper.stateToModelLocation(state);
+            var baked = event.getModels().get(location);
+            if (baked != null) event.getModels().put(location, SmartFluidTankModels.wrap(baked));
+        }
         // Three-way valve multipart models already include native rims/connectors and status stamps.
         // A PipeAttachmentModel wrapper would draw duplicate coplanar mouths over those stamps.
         for (var state : CopperDynamics.REDSTONE_FLUID_VALVE.get().getStateDefinition().getPossibleStates()) {

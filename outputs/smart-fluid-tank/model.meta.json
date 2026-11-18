@@ -1,0 +1,58 @@
+{
+  "source": "Create 6.0.10-280",
+  "textures": [
+    {
+      "name": "fluid_tank",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 256
+    },
+    {
+      "name": "fluid_tank_top",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 256
+    },
+    {
+      "name": "fluid_tank_connected",
+      "width": 64,
+      "height": 64,
+      "recoloredPixels": 4096
+    },
+    {
+      "name": "fluid_tank_top_connected",
+      "width": 64,
+      "height": 64,
+      "recoloredPixels": 2560
+    },
+    {
+      "name": "fluid_tank_inner",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 256
+    },
+    {
+      "name": "fluid_tank_inner_connected",
+      "width": 64,
+      "height": 64,
+      "recoloredPixels": 2560
+    },
+    {
+      "name": "fluid_tank_window",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 4
+    },
+    {
+      "name": "fluid_tank_window_single",
+      "width": 16,
+      "height": 16,
+      "recoloredPixels": 4
+    }
+  ],
+  "geometry": "24 native parents unchanged",
+  "innerAndGlass": "warm inner pixels recolored to brass; non-warm glass pixels unchanged",
+  "connectedTextures": "native FluidTankCTBehaviour, CTModel and RECTANGLE shifts; only same controller connects",
+  "fluidRendering": "existing multi-layer renderer unchanged",
+  "artwork": "Create derived palette variants, not original CCD upstream artwork"
+}
