@@ -31,30 +31,33 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
         # Draw metal afresh instead of retaining paper grain/creases from the source.
         panels={
             'copper':[
-                '266666666662','655555555553','655555555553','655555544453',
-                '655555544453','655555554453','655445555553','655445555553',
-                '655444555553','655555555553','655555555553','244444444442'],
+                '267777666662','765665555653','654455556653','654455566543',
+                '655555664443','665556654443','654466555543','654465555653',
+                '655555446653','665554445543','654444555443','233333333332'],
             'brass':[
-                '377777777773','766666666664','766666666664','766666655564',
-                '766666655564','766666665564','766556666664','766556666664',
-                '766555666664','766666666664','766666666664','355555555553']}
+                '378888777773','876776666764','765566677764','765566776654',
+                '766667765554','776677665554','765577666654','765576667764',
+                '766666557764','776665556654','765555666554','344444444443']}
         for tile in range(5):
             c=Canvas(12,12)
             for y,row in enumerate(panels[name]):
                 for x,index in enumerate(row):
-                    c.set(x,y,ramp[int(index)])
+                    # Shift the interior cluster arrangement on opposite side faces;
+                    # preserve folds, so the pattern is material wear, not a repeated glyph.
+                    source_x=10-x if tile==1 and 1<=x<=10 else x
+                    c.set(x,y,ramp[int(row[source_x])])
             # Flush metal sealing band, lighter folded lip with dark right edge.
             if tile in (0,1,2):
                 for y in range(12):
-                    c.set(5,y,ramp[5 if name=='copper' else 6])
+                    c.set(5,y,ramp[(7 if y in (0,1,6,7) else 6) if name=='copper' else (8 if y in (0,1,6,7) else 7)])
                     c.set(6,y,ramp[5 if name=='copper' else 6])
-                    c.set(7,y,ramp[4 if name=='copper' else 5])
+                    c.set(7,y,ramp[3 if name=='copper' else 4])
                 # Horizontal lid fold is defined through pixels, no extra cuboids.
                 for x in range(1,11):
                     if x not in (5,6,7): c.set(x,2,ramp[4 if name=='copper' else 5])
             else:
                 for y in range(12):
-                    c.set(5,y,ramp[5 if name=='copper' else 6]); c.set(6,y,ramp[5 if name=='copper' else 6]); c.set(7,y,ramp[4 if name=='copper' else 5])
+                    c.set(5,y,ramp[6 if name=='copper' else 7]); c.set(6,y,ramp[5 if name=='copper' else 6]); c.set(7,y,ramp[3 if name=='copper' else 4])
                 # Inset lid seam following original folded package construction.
                 for x in list(range(1,5))+list(range(8,11)):
                     c.set(x,5,ramp[4 if name=='copper' else 5]); c.set(x,6,ramp[5 if name=='copper' else 6])
