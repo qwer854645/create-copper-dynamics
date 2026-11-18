@@ -78,7 +78,7 @@
   "ccd.gauge.target_amount": "Target fluid amount",
   "ccd.gauge.apply": "Apply",
   "ccd.gauge.exact_mb": "Amount (mB)",
-  "item.ccd.composite_package": "Composite Case",
+  "item.ccd.composite_package": "Brass Box",
   "ccd.composite.invalid": "Damaged composite contents",
   "ccd.composite.fluid_line": "%s: %s",
   "block.ccd.copper_water_basin": "Copper Water Basin",

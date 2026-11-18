@@ -1,0 +1,63 @@
+{
+  "name": "Brass Box",
+  "model": "ccd:item/composite_package",
+  "textureSize": [
+    16,
+    16
+  ],
+  "reference": "Fluid Canister",
+  "bounds": [
+    12,
+    12,
+    12
+  ],
+  "palette": [
+    [
+      114,
+      71,
+      49
+    ],
+    [
+      145,
+      92,
+      58
+    ],
+    [
+      164,
+      107,
+      71
+    ],
+    [
+      191,
+      142,
+      85
+    ],
+    [
+      215,
+      170,
+      94
+    ],
+    [
+      228,
+      183,
+      99
+    ],
+    [
+      247,
+      203,
+      108
+    ],
+    [
+      251,
+      220,
+      125
+    ]
+  ],
+  "windows": "two existing fluid color samples; no dynamic level or fluid texture added",
+  "sharedResources": [
+    "fluid_canister/band",
+    "fluid_canister/flat",
+    "fluid_canister/cap",
+    "fluid_canister/glass"
+  ]
+}
