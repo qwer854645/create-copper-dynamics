@@ -7,6 +7,7 @@
     "cap": "ccd:item/fluid_canister/cap",
     "glass": "ccd:item/fluid_canister/glass",
     "side": "ccd:item/brass_box/side",
+    "back": "ccd:item/brass_box/back",
     "window": "minecraft:block/white_concrete",
     "particle": "ccd:item/brass_box/side"
   },
@@ -25,7 +26,7 @@
       ],
       "faces": {
         "south": {
-          "texture": "#side",
+          "texture": "#back",
           "uv": [
             3,
             6,

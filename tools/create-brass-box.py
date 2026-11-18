@@ -12,22 +12,35 @@ ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'src/main/resources/assets/ccd'
 OUT = ROOT / 'outputs/brass-box'
 TEXTURES = ASSETS / 'textures/item/brass_box'
-COPPER = [(144,73,49),(154,80,56),(167,90,64),(178,98,71),(194,107,76),(200,116,86),(214,123,91),(227,130,108)]
-BRASS = [(114,71,49),(145,92,58),(164,107,71),(191,142,85),(215,170,94),(228,183,99),(247,203,108),(251,220,125)]
+BRASS = [(114,71,49),(164,107,71),(175,121,79),(199,151,88),(215,170,94),(228,183,99),(247,203,108),(251,220,125)]
+# Hand-drawn panel using the actual mechanical_arm / mechanical_arm_side ramp.
+# Bright folded lip, broad golden face, connected asymmetric wear and brown folds.
+# Each character is one source pixel; this is independent of the copper layout.
+PANEL = (
+    '1677777661',
+    '2566655661',
+    '1565556641',
+    '1566555441',
+    '2566655541',
+    '1556655441',
+    '1544556541',
+    '1445554431',
+    '0122222210',
+)
 
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     TEXTURES.mkdir(parents=True, exist_ok=True)
-    source = ASSETS / 'textures/item/fluid_canister'
-    remap = dict(zip(COPPER, BRASS))
     for name in ('side', 'back'):
-        old = Image.open(source / f'{name}.png').convert('RGBA')
         canvas = Canvas(16, 16)
         for y in range(16):
             for x in range(16):
-                pixel = old.getpixel((x, y))
-                canvas.set(x, y, (*remap.get(pixel[:3], pixel[:3]), pixel[3]))
+                canvas.set(x, y, BRASS[4])
+        for y,row in enumerate(PANEL,6):
+            for x,index in enumerate(row,3):
+                # Back gets a mirrored wear arrangement, retaining the same folded edges.
+                canvas.set(x,y,BRASS[int(row[9-(x-3)] if name=='back' else index)])
         canvas.save(str(TEXTURES / f'{name}.png'))
     # The front uses the same metal panel; windows are actual geometry openings.
     elements = []
@@ -60,7 +73,8 @@ def main():
         plane(f'glint_{x}_{y}',x,y,1,2.99,'glass')
     # Shared iron closure and glass resources deliberately match the copper canister.
     textures = {key:'ccd:item/fluid_canister/'+key for key in ('band','flat','cap','glass')}
-    textures.update(side='ccd:item/brass_box/side', window='minecraft:block/white_concrete', particle='ccd:item/brass_box/side')
+    textures.update(side='ccd:item/brass_box/side', back='ccd:item/brass_box/back', window='minecraft:block/white_concrete', particle='ccd:item/brass_box/side')
+    elements[0]['faces']['south']['texture'] = '#back'
     model = dict(parent='create:item/package_transforms', render_type='minecraft:solid', textures=textures,
                  elements=[{('from' if k == 'from_' else k):v for k,v in e.items()} for e in elements],
                  display=json.loads((ASSETS / 'models/item/fluid_package.json').read_text())['display'])
@@ -122,8 +136,14 @@ def main():
         draw.text((i*400+200,443),label,font=font,fill='#303535',anchor='mm')
     draw.text((600,478),'实际模型离线预览 · 窗口颜色为示意',font=ImageFont.truetype(r'C:\Windows\Fonts\msyh.ttc',14),fill='#677070',anchor='mm')
     preview.save(OUT / 'preview.png')
+    pixels = Image.new('RGBA',(32,16))
+    pixels.alpha_composite(Image.open(TEXTURES/'side.png'),(0,0))
+    pixels.alpha_composite(Image.open(TEXTURES/'back.png'),(16,0))
+    pixels.save(OUT/'textures-source.png')
+    pixels.resize((512,256),Image.Resampling.NEAREST).save(OUT/'textures.png')
     (OUT / 'model.meta.json').write_text(json.dumps(dict(name='Brass Box',model='ccd:item/composite_package',
-        textureSize=[16,16],reference='Fluid Canister',bounds=[12,12,12],palette=BRASS,
+        textureSize=[16,16],reference='Fluid Canister geometry; Create mechanical_arm and mechanical_arm_side brass',bounds=[12,12,12],palette=BRASS,
+        artwork='hand-drawn brass panel, independent pixel layout from the copper canister',
         windows='two existing fluid color samples; no dynamic level or fluid texture added',
         sharedResources=['fluid_canister/band','fluid_canister/flat','fluid_canister/cap','fluid_canister/glass']),indent=2)+'\n')
 

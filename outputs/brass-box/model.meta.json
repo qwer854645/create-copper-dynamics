@@ -5,7 +5,7 @@
     16,
     16
   ],
-  "reference": "Fluid Canister",
+  "reference": "Fluid Canister geometry; Create mechanical_arm and mechanical_arm_side brass",
   "bounds": [
     12,
     12,
@@ -18,19 +18,19 @@
       49
     ],
     [
-      145,
-      92,
-      58
-    ],
-    [
       164,
       107,
       71
     ],
     [
-      191,
-      142,
-      85
+      175,
+      121,
+      79
+    ],
+    [
+      199,
+      151,
+      88
     ],
     [
       215,
@@ -53,6 +53,7 @@
       125
     ]
   ],
+  "artwork": "hand-drawn brass panel, independent pixel layout from the copper canister",
   "windows": "two existing fluid color samples; no dynamic level or fluid texture added",
   "sharedResources": [
     "fluid_canister/band",
