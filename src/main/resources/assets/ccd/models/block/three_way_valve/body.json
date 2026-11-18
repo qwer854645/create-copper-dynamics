@@ -2,8 +2,8 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "ccd:block/three_way_valve/body",
-    "particle": "ccd:block/three_way_valve/body"
+    "body": "create:block/copper_underside",
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {

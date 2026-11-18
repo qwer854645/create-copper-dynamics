@@ -1,0 +1,112 @@
+[
+  {
+    "texture": "faucet body",
+    "source": "block/faucet/body.png",
+    "new": "copper_underside.png",
+    "std_before": 11.8,
+    "std_after": 19.1,
+    "flat_before": 57.4,
+    "flat_after": 25.0,
+    "tones_before": 8,
+    "tones_after": 8
+  },
+  {
+    "texture": "three-way valve body",
+    "source": "block/three_way_valve/body.png",
+    "new": "copper_underside.png",
+    "std_before": 11.8,
+    "std_after": 19.1,
+    "flat_before": 57.4,
+    "flat_after": 25.0,
+    "tones_before": 8,
+    "tones_after": 8
+  },
+  {
+    "texture": "booster pump body",
+    "source": "block/booster_pump/body.png",
+    "new": "copper_underside.png",
+    "std_before": 8.6,
+    "std_after": 19.1,
+    "flat_before": 62.5,
+    "flat_after": 25.0,
+    "tones_before": 5,
+    "tones_after": 8
+  },
+  {
+    "texture": "fluid hatch plate",
+    "source": "block/fluid_hatch/plate.png",
+    "new": "copper_underside.png",
+    "std_before": 15.7,
+    "std_after": 19.1,
+    "flat_before": 56.6,
+    "flat_after": 25.0,
+    "tones_before": 6,
+    "tones_after": 8
+  },
+  {
+    "texture": "water supply body",
+    "source": "block/copper_water_supply/body.png",
+    "new": "copper_underside.png",
+    "std_before": 3.9,
+    "std_after": 19.1,
+    "flat_before": 79.7,
+    "flat_after": 25.0,
+    "tones_before": 3,
+    "tones_after": 8
+  },
+  {
+    "texture": "collection grate body",
+    "source": "block/copper_collection_grate/body.png",
+    "new": "copper_underside.png",
+    "std_before": 11.8,
+    "std_after": 19.1,
+    "flat_before": 62.1,
+    "flat_after": 25.0,
+    "tones_before": 9,
+    "tones_after": 8
+  },
+  {
+    "texture": "smart faucet body",
+    "source": "block/smart_faucet/body.png",
+    "new": "brass_block.png",
+    "std_before": 20.8,
+    "std_after": 42.6,
+    "flat_before": 57.4,
+    "flat_after": 20.3,
+    "tones_before": 8,
+    "tones_after": 13
+  },
+  {
+    "texture": "fluid arm metal",
+    "source": "block/fluid_arm/metal.png",
+    "new": "industrial_iron_block.png",
+    "std_before": 6.3,
+    "std_after": 19.7,
+    "flat_before": 71.9,
+    "flat_after": 19.9,
+    "tones_before": 3,
+    "tones_after": 11
+  },
+  {
+    "texture": "smart tank",
+    "source": "block/smart_fluid_tank/fluid_tank.png",
+    "new": "block/smart_fluid_tank/fluid_tank.png",
+    "std_before": 16.0,
+    "std_after": 30.5,
+    "flat_before": 34.8,
+    "flat_after": 20.7,
+    "tones_before": 4,
+    "tones_after": 8
+  },
+  {
+    "texture": "grate body 32px",
+    "source": "block/smart_collection_grate/body.png",
+    "new": "block/smart_collection_grate/body.png",
+    "std_before": 12.5,
+    "std_after": 42.6,
+    "flat_before": 93.8,
+    "flat_after": 20.3,
+    "tones_before": 6,
+    "tones_after": 13
+  }
+]

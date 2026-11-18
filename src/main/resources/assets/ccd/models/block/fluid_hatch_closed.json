@@ -2,10 +2,10 @@
   "parent": "create:block/item_hatch/block_closed",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "plate": "ccd:block/fluid_hatch/plate",
+    "plate": "create:block/copper_underside",
     "pipe": "create:block/pipes",
     "port": "create:block/pipes",
-    "particle": "ccd:block/fluid_hatch/plate"
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {

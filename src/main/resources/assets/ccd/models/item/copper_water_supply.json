@@ -3,7 +3,7 @@
   "loader": "neoforge:composite",
   "ambientocclusion": false,
   "textures": {
-    "particle": "ccd:block/copper_water_supply/body"
+    "particle": "create:block/copper_underside"
   },
   "children": {
     "frame": {

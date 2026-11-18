@@ -6,8 +6,8 @@ const root=path.resolve(__dirname,'..'),ref=path.resolve(process.argv[2]),assets
 const textures=path.join(assets,'textures/block/smart_fluid_tank'),models=path.join(assets,'models/block/smart_fluid_tank'),output=path.join(root,'outputs/smart-fluid-tank');
 for(const dir of [textures,models,output])fs.mkdirSync(dir,{recursive:true});
 const save=(p,d)=>fs.writeFileSync(p,JSON.stringify(d,null,2)+'\n');
-const brass=[[114,71,49],[164,107,71],[175,121,79],[199,151,88],[215,170,94],[228,183,99],[247,203,108],[251,220,125],[255,235,140]];
-const thresholds=[35,55,75,90,108,128,150,180];
+// 8 step brass ladder, must stay in sync with tools/copper-material.py BRASS.
+const brass=[[114,71,49],[127,78,43],[140,88,52],[158,105,71],[175,121,79],[191,142,85],[206,160,90],[215,170,94]];
 const names=['fluid_tank','fluid_tank_top','fluid_tank_connected','fluid_tank_top_connected','fluid_tank_inner','fluid_tank_inner_connected','fluid_tank_window','fluid_tank_window_single'];
 const moved=(faces,dy)=>faces.map(f=>({...f,vertices:f.vertices.map(v=>[v[0],v[1]+dy,v[2]])}));
 function liquid(from,to,rgb){
@@ -24,11 +24,25 @@ async function main(){
  const changes=[];
  for(const name of names){
   const {data,info}=await sharp(path.join(ref,'assets/create/textures/block',name+'.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
-  const updated=Buffer.from(data);let count=0;
+  // Rank mapping: the k-th source tone (by luminance) becomes the k-th brass tone.
+  // The old absolute-threshold ladder ([35,55,75,90,108,128,150,180]) mapped Create's
+  // eight copper tones (lum 86.4..149.0) onto indices [3,4,4,5,5,6,6,6], i.e. four
+  // distinct outputs, and lifted every one of them by 70..100 luminance. That is what
+  // made the tank look like flat gold paint. Rank mapping keeps all eight steps.
+  const warm=new Map();
   for(let i=0;i<data.length;i+=4){
    const [r,g,b,a]=data.subarray(i,i+4);if(!a||r<g||g<b||r-b<20||g-b<8)continue;
-   const luminance=.2126*r+.7152*g+.0722*b;let index=thresholds.findIndex(t=>luminance<t);if(index<0)index=8;
-   updated.set(brass[index],i);count++;
+   warm.set((r<<16)|(g<<8)|b,[r,g,b]);
+  }
+  const tones=[...warm.values()].sort((p,q)=>
+   (.2126*p[0]+.7152*p[1]+.0722*p[2])-(.2126*q[0]+.7152*q[1]+.0722*q[2]));
+  const rank=new Map(tones.map((c,k)=>[(c[0]<<16)|(c[1]<<8)|c[2],
+   brass[tones.length===1?Math.floor(brass.length/2):Math.round(k*(brass.length-1)/(tones.length-1))]]));
+  const updated=Buffer.from(data);let count=0;
+  for(let i=0;i<data.length;i+=4){
+   const [r,g,b]=data.subarray(i,i+3);
+   const hit=rank.get((r<<16)|(g<<8)|b);if(!hit)continue;
+   updated.set(hit,i);count++;
   }
   for(let i=3;i<data.length;i+=4)if(updated[i]!==data[i])throw Error('Native alpha changed');
   await sharp(updated,{raw:{width:info.width,height:info.height,channels:4}}).png().toFile(path.join(textures,name+'.png'));

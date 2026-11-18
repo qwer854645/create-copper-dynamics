@@ -1,61 +1,83 @@
-"""Balance rotatable copper panels; preserve native apertures, filters and flow marks."""
+"""Finish the two rimmed housings. Kept as an entry point for tools/create-booster-pump.cjs.
+
+History: this script used to build the 16x16 body panel from a 6x6 PATCH by reflecting it
+across both axes *and* the diagonal, then assert that symmetry:
+
+    assert image.tobytes()==image.transpose(FLIP_LEFT_RIGHT).tobytes()
+    assert image.tobytes()==image.transpose(ROTATE_90).tobytes()
+
+A 16x16 face has 256 pixels; folding it twice left 10 free pixels, so the result read as
+blur rather than sheet metal, and the assertion also forbade the top-left light direction
+that Create's machine faces all use.
+
+The body panel is now `create:block/copper_underside` referenced straight from the model, so
+this script only has to rebuild the two textures that still need pixels of their own:
+block/booster_pump/shaft_face and block/fluid_transmitter/{side,top}. Both are derived from
+Create's own copper in tools/copper-material.py.
+
+Usage:
+    python tools/symmetrize-fluid-housings.py [booster_pump|fluid_transmitter] [create-source]
+"""
+from __future__ import annotations
+
+import importlib.util
 import sys
 from pathlib import Path
-from PIL import Image
-sys.path.insert(0,str(Path.home()/'.config/opencode/skills/pixel-art/scripts'))
-from pxl import Canvas
-ROOT=Path(__file__).resolve().parents[1]
-BASE=ROOT/'src/main/resources/assets/ccd/textures/block'
-# One triangular eighth of the material. Reflect across both axes and diagonals:
-# irregular joined clusters remain, but no fixed bright-top/dark-bottom direction.
-PATCH=['277777','765566','754455','765445','765554','654455']
-PUMP=[(70,32,24),(144,73,49),(154,80,56),(167,90,64),(178,98,71),(194,107,76),(200,116,86),(214,123,91),(227,130,108)]
-TRANSFER=[(96,46,31),(144,73,49),(154,80,56),(167,90,64),(178,98,71),(194,107,76),(214,123,91),(227,130,108)]
-def material(palette,full):
-    canvas=Canvas(16,16)
-    for y in range(16):
-        for x in range(16):
-            a,b=sorted((min(x,15-x),min(y,15-y)))
-            if a<2:
-                index=(1 if a==0 else 6) if full else 5
-            else:
-                index=int(PATCH[a-2][b-2])
-            canvas.set(x,y,palette[min(index,len(palette)-1)])
-    return canvas.img
-def main():
-    selected=sys.argv[1] if len(sys.argv)>1 else None
-    for folder,palette,full in [('booster_pump',PUMP,False),('fluid_transmitter',TRANSFER,True)]:
-        if selected and folder!=selected: continue
-        body=material(palette,full)
-        body.save(BASE/folder/'body.png')
-        if folder=='booster_pump':
-            path=BASE/folder/'shaft_face.png'; old=Image.open(path).convert('RGBA')
-            # Native 8x8 shaft recess is kept verbatim, including its own light shading.
-            body.paste(old.crop((4,4,12,12)),(4,4)); body.save(path)
-            names=['body','shaft_face']
-        else:
-            for name in ['side','top']:
-                path=BASE/folder/(name+'.png'); old=Image.open(path).convert('RGBA')
-                panel=material(palette,full).resize((32,32),Image.Resampling.NEAREST)
-                panel.paste(old.crop((8,8,24,24)),(8,8))
-                # Preserve only the actual five-row arrow mask, not its old background.
-                arrow=['0000100','0000110','1111111','0000110','0000100']
-                for y,row in enumerate(arrow):
-                    for x,value in enumerate(row):
-                        if value=='1':
-                            u,v=(12+x,2+y) if name=='side' else (2+y,12+x)
-                            panel.putpixel((u,v),old.getpixel((u,v)))
-                panel.save(path)
-            names=['body','side','top']
-        output=ROOT/'outputs'/('booster-pump' if folder=='booster_pump' else 'fluid-transmitter')
-        sheet=Image.new('RGBA',(len(names)*272-16,256),'#e5e8e2')
-        for i,name in enumerate(names):
-            sheet.alpha_composite(Image.open(BASE/folder/(name+'.png')).resize((256,256),Image.Resampling.NEAREST),(272*i,0))
-        sheet.save(output/'textures.png')
-    for folder in ['booster_pump','fluid_transmitter']:
-        if selected and folder!=selected: continue
-        image=Image.open(BASE/folder/'body.png')
-        assert image.tobytes()==image.transpose(Image.Transpose.FLIP_LEFT_RIGHT).tobytes()
-        assert image.tobytes()==image.transpose(Image.Transpose.ROTATE_90).tobytes()
-    print('Both copper body textures: mirror and quarter-turn symmetry verified. Native details preserved.')
-if __name__=='__main__': main()
+
+ROOT = Path(__file__).resolve().parents[1]
+ASSETS = ROOT / "src/main/resources/assets/ccd"
+
+
+def _load_material():
+    spec = importlib.util.spec_from_file_location(
+        "copper_material", Path(__file__).resolve().parent / "copper-material.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def find_create_source() -> Path | None:
+    base = Path.home() / ".gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1"
+    if not base.exists():
+        return None
+    jars = sorted(base.rglob("create-*.jar"))
+    full = [j for j in jars if not j.name.endswith("-slim.jar")]
+    return (full or jars or [None])[0]
+
+
+def main(argv):
+    args = [a for a in argv[1:] if not a.startswith("--")]
+    selected = args[0] if args and not args[0].endswith(".jar") and "/" not in args[0] else None
+    explicit = next((a for a in args if a.endswith(".jar") or "/" in a or "\\" in a), None)
+    source = Path(explicit).resolve() if explicit else find_create_source()
+    if source is None:
+        print("no Create source found; pass the Create jar or an extracted assets root")
+        return 2
+
+    cm = _load_material()
+    built = cm.derive(ASSETS, source)
+    wanted = {
+        "booster_pump": ["block/booster_pump/shaft_face.png"],
+        "fluid_transmitter": ["block/fluid_transmitter/side.png", "block/fluid_transmitter/top.png"],
+    }
+    written = 0
+    for name, rels in wanted.items():
+        if selected and selected != name:
+            continue
+        for rel in rels:
+            im = built.get(rel)
+            if im is None:
+                print(f"skip {rel} (source texture missing)")
+                continue
+            im.save(ASSETS / "textures" / rel)
+            written += 1
+            m, s = cm.metrics(im), cm.symmetry(im)
+            assert max(s.values()) > 5.0, f"{rel} came out rotationally symmetric"
+            print(f"{rel:42s} std={m['std']:5.1f} flat={m['flat']:5.1f}% tones={m['tones']:2d} "
+                  f"sym LR/UD/R180/R90={s['LR']}/{s['UD']}/{s['R180']}/{s['R90']}")
+    print(f"\n{written} texture(s) rebuilt from Create copper; no mirror symmetry enforced")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

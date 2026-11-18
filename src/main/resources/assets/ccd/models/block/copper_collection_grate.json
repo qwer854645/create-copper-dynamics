@@ -2,7 +2,7 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "copper": "ccd:block/copper_collection_grate/body",
+    "copper": "create:block/copper_underside",
     "rim": "ccd:block/copper_collection_grate/rim",
     "inner": "ccd:block/copper_collection_grate/inner",
     "grate": "ccd:block/copper_collection_grate/grate",

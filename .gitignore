@@ -4,3 +4,5 @@ run/
 runs/
 .idea/
 *.iml
+__pycache__/
+*.pyc

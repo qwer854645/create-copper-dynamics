@@ -2,11 +2,11 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "ccd:block/booster_pump/body",
+    "body": "create:block/copper_underside",
     "shaft_face": "ccd:block/booster_pump/shaft_face",
     "pipe": "create:block/pipes",
     "native_pump": "create:block/pump",
-    "particle": "ccd:block/booster_pump/body"
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {

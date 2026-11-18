@@ -1,31 +1,55 @@
-"""Use the mechanical arm's actual brass ramp; preserve tank alpha and CT tile layout."""
-from pathlib import Path
-from PIL import Image
-from zipfile import ZipFile
-from io import BytesIO
+"""Smart tank brass repaint - thin wrapper around tools/recolor-rank.py.
+
+This script used to duplicate the recolour loop with its own absolute-threshold ladder:
+
+    index = next((i for i, t in enumerate([35, 55, 75, 90, 108, 128, 150, 180])
+                  if luminance < t), 8)
+
+which mapped Create's eight copper tones (lum 86.4..149.0) onto indices
+[3, 4, 4, 5, 5, 6, 6, 6]: four distinct outputs, all lifted by 70..100 luminance. It also
+imported `pxl.Canvas` from a local pixel-art skill that is not part of this repository, so
+it could not run here at all, and it repainted every `*.png` in the folder rather than only
+the fluid tank faces.
+
+The logic now lives in one place. This wrapper keeps the old entry point working and
+restricts it to the four tank body textures handled by tools/recolor-rank.py.
+"""
+from __future__ import annotations
+
+import importlib.util
 import sys
-sys.path.insert(0,str(Path.home()/'.config/opencode/skills/pixel-art/scripts'))
-from pxl import Canvas
-ROOT=Path(__file__).resolve().parents[1]
-folder=ROOT/'src/main/resources/assets/ccd/textures/block/smart_fluid_tank'
-old=[(68,50,42),(114,71,49),(158,105,71),(175,121,79),(191,142,85),(206,160,90),(228,183,99),(247,203,108),(255,235,140)]
-new=[(114,71,49),(164,107,71),(175,121,79),(199,151,88),(215,170,94),(228,183,99),(247,203,108),(251,220,125),(255,235,140)]
-archive=ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar')))
-out=ROOT/'outputs/smart-fluid-tank'
-for path in folder.glob('*.png'):
-    image=Image.open(BytesIO(archive.read('assets/create/textures/block/'+path.name))).convert('RGBA'); canvas=Canvas(image.width,image.height)
-    for y in range(image.height):
-        for x in range(image.width):
-            r,g,b,a=image.getpixel((x,y))
-            color=(r,g,b)
-            if a and r>=g and g>=b and r-b>=20 and g-b>=8:
-                luminance=.2126*r+.7152*g+.0722*b
-                index=next((i for i,t in enumerate([35,55,75,90,108,128,150,180]) if luminance<t),8)
-                color=new[index]
-            canvas.set(x,y,(*color,a))
-    canvas.save(str(path))
-images=[Image.open(folder/(n+'.png')).convert('RGBA') for n in ['fluid_tank','fluid_tank_top','fluid_tank_inner','fluid_tank_window_single']]
-sheet=Image.new('RGBA',(sum(i.width for i in images),max(i.height for i in images)))
-x=0
-for image in images: sheet.alpha_composite(image,(x,0)); x+=image.width
-sheet.resize((sheet.width*8,sheet.height*8),Image.Resampling.NEAREST).save(out/'arm-brass-textures.png')
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _load(name, filename):
+    spec = importlib.util.spec_from_file_location(name, Path(__file__).resolve().parent / filename)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def main(argv):
+    rank = _load("recolor_rank", "recolor-rank.py")
+    positional = [a for a in argv[1:] if not a.startswith("--")]
+    source = positional[0] if positional else None
+    if source is None:
+        # same auto-discovery the old script used
+        base = Path.home() / ".gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1"
+        jars = sorted(base.rglob("create-*.jar")) if base.exists() else []
+        jars = [j for j in jars if not j.name.endswith("-slim.jar")] + jars
+        if jars:
+            source = str(jars[0])
+    if not source:
+        print("no Create jar given and none found in the Gradle cache; "
+              "pass one: python tools/repaint-smart-tank.py <create.jar>")
+        return 2
+    args = ["recolor-rank.py", source]
+    if "--check" in argv:
+        args.append("--check")
+    return rank.main(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

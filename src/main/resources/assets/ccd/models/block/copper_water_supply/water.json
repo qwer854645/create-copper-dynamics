@@ -5,7 +5,7 @@
   "textures": {
     "water": "ccd:block/copper_water_supply/water",
     "water_surface": "ccd:block/copper_water_supply/water_surface",
-    "particle": "ccd:block/copper_water_supply/body"
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {

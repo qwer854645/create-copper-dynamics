@@ -1,8 +1,8 @@
 {
   "parent": "ccd:block/fluid_hatch_closed",
   "textures": {
-    "plate": "ccd:block/smart_fluid_hatch/plate",
-    "particle": "ccd:block/smart_fluid_hatch/plate",
+    "plate": "create:block/brass_block",
+    "particle": "create:block/brass_block",
     "filter": "create:block/smart_pipe_2"
   },
   "elements": [

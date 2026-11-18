@@ -2,12 +2,12 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "particle": "ccd:block/copper_water_basin/outer",
-    "outer": "ccd:block/copper_water_basin/outer",
+    "particle": "create:block/copper_underside",
+    "outer": "create:block/copper_underside",
     "inner": "ccd:block/copper_water_basin/inner",
     "floor": "ccd:block/copper_water_basin/floor",
     "rim": "ccd:block/copper_water_basin/rim",
-    "tap_body": "ccd:block/faucet/body",
+    "tap_body": "create:block/copper_underside",
     "tap_handle": "ccd:block/faucet/handle",
     "tap_nozzle": "create:block/spout_nozzle"
   },

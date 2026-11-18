@@ -3,7 +3,7 @@
   "textures": {
     "brass": "ccd:block/smart_collection_grate/body",
     "rim": "ccd:block/smart_collection_grate/rim",
-    "particle": "ccd:block/copper_collection_grate/body"
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {

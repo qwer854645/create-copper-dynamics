@@ -2,12 +2,12 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "body": "ccd:block/faucet/body",
-    "base": "ccd:block/faucet/body",
+    "body": "create:block/copper_underside",
+    "base": "create:block/copper_underside",
     "handle": "ccd:block/faucet/handle",
     "pipe": "create:block/pipes",
     "nozzle": "create:block/spout_nozzle",
-    "particle": "ccd:block/faucet/body"
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {

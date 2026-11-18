@@ -6,7 +6,6 @@ const root=path.resolve(__dirname,'..'),assets=path.join(root,'src/main/resource
 const textures=path.join(assets,'textures/block/fluid_arm'),models=path.join(assets,'models/block/fluid_arm');
 const output=path.join(root,'outputs/fluid-arm-copper');for(const dir of [textures,models,output])fs.mkdirSync(dir,{recursive:true});
 const copper=[[63,32,22],[96,46,31],[123,61,41],[144,73,49],[167,90,64],[194,107,76],[214,123,91],[227,130,108],[239,156,128]];
-const thresholds=[40,60,85,105,135,165,190,215];
 const textureNames=['mechanical_arm'];
 const parts=['lower_body','upper_body'];
 const save=(file,data)=>fs.writeFileSync(file,JSON.stringify(data,null,2)+'\n');
@@ -118,12 +117,25 @@ async function main(){
  const changes=[],palette=new Map();
  for(const name of textureNames){
   const {data,info}=await sharp(path.join(ref,'assets/create/textures/block',name+'.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
-  const updated=Buffer.from(data);let count=0;
+  // Rank mapping: the k-th source tone (by luminance) becomes the k-th copper tone.
+  // The old absolute-threshold ladder ([40,60,85,105,135,165,190,215]) mapped Create's
+  // eight copper tones (lum 86.4..149.0) onto indices [3,3,3,4,4,4,5,5], i.e. only three
+  // distinct outputs, which flattened every copper strap on the arm.
+  const warm=new Map();
   for(let i=0;i<data.length;i+=4){
    const [r,g,b]=data.subarray(i,i+3);
    if(!data[i+3]||r<g||g<b||r-b<20||g-b<8)continue;
-   const value=.2126*r+.7152*g+.0722*b;let index=thresholds.findIndex(t=>value<t);if(index<0)index=8;
-   updated.set(copper[index],i);palette.set([r,g,b].join(','),copper[index]);count++;
+   warm.set((r<<16)|(g<<8)|b,[r,g,b]);
+  }
+  const tones=[...warm.values()].sort((p,q)=>
+   (.2126*p[0]+.7152*p[1]+.0722*p[2])-(.2126*q[0]+.7152*q[1]+.0722*q[2]));
+  const rank=new Map(tones.map((c,k)=>[(c[0]<<16)|(c[1]<<8)|c[2],
+   copper[tones.length===1?Math.floor(copper.length/2):Math.round(k*(copper.length-1)/(tones.length-1))]]));
+  const updated=Buffer.from(data);let count=0;
+  for(let i=0;i<data.length;i+=4){
+   const [r,g,b]=data.subarray(i,i+3);
+   const hit=rank.get((r<<16)|(g<<8)|b);if(!hit)continue;
+   updated.set(hit,i);palette.set([r,g,b].join(','),hit);count++;
   }
   for(let i=3;i<data.length;i+=4)if(updated[i]!==data[i])throw Error('Alpha changed');
   await sharp(updated,{raw:{width:info.width,height:info.height,channels:4}}).png().toFile(path.join(textures,name+'.png'));

@@ -2,7 +2,7 @@
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
   "textures": {
-    "body": "ccd:block/fluid_access/copper",
+    "body": "create:block/copper_underside",
     "socket": "ccd:block/fluid_access/connected_bridge",
     "band": "ccd:block/fluid_access/bridge_band",
     "particle": "#body"

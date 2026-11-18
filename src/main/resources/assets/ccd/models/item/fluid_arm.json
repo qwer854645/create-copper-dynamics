@@ -2,8 +2,8 @@
   "parent": "create:block/mechanical_arm/item",
   "textures": {
     "5": "ccd:block/fluid_arm/mechanical_arm",
-    "copper": "ccd:block/faucet/body",
-    "metal": "ccd:block/fluid_arm/metal",
+    "copper": "create:block/copper_underside",
+    "metal": "create:block/industrial_iron_block",
     "core": "ccd:block/fluid_arm/core",
     "glass": "ccd:block/fluid_arm/glass",
     "original_arm": "create:block/mechanical_arm",
