@@ -1,4 +1,6 @@
 {
   "parent": "ccd:block/fluid_hatch_closed",
-  "textures": {"1": "create:block/hatch_open"}
+  "textures": {
+    "port": "create:block/pipes"
+  }
 }

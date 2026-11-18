@@ -1,0 +1,48 @@
+{
+  "source": "Create 6.0.10-280",
+  "nativeHatchElements": 3,
+  "nativeParts": [
+    "create:block/fluid_pipe/rim_connector/south",
+    "create:block/fluid_pipe/rim/south"
+  ],
+  "textures": {
+    "frame": {
+      "size": [
+        32,
+        32
+      ],
+      "recoloredPixels": 535,
+      "alpha": "unchanged"
+    },
+    "pipeCap": {
+      "size": [
+        32,
+        32
+      ],
+      "changedBorePixels": 32
+    }
+  },
+  "portFrontCenter": [
+    8,
+    11.4,
+    5.9
+  ],
+  "portRotation": {
+    "axis": "x",
+    "angle": -45
+  },
+  "nativePortUVs": "unchanged",
+  "nativePortCullFaces": "removed for internal angled mount",
+  "openState": "native timed interaction feedback; does not gate the fluid capability",
+  "preserved": [
+    "placement",
+    "four horizontal rotations",
+    "waterlogging",
+    "collision",
+    "fluid proxy",
+    "container interaction",
+    "timed closing",
+    "smart hatch appearance"
+  ],
+  "artwork": "Create hatch/pipe derived textures and geometry; existing CCD copper fascia; upstream artwork remains owned by Create"
+}
