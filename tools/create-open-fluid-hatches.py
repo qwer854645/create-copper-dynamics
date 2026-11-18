@@ -1,7 +1,12 @@
 """Open receiving troughs. Native materials, pipe rim and smart-pipe bezel UVs."""
 import copy
 import json
+import sys
 from pathlib import Path
+from PIL import Image
+
+sys.path.insert(0,str(Path.home()/'.config/opencode/skills/pixel-art/scripts'))
+from pxl import Canvas
 
 ROOT=Path(__file__).resolve().parents[1]
 REF=Path.home()/'AppData/Local/Temp/opencode/create-art-reference/assets/create/models/block'
@@ -21,12 +26,23 @@ for smart in (False,True):
     for label,lo,hi in [('left',[1,0,1],[3,16,3]),('right',[13,0,1],[15,16,3]),
                         ('bottom',[3,0,1],[13,3,3]),('top',[3,13,1],[13,16,3])]:
         elements.append(box('mount_'+label,lo,hi,'rim'))
-    # Pixel-stepped triangular side walls stop at the slope; no hidden cube
-    # corners rely on transparent textures to disappear.
-    for z in range(3,14):
-        top=15-z
-        for x in (2,13):
-            elements.append(box('side_'+str(x)+'_'+str(z),[x,1,z],[x+1,top,z+1],'body'))
+    # Two thin planar sides. Transparent pixels clip the triangular silhouette;
+    # only the native copper/brass panel is sampled, without inventing new art.
+    material='brass_block' if smart else 'copper_underside'
+    source=Image.open(REF.parent.parent/'textures/block'/f'{material}.png').convert('RGBA')
+    clipped=Canvas(16,16)
+    for v in range(16):
+        for u in range(16):
+            if u<=v:
+                clipped.set(u,v,source.getpixel((u,v)))
+    texture=ROOT/f'src/main/resources/assets/ccd/textures/block/{name}/side_triangle.png'
+    clipped.save(texture)
+    for x in (2,13):
+        side=box('smooth_side_'+str(x),[x,1,3],[x+1,12,14],'side')
+        side['faces']={
+            'east':{'texture':'#side','uv':[16,0,0,16]},
+            'west':{'texture':'#side','uv':[0,0,16,16]}}
+        elements.append(side)
     floor=box('inclined_trough_floor',[3,.5,8.8],[13,12,9.3],'body')
     floor['rotation']={'angle':-45,'axis':'x','origin':[8,5.15,9.5]}
     elements.append(floor)
@@ -52,5 +68,6 @@ for smart in (False,True):
           'textures':{'body':'create:block/brass_block' if smart else 'create:block/copper_underside',
                       'rim':'create:block/brass_casing' if smart else 'create:block/fluid_tank',
                       'pipe':'create:block/pipes','filter':'create:block/smart_pipe_2',
+                      'side':f'ccd:block/{name}/side_triangle',
                       'particle':'#body'},'elements':elements}
     (DEST/(name+'_closed.json')).write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
