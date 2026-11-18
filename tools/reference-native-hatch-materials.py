@@ -14,6 +14,8 @@ with ZipFile(jar) as archive:
     mask=Image.open(io.BytesIO(archive.read('assets/create/textures/block/hatch.png'))).convert('RGBA')
     materials={name:Image.open(io.BytesIO(archive.read('assets/create/textures/block/'+name+'.png'))).convert('RGBA')
                for name in ('fluid_tank','brass_casing')}
+    pipe_parts=[json.loads(archive.read(f'assets/create/models/block/fluid_pipe/{part}/south.json'))
+                for part in ('rim_connector','rim')]
 for element in geometry:
     for face in element['faces'].values():
         face['uv']=[0,0,16,16]
@@ -32,6 +34,27 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
     for side in ('east','west'):
         elements[2]['faces'][side]=copy.deepcopy(original[2]['faces'][side])
         elements[2]['faces'][side]['texture']='#side'
+    # Replace only the upward-facing inclined cover with an actual pipe mouth.
+    # Surrounding strips bridge the native ten-pixel mouth to the old cover edges.
+    elements[2]['faces'].pop('south',None)
+    for label,lo,hi in [('left',[2,0,12.55],[3,10.6,12.6]),
+                        ('right',[13,0,12.55],[14,10.6,12.6]),
+                        ('bottom',[3,0,12.55],[13,.3,12.6]),
+                        ('top',[3,10.3,12.55],[13,10.6,12.6])]:
+        elements.append({'name':'mouth_surround_'+label,'from':lo,'to':hi,
+            'rotation':copy.deepcopy(original[2]['rotation']),
+            'faces':{'south':{'texture':'#1','uv':[lo[0],16-hi[1],hi[0],16-lo[1]]}}})
+    for part_index,part in enumerate(pipe_parts):
+        for native_part in part['elements']:
+            mouth=copy.deepcopy(native_part)
+            mouth['name']='native_inclined_pipe_mouth_'+str(part_index)
+            for corner in ('from','to'):
+                mouth[corner]=[mouth[corner][0],mouth[corner][1]-2.7,mouth[corner][2]-3.4]
+            mouth['rotation']=copy.deepcopy(original[2]['rotation'])
+            for face in mouth['faces'].values():
+                face['texture']='#pipe'
+                face.pop('cullface',None)
+            elements.append(mouth)
     if name=='smart_fluid_hatch':
         # NORTH rotates the native offset to (8,5.15,6.5), not z=9.5.
         # Project onto the hatch underside z-y=2, then offset only .01px
@@ -51,5 +74,6 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
     model={'parent':'create:block/item_hatch/block_closed','textures':{
         '0':'create:block/'+body,'1':'create:block/'+lid,'side':f'ccd:block/{name}/side_clipped',
         'filter':'create:block/smart_pipe_2',
+        'pipe':'create:block/pipes',
         'particle':'create:block/'+body},'render_type':'minecraft:cutout_mipped','elements':elements}
     (root/f'src/main/resources/assets/ccd/models/block/{name}_closed.json').write_text(json.dumps(model,indent=2)+'\n',encoding='utf-8')
