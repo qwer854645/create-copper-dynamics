@@ -27,24 +27,34 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
     clipped=Image.new('RGBA',mask.size)
     for y in range(mask.height):
         for x in range(mask.width):
-            color=materials[body].getpixel((x%16,y%16))
+            color=materials['fluid_tank'].getpixel((x%16,y%16))
             clipped.putpixel((x,y),color[:3]+(mask.getpixel((x,y))[3],))
     destination=root/f'src/main/resources/assets/ccd/textures/block/{name}/side_clipped.png'
     clipped.save(destination)
     for side in ('east','west'):
         elements[2]['faces'][side]=copy.deepcopy(original[2]['faces'][side])
         elements[2]['faces'][side]['texture']='#side'
+    if name=='smart_fluid_hatch':
+        elements[2]['faces']['down']['texture']='#front_copper'
     # Replace only the upward-facing inclined cover with an actual pipe mouth.
     # Surrounding strips bridge the native ten-pixel mouth to the old cover edges.
     elements[2]['faces'].pop('south',None)
-    for label,lo,hi in [('left',[2,0,12.55],[3,10.6,12.6]),
+    strips=[('left',[2,0,12.55],[3,10.6,12.6]),
                         ('right',[13,0,12.55],[14,10.6,12.6]),
                         ('bottom',[3,0,12.55],[13,.3,12.6]),
-                        ('top',[3,10.3,12.55],[13,10.6,12.6])]:
+                         ('top',[3,10.3,12.55],[13,10.6,12.6])]
+    if name=='smart_fluid_hatch':
+        # Cut the opening into the original brass cover itself: four coplanar
+        # strips retain continuous UVs, with no copper pipe fitting on this model.
+        strips=[('left',[2,0,12.55],[4,10.6,12.6]),
+                ('right',[12,0,12.55],[14,10.6,12.6]),
+                ('bottom',[4,0,12.55],[12,1.5,12.6]),
+                ('top',[4,9.1,12.55],[12,10.6,12.6])]
+    for label,lo,hi in strips:
         elements.append({'name':'mouth_surround_'+label,'from':lo,'to':hi,
             'rotation':copy.deepcopy(original[2]['rotation']),
             'faces':{'south':{'texture':'#1','uv':[lo[0],16-hi[1],hi[0],16-lo[1]]}}})
-    for part_index,part in enumerate(pipe_parts):
+    for part_index,part in enumerate(pipe_parts if name=='fluid_hatch' else []):
         for native_part in part['elements']:
             mouth=copy.deepcopy(native_part)
             mouth['name']='native_inclined_pipe_mouth_'+str(part_index)
@@ -72,7 +82,8 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
                 'down':{'texture':'#filter','uv':[13,0,16,8],'rotation':90}
             }})
     model={'parent':'create:block/item_hatch/block_closed','textures':{
-        '0':'create:block/'+body,'1':'create:block/'+lid,'side':f'ccd:block/{name}/side_clipped',
+        '0':'create:block/'+body,'1':'create:block/copper_underside','side':f'ccd:block/{name}/side_clipped',
+        'front_copper':'create:block/fluid_tank',
         'filter':'create:block/smart_pipe_2',
         'pipe':'create:block/pipes',
         'particle':'create:block/'+body},'render_type':'minecraft:cutout_mipped','elements':elements}

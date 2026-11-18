@@ -2,8 +2,9 @@
   "parent": "create:block/item_hatch/block_closed",
   "textures": {
     "0": "create:block/brass_casing",
-    "1": "create:block/brass_block",
+    "1": "create:block/copper_underside",
     "side": "ccd:block/smart_fluid_hatch/side_clipped",
+    "front_copper": "create:block/fluid_tank",
     "filter": "create:block/smart_pipe_2",
     "pipe": "create:block/pipes",
     "particle": "create:block/brass_casing"
@@ -203,7 +204,7 @@
             16,
             16
           ],
-          "texture": "#0"
+          "texture": "#front_copper"
         }
       }
     },
@@ -215,7 +216,7 @@
         12.55
       ],
       "to": [
-        3,
+        4,
         10.6,
         12.6
       ],
@@ -234,7 +235,7 @@
           "uv": [
             2,
             5.4,
-            3,
+            4,
             16
           ]
         }
@@ -243,7 +244,7 @@
     {
       "name": "mouth_surround_right",
       "from": [
-        13,
+        12,
         0,
         12.55
       ],
@@ -265,7 +266,7 @@
         "south": {
           "texture": "#1",
           "uv": [
-            13,
+            12,
             5.4,
             14,
             16
@@ -276,13 +277,13 @@
     {
       "name": "mouth_surround_bottom",
       "from": [
-        3,
+        4,
         0,
         12.55
       ],
       "to": [
-        13,
-        0.3,
+        12,
+        1.5,
         12.6
       ],
       "rotation": {
@@ -298,9 +299,9 @@
         "south": {
           "texture": "#1",
           "uv": [
-            3,
-            15.7,
-            13,
+            4,
+            14.5,
+            12,
             16
           ]
         }
@@ -309,12 +310,12 @@
     {
       "name": "mouth_surround_top",
       "from": [
-        3,
-        10.3,
+        4,
+        9.1,
         12.55
       ],
       "to": [
-        13,
+        12,
         10.6,
         12.6
       ],
@@ -331,157 +332,13 @@
         "south": {
           "texture": "#1",
           "uv": [
-            3,
+            4,
             5.4,
-            13,
-            5.699999999999999
+            12,
+            6.9
           ]
         }
       }
-    },
-    {
-      "name": "native_inclined_pipe_mouth_0",
-      "from": [
-        4,
-        1.2999999999999998,
-        8.6
-      ],
-      "to": [
-        12,
-        9.3,
-        12.6
-      ],
-      "rotation": {
-        "angle": -45,
-        "axis": "x",
-        "origin": [
-          8,
-          0,
-          2
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        }
-      }
-    },
-    {
-      "from": [
-        3,
-        0.2999999999999998,
-        10.6
-      ],
-      "to": [
-        13,
-        10.3,
-        12.6
-      ],
-      "rotation": {
-        "angle": -45,
-        "axis": "x",
-        "origin": [
-          8,
-          0,
-          2
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "east": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "texture": "#pipe"
-        },
-        "south": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        }
-      },
-      "name": "native_inclined_pipe_mouth_1"
     },
     {
       "name": "smart_pipe_filter_slot",
