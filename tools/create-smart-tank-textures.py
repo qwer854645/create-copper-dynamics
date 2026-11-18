@@ -63,8 +63,14 @@ SIDE_SEAM = {3, 12}
 V_STRIP = {0, 1, 2, 3, 12, 13, 14, 15}     # columns of the vertical strips
 H_BAND_TOP = {0, 1, 2}                       # dim brass rim rows (top end)
 H_BAND_BOT = {13, 14, 15}                    # dim brass rim rows (bottom end)
-POST_HI, POST_LO = 8, 6            # GOLD indices across a vertical post (bright -> mid)
-EDGE_DIM = 3                        # GOLD index for the horizontal rim; brighter reads as stripes
+
+# Bands and posts map the source tone into a NARROW gold range instead of a single pinned colour.
+# A pinned colour filled the whole band/plate with one flat value, which read as a big dead colour
+# block ("这样大色块有些不太好看"). A two-step range keeps the band reading as one brass band while
+# letting Create's own shading show through, so the surface still has texture.
+POST_HI_LO, POST_HI_HI = 7, 9      # outer post pixel
+POST_LO_LO, POST_LO_HI = 5, 7      # second post pixel
+EDGE_LO, EDGE_HI = 2, 5            # horizontal rim
 
 
 def _lum(c):
@@ -77,14 +83,14 @@ def zone_side(x, y):
     if lx in V_STRIP and not top_or_bot:
         # vertical corner post: bright outside, one step in, a dark bevel, then copper again
         if lx in (0, 15):
-            return ("gold", POST_HI)
+            return ("gold_range", POST_HI_LO, POST_HI_HI)
         if lx in (1, 14):
-            return ("gold", POST_LO)
+            return ("gold_range", POST_LO_LO, POST_LO_HI)
         if lx in (2, 13):
             return "seam"
         return "copper"
     if top_or_bot:
-        return ("gold", EDGE_DIM)
+        return ("gold_range", EDGE_LO, EDGE_HI)
     if ly in SIDE_SEAM:
         return "seam"
     return "copper"
@@ -122,11 +128,11 @@ def zone_connected_side(x, y):
         sx, sy = x - rx, y - ry
         # the 48 px panel is the whole tank's face: same grammar, scaled to its own bands
         if sx in (0, rw - 1):
-            return ("gold", POST_HI)
+            return ("gold_range", POST_HI_LO, POST_HI_HI)
         if sx in (1, rw - 2):
-            return ("gold", POST_LO)
+            return ("gold_range", POST_LO_LO, POST_LO_HI)
         if sy in (0, 1, rh - 2, rh - 1):
-            return ("gold", EDGE_DIM)
+            return ("gold_range", EDGE_LO, EDGE_HI)
         if sx in (2, rw - 3):
             return "seam"
         if sy in SIDE48_SEAM:
@@ -196,9 +202,15 @@ def convert(im: Image.Image, zonefn) -> Image.Image:
             zone = zonefn(x, y)
             if zone == "copper":
                 continue                     # Create's copper stays exactly as drawn
+            if isinstance(zone, tuple) and zone[0] == "gold_range":
+                # Map the source tone into a narrow gold range instead of pinning one colour:
+                # a single colour per band filled it with one flat value, which read as a big dead
+                # colour block. The range keeps Create's own shading inside the band.
+                lo, hi = zone[1], zone[2]
+                t = rank[(r, g, b)]
+                op[x, y] = GOLD[min(len(GOLD) - 1, lo + round(t * (hi - lo)))] + (a,)
+                continue
             if isinstance(zone, tuple):
-                # ("gold", k) pins an exact ladder entry, so a corner post can be a solid bright
-                # gold instead of inheriting whatever tone the source pixel happened to have
                 op[x, y] = GOLD[zone[1]] + (a,)
                 continue
             t = rank[(r, g, b)]
