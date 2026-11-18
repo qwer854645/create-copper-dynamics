@@ -80,9 +80,8 @@ COPPER_BODY = _rgb(["9A5038", "A75A40", "B26247", "C26B4C", "C87456", "D67B5B", 
 # 的颜色"). The arm carries more intermediate bronze tones between lum 78 and 116 - #854A34,
 # #875137, #8E5B3D, #995A3D, #A46B47 - where brass_block jumps straight from #724731 to #9E6947.
 # Those extra steps are what make it read as machined brass instead of a flat gold sheet.
-BRASS_BODY = _rgb(["724731", "854A34", "875137", "8E5B3D", "995A3D", "9E6947", "A46B47",
-                   "AF794F", "BF8E55", "C79758", "CEA05A", "D7AA5E", "E4B763", "EEC168",
-                   "F7CB6C"])
+BRASS_BODY = _rgb(["995A3D", "9E6947", "A46B47", "AF794F", "BF8E55", "C79758", "CEA05A",
+                   "D7AA5E", "E4B763", "EEC168", "F7CB6C"])
 
 TINT = {"copper": COPPER_BODY, "brass": BRASS_BODY}
 
@@ -192,6 +191,40 @@ def swap_material(src: Image.Image, ramp, keep_silver=True, keep_black=True, war
 
 
 
+# The arm's dark end (#724731, #854A34, #875137) is not used: on this hatch it made the body read
+# too dark, because Create's hatch body carries more low-mid tones than the arm's flat panels do.
+# The slice now starts at #995A3D.
+LIFT_FROM = 0.82          # source luminance fraction above which a pixel counts as a highlight
+
+
+def lift_highlights(src: Image.Image, ramp, lift=1):
+    """Re-fill only the pixels Create already drew as highlights, one ramp step brighter.
+
+    Same layout, same edges - it just re-uses Create's own shading instead of inventing any. The
+    frame edge and the lit lip of the body come up, the mid tones stay put, so the hatch reads
+    lighter without turning into a flat sheet.
+    """
+    px = src.load()
+    out = src.copy()
+    op = out.load()
+    span = (SILVER_MIN - BLACK_MAX) or 1.0
+    steps = len(ramp) - 1
+    for y in range(src.height):
+        for x in range(src.width):
+            r, g, b, a = px[x, y]
+            if not a:
+                continue
+            L = 0.2126 * r + 0.7152 * g + 0.0722 * b
+            if L <= BLACK_MAX or L >= SILVER_MIN:
+                continue
+            t = (L - BLACK_MAX) / span
+            idx = round(t * steps)
+            if t >= LIFT_FROM:
+                idx = min(steps, idx + lift)
+            op[x, y] = ramp[idx] + (a,)
+    return out
+
+
 def derive(assets: Path, create_src: Path):
     """Pure material swap: Create's pixel layout is kept exactly, only the grey body tones move.
 
@@ -206,8 +239,11 @@ def derive(assets: Path, create_src: Path):
     out = {}
     for material, key in (("fluid_hatch", "copper"), ("smart_fluid_hatch", "brass")):
         ramp = TINT[key]
-        out[f"block/{material}/housing.png"] = swap_material(housing_src, ramp)
-        out[f"block/{material}/flap.png"] = swap_material(flap_src, ramp)
+        # brass gets one detail pass on top of the swap: the pixels Create drew as highlights are
+        # re-filled one step brighter. The frame and layout are untouched.
+        fill = lift_highlights if key == "brass" else swap_material
+        out[f"block/{material}/housing.png"] = fill(housing_src, ramp)
+        out[f"block/{material}/flap.png"] = fill(flap_src, ramp)
     return out
 
 
