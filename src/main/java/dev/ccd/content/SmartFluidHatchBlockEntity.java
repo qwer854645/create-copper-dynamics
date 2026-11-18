@@ -5,10 +5,7 @@ import com.simibubi.create.content.logistics.itemHatch.HatchFilterSlot;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import dev.ccd.CopperDynamics;
-import dev.ccd.CCDTooltip;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -26,8 +23,8 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
     }
     @Override public void clearContent() { filtering.setFilter(ItemStack.EMPTY); }
     @Override protected boolean acceptsFluid(FluidStack fluid) {
-        // Deliberately fail closed until configured; native empty filters otherwise accept everything.
-        return filtering != null && !filtering.getFilter().isEmpty() && filtering.test(fluid);
+        // Native empty filters accept every fluid.
+        return filtering != null && filtering.test(fluid);
     }
     @Override protected FluidStack drainAllowed(IFluidHandler target, int amount, FluidAction action) {
         // Unspecified drains must search all tanks, rather than draining and then discarding a rejected fluid.
@@ -41,11 +38,5 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
             return target.drain(planned.copyWithAmount(Math.min(wanted.getAmount(), planned.getAmount())), action);
         }
         return FluidStack.EMPTY;
-    }
-    @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        super.addToGoggleTooltip(tooltip, sneaking);
-        if (filtering.getFilter().isEmpty())
-            CCDTooltip.line(tooltip, ChatFormatting.YELLOW, "ccd.smart_fluid_hatch.unconfigured");
-        return true;
     }
 }
