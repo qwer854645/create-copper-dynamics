@@ -2,6 +2,7 @@
   "reference": "Connected full casing, raised end sockets and broad side band; Create stock-link metal shading and native filter",
   "textures": "CCD hand-drawn 16x16 copper panels, dark copper band and grey metal socket seats",
   "upstreamResources": [
+    "create:block/stock_link (original connector UV 0,0,8,8)",
     "create:block/smart_pipe_2"
   ],
   "connectedAssetsCopied": false,

@@ -110,7 +110,11 @@ def main():
                 # Native pipe mouth at the surface; the narrow collar is inset into the case.
                 # Connected-like raised square connector; no additional pipe flange.
                 lo,hi=([3,3,16],[13,13,18]) if end=='south' else ([3,3,-2],[13,13,0])
-                elements.append(cube('raised_socket_'+end,lo,hi,'socket'))
+                seat=cube('raised_socket_'+end,lo,hi,'socket')
+                # Direct reference to the original stock-link connector region (32x32 atlas).
+                # Preserve its complete pixel layout and native colors, without repainting.
+                seat['faces'][end]={'texture':'#stock_link','uv':[0,0,8,8]}
+                elements.append(seat)
             if bridge:
                 # Small native smart-pipe filter panel at the existing interaction position.
                 source=json.loads(archive.read('assets/create/models/block/smart_fluid_pipe/block.json'))
@@ -133,6 +137,7 @@ def main():
                         e['faces']={({'north':'south','south':'north'}.get(s,s)):f for s,f in e['faces'].items()}
                     elements.append(e)
             textures={'body':f'ccd:block/fluid_access/{material}','socket':f'ccd:block/fluid_access/{material}_socket',
+                      'stock_link':'create:block/stock_link',
                       'band':'ccd:block/fluid_access/'+('bridge_band' if bridge else 'copper_band'),
                       'pipe':'create:block/pipes','filter':'create:block/smart_pipe_2','particle':'#body'}
             model={'parent':'minecraft:block/block','ambientocclusion':False,'textures':textures,'elements':elements}
@@ -146,7 +151,7 @@ def main():
     atlas.save(OUT/'textures-source.png'); atlas.resize((1024,256),Image.Resampling.NEAREST).save(OUT/'textures.png')
     save(OUT/'model.meta.json',{'reference':'Connected full casing, raised end sockets and broad side band; Create stock-link metal shading and native filter',
          'textures':'CCD hand-drawn 16x16 copper panels, dark copper band and grey metal socket seats',
-         'upstreamResources':['create:block/smart_pipe_2'],
+         'upstreamResources':['create:block/stock_link (original connector UV 0,0,8,8)','create:block/smart_pipe_2'],
          'connectedAssetsCopied':False,'preview':'actual model geometry, offline lighting; no client validation'})
 
 def render_preview(models,archive):

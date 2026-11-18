@@ -4,6 +4,7 @@
   "textures": {
     "body": "ccd:block/fluid_access/copper",
     "socket": "ccd:block/fluid_access/copper_socket",
+    "stock_link": "create:block/stock_link",
     "band": "ccd:block/fluid_access/bridge_band",
     "pipe": "create:block/pipes",
     "filter": "create:block/smart_pipe_2",
@@ -102,12 +103,12 @@
           ]
         },
         "south": {
-          "texture": "#socket",
+          "texture": "#stock_link",
           "uv": [
-            3,
-            3,
-            13,
-            13
+            0,
+            0,
+            8,
+            8
           ]
         },
         "east": {
@@ -162,12 +163,12 @@
       ],
       "faces": {
         "north": {
-          "texture": "#socket",
+          "texture": "#stock_link",
           "uv": [
-            3,
-            3,
-            13,
-            13
+            0,
+            0,
+            8,
+            8
           ]
         },
         "south": {
