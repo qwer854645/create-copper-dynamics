@@ -36,25 +36,23 @@ def derive(source):
         for y in range(native.height):
             for x in range(native.width):
                 color = native.getpixel((x, y))
-                # RECTANGLE CT stores one 48x48 continuous nine-slice panel at
-                # (16,0), plus the isolated face at (0,48). Internal 16px tile
-                # boundaries are NOT physical edges of the assembled tank.
-                bounds = (0, 0, 16, 16)
+                # Decode every native RECTANGLE state, including single-row
+                # and single-column structures. Only unconnected sides are rims.
+                u, v = x % 16, y % 16
+                left = right = up = down = False
                 if name.endswith('_connected'):
-                    if 16 <= x < 64 and y < 48:
-                        bounds = (16, 0, 48, 48)
-                    elif x < 16 and 48 <= y < 64:
-                        bounds = (0, 48, 16, 16)
-                    else:
-                        bounds = None
-                if 'window' not in name and color[3] and bounds is not None:
-                    left, top, width, height = bounds
-                    u, v = x-left, y-top
-                    if min(u, v, width-1-u, height-1-v) < 3:
+                    column, row = x // 16, y // 16
+                    # Exact native RECTANGLE indexing: columns encode neither,
+                    # right, both, left; rows encode down, both, up, neither.
+                    left, right = column in (2, 3), column in (1, 2)
+                    up, down = row in (1, 2), row in (0, 1)
+                if 'window' not in name and color[3]:
+                    if (not left and u < 3 or not right and u >= 13
+                        or not up and v < 3 or not down and v >= 13):
                         # Keep casing edge texels at 1:1 density; continue the
                         # flat rail across the middle of a long outer edge.
-                        sx = u if u < 3 else 16-(width-u) if u >= width-3 else 3+(u-3)%10
-                        sy = v if v < 3 else 16-(height-v) if v >= height-3 else 3+(v-3)%10
+                        sx = u if not left and u < 3 or not right and u >= 13 else 3+(u-3)%10
+                        sy = v if not up and v < 3 or not down and v >= 13 else 3+(v-3)%10
                         color = casing.getpixel((sx, sy))[:3] + (color[3],)
                 canvas.set(x, y, color)
         # Canvas owns pixel editing; save to bytes to return ordinary Pillow images.
