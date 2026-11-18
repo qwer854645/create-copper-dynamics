@@ -235,5 +235,6 @@
   "waterRendering": "native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved",
   "inventoryAndInteraction": "unchanged infinite fixed water; ordinary right click fills, sneak disposes",
   "reference": "https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json",
-  "artwork": "CCD original geometry and pixels; cabinet/countertop/inset-bowl composition references Cooking for Blockheads; no external model or texture copied"
+  "artwork": "CCD original geometry and pixels; external reference applies to structure only, not textures",
+  "pixelStyle": "approved CCD booster pump: irregular connected copper clusters, industrial iron palette, folded edges and one door seam; six textures redrawn at 16x16"
 }
