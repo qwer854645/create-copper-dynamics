@@ -3,8 +3,8 @@
   "category": "redstone",
   "ingredients": [
     {"item": "create:fluid_tank"},
-    {"item": "create:brass_ingot"},
-    {"item": "create:electron_tube"}
+    {"item": "create:brass_casing"},
+    {"item": "create:precision_mechanism"}
   ],
   "result": {"id": "ccd:smart_fluid_tank", "count": 1}
 }
