@@ -22,6 +22,9 @@ for element in geometry:
         face.pop('rotation',None)
 for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fluid_hatch','brass_block','brass_block')]:
     elements=copy.deepcopy(geometry)
+    # Container-facing rear plate: same native pipe socket artwork on both
+    # hatches. Keep the mounting outline, change only its visible rear panel.
+    elements[1]['faces']['north']={'texture':'#pipe','uv':[11,11,16,16]}
     # Restore the native triangular transparency and its precise rotated UVs on
     # the inclined part's two side faces only. All other material references stay.
     clipped=Image.new('RGBA',mask.size)

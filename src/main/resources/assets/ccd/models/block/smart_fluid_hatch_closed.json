@@ -110,13 +110,13 @@
       },
       "faces": {
         "north": {
+          "texture": "#pipe",
           "uv": [
-            0,
-            0,
+            11,
+            11,
             16,
             16
-          ],
-          "texture": "#0"
+          ]
         },
         "east": {
           "uv": [

@@ -4,6 +4,7 @@
     "0": "create:block/fluid_tank",
     "1": "create:block/copper_underside",
     "side": "ccd:block/fluid_hatch/side_clipped",
+    "front_copper": "create:block/fluid_tank",
     "filter": "create:block/smart_pipe_2",
     "pipe": "create:block/pipes",
     "particle": "create:block/fluid_tank"
@@ -109,13 +110,13 @@
       },
       "faces": {
         "north": {
+          "texture": "#pipe",
           "uv": [
-            0,
-            0,
+            11,
+            11,
             16,
             16
-          ],
-          "texture": "#0"
+          ]
         },
         "east": {
           "uv": [
