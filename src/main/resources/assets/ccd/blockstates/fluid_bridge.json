@@ -1,34 +1,196 @@
 {
-  "variants": {
-    "facing=north": {
-      "model": "ccd:block/fluid_bridge",
-      "x": 0,
-      "y": 0
+  "multipart": [
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_casing",
+        "x": 0,
+        "y": 0
+      }
     },
-    "facing=south": {
-      "model": "ccd:block/fluid_bridge",
-      "x": 0,
-      "y": 180
+    {
+      "when": {
+        "facing": "north",
+        "attached_negative": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 180
+      }
     },
-    "facing=east": {
-      "model": "ccd:block/fluid_bridge",
-      "x": 0,
-      "y": 90
+    {
+      "when": {
+        "facing": "north",
+        "attached_positive": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 0
+      }
     },
-    "facing=west": {
-      "model": "ccd:block/fluid_bridge",
-      "x": 0,
-      "y": 270
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_casing",
+        "x": 0,
+        "y": 180
+      }
     },
-    "facing=up": {
-      "model": "ccd:block/fluid_bridge",
-      "x": 270,
-      "y": 0
+    {
+      "when": {
+        "facing": "south",
+        "attached_negative": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 180
+      }
     },
-    "facing=down": {
-      "model": "ccd:block/fluid_bridge",
-      "x": 90,
-      "y": 0
+    {
+      "when": {
+        "facing": "south",
+        "attached_positive": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_casing",
+        "x": 0,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "attached_negative": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "attached_positive": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_casing",
+        "x": 0,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "attached_negative": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "attached_positive": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 0,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_casing",
+        "x": 270,
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "attached_negative": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 270,
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "attached_positive": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 90,
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_casing",
+        "x": 90,
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "attached_negative": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 270,
+        "y": 0
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "attached_positive": true
+      },
+      "apply": {
+        "model": "ccd:block/fluid_bridge_socket",
+        "x": 90,
+        "y": 0
+      }
     }
-  }
+  ]
 }

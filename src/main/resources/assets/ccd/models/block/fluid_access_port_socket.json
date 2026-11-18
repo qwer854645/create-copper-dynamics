@@ -1,0 +1,81 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "body": "create:block/copper_underside",
+    "socket": "ccd:block/fluid_access/connected_port",
+    "band": "ccd:block/fluid_access/copper_band",
+    "particle": "#body"
+  },
+  "elements": [
+    {
+      "name": "raised_socket_south",
+      "from": [
+        3,
+        3,
+        16
+      ],
+      "to": [
+        13,
+        13,
+        18
+      ],
+      "faces": {
+        "north": {
+          "texture": "#socket",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#socket",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "east": {
+          "texture": "#socket",
+          "uv": [
+            -2,
+            3,
+            0,
+            13
+          ]
+        },
+        "west": {
+          "texture": "#socket",
+          "uv": [
+            16,
+            3,
+            18,
+            13
+          ]
+        },
+        "up": {
+          "texture": "#socket",
+          "uv": [
+            3,
+            16,
+            13,
+            18
+          ]
+        },
+        "down": {
+          "texture": "#socket",
+          "uv": [
+            3,
+            -2,
+            13,
+            0
+          ]
+        }
+      }
+    }
+  ]
+}

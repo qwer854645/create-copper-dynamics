@@ -44,3 +44,4 @@ for locale,entries in {
 
 # Regenerating functional resources must preserve the current art models.
 runpy.run_path(str(ROOT/'tools/create-fluid-access-art.py'),run_name='__main__')
+runpy.run_path(str(ROOT/'tools/update-fluid-access-text.py'),run_name='__main__')

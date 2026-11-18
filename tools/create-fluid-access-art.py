@@ -194,4 +194,7 @@ def render_preview(models,archive):
             draw.text((col*420+210,row*480+456),label,font=font,fill='#303535',anchor='mm')
     sheet.save(OUT/'preview.png')
 
-if __name__=='__main__': main()
+if __name__=='__main__':
+    main()
+    import runpy
+    runpy.run_path(str(ROOT/'tools/update-fluid-access-states.py'),run_name='__main__')

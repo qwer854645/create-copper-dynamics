@@ -82,15 +82,15 @@ public final class CCDPonderScenes {
         var s=begin(builder,"fluid_access","Extending and combining fluid access");
         show(s,util,A,AllBlocks.FLUID_TANK.getDefaultState()); water(s,A,2000);
         show(s,util,B,CopperDynamics.FLUID_ACCESS_PORT.get().defaultBlockState().setValue(FluidAccessBlock.FACING,Direction.EAST));
-        text(s,util,B,"An Access Port exposes the attached container on its other five faces");
+        text(s,util,B,"An Access Port shares the attached container through all faces");
         s.overlay().showOutline(PonderPalette.RED,"blocked",util.select().position(C),45);
-        text(s,util,C,"Access Ports cannot extend other Access Ports");
+        text(s,util,C,"Access Ports and Fluid Bridges cannot extend each other");
         s.world().setBlock(B,CopperDynamics.FLUID_BRIDGE.get().defaultBlockState().setValue(FluidAccessBlock.FACING,Direction.EAST),true);
         show(s,util,C,AllBlocks.FLUID_TANK.getDefaultState()); water(s,C,2000);
-        text(s,util,B,"A Fluid Bridge gives side connections access to both end containers");
+        text(s,util,B,"A Fluid Bridge gives access to both end containers");
         show(s,util,B.south(),AllBlocks.FLUID_PIPE.getDefaultState());
         s.overlay().showFilterSlotInput(util.vector().centerOf(B),Direction.EAST,45);
-        text(s,util,B,"Each end can filter which fluids enter or leave its container"); s.markAsFinished();
+        text(s,util,B,"Explicit end filters take priority over an empty filter on the opposite end"); s.markAsFinished();
     }
     public static void tanks(SceneBuilder builder,SceneBuildingUtil util) {
         var s=begin(builder,"smart_tanks","Combining Smart Fluid Tanks");

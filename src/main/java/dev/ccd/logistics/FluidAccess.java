@@ -19,21 +19,27 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 public final class FluidAccess {
     public record Source(BlockPos identity, IFluidHandler handler, Predicate<FluidStack> filter) {}
     private static final ThreadLocal<Set<BlockPos>> ACTIVE = ThreadLocal.withInitial(HashSet::new);
-    public static List<Source> resolve(Level level, BlockPos pos, Direction side) {
-        return resolve(level, pos, side, new HashSet<>(), 0, true);
+    public static boolean hasDirectContainer(Level level, BlockPos origin, Direction end) {
+        BlockPos target = origin.relative(end);
+        return level.hasChunkAt(target) && !(level.getBlockEntity(target) instanceof FluidAccessBlockEntity)
+            && level.getCapability(Capabilities.FluidHandler.BLOCK, target, end.getOpposite()) != null;
     }
-    private static List<Source> resolve(Level level, BlockPos pos, Direction side, Set<BlockPos> visited, int depth, boolean allowBridge) {
+    public static List<Source> resolve(Level level, BlockPos pos, Direction side) {
+        return resolve(level, pos, side, new HashSet<>(), 0);
+    }
+    private static List<Source> resolve(Level level, BlockPos pos, Direction side, Set<BlockPos> visited, int depth) {
         if (level == null || depth > 16 || !level.hasChunkAt(pos) || !visited.add(pos)) return List.of();
         var entity = level.getBlockEntity(pos);
         if (entity instanceof FluidAccessBlockEntity access) {
+            if (depth != 0 || level.hasNeighborSignal(pos)) return List.of();
             var state = access.getBlockState();
             var block = (FluidAccessBlock) state.getBlock();
             var facing = state.getValue(FluidAccessBlock.FACING);
             if (block.isBridge()) {
-                if (!allowBridge || side != null && side.getAxis() == facing.getAxis()) return List.of();
                 var result = new ArrayList<Source>();
-                for (var end : List.of(facing.getOpposite(), facing)) {
-                    for (var source : resolve(level, pos.relative(end), end.getOpposite(), new HashSet<>(visited), depth+1, false))
+                Direction negative = Direction.fromAxisAndDirection(facing.getAxis(), Direction.AxisDirection.NEGATIVE);
+                for (var end : List.of(negative, negative.getOpposite())) {
+                    for (var source : resolve(level, pos.relative(end), end.getOpposite(), new HashSet<>(visited), depth+1))
                         result.add(new Source(source.identity(), source.handler(), fluid -> source.filter().test(fluid) && access.accepts(end, fluid)));
                 }
                 // Prefer the first sided view of an identical native controller.
@@ -41,11 +47,9 @@ public final class FluidAccess {
                 var identities = new HashSet<BlockPos>();
                 return result.stream().filter(source -> identities.add(source.identity())).toList();
             }
-            if (side == facing.getOpposite()) return List.of();
             var attached = pos.relative(facing.getOpposite());
-            if (!level.hasChunkAt(attached) || level.getBlockEntity(attached) instanceof FluidAccessBlockEntity next
-                && !((FluidAccessBlock)next.getBlockState().getBlock()).isBridge()) return List.of();
-            return resolve(level, pos.relative(facing.getOpposite()), facing, visited, depth+1, allowBridge);
+            if (!level.hasChunkAt(attached) || level.getBlockEntity(attached) instanceof FluidAccessBlockEntity) return List.of();
+            return resolve(level, pos.relative(facing.getOpposite()), facing, visited, depth+1);
         }
         var active = ACTIVE.get();
         if (active.size() >= 32 || !active.add(pos)) return List.of();
@@ -83,10 +87,8 @@ public final class FluidAccess {
                 active.set(true);
                 try {
                     int remaining=fluid.getAmount(); var used=new HashSet<BlockPos>(); var sources=sources();
-                    for (boolean matching : new boolean[]{true,false}) for (var s:sources) {
+                    for (var s:sources) {
                         if (remaining<=0 || used.contains(s.identity()) || !s.filter().test(fluid)) continue;
-                        boolean has=false; for(int i=0;i<s.handler().getTanks();i++) if(FluidStack.isSameFluidSameComponents(fluid,s.handler().getFluidInTank(i))) has=true;
-                        if(has!=matching) continue;
                         int filled=s.handler().fill(fluid.copyWithAmount(remaining),action);
                         // Visit each source once even when an active endpoint changes
                         // its displayed contents between simulation and execution.

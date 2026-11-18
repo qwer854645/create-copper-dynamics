@@ -25,16 +25,20 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
             ? List.of() : FluidAccess.resolve(level,worldPosition,null);
     }
     public IFluidHandler handler(Direction side) {
-        if (!accessible(side)) return null;
-        return FluidAccess.handler(() -> accessible(side) ? sources() : List.of());
+        return handler;
     }
-    private boolean accessible(Direction side) {
-        Direction facing=getBlockState().getValue(FluidAccessBlock.FACING);
-        return side==null || !(((FluidAccessBlock)getBlockState().getBlock()).isBridge()
-            ? side.getAxis()==facing.getAxis() : side==facing.getOpposite());
+    @Override public void initialize() {
+        super.initialize();
+        if (level != null && !level.isClientSide())
+            ((FluidAccessBlock)getBlockState().getBlock()).refreshConnections(level, worldPosition);
     }
     public boolean accepts(Direction end, FluidStack fluid) {
-        return filters==null || filters.get(end)==null || filters.get(end).test(fluid);
+        if (filters == null) return true;
+        var own = filters.get(end);
+        var other = filters.get(end.getOpposite());
+        if (own != null && !own.test(fluid)) return false;
+        return own == null || !own.getFilter().isEmpty() || other == null
+            || other.getFilter().isEmpty() || !other.test(fluid);
     }
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         if (!((FluidAccessBlock)getBlockState().getBlock()).isBridge()) return;
