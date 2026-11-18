@@ -1,0 +1,674 @@
+{
+  "stage": "octagonal body study",
+  "textureSize": [
+    16,
+    16
+  ],
+  "geometry": [
+    {
+      "name": "lower_iron_foot_north",
+      "from": [
+        3.5,
+        0,
+        0.5
+      ],
+      "to": [
+        12.5,
+        1.5,
+        0.5
+      ]
+    },
+    {
+      "name": "lower_iron_foot_south",
+      "from": [
+        3.5,
+        0,
+        15.5
+      ],
+      "to": [
+        12.5,
+        1.5,
+        15.5
+      ]
+    },
+    {
+      "name": "lower_iron_foot_west",
+      "from": [
+        0.5,
+        0,
+        3.5
+      ],
+      "to": [
+        0.5,
+        1.5,
+        12.5
+      ]
+    },
+    {
+      "name": "lower_iron_foot_east",
+      "from": [
+        15.5,
+        0,
+        3.5
+      ],
+      "to": [
+        15.5,
+        1.5,
+        12.5
+      ]
+    },
+    {
+      "name": "lower_iron_foot_north_diagonal_-45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        -0.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_south_diagonal_-45",
+      "from": [
+        5.87868,
+        0,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_north_diagonal_45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        -0.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "lower_iron_foot_south_diagonal_45",
+      "from": [
+        5.87868,
+        0,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_cross_x",
+      "from": [
+        0.5,
+        0,
+        3.5
+      ],
+      "to": [
+        15.5,
+        1.5,
+        12.5
+      ]
+    },
+    {
+      "name": "lower_iron_foot_cap_cross_z",
+      "from": [
+        3.5,
+        0,
+        0.5
+      ],
+      "to": [
+        12.5,
+        1.5,
+        15.5
+      ]
+    },
+    {
+      "name": "lower_iron_foot_cap_north_-45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        1.636039
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_south_-45",
+      "from": [
+        5.87868,
+        0,
+        14.363961
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_north_45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        1.636039
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_south_45",
+      "from": [
+        5.87868,
+        0,
+        14.363961
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "copper_vessel_north",
+      "from": [
+        4,
+        1.5,
+        1
+      ],
+      "to": [
+        12,
+        14,
+        1
+      ]
+    },
+    {
+      "name": "copper_vessel_south",
+      "from": [
+        4,
+        1.5,
+        15
+      ],
+      "to": [
+        12,
+        14,
+        15
+      ]
+    },
+    {
+      "name": "copper_vessel_west",
+      "from": [
+        1,
+        1.5,
+        4
+      ],
+      "to": [
+        1,
+        14,
+        12
+      ]
+    },
+    {
+      "name": "copper_vessel_east",
+      "from": [
+        15,
+        1.5,
+        4
+      ],
+      "to": [
+        15,
+        14,
+        12
+      ]
+    },
+    {
+      "name": "copper_vessel_north_diagonal_-45",
+      "from": [
+        5.87868,
+        1.5,
+        0.221825
+      ],
+      "to": [
+        10.12132,
+        14,
+        0.221825
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "copper_vessel_south_diagonal_-45",
+      "from": [
+        5.87868,
+        1.5,
+        15.778175
+      ],
+      "to": [
+        10.12132,
+        14,
+        15.778175
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "copper_vessel_north_diagonal_45",
+      "from": [
+        5.87868,
+        1.5,
+        0.221825
+      ],
+      "to": [
+        10.12132,
+        14,
+        0.221825
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "copper_vessel_south_diagonal_45",
+      "from": [
+        5.87868,
+        1.5,
+        15.778175
+      ],
+      "to": [
+        10.12132,
+        14,
+        15.778175
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_north",
+      "from": [
+        3.5,
+        14,
+        0.5
+      ],
+      "to": [
+        12.5,
+        15,
+        0.5
+      ]
+    },
+    {
+      "name": "upper_iron_collar_south",
+      "from": [
+        3.5,
+        14,
+        15.5
+      ],
+      "to": [
+        12.5,
+        15,
+        15.5
+      ]
+    },
+    {
+      "name": "upper_iron_collar_west",
+      "from": [
+        0.5,
+        14,
+        3.5
+      ],
+      "to": [
+        0.5,
+        15,
+        12.5
+      ]
+    },
+    {
+      "name": "upper_iron_collar_east",
+      "from": [
+        15.5,
+        14,
+        3.5
+      ],
+      "to": [
+        15.5,
+        15,
+        12.5
+      ]
+    },
+    {
+      "name": "upper_iron_collar_north_diagonal_-45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        -0.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_south_diagonal_-45",
+      "from": [
+        5.87868,
+        14,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_north_diagonal_45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        -0.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_south_diagonal_45",
+      "from": [
+        5.87868,
+        14,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_cross_x",
+      "from": [
+        0.5,
+        14,
+        3.5
+      ],
+      "to": [
+        15.5,
+        15,
+        12.5
+      ]
+    },
+    {
+      "name": "upper_iron_collar_cap_cross_z",
+      "from": [
+        3.5,
+        14,
+        0.5
+      ],
+      "to": [
+        12.5,
+        15,
+        15.5
+      ]
+    },
+    {
+      "name": "upper_iron_collar_cap_north_-45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        1.636039
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_south_-45",
+      "from": [
+        5.87868,
+        14,
+        14.363961
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_north_45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        1.636039
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_south_45",
+      "from": [
+        5.87868,
+        14,
+        14.363961
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "fixed_copper_crown",
+      "from": [
+        3.5,
+        15,
+        3.5
+      ],
+      "to": [
+        12.5,
+        16,
+        12.5
+      ]
+    }
+  ],
+  "style": "CCD copper pixel clusters; eight-sided vessel, iron collars and low foot",
+  "connectionPlan": "show native fluid interface only on faces touching valid containers; deferred until body approval",
+  "behavior": "existing Java supply, cache, rate, redstone and full-block collision unchanged",
+  "artwork": "CCD original geometry and pixel textures; palette follows existing CCD booster-pump study"
+}

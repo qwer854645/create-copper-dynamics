@@ -1,1 +1,7 @@
-{"variants":{"":{"model":"ccd:block/copper_water_supply"}}}
+{
+  "variants": {
+    "": {
+      "model": "ccd:block/copper_water_supply"
+    }
+  }
+}

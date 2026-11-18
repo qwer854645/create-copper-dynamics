@@ -1,150 +1,1234 @@
 {
   "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "textures": {
+    "body": "ccd:block/copper_water_supply/body",
+    "cap": "ccd:block/copper_water_supply/cap",
+    "band": "ccd:block/copper_water_supply/band",
+    "flat": "ccd:block/copper_water_supply/flat",
+    "particle": "ccd:block/copper_water_supply/body"
+  },
   "elements": [
     {
+      "name": "lower_iron_foot_north",
       "from": [
+        3.5,
         0,
-        0,
-        0
+        0.5
       ],
-      "faces": {
-        "west": {
-          "cullface": "west",
-          "texture": "#copper"
-        },
-        "south": {
-          "cullface": "south",
-          "texture": "#copper"
-        },
-        "north": {
-          "cullface": "north",
-          "texture": "#copper"
-        },
-        "east": {
-          "cullface": "east",
-          "texture": "#copper"
-        },
-        "down": {
-          "cullface": "down",
-          "texture": "#copper"
-        },
-        "up": {
-          "cullface": "up",
-          "texture": "#copper"
-        }
-      },
       "to": [
-        16,
-        16,
-        16
-      ]
-    },
-    {
-      "from": [
-        5,
-        5,
-        -0.01
+        12.5,
+        1.5,
+        0.5
       ],
       "faces": {
         "north": {
-          "texture": "#port"
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            9,
+            16
+          ]
         }
-      },
-      "to": [
-        11,
-        11,
-        0.05
-      ]
+      }
     },
     {
+      "name": "lower_iron_foot_south",
       "from": [
-        5,
-        5,
-        15.95
+        3.5,
+        0,
+        15.5
+      ],
+      "to": [
+        12.5,
+        1.5,
+        15.5
       ],
       "faces": {
         "south": {
-          "texture": "#port"
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            9,
+            16
+          ]
         }
-      },
-      "to": [
-        11,
-        11,
-        16.01
-      ]
+      }
     },
     {
+      "name": "lower_iron_foot_west",
       "from": [
-        15.95,
-        5,
-        5
+        0.5,
+        0,
+        3.5
       ],
-      "faces": {
-        "east": {
-          "texture": "#port"
-        }
-      },
       "to": [
-        16.01,
-        11,
-        11
-      ]
-    },
-    {
-      "from": [
-        -0.01,
-        5,
-        5
+        0.5,
+        1.5,
+        12.5
       ],
       "faces": {
         "west": {
-          "texture": "#port"
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            9,
+            16
+          ]
         }
-      },
-      "to": [
-        0.05,
-        11,
-        11
-      ]
+      }
     },
     {
+      "name": "lower_iron_foot_east",
       "from": [
-        5,
-        15.95,
-        5
+        15.5,
+        0,
+        3.5
+      ],
+      "to": [
+        15.5,
+        1.5,
+        12.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            9,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "lower_iron_foot_north_diagonal_-45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        -0.485281
+      ],
+      "faces": {
+        "north": {
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            4.242641,
+            16
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_south_diagonal_-45",
+      "from": [
+        5.87868,
+        0,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "faces": {
+        "south": {
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            4.242641,
+            16
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_north_diagonal_45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        -0.485281
+      ],
+      "faces": {
+        "north": {
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            4.242641,
+            16
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "lower_iron_foot_south_diagonal_45",
+      "from": [
+        5.87868,
+        0,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "faces": {
+        "south": {
+          "texture": "#band",
+          "uv": [
+            0,
+            14.5,
+            4.242641,
+            16
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_cross_x",
+      "from": [
+        0.5,
+        0,
+        3.5
+      ],
+      "to": [
+        15.5,
+        1.5,
+        12.5
       ],
       "faces": {
         "up": {
-          "texture": "#port"
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
         }
-      },
-      "to": [
-        11,
-        16.01,
-        11
-      ]
+      }
     },
     {
+      "name": "lower_iron_foot_cap_cross_z",
       "from": [
-        5,
-        -0.01,
-        5
+        3.5,
+        0,
+        0.5
+      ],
+      "to": [
+        12.5,
+        1.5,
+        15.5
       ],
       "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
         "down": {
-          "texture": "#port"
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_north_-45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        1.636039
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
         }
       },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_south_-45",
+      "from": [
+        5.87868,
+        0,
+        14.363961
+      ],
       "to": [
-        11,
-        0.05,
-        11
-      ]
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_north_45",
+      "from": [
+        5.87868,
+        0,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        1.636039
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "lower_iron_foot_cap_south_45",
+      "from": [
+        5.87868,
+        0,
+        14.363961
+      ],
+      "to": [
+        10.12132,
+        1.5,
+        16.485281
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "copper_vessel_north",
+      "from": [
+        4,
+        1.5,
+        1
+      ],
+      "to": [
+        12,
+        14,
+        1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            8,
+            14.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "copper_vessel_south",
+      "from": [
+        4,
+        1.5,
+        15
+      ],
+      "to": [
+        12,
+        14,
+        15
+      ],
+      "faces": {
+        "south": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            8,
+            14.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "copper_vessel_west",
+      "from": [
+        1,
+        1.5,
+        4
+      ],
+      "to": [
+        1,
+        14,
+        12
+      ],
+      "faces": {
+        "west": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            8,
+            14.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "copper_vessel_east",
+      "from": [
+        15,
+        1.5,
+        4
+      ],
+      "to": [
+        15,
+        14,
+        12
+      ],
+      "faces": {
+        "east": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            8,
+            14.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "copper_vessel_north_diagonal_-45",
+      "from": [
+        5.87868,
+        1.5,
+        0.221825
+      ],
+      "to": [
+        10.12132,
+        14,
+        0.221825
+      ],
+      "faces": {
+        "north": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            4.242641,
+            14.5
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "copper_vessel_south_diagonal_-45",
+      "from": [
+        5.87868,
+        1.5,
+        15.778175
+      ],
+      "to": [
+        10.12132,
+        14,
+        15.778175
+      ],
+      "faces": {
+        "south": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            4.242641,
+            14.5
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "copper_vessel_north_diagonal_45",
+      "from": [
+        5.87868,
+        1.5,
+        0.221825
+      ],
+      "to": [
+        10.12132,
+        14,
+        0.221825
+      ],
+      "faces": {
+        "north": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            4.242641,
+            14.5
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "copper_vessel_south_diagonal_45",
+      "from": [
+        5.87868,
+        1.5,
+        15.778175
+      ],
+      "to": [
+        10.12132,
+        14,
+        15.778175
+      ],
+      "faces": {
+        "south": {
+          "texture": "#body",
+          "uv": [
+            0,
+            2,
+            4.242641,
+            14.5
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_north",
+      "from": [
+        3.5,
+        14,
+        0.5
+      ],
+      "to": [
+        12.5,
+        15,
+        0.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            9,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "upper_iron_collar_south",
+      "from": [
+        3.5,
+        14,
+        15.5
+      ],
+      "to": [
+        12.5,
+        15,
+        15.5
+      ],
+      "faces": {
+        "south": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            9,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "upper_iron_collar_west",
+      "from": [
+        0.5,
+        14,
+        3.5
+      ],
+      "to": [
+        0.5,
+        15,
+        12.5
+      ],
+      "faces": {
+        "west": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            9,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "upper_iron_collar_east",
+      "from": [
+        15.5,
+        14,
+        3.5
+      ],
+      "to": [
+        15.5,
+        15,
+        12.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            9,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "upper_iron_collar_north_diagonal_-45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        -0.485281
+      ],
+      "faces": {
+        "north": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            4.242641,
+            2
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_south_diagonal_-45",
+      "from": [
+        5.87868,
+        14,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "faces": {
+        "south": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            4.242641,
+            2
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_north_diagonal_45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        -0.485281
+      ],
+      "faces": {
+        "north": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            4.242641,
+            2
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_south_diagonal_45",
+      "from": [
+        5.87868,
+        14,
+        16.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "faces": {
+        "south": {
+          "texture": "#band",
+          "uv": [
+            0,
+            1,
+            4.242641,
+            2
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_cross_x",
+      "from": [
+        0.5,
+        14,
+        3.5
+      ],
+      "to": [
+        15.5,
+        15,
+        12.5
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_cross_z",
+      "from": [
+        3.5,
+        14,
+        0.5
+      ],
+      "to": [
+        12.5,
+        15,
+        15.5
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_north_-45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        1.636039
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_south_-45",
+      "from": [
+        5.87868,
+        14,
+        14.363961
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": -45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_north_45",
+      "from": [
+        5.87868,
+        14,
+        -0.485281
+      ],
+      "to": [
+        10.12132,
+        15,
+        1.636039
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "upper_iron_collar_cap_south_45",
+      "from": [
+        5.87868,
+        14,
+        14.363961
+      ],
+      "to": [
+        10.12132,
+        15,
+        16.485281
+      ],
+      "faces": {
+        "up": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#flat",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      },
+      "rotation": {
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "axis": "y",
+        "angle": 45
+      }
+    },
+    {
+      "name": "fixed_copper_crown",
+      "from": [
+        3.5,
+        15,
+        3.5
+      ],
+      "to": [
+        12.5,
+        16,
+        12.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#cap",
+          "uv": [
+            3.5,
+            0,
+            12.5,
+            1
+          ]
+        },
+        "south": {
+          "texture": "#cap",
+          "uv": [
+            3.5,
+            0,
+            12.5,
+            1
+          ]
+        },
+        "east": {
+          "texture": "#cap",
+          "uv": [
+            3.5,
+            0,
+            12.5,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#cap",
+          "uv": [
+            3.5,
+            0,
+            12.5,
+            1
+          ]
+        },
+        "up": {
+          "texture": "#cap",
+          "uv": [
+            3.5,
+            3.5,
+            12.5,
+            12.5
+          ]
+        },
+        "down": {
+          "texture": "#cap",
+          "uv": [
+            3.5,
+            3.5,
+            12.5,
+            12.5
+          ]
+        }
+      }
     }
-  ],
-  "textures": {
-    "particle": "minecraft:block/copper_block",
-    "port": "create:block/andesite_casing",
-    "copper": "minecraft:block/copper_block"
-  }
+  ]
 }
