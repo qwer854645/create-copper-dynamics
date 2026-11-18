@@ -33,14 +33,13 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
         elements[2]['faces'][side]=copy.deepcopy(original[2]['faces'][side])
         elements[2]['faces'][side]['texture']='#side'
     if name=='smart_fluid_hatch':
-        # The outward face sits just behind HatchFilterSlot's (8,5.15,9.5)
-        # origin. NORTH hatch orientation turns the native filter transform's
-        # local -45 degree tilt into +45 degrees on the model's south face.
-        # Icon and hitbox stay unchanged.
+        # NORTH rotates the native offset to (8,5.15,6.5), not z=9.5.
+        # Project onto the hatch underside z-y=2, then offset only .01px
+        # outwards. Native ValueBox scale is .5*.965 -> 7.72 model pixels.
         elements.append({
             'name':'smart_pipe_filter_slot',
-            'from':[4,1.15,9.28],'to':[12,9.15,9.48],
-            'rotation':{'angle':45,'axis':'x','origin':[8,5.15,9.5]},
+            'from':[4.14,.965,6.795],'to':[11.86,8.685,6.835],
+            'rotation':{'angle':45,'axis':'x','origin':[8,4.825,6.825]},
             'faces':{
                 'south':{'texture':'#filter','uv':[8,8,16,16]},
                 'north':{'texture':'#filter','uv':[0,8,8,16]},
