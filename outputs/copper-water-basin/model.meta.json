@@ -48,7 +48,7 @@
       "from": [
         0,
         1,
-        13
+        14
       ],
       "to": [
         16,
@@ -64,22 +64,22 @@
         3
       ],
       "to": [
-        3,
+        2,
         15,
-        13
+        14
       ]
     },
     {
       "name": "right_wall",
       "from": [
-        13,
+        14,
         1,
         3
       ],
       "to": [
         16,
         15,
-        13
+        14
       ]
     },
     {
@@ -100,7 +100,7 @@
       "from": [
         0,
         15,
-        13
+        14
       ],
       "to": [
         16,
@@ -116,22 +116,22 @@
         3
       ],
       "to": [
-        3,
+        2,
         16,
-        13
+        14
       ]
     },
     {
       "name": "counter_right",
       "from": [
-        13,
+        14,
         15,
         3
       ],
       "to": [
         16,
         16,
-        13
+        14
       ]
     },
     {
@@ -224,6 +224,58 @@
         10,
         16.25
       ]
+    },
+    {
+      "name": "bowl_step_back",
+      "from": [
+        2,
+        9,
+        3
+      ],
+      "to": [
+        14,
+        11,
+        4
+      ]
+    },
+    {
+      "name": "bowl_step_front",
+      "from": [
+        2,
+        9,
+        13
+      ],
+      "to": [
+        14,
+        11,
+        14
+      ]
+    },
+    {
+      "name": "bowl_step_left",
+      "from": [
+        2,
+        9,
+        4
+      ],
+      "to": [
+        3,
+        11,
+        13
+      ]
+    },
+    {
+      "name": "bowl_step_right",
+      "from": [
+        13,
+        9,
+        4
+      ],
+      "to": [
+        14,
+        11,
+        13
+      ]
     }
   ],
   "front": "south",
@@ -232,6 +284,21 @@
   "nativeWaterScaleY": 0.625,
   "nativeWaterOffsetY": 6.5,
   "fullWaterSurfaceY": 14,
+  "opening": [
+    [
+      2,
+      3
+    ],
+    [
+      14,
+      14
+    ]
+  ],
+  "bowlStepHeight": [
+    9,
+    11
+  ],
+  "countertopUV": "one continuous 16x16 X/Z layout, four strips use absolute UVs",
   "waterRendering": "native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved",
   "inventoryAndInteraction": "unchanged infinite fixed water; ordinary right click fills, sneak disposes",
   "reference": "https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json",

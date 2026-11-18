@@ -38,7 +38,7 @@ async function main(){
   else if(x===15)copper=y<6?3:1;
   paint(outer,x,y,colors[copper]);
   // Flat folded sheet-metal doors, with a single seam rather than inset furniture moulding.
-  paint(front,x,y,colors[x===8?0:x===9?Math.min(copper+1,6):copper]);
+  paint(front,x,y,colors[x===8?Math.max(1,copper-2):copper]);
   const iron=Math.max(1,Math.min(5,cluster-1));
   paint(inner,x,y,steel[Math.max(1,iron-1)]);
   paint(metal,x,y,steel[iron]);
@@ -50,6 +50,25 @@ async function main(){
   else if(x===15)rimColor=y<5?3:1;
   paint(rim,x,y,colors[rimColor]);
  }
+ // Draw one complete countertop in X/Z space. Its four model strips sample matching regions.
+ for(let x=2;x<14;x++){
+  paint(rim,x,2,colors[x<8?2:1]);
+  paint(rim,x,14,colors[x<10?6:5]);
+ }
+ for(let z=3;z<14;z++){
+  paint(rim,1,z,colors[z<9?2:1]);
+  paint(rim,14,z,colors[z<8?5:4]);
+ }
+ // A narrow dark reveal directly below the copper lip joins the inset steel bowl to the top.
+ for(let x=0;x<16;x++){
+  paint(inner,x,1,steel[0]);
+  paint(inner,x,2,steel[2]);
+ }
+ // Small taps are one pixel wide: use different atlas strips for lit and shaded faces.
+ for(let y=0;y<16;y++)for(let x=0;x<10;x++){
+  const shades=[2,4,5,4,3,3,2,1,2,3];
+  paint(metal,x,y,steel[Math.max(1,shades[x]-(y===6||y===7?1:0))]);
+ }
  // Short connected wear marks at folded edges; no evenly spaced dots or rivets.
  for(const [x,y]of [[2,2],[3,2],[4,2],[3,3],[12,11],[12,12],[11,12]])paint(front,x,y,colors[y<5?7:2]);
  const floor=Buffer.from(inner);
@@ -59,24 +78,50 @@ async function main(){
  const elements=[
   box('recessed_plinth',[1,0,1],[15,1,15],'metal'),
   box('cabinet_and_bowl_floor',[1,1,1],[15,9,15]),
-  box('back_wall',[0,1,0],[16,15,3]),box('front_cabinet',[0,1,13],[16,15,16]),
-  box('left_wall',[0,1,3],[3,15,13]),box('right_wall',[13,1,3],[16,15,13]),
-  box('counter_back',[0,15,0],[16,16,3],'rim'),box('counter_front',[0,15,13],[16,16,16],'rim'),
-  box('counter_left',[0,15,3],[3,16,13],'rim'),box('counter_right',[13,15,3],[16,16,13],'rim'),
-  box('tap_foot',[6.5,16,0.5],[9.5,17,3.5],'metal'),
+  box('back_wall',[0,1,0],[16,15,3]),box('front_cabinet',[0,1,14],[16,15,16]),
+  box('left_wall',[0,1,3],[2,15,14]),box('right_wall',[14,1,3],[16,15,14]),
+  box('counter_back',[0,15,0],[16,16,3],'rim'),box('counter_front',[0,15,14],[16,16,16],'rim'),
+  box('counter_left',[0,15,3],[2,16,14],'rim'),box('counter_right',[14,15,3],[16,16,14],'rim'),
+  box('tap_foot',[6.5,16,0.5],[9.5,17,3.5],'rim'),
   box('tap_stem',[7.5,17,1.5],[8.5,21,2.5],'metal'),
   box('tap_arch',[7.5,20,2.5],[8.5,21,7],'metal'),
   box('tap_nozzle',[7.5,18.5,6],[8.5,20,7],'metal'),
   box('mixer_lever',[9,17,1],[11,17.75,2],'metal'),
   box('left_cabinet_handle',[6,7,15.75],[6.75,10,16.25],'metal'),
-  box('right_cabinet_handle',[9.25,7,15.75],[10,10,16.25],'metal')];
+  box('right_cabinet_handle',[9.25,7,15.75],[10,10,16.25],'metal'),
+  box('bowl_step_back',[2,9,3],[14,11,4],'inner'),
+  box('bowl_step_front',[2,9,13],[14,11,14],'inner'),
+  box('bowl_step_left',[2,9,4],[3,11,13],'inner'),
+  box('bowl_step_right',[13,9,4],[14,11,13],'inner')];
  elements[1].faces.up.texture='#floor';
+ elements[1].faces.up.uv=[1,1,15,15];
  elements[3].faces.south={texture:'#front',uv:[0,1,16,15]};
- for(const [index,side]of [[2,'south'],[3,'north'],[4,'east'],[5,'west']])elements[index].faces[side].texture='#inner';
+ for(const [index,side]of [[2,'south'],[3,'north'],[4,'east'],[5,'west']]){
+  const e=elements[index],horizontal=side==='east'||side==='west'?2:0;
+  e.faces[side]={texture:'#inner',uv:[e.from[horizontal],16-e.to[1],e.to[horizontal],16-e.from[1]]};
+ }
+ for(const e of elements.filter(e=>e.name.startsWith('counter_'))){
+  // Absolute coordinates avoid restarting the rim texture at every corner.
+  e.faces.up.uv=[e.from[0],e.from[2],e.to[0],e.to[2]];
+  e.faces.down.uv=[e.from[0],e.from[2],e.to[0],e.to[2]];
+  for(const side of ['north','south'])e.faces[side].uv=[e.from[0],0,e.to[0],1];
+  for(const side of ['east','west'])e.faces[side].uv=[e.from[2],15,e.to[2],16];
+ }
+ for(const e of elements.filter(e=>e.name.startsWith('bowl_step_'))){
+  e.faces.up.uv=[e.from[0],e.from[2],e.to[0],e.to[2]];
+  e.faces.down.uv=[e.from[0],e.from[2],e.to[0],e.to[2]];
+  for(const side of ['north','south'])e.faces[side].uv=[e.from[0],16-e.to[1],e.to[0],16-e.from[1]];
+  for(const side of ['east','west'])e.faces[side].uv=[e.from[2],16-e.to[1],e.to[2],16-e.from[1]];
+ }
  elements[13].faces.down.texture='#hole';
  // Sample the textured interior of the iron atlas on the small tap and handle faces.
  for(const e of elements.slice(10))for(const f of Object.values(e.faces))if(f.texture==='#metal')
   f.uv=f.uv.map((v,i)=>v+(i%2===0?4:3));
+ for(const e of elements.filter(e=>e.name.startsWith('tap_')&&e.name!=='tap_foot'))
+  for(const [side,f]of Object.entries(e.faces))if(f.texture==='#metal'){
+   const w=f.uv[2]-f.uv[0],h=f.uv[3]-f.uv[1],u={north:3,south:5,east:7,west:2,up:1,down:7}[side];
+   f.uv=[u,2,u+w,2+h];
+  }
  const model={parent:'minecraft:block/block',textures:{particle:'ccd:block/copper_water_basin/outer',
   outer:'ccd:block/copper_water_basin/outer',front:'ccd:block/copper_water_basin/front',inner:'ccd:block/copper_water_basin/inner',
   floor:'ccd:block/copper_water_basin/floor',rim:'ccd:block/copper_water_basin/rim',metal:'ccd:block/copper_water_basin/metal',hole:'ccd:block/fluid_arm/core'},elements};
@@ -100,10 +145,11 @@ async function main(){
   const buffer=await render(faces,500,510,view,{center:[8,10,8],scale:18});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*500,top:95});
  }
- const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · 铜色折边台面</text><text x="750" y="78" font-size="16">柜体与台面统一铜色 · 保留灰色槽盆与细龙头 · Create 风格明暗像素簇</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽结构与金属内壁</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 本次仅重绘顶部台面贴图 / 未启动游戏</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · 连续铜台面与内嵌槽盆</text><text x="750" y="78" font-size="16">窄槽沿 · 12×11 槽口 · 深色嵌缝与收进盆底 · 铜箍连接细龙头</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽 · 收进盆底与铜箍</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 修正台面 UV 衔接，保留既有供水逻辑与原生水面 / 未启动游戏</text></g></svg>`);
  await sharp({create:{width:1500,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  save(path.join(output,'model.meta.json'),{textureSize:[16,16],geometry:elements.map(({name,from,to})=>({name,from,to})),
   front:'south',facing:'four horizontal directions',rimHeight:16,nativeWaterScaleY:.625,nativeWaterOffsetY:6.5,fullWaterSurfaceY:14,
+  opening:[[2,3],[14,14]],bowlStepHeight:[9,11],countertopUV:'one continuous 16x16 X/Z layout, four strips use absolute UVs',
   waterRendering:'native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved',
   inventoryAndInteraction:'unchanged infinite fixed water; ordinary right click fills, sneak disposes',
   reference:'https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json',
