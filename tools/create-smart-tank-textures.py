@@ -46,27 +46,47 @@ GOLD = [(0x9E, 0x69, 0x47), (0xAF, 0x79, 0x4F), (0xBF, 0x8E, 0x55), (0xC7, 0x97,
 # create:block/industrial_iron_block.png, neutral greys - never a warm brown, so no wood read
 IRON = [(0x35, 0x34, 0x38), (0x3F, 0x3E, 0x42), (0x49, 0x48, 0x48), (0x4F, 0x4F, 0x4F)]
 
-SIDE_BAND = {0, 1, 2, 4, 13, 14}
-SIDE_SEAM = {3, 12, 15}
+SIDE_SEAM = {3, 12}
 
-# Every block edge is wrapped in brass, not just the horizontal bands: 2 px matches the lid's
-# frame. The perimeter is tested first so the corners stay brass all the way round instead of
-# the seam rows cutting the vertical posts short.
-SIDE_FRAME = 2
+# `fluid_tank.png` is a FRAME ATLAS, not one 16x16 face. From the model's UVs:
+#
+#   rows 0..3   (uv [0,0,16,4])    the lid's side band      -> horizontal edge, top
+#   rows 12..15 (uv [0,12,16,16])  the bottom band          -> horizontal edge, bottom
+#   cols 0..3 / 12..15, rows 4..12 (uv [0,4,4,12] / [12,4,16,12]) -> the vertical corner strips
+#   the middle is behind the glass window and never sampled
+#
+# Ringing the whole 16x16 face (an earlier attempt) decorated pixels the model never reads and
+# left the actual bands wrong.
+#
+# The two axes still get different values, because the horizontal edge is shared with the block
+# above/below: bright brass there turns a tall tank into a stack of stripes.
+V_STRIP = {0, 1, 2, 3, 12, 13, 14, 15}     # columns of the vertical strips
+H_BAND_TOP = {0, 1}                          # dim brass rim rows (top)
+H_BAND_BOT = {14, 15}                        # dim brass rim rows (bottom)
+POST_HI, POST_LO = 8, 6            # GOLD indices across a vertical post (bright -> mid)
+EDGE_DIM = 3                        # GOLD index for the horizontal rim; brighter reads as stripes
 
 
 def _lum(c):
     return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
 
 
-def zone_side(x, y, width=SIDE_FRAME):
+def zone_side(x, y):
     lx, ly = x % 16, y % 16
-    if min(lx, ly, 15 - lx, 15 - ly) < width:
-        return "brass"
+    top_or_bot = ly in H_BAND_TOP or ly in H_BAND_BOT
+    if lx in V_STRIP and not top_or_bot:
+        # vertical corner post: bright outside, one step in, a dark bevel, then copper again
+        if lx in (0, 15):
+            return ("gold", POST_HI)
+        if lx in (1, 14):
+            return ("gold", POST_LO)
+        if lx in (2, 13):
+            return "seam"
+        return "copper"
+    if top_or_bot:
+        return ("gold", EDGE_DIM)
     if ly in SIDE_SEAM:
         return "seam"
-    if ly in SIDE_BAND:
-        return "brass"
     return "copper"
 
 
@@ -96,19 +116,24 @@ SIDE48_BAND = {0, 1, 2, 4, 9, 25, 41, 45}
 SIDE48_SEAM = {3, 8, 24, 40, 44, 47}
 
 
-def zone_connected_side(x, y, width=SIDE_FRAME):
+def zone_connected_side(x, y):
     rx, ry, rw, rh = CONN_REGION
     if rx <= x < rx + rw and ry <= y < ry + rh:
         sx, sy = x - rx, y - ry
-        if min(sx, sy, rw - 1 - sx, rh - 1 - sy) < width:
-            return "brass"
+        # the 48 px panel is the whole tank's face: same grammar, scaled to its own bands
+        if sx in (0, rw - 1):
+            return ("gold", POST_HI)
+        if sx in (1, rw - 2):
+            return ("gold", POST_LO)
+        if sy in (0, 1, rh - 2, rh - 1):
+            return ("gold", EDGE_DIM)
+        if sx in (2, rw - 3):
+            return "seam"
         if sy in SIDE48_SEAM:
             return "seam"
-        if sy in SIDE48_BAND:
-            return "brass"
         return "copper"
     if y >= CONN_PLAIN[1]:
-        return zone_side(x, y, width)   # the plain 16x16 face keeps the standalone grammar
+        return zone_side(x, y)          # the plain 16x16 face keeps the standalone grammar
     return "copper"
 
 
@@ -171,6 +196,11 @@ def convert(im: Image.Image, zonefn) -> Image.Image:
             zone = zonefn(x, y)
             if zone == "copper":
                 continue                     # Create's copper stays exactly as drawn
+            if isinstance(zone, tuple):
+                # ("gold", k) pins an exact ladder entry, so a corner post can be a solid bright
+                # gold instead of inheriting whatever tone the source pixel happened to have
+                op[x, y] = GOLD[zone[1]] + (a,)
+                continue
             t = rank[(r, g, b)]
             ramp = GOLD if zone == "brass" else IRON
             op[x, y] = ramp[min(len(ramp) - 1, round(t * (len(ramp) - 1)))] + (a,)
