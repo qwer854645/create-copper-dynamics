@@ -236,5 +236,5 @@
   "inventoryAndInteraction": "unchanged infinite fixed water; ordinary right click fills, sneak disposes",
   "reference": "https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json",
   "artwork": "CCD original geometry and pixels; external reference applies to structure only, not textures",
-  "pixelStyle": "approved CCD booster pump: irregular connected copper clusters, industrial iron palette, folded edges and one door seam; six textures redrawn at 16x16"
+  "pixelStyle": "approved CCD booster pump: copper cabinet and separately drawn folded copper countertop; iron bowl and tap; original 16x16 clusters"
 }

@@ -20,6 +20,12 @@ async function main(){
   '55444445555433','55444455544333','54445554443332','44455544433322',
   '33344433322211','12222111111100'];
  if(clusters.length!==14||clusters.some(row=>row.length!==14))throw Error('Invalid pixel-art panel');
+ const rimClusters=[
+  '66777665556665','66666655556654','65555555555543','65554445555543',
+  '65544445555433','65444455554433','65444555544333','65555554443343',
+  '65555444433343','55554444333443','55444443334433','44433333333322',
+  '33322222222211','12211111111000'];
+ if(rimClusters.some(row=>row.length!==14))throw Error('Invalid copper rim pixels');
  const outer=Buffer.alloc(1024),front=Buffer.alloc(1024),inner=Buffer.alloc(1024),rim=Buffer.alloc(1024),metal=Buffer.alloc(1024);
  const steel=[[53,52,56],[79,79,79],[103,97,97],[130,132,124],[159,163,153],[190,193,175]];
  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
@@ -36,8 +42,13 @@ async function main(){
   const iron=Math.max(1,Math.min(5,cluster-1));
   paint(inner,x,y,steel[Math.max(1,iron-1)]);
   paint(metal,x,y,steel[iron]);
-  const rimColor=(x===0||y===0)?5:(x===15||y===15)?1:Math.max(2,iron);
-  paint(rim,x,y,steel[rimColor]);
+  // Copper folded countertop, drawn separately from the cabinet and iron bowl.
+  let rimColor=Number(rimClusters[py][px]);
+  if(y===0)rimColor=x<11?6:5;
+  else if(y===15)rimColor=x<6?2:1;
+  else if(x===0)rimColor=y<10?6:4;
+  else if(x===15)rimColor=y<5?3:1;
+  paint(rim,x,y,colors[rimColor]);
  }
  // Short connected wear marks at folded edges; no evenly spaced dots or rivets.
  for(const [x,y]of [[2,2],[3,2],[4,2],[3,3],[12,11],[12,12],[11,12]])paint(front,x,y,colors[y<5?7:2]);
@@ -89,7 +100,7 @@ async function main(){
   const buffer=await render(faces,500,510,view,{center:[8,10,8],scale:18});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*500,top:95});
  }
- const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · Create 风格像素重绘</text><text x="750" y="78" font-size="16">保留柜式结构 · 铜面明暗像素簇 · 工业铁灰色台面与槽盆 · 简洁折边门缝</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽结构与金属内壁</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 六张贴图重新按 16×16 像素绘制，不参考外部模组贴图 / 未启动游戏</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · 铜色折边台面</text><text x="750" y="78" font-size="16">柜体与台面统一铜色 · 保留灰色槽盆与细龙头 · Create 风格明暗像素簇</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽结构与金属内壁</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 本次仅重绘顶部台面贴图 / 未启动游戏</text></g></svg>`);
  await sharp({create:{width:1500,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  save(path.join(output,'model.meta.json'),{textureSize:[16,16],geometry:elements.map(({name,from,to})=>({name,from,to})),
   front:'south',facing:'four horizontal directions',rimHeight:16,nativeWaterScaleY:.625,nativeWaterOffsetY:6.5,fullWaterSurfaceY:14,
@@ -97,7 +108,7 @@ async function main(){
   inventoryAndInteraction:'unchanged infinite fixed water; ordinary right click fills, sneak disposes',
   reference:'https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json',
   artwork:'CCD original geometry and pixels; external reference applies to structure only, not textures',
-  pixelStyle:'approved CCD booster pump: irregular connected copper clusters, industrial iron palette, folded edges and one door seam; six textures redrawn at 16x16'});
+  pixelStyle:'approved CCD booster pump: copper cabinet and separately drawn folded copper countertop; iron bowl and tap; original 16x16 clusters'});
  const swatches=[];
  for(const [i,name]of ['outer','front','inner','rim','floor','metal'].entries())swatches.push({
   input:await sharp(path.join(textures,name+'.png')).resize(192,192,{kernel:'nearest'}).png().toBuffer(),left:(i%3)*208,top:Math.floor(i/3)*208});
