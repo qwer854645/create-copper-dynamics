@@ -18,6 +18,19 @@ import net.minecraft.world.item.ItemStack;
 @PrefixGameTestTemplate(false)
 public final class QuicksandTests {
     @GameTest(template="empty")
+    public static void browserVisibilityMatchesOptionalMedia(GameTestHelper h) {
+        for(var medium:dev.ccd.compat.ProcessingMedia.ALL) {
+            boolean hidden=!medium.available();
+            h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.bucket.get())==hidden,"Bucket key visibility wrong");
+            h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.source.get())==hidden,"Source visibility wrong");
+            h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.flowing.get())==hidden,"Flowing visibility wrong");
+            h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(new ItemStack(medium.bucket.get()))==hidden,"Item stack visibility wrong");
+            h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(new FluidStack(medium.source.get(),1000))==hidden,"Fluid stack visibility wrong");
+        }
+        h.assertTrue(!dev.ccd.compat.BrowserVisibility.hidden(dev.ccd.CCDFluids.QUICKSAND.get()),"Base fluid was hidden");
+        h.succeed();
+    }
+    @GameTest(template="empty")
     public static void processingMediaRecipesAndBuckets(GameTestHelper h) {
         for(var medium:dev.ccd.compat.ProcessingMedia.ALL) {
             var bucket=new ItemStack(medium.bucket.get());

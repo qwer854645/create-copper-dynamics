@@ -54,13 +54,13 @@ public final class ProcessingMedia {
         };
     }
     public static final List<Medium> ALL=List.of(
-        new Medium("seething_reagent",0xff74b9e8,1300),
-        new Medium("enriching_reagent",0xff85b741,300),
-        new Medium("soul_stripping_reagent",0xff58c6ca,300),
-        new Medium("explosive_slurry",0xffb98a55,300),
-        new Medium("resonant_solution",0xffa682cb,300),
-        new Medium("sculk_suspension",0xff226b70,300),
-        new Medium("purifying_solution",0xffc8ecdc,300)
+        new Medium("seething_reagent",0xff518fe8,1300),
+        new Medium("enriching_reagent",0xff126568,300),
+        new Medium("soul_stripping_reagent",0xffafeeee,300),
+        new Medium("explosive_slurry",0xffa64e36,300),
+        new Medium("resonant_solution",0xffb774c9,300),
+        new Medium("sculk_suspension",0xff1a8b7e,300),
+        new Medium("purifying_solution",0xffffedb0,300)
     );
     public static void register(IEventBus bus) { TYPES.register(bus); FLUIDS.register(bus); }
 }

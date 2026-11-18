@@ -6,9 +6,11 @@ from zipfile import ZipFile
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[1]
 A=ROOT/'src/main/resources/assets/ccd'
-colors={'quicksand':(211,185,129),'seething_reagent':(116,185,232),'enriching_reagent':(133,183,65),
-    'soul_stripping_reagent':(88,198,202),'explosive_slurry':(185,138,85),'resonant_solution':(166,130,203),
-    'sculk_suspension':(34,107,112),'purifying_solution':(200,236,220)}
+import re
+colors={'quicksand':(211,185,129)}
+for name,value in re.findall(r'new Medium\("([^"]+)",0xff([0-9a-f]{6})',
+        (ROOT/'src/main/java/dev/ccd/compat/ProcessingMedia.java').read_text(encoding='utf-8')):
+    colors[name]=tuple(bytes.fromhex(value))
 jar=next((ROOT/'build/moddev/artifacts').glob('*minecraft-resources.jar'))
 with ZipFile(jar) as z:
     empty=Image.open(BytesIO(z.read('assets/minecraft/textures/item/bucket.png'))).convert('RGBA')
