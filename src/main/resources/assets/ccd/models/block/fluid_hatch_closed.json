@@ -2,218 +2,78 @@
   "parent": "create:block/item_hatch/block_closed",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "0": "ccd:block/fluid_hatch/frame",
-    "1": "ccd:block/faucet/body",
+    "plate": "ccd:block/fluid_hatch/plate",
     "pipe": "create:block/pipes",
     "port": "create:block/pipes",
-    "particle": "ccd:block/fluid_hatch/frame"
+    "particle": "ccd:block/fluid_hatch/plate"
   },
   "elements": [
     {
+      "name": "thin_copper_plate",
       "from": [
-        1,
-        0,
+        2,
+        2,
         0
       ],
       "to": [
-        15,
-        16,
+        14,
+        14,
         2
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          1,
-          0,
-          0
-        ]
-      },
       "faces": {
         "north": {
+          "texture": "#plate",
           "uv": [
-            1,
-            1,
-            8,
-            9
-          ],
-          "texture": "#0"
-        },
-        "east": {
-          "uv": [
-            1,
-            1,
-            0,
-            9
-          ],
-          "texture": "#0"
+            14,
+            2,
+            2,
+            14
+          ]
         },
         "south": {
-          "uv": [
-            1,
-            1,
-            8,
-            9
-          ],
-          "texture": "#0"
-        },
-        "west": {
-          "uv": [
-            0,
-            1,
-            1,
-            9
-          ],
-          "texture": "#0"
-        },
-        "up": {
-          "uv": [
-            1,
-            0,
-            8,
-            1
-          ],
-          "texture": "#0"
-        },
-        "down": {
-          "uv": [
-            1,
-            1,
-            8,
-            0
-          ],
-          "texture": "#0"
-        }
-      }
-    },
-    {
-      "from": [
-        2,
-        1,
-        -2
-      ],
-      "to": [
-        14,
-        15,
-        0
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          2,
-          1,
-          -2
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            1.5,
-            1.5,
-            7.5,
-            8.5
-          ],
-          "texture": "#0"
-        },
-        "east": {
-          "uv": [
-            9,
-            1.5,
-            10,
-            8.5
-          ],
-          "texture": "#0"
-        },
-        "west": {
-          "uv": [
-            10,
-            1.5,
-            9,
-            8.5
-          ],
-          "texture": "#0"
-        },
-        "up": {
-          "uv": [
-            11.5,
-            2,
-            10.5,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#0"
-        },
-        "down": {
-          "uv": [
-            10.5,
-            2,
-            11.5,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#0"
-        }
-      }
-    },
-    {
-      "from": [
-        2,
-        0,
-        2
-      ],
-      "to": [
-        14,
-        10.6,
-        12.6
-      ],
-      "rotation": {
-        "angle": -45,
-        "axis": "x",
-        "origin": [
-          8,
-          0,
-          2
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            9.5,
-            15,
-            15,
-            9.5
-          ],
-          "rotation": 90,
-          "texture": "#0"
-        },
-        "south": {
+          "texture": "#plate",
           "uv": [
             2,
-            3,
+            2,
             14,
             14
-          ],
-          "texture": "#1"
+          ]
+        },
+        "east": {
+          "texture": "#plate",
+          "uv": [
+            2,
+            2,
+            4,
+            14
+          ]
         },
         "west": {
+          "texture": "#plate",
           "uv": [
-            9.5,
-            9.5,
-            15,
-            15
-          ],
-          "rotation": 90,
-          "texture": "#0"
+            2,
+            2,
+            4,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#plate",
+          "uv": [
+            2,
+            2,
+            14,
+            4
+          ]
         },
         "down": {
+          "texture": "#plate",
           "uv": [
-            1.5,
-            9.5,
-            7.5,
-            15.1
-          ],
-          "texture": "#0"
+            2,
+            2,
+            14,
+            4
+          ]
         }
       }
     },
@@ -221,21 +81,21 @@
       "name": "native_pipe_rim_connector",
       "from": [
         4,
-        7.4,
-        1.9000000000000004
+        4,
+        0
       ],
       "to": [
         12,
-        15.4,
-        5.9
+        12,
+        4
       ],
       "rotation": {
-        "axis": "x",
-        "angle": -45,
+        "angle": 0,
+        "axis": "y",
         "origin": [
+          0,
           8,
-          11.4,
-          5.9
+          -12
         ]
       },
       "faces": {
@@ -284,21 +144,21 @@
     {
       "from": [
         3,
-        6.4,
-        3.9000000000000004
+        3,
+        2
       ],
       "to": [
         13,
-        16.4,
-        5.9
+        13,
+        4
       ],
       "rotation": {
-        "axis": "x",
-        "angle": -45,
+        "angle": 0,
+        "axis": "y",
         "origin": [
           8,
-          11.4,
-          5.9
+          28,
+          -4
         ]
       },
       "faces": {

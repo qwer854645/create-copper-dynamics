@@ -7,26 +7,41 @@ import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
 import com.simibubi.create.content.logistics.itemHatch.ItemHatchBlock;
 import com.simibubi.create.content.logistics.itemHatch.ItemHatchBlockEntity;
 import dev.ccd.CopperDynamics;
+import net.createmod.catnip.math.VoxelShaper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
 /** Native hatch placement, waterlogging and wrenching; fixed fluid access without lid feedback. */
 public class FluidHatchBlock extends ItemHatchBlock {
     public static final MapCodec<FluidHatchBlock> CODEC = simpleCodec(FluidHatchBlock::new);
+    private static final VoxelShaper FLAT_SHAPE = VoxelShaper.forHorizontal(Shapes.or(
+        Block.box(2, 2, 0, 14, 14, 2), Block.box(3, 3, 2, 13, 13, 4)), Direction.SOUTH);
 
     public FluidHatchBlock(Properties properties) { super(properties); }
+
+    @Override public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        // The smart hatch still uses the native sloped housing and filter position.
+        return state.is(CopperDynamics.FLUID_HATCH.get())
+            ? FLAT_SHAPE.get(state.getValue(FACING).getOpposite()) : super.getShape(state, level, pos, context);
+    }
 
     public static boolean isFluidContainer(Level level, ItemStack stack) {
         return !stack.isEmpty() && (GenericItemEmptying.canItemBeEmptied(level, stack)

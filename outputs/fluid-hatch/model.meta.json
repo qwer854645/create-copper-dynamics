@@ -1,40 +1,46 @@
 {
   "source": "Create 6.0.10-280",
-  "nativeHatchElements": 3,
+  "copperPlate": {
+    "from": [
+      2,
+      2,
+      0
+    ],
+    "to": [
+      14,
+      14,
+      2
+    ]
+  },
   "nativeParts": [
     "create:block/fluid_pipe/rim_connector/south",
     "create:block/fluid_pipe/rim/south"
   ],
   "textures": {
-    "frame": {
+    "plate": {
       "size": [
-        32,
-        32
+        16,
+        16
       ],
-      "recoloredPixels": 535,
-      "alpha": "unchanged"
+      "source": "CCD faucet/body with one-pixel folded edges"
     }
   },
   "portFrontCenter": [
     8,
-    11.4,
-    5.9
+    8,
+    4
   ],
-  "portRotation": {
-    "axis": "x",
-    "angle": -45
-  },
+  "portRotation": "none",
   "nativePortUVs": "unchanged",
-  "nativePortCullFaces": "removed for internal angled mount",
+  "nativePortCullFaces": "removed for internal straight mount",
   "openState": "inherited property unused; all states use one fixed model; no interaction state changes or scheduled reset",
   "preserved": [
     "placement",
     "four horizontal rotations",
     "waterlogging",
-    "collision",
     "fluid proxy",
     "container interaction",
     "smart hatch geometry and filter"
   ],
-  "artwork": "Create hatch derived texture and hatch/pipe geometry; existing CCD copper fascia; upstream artwork remains owned by Create"
+  "artwork": "CCD plate geometry and pixel texture; native Create pipe geometry, UVs, textures and item display transforms"
 }
