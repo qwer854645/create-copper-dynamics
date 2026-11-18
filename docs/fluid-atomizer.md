@@ -119,3 +119,8 @@ CCDAtomizer.entityHandler('example:regeneration', ctx => {
 换液、规则或脚本重载会重新判定自定义加工计时，避免旧媒介的进度直接生成新媒介产物。原生加工类型的计时仍保持原生规则。
 
 本版只做代码与资源静态检查；没有编译、运行游戏、KubeJS 脚本实测或性能／视觉实测。
+# 外观调整：后移转子与前部储液
+
+原生风扇转子向背面移动 4 模型像素，普通渲染与 Flywheel 仅对 CCD 雾化器替换同一 partial model，普通鼓风机不受影响。前部按实际储罐流体和液量绘制水平液面，六种放置方向均使用世界竖直液位。Flywheel 下继续绘制非实例化液体；轴、风扇速度与气流规则保持原生实现。
+
+背板使用 gearbox 原生轴孔，周围棕色像素改用 CCD 铜色纹理；轴孔暗部及灰色孔壁保留。模型／原图来源为 Create，未标为 CCD 原创。生成器 `tools/create-atomizer-model.py`，离线预览 `outputs/fluid-atomizer/preview.png`；蓝色液体仅为示意。Java 编译通过，未启动客户端验证透明层、转子动态或 Flywheel Mixin 实际效果。

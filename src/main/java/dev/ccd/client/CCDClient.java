@@ -33,6 +33,7 @@ import com.simibubi.create.content.kinetics.mechanicalArm.ArmVisual;
 public final class CCDClient {
     /** Register before model baking; native package entities and conveyors use these maps. */
     public static void init() {
+        AtomizerModels.init();
         FluidPackagerRenderer.registerModels();
         FluidGaugeModel.registerModels();
         FluidArmModels.registerModels();
@@ -70,7 +71,7 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_WATER_SUPPLY_BE.get(), ConduitBoxRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
-        event.registerBlockEntityRenderer(CopperDynamics.FLUID_ATOMIZER_BE.get(), com.simibubi.create.content.kinetics.fan.EncasedFanRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.FLUID_ATOMIZER_BE.get(), AtomizerRenderer::new);
     }
     @SubscribeEvent public static void fluidExtensions(RegisterClientExtensionsEvent event) {
         event.registerFluidType(new IClientFluidTypeExtensions() {
@@ -89,7 +90,7 @@ public final class CCDClient {
             });
         });
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ATOMIZER_BE.get())
-            .factory(com.simibubi.create.content.kinetics.fan.FanVisual::new).apply());
+            .factory(com.simibubi.create.content.kinetics.fan.FanVisual::new).neverSkipVanillaRender().apply());
         event.enqueueWork(() -> SimpleBlockEntityVisualizer.builder(CopperDynamics.FLUID_ARM_BE.get())
             .factory(ArmVisual::new).neverSkipVanillaRender().apply());
     }

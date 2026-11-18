@@ -25,6 +25,8 @@
     "defaultRequire": 1
   },
   "client": [
+    "AtomizerRotorRendererMixin",
+    "AtomizerRotorVisualMixin",
     "CanisterPartialModelAccessor",
     "CanisterEntityRenderMixin",
     "CanisterEntityVisualMixin",

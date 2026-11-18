@@ -59,6 +59,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     public boolean isFluidSide(Direction side) { return side == null || side.getAxis() != getBlockState().getValue(FluidAtomizerBlock.FACING).getAxis(); }
     public IFluidHandler fluidHandler(Direction side) { return isFluidSide(side) ? tank.getCapability() : null; }
     public boolean mistActive() { return mistActive; }
+    public FluidStack displayFluid() { return tank.getPrimaryHandler().getFluid().copy(); }
     public FluidStack activeFluid() { return activeFluid.copy(); }
     private FanProcessingType activeType() { return level != null && level.isClientSide() ? clientType : active == null ? null : active.type(); }
     public FanProcessingType nativeFallback() {
