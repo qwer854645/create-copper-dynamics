@@ -7,28 +7,38 @@ const reference=path.resolve(process.argv[2]);
 const textures=path.join(assets,'textures/block/smart_collection_grate'),output=path.join(root,'outputs/smart-collection-grate');
 for(const dir of [textures,output])fs.mkdirSync(dir,{recursive:true});
 const save=(p,d)=>fs.writeFileSync(p,JSON.stringify(d,null,2)+'\n');
-const copper=[[70,32,24],[144,73,49],[154,80,56],[167,90,64],[178,98,71],[194,107,76],[200,116,86],[214,123,91],[227,130,108]];
-const brass=[[70,46,30],[158,105,71],[175,121,79],[191,142,85],[206,160,90],[228,183,99],[238,193,103],[247,203,108],[255,235,140]];
-const palette=new Map(copper.map((color,i)=>[color.join(','),brass[i]]));
+// Native mechanical_arm_side / mechanical_arm / brass_block material ramp.
+// The rim layout is redrawn here rather than copper-palette replacement.
+const brass=[[73,47,27],[114,71,49],[164,107,71],[191,142,85],[215,170,94],
+ [228,183,99],[247,203,108],[251,220,125],[255,235,140]];
 const sourcePanel=loadModel('create:block/smart_fluid_pipe/block').elements[2];
 const panel={name:'front_filter_panel',from:[5.5,2,14],to:[10.5,7,15.5],faces:{}};
 const reversed={north:'south',south:'north',east:'west',west:'east',up:'up',down:'down'};
 for(const [side,source]of Object.entries(sourcePanel.faces))panel.faces[reversed[side]]={...source,texture:'#filter'};
 async function main(){
- for(const name of ['body','rim']){
-  const {data,info}=await sharp(path.join(assets,'textures/block/copper_collection_grate',name+'.png'))
-   .ensureAlpha().raw().toBuffer({resolveWithObject:true});
-  const pixels=Buffer.from(data);
-  for(let i=0;i<data.length;i+=4){
-   const color=palette.get([...data.subarray(i,i+3)].join(','));if(!color)throw Error('Unexpected copper pixel');
-   pixels.set(color,i);
-  }
-  await sharp(pixels,{raw:{width:info.width,height:info.height,channels:4}}).png().toFile(path.join(textures,name+'.png'));
+ const size=32,bodyPixels=Buffer.alloc(size*size*4),rimPixels=Buffer.alloc(size*size*4);
+ const paint=(pixels,x,y,index)=>pixels.set([...brass[index],255],(y*size+x)*4);
+ for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+  // Four texels across the two-unit rim: folded brown edge, gold glint,
+  // warm flat, then the narrow shadow at the inner reveal.
+  const d=Math.min(x,y,31-x,31-y),brightSide=y<4||x<4;
+  let c=d===0?2:d===1?(brightSide?6:5):d===2?(brightSide?5:4):d===3?1:4;
+  if(d===1&&((y===1&&x>=4&&x<=8)||(x===1&&y>=15&&y<=18)))c=7;
+  if((x===6&&y===1)||(x===1&&y===16))c=8;
+  paint(rimPixels,x,y,c);
+  // The unchanged side UVs use rows 4..5 at this resolution. Give that
+  // thin edge the same bright rail / brown fold seen on the arm base.
+  let side=4;
+  if(y===4)side=x<3||x>28?5:x>=8&&x<=12?7:6;
+  else if(y===5)side=x<2||x>29?1:2;
+  paint(bodyPixels,x,y,side);
  }
+ for(const [name,pixels]of Object.entries({body:bodyPixels,rim:rimPixels}))
+  await sharp(pixels,{raw:{width:size,height:size,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  const shared=loadModel('ccd:block/copper_collection_grate');
  const smartElements=structuredClone(shared.elements);
  for(const e of smartElements.filter(e=>e.name.startsWith('raised_copper_lip')))
-  for(const f of Object.values(e.faces))if(f.texture==='#copper')f.texture='#brass';
+  for(const [side,f]of Object.entries(e.faces))if(f.texture==='#copper')f.texture=side==='down'?'#rim':'#brass';
  save(path.join(assets,'models/block/smart_collection_grate.json'),{parent:'ccd:block/copper_collection_grate',textures:{
   brass:'ccd:block/smart_collection_grate/body',rim:'ccd:block/smart_collection_grate/rim',
   particle:'ccd:block/copper_collection_grate/body'},elements:smartElements});
@@ -62,21 +72,25 @@ async function main(){
   const buffer=await render(fluid?[...faces,...waterFaces]:faces,500,440,view,{center:[8,4,8],scale:20,alphaBlend:fluid});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*500,top:90});
  }
- const labels=Buffer.from(`<svg width="1500" height="620" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">智能集液栅 · 铜槽体与黄铜边框</text><text x="750" y="77" font-size="16">铜壳为主 · 顶部边框和过滤槽保留黄铜 · 灰色栅条</text><text x="250" y="566" font-size="19">正面过滤面板</text><text x="750" y="566" font-size="19">存液示意</text><text x="1250" y="566" font-size="19">背面</text><text x="750" y="605" font-size="14" fill="#677070">实际模型离线预览 / 当前未设置过滤，游戏内由原生行为显示过滤图标 / 未构建或启动客户端</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="620" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">智能集液栅 · 动力臂风格黄铜顶框</text><text x="750" y="77" font-size="16">细金色高光 · 棕色折边与内沿暗缝 · 铜槽体与原生过滤面板</text><text x="250" y="566" font-size="19">正面过滤面板</text><text x="750" y="566" font-size="19">存液示意</text><text x="1250" y="566" font-size="19">背面</text><text x="750" y="605" font-size="14" fill="#677070">实际模型离线预览 / 当前未设置过滤，游戏内由原生行为显示过滤图标 / 未构建或启动客户端</text></g></svg>`);
  await sharp({create:{width:1500,height:620,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  const comparison=[];
  for(const [i,part]of [await mesh('ccd:block/copper_collection_grate'),faces].entries())comparison.push({
   input:await render(part,500,440,[20,18,38],{center:[8,4,8],scale:20}),left:i*500,top:50});
- const comparisonLabels=Buffer.from(`<svg width="1000" height="550" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" fill="#303535" text-anchor="middle"><text x="500" y="35" font-size="24">集液栅 · 铜壳为主，黄铜区分智能版</text><text x="250" y="505" font-size="19">普通版 · 铜壳</text><text x="750" y="505" font-size="19">智能版 · 黄铜顶框与过滤槽</text><text x="500" y="538" font-size="13" fill="#677070">同角度实际模型离线预览 / 铜面沿用 CCD 增压泵原贴图布局，灰色栅条复用 Create 工业铁材质</text></g></svg>`);
+ const comparisonLabels=Buffer.from(`<svg width="1000" height="550" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" fill="#303535" text-anchor="middle"><text x="500" y="35" font-size="24">集液栅 · 智能版顶框参考动力臂重绘</text><text x="250" y="505" font-size="19">普通版 · 铜壳</text><text x="750" y="505" font-size="19">智能版 · 细金色高光与棕色折边</text><text x="500" y="538" font-size="13" fill="#677070">同角度实际模型离线预览 / 铜壳和灰色栅条沿用上一版，顶部黄铜框重新绘制</text></g></svg>`);
  await sharp({create:{width:1000,height:550,channels:4,background:'#e5e8e2'}}).composite([...comparison,{input:comparisonLabels,left:0,top:0}]).png().toFile(path.join(output,'comparison.png'));
- await sharp(path.join(textures,'body.png')).resize(256,256,{kernel:'nearest'}).png().toFile(path.join(output,'texture.png'));
- save(path.join(output,'model.meta.json'),{textureSize:[16,16],base:'ccd:block/copper_collection_grate',panel:[panel.from,panel.to],
+ const swatches=[];for(const [i,name]of ['body','rim'].entries())swatches.push({
+  input:await sharp(path.join(textures,name+'.png')).resize(256,256,{kernel:'nearest'}).png().toBuffer(),left:i*272,top:0});
+ await sharp({create:{width:528,height:256,channels:4,background:'#e5e8e2'}}).composite(swatches).png().toFile(path.join(output,'texture.png'));
+ save(path.join(output,'model.meta.json'),{textureSize:[32,32],base:'ccd:block/copper_collection_grate',panel:[panel.from,panel.to],
   materials:{body:'copper',topLip:'brass on all faces of the four lip elements',filter:'native brass bezel',bars:'native grey iron'},
+  topLipStyle:{references:['create:block/mechanical_arm_side','create:block/mechanical_arm','create:block/brass_block'],
+   layout:'redrawn 32px pixel art: brown outer fold, narrow bright gold rail, warm flat, inner brown reveal',sideUVRows:[4,5]},
   panelFaceCenter:[8,4.5,15.5],interactionCenter:[8,4.5,15.5625],filterScale:.25,
   filter:'native FilteringBehaviour.forFluids and ValueBoxTransform.Sided, front only',
   facingRotations:{south:0,north:180,east:270,west:90},capacity:2000,
   unchanged:['collection','search','redstone pause','native bottom pipe','fluid rendering'],
-  artwork:'CCD brass recoloring of the approved booster-pump copper pixels; iron bars/liner, filter bezel UVs/texture and pipe belong to Create'});
+  artwork:'CCD redrawn brass top rim referencing native arm colors and folded rails; copper reuses CCD booster pump; native iron/filter/pipe belong to Create'});
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),filter:'front only',facings:4}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

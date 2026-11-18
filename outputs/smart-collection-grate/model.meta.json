@@ -1,7 +1,7 @@
 {
   "textureSize": [
-    16,
-    16
+    32,
+    32
   ],
   "base": "ccd:block/copper_collection_grate",
   "panel": [
@@ -21,6 +21,18 @@
     "topLip": "brass on all faces of the four lip elements",
     "filter": "native brass bezel",
     "bars": "native grey iron"
+  },
+  "topLipStyle": {
+    "references": [
+      "create:block/mechanical_arm_side",
+      "create:block/mechanical_arm",
+      "create:block/brass_block"
+    ],
+    "layout": "redrawn 32px pixel art: brown outer fold, narrow bright gold rail, warm flat, inner brown reveal",
+    "sideUVRows": [
+      4,
+      5
+    ]
   },
   "panelFaceCenter": [
     8,
@@ -48,5 +60,5 @@
     "native bottom pipe",
     "fluid rendering"
   ],
-  "artwork": "CCD brass recoloring of the approved booster-pump copper pixels; iron bars/liner, filter bezel UVs/texture and pipe belong to Create"
+  "artwork": "CCD redrawn brass top rim referencing native arm colors and folded rails; copper reuses CCD booster pump; native iron/filter/pipe belong to Create"
 }
