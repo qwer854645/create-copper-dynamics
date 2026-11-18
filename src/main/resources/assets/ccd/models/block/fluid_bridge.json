@@ -80,25 +80,16 @@
     {
       "name": "raised_socket_south",
       "from": [
-        3,
-        3,
-        16
+        2.95,
+        2.95,
+        15.9
       ],
       "to": [
-        13,
-        13,
-        18
+        13.05,
+        13.05,
+        17.95
       ],
       "faces": {
-        "north": {
-          "texture": "#socket",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
         "south": {
           "texture": "#socket",
           "uv": [
@@ -111,37 +102,37 @@
         "east": {
           "texture": "#socket",
           "uv": [
-            -2,
+            13,
             3,
-            0,
+            11,
             13
           ]
         },
         "west": {
           "texture": "#socket",
           "uv": [
-            16,
+            5,
             3,
-            18,
+            3,
             13
           ]
         },
         "up": {
           "texture": "#socket",
           "uv": [
-            3,
-            16,
             13,
-            18
+            3,
+            3,
+            5
           ]
         },
         "down": {
           "texture": "#socket",
           "uv": [
-            3,
-            -2,
             13,
-            0
+            11,
+            3,
+            13
           ]
         }
       }
@@ -149,14 +140,14 @@
     {
       "name": "raised_socket_north",
       "from": [
-        3,
-        3,
-        -2
+        2.95,
+        2.95,
+        -1.95
       ],
       "to": [
-        13,
-        13,
-        0
+        13.05,
+        13.05,
+        0.1
       ],
       "faces": {
         "north": {
@@ -168,49 +159,40 @@
             13
           ]
         },
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
         "east": {
           "texture": "#socket",
           "uv": [
-            16,
+            13,
             3,
-            18,
+            11,
             13
           ]
         },
         "west": {
           "texture": "#socket",
           "uv": [
-            -2,
+            5,
             3,
-            0,
+            3,
             13
           ]
         },
         "up": {
           "texture": "#socket",
           "uv": [
-            3,
-            -2,
             13,
-            0
+            3,
+            3,
+            5
           ]
         },
         "down": {
           "texture": "#socket",
           "uv": [
-            3,
-            16,
             13,
-            18
+            11,
+            3,
+            13
           ]
         }
       }

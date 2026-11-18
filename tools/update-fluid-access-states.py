@@ -32,6 +32,6 @@ for name in ('fluid_access_port', 'fluid_bridge'):
         for flag, end in ends:
             # The unrotated south socket points opposite the model's FACING.
             sx, sy = rotations[opposite[end]]
-            parts.append({'when': {'facing': facing, flag: True},
+            parts.append({'when': {'facing': facing},
                           'apply': {'model': f'ccd:block/{name}_socket', 'x': sx, 'y': sy}})
     save(ROOT / f'blockstates/{name}.json', {'multipart': parts})

@@ -147,6 +147,22 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
             "ccd.fluid_arm.status", Component.translatable("ccd.fluid_arm.status." + status));
         return true;
     }
+    @Override public boolean addToTooltip(List<Component> tooltip, boolean sneaking) {
+        // Retain native kinetic diagnostics, replacing only the item-arm hint.
+        var nativeTooltip = new java.util.ArrayList<Component>();
+        boolean shown = super.addToTooltip(nativeTooltip, sneaking);
+        for (Component line : nativeTooltip) tooltip.add(fluidArmHint(line));
+        return shown;
+    }
+    private static Component fluidArmHint(Component component) {
+        var content = component.getContents();
+        var result = content instanceof net.minecraft.network.chat.contents.TranslatableContents translated
+            && translated.getKey().equals("create.hint.mechanical_arm_no_targets")
+            ? Component.translatable("ccd.hint.fluid_arm_no_targets").withStyle(component.getStyle())
+            : component.copy().plainCopy().withStyle(component.getStyle());
+        for (Component sibling : component.getSiblings()) result.append(fluidArmHint(sibling));
+        return result;
+    }
     private String workStatus() {
         if (getSpeed() == 0) return "stopped";
         if (!state().ccd$held().isEmpty()) {

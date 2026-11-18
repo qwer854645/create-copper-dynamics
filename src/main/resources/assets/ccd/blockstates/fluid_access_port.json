@@ -12,8 +12,7 @@
     },
     {
       "when": {
-        "facing": "north",
-        "attached_negative": true
+        "facing": "north"
       },
       "apply": {
         "model": "ccd:block/fluid_access_port_socket",
@@ -33,8 +32,7 @@
     },
     {
       "when": {
-        "facing": "south",
-        "attached_negative": true
+        "facing": "south"
       },
       "apply": {
         "model": "ccd:block/fluid_access_port_socket",
@@ -54,8 +52,7 @@
     },
     {
       "when": {
-        "facing": "east",
-        "attached_negative": true
+        "facing": "east"
       },
       "apply": {
         "model": "ccd:block/fluid_access_port_socket",
@@ -75,8 +72,7 @@
     },
     {
       "when": {
-        "facing": "west",
-        "attached_negative": true
+        "facing": "west"
       },
       "apply": {
         "model": "ccd:block/fluid_access_port_socket",
@@ -96,8 +92,7 @@
     },
     {
       "when": {
-        "facing": "up",
-        "attached_negative": true
+        "facing": "up"
       },
       "apply": {
         "model": "ccd:block/fluid_access_port_socket",
@@ -117,8 +112,7 @@
     },
     {
       "when": {
-        "facing": "down",
-        "attached_negative": true
+        "facing": "down"
       },
       "apply": {
         "model": "ccd:block/fluid_access_port_socket",
