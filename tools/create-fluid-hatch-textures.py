@@ -66,17 +66,23 @@ BRASS_WIDE = _rgb([
 ])
 
 # The body ramps are a *slice of the same ladder*, not a different palette: every tone below is
-# a real Create colour. Where the slice starts sets how dark the hatch looks.
+# a real Create colour. Where the slice starts sets how dark the hatch looks, and the number of
+# steps sets how much of the source's shading survives.
 #
-#   start #3D161E (lum 31, 10 steps)  -> reported "too dark": the saturated low coppers read
-#                                        heavier than a neutral grey of the same luminance
-#   start #9A5038 (lum 94,  7 steps)  -> reported "a bit pale": the slice is too short, the body
-#                                        loses its tonal steps and flattens out
-#   start #724731 (lum 79,  9 steps)  -> the middle ground, and what is used below
-COPPER_BODY = _rgb(["724731", "904931", "9A5038", "A75A40", "B26247",
-                    "C26B4C", "C87456", "D67B5B", "E3826C"])
-BRASS_BODY = _rgb(["724731", "9E6947", "AF794F", "BF8E55", "C79758", "CEA05A", "D7AA5E",
-                   "E4B763", "EEC168", "F7CB6C", "FBDC7D", "FFEB8C"])
+#   copper start #3D161E (lum 31, 10 steps) -> "too dark"
+#   copper start #9A5038 (lum 94,  7 steps) -> "too pale": the slice was too short and went flat
+#   copper start #724731 (lum 79,  9 steps) -> still "too dark" once the repainting was removed
+#   copper start #9A5038 (lum 94,  7 steps) -> current; with nothing painted on top, the short
+#                                              slice no longer flattens anything
+COPPER_BODY = _rgb(["9A5038", "A75A40", "B26247", "C26B4C", "C87456", "D67B5B", "E3826C"])
+
+# Brass follows create:block/mechanical_arm.png rather than brass_block (user: "黄铜可以参考动力臂
+# 的颜色"). The arm carries more intermediate bronze tones between lum 78 and 116 - #854A34,
+# #875137, #8E5B3D, #995A3D, #A46B47 - where brass_block jumps straight from #724731 to #9E6947.
+# Those extra steps are what make it read as machined brass instead of a flat gold sheet.
+BRASS_BODY = _rgb(["724731", "854A34", "875137", "8E5B3D", "995A3D", "9E6947", "A46B47",
+                   "AF794F", "BF8E55", "C79758", "CEA05A", "D7AA5E", "E4B763", "EEC168",
+                   "F7CB6C"])
 
 TINT = {"copper": COPPER_BODY, "brass": BRASS_BODY}
 
