@@ -44,13 +44,13 @@ public final class CCDPonderScenes {
         var s=begin(builder,"fluid_packaging","Packaging and Unpacking Fluids");
         show(s,util,A,AllBlocks.FLUID_TANK.getDefaultState()); water(s,A,4000);
         show(s,util,B,CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING,Direction.EAST));
-        text(s,util,A,"The rear of a Fluid Packager connects to a fluid container");
+        text(s,util,A,"Attach fluid packagers to the fluid container they should target");
         s.overlay().showOutline(PonderPalette.BLUE,"source",util.select().position(A),45);
-        text(s,util,B,"A Redstone Signal packs up to 4000 mB into a Copper Package");
+        text(s,util,B,"Given redstone power, it will pack fluids from the container into a package");
         s.world().modifyBlockEntity(B,FluidPackagerBlockEntity.class,be->{be.heldBox=FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,4000));}); water(s,A,0);
-        text(s,util,B,"Copper Packages use the same addresses and transport as ordinary Packages");
+        text(s,util,B,"These can be picked up and transported like any other item");
         s.world().modifyBlockEntity(B,FluidPackagerBlockEntity.class,be->{be.heldBox=ItemStack.EMPTY;}); water(s,A,4000);
-        text(s,util,A,"Arriving Copper Packages are emptied into the attached container");
+        text(s,util,A,"Packages inserted will be destroyed, unpacking the fluids into the container");
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(Items.WATER_BUCKET));
         text(s,util,B,"R-Click with a filled container to filter Redstone-triggered packaging");
         show(s,util,C,AllBlocks.REPACKAGER.getDefaultState());
@@ -65,12 +65,12 @@ public final class CCDPonderScenes {
         text(s,util,B,"R-Click the front with a fluid container to empty or fill it");
         s.world().setBlock(B,CopperDynamics.SMART_FLUID_HATCH.get().defaultBlockState().setValue(FluidHatchBlock.FACING,Direction.WEST),true);
         s.overlay().showFilterSlotInput(util.vector().centerOf(B),Direction.EAST,45);
-        text(s,util,B,"Smart Fluid Hatches only allow fluids selected by their filter");
+        text(s,util,B,"Smart Fluid Hatches can restrict which fluids may pass");
         s.world().setFilterData(util.select().position(B),SmartFluidHatchBlockEntity.class,new ItemStack(Items.WATER_BUCKET));
         var arm=new BlockPos(2,1,4);
         show(s,util,arm,CopperDynamics.FLUID_ARM.get().defaultBlockState());
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(CopperDynamics.FLUID_ARM_ITEM.get()));
-        text(s,util,B,"Before placing a Mechanical Fluid Arm, select hatch fronts as inputs and outputs");
+        text(s,util,B,"Mechanical Fluid Arms have to be assigned their in- and outputs before they are placed");
         var output=new BlockPos(4,1,3); var hatch=output.south();
         show(s,util,output,AllBlocks.FLUID_TANK.getDefaultState());
         show(s,util,hatch,CopperDynamics.FLUID_HATCH.get().defaultBlockState().setValue(FluidHatchBlock.FACING,Direction.NORTH));
@@ -90,21 +90,53 @@ public final class CCDPonderScenes {
         text(s,util,B,"A Fluid Bridge provides access to both end containers through one interface");
         show(s,util,B.south(),AllBlocks.FLUID_PIPE.getDefaultState());
         s.overlay().showFilterSlotInput(util.vector().centerOf(B),Direction.EAST,45);
-        text(s,util,B,"Fluids selected by one end are excluded from the opposite end if its filter is empty"); s.markAsFinished();
+        text(s,util,B,"Use filters to assign different fluids to each container"); s.markAsFinished();
     }
     public static void tanks(SceneBuilder builder,SceneBuildingUtil util) {
-        var s=begin(builder,"smart_tanks","Storage using Smart Fluid Tanks");
-        show(s,util,B,CopperDynamics.SMART_FLUID_TANK.get().defaultBlockState());
-        show(s,util,B.above(),CopperDynamics.SMART_FLUID_TANK.get().defaultBlockState());
-        text(s,util,B,"Smart Fluid Tanks can be stacked for greater storage capacity");
-        text(s,util,B.above(),"Their square cross-section can be 1×1, 2×2 or 3×3 blocks");
-        s.world().hideSection(util.select().fromTo(B,B.above()),Direction.UP); s.idle(20);
-        for(var p:java.util.List.of(A,B,C)) show(s,util,p,CopperDynamics.HORIZONTAL_SMART_TANK.get().defaultBlockState().setValue(HorizontalSmartTankBlock.AXIS,Direction.Axis.X));
-        text(s,util,B,"Horizontal Smart Fluid Tanks extend along their placement axis");
-        water(s,A,3000);
-        text(s,util,A,"Different fluids remain separate while sharing the structure’s capacity");
+        var s=begin(builder,"smart_tanks","Dimensions of a Smart Fluid Tank");
+        var origin=new BlockPos(1,1,1);
+        tankStructure(s,util,origin,false);
+        text(s,util,B,"Smart Fluid Tanks can be combined to increase the total capacity");
+        text(s,util,B.above(),"Their cross-section can be 1×1, 2×2 or 3×3 blocks");
+        s.world().hideSection(util.select().fromTo(origin,origin.offset(1,2,1)),Direction.UP); s.idle(20);
+        for(var p:BlockPos.betweenClosed(origin,origin.offset(1,2,1)))
+            s.world().setBlock(p.immutable(),Blocks.AIR.defaultBlockState(),false);
+        tankStructure(s,util,origin,true);
+        text(s,util,B,"Horizontal Smart Fluid Tanks can be extended horizontally");
+        s.world().modifyBlockEntity(origin,SmartFluidTankBlockEntity.class,tank->{
+            tank.inventory.fill(new FluidStack(Fluids.WATER,24000),FluidAction.EXECUTE);
+            tank.inventory.fill(new FluidStack(Fluids.LAVA,16000),FluidAction.EXECUTE);
+        });
+        text(s,util,A,"A single tank structure can store multiple fluids");
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(com.simibubi.create.AllItems.WRENCH.asStack());
-        text(s,util,B,"A Wrench can be used to toggle the windows"); s.markAsFinished();
+        text(s,util,B,"Using a Wrench, a tanks' window can be toggled"); s.markAsFinished();
+    }
+    /** Ponder does not run server connectivity: stage complete controller/member data explicitly. */
+    private static void tankStructure(CreateSceneBuilder s,SceneBuildingUtil util,BlockPos origin,boolean horizontal) {
+        var block=horizontal?CopperDynamics.HORIZONTAL_SMART_TANK.get():CopperDynamics.SMART_FLUID_TANK.get();
+        for(int layer=0;layer<3;layer++) {
+            for(int x=0;x<2;x++) for(int z=0;z<2;z++) {
+                var pos=origin.offset(horizontal?layer:x,horizontal?x:layer,z);
+                int localX=horizontal?z:x,localZ=horizontal?1-x:z;
+                var shape=localX==0
+                    ?(localZ==0?com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_NW:com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_SW)
+                    :(localZ==0?com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_NE:com.simibubi.create.content.fluids.tank.FluidTankBlock.Shape.WINDOW_SE);
+                var state=block.defaultBlockState()
+                    .setValue(com.simibubi.create.content.fluids.tank.FluidTankBlock.BOTTOM,layer==0)
+                    .setValue(com.simibubi.create.content.fluids.tank.FluidTankBlock.TOP,layer==2)
+                    .setValue(com.simibubi.create.content.fluids.tank.FluidTankBlock.SHAPE,shape);
+                if(horizontal) state=state.setValue(HorizontalSmartTankBlock.AXIS,Direction.Axis.X);
+                s.world().setBlock(pos,state,false);
+                s.world().modifyBlockEntity(pos,SmartFluidTankBlockEntity.class,tank->{
+                    tank.preventConnectivityUpdate();
+                    tank.setController(origin);
+                    tank.setWidth(2); tank.setHeight(3); tank.setWindows(true);
+                });
+            }
+            var from=origin.offset(horizontal?layer:0,horizontal?0:layer,0);
+            var to=from.offset(horizontal?0:1,horizontal?1:0,1);
+            s.world().showSection(util.select().fromTo(from,to),Direction.DOWN); s.idle(15);
+        }
     }
     public static void faucets(SceneBuilder builder,SceneBuildingUtil util) {
         var s=begin(builder,"fluid_faucets","Pouring Fluids using Faucets");
@@ -132,7 +164,7 @@ public final class CCDPonderScenes {
         text(s,util,B,"Handheld fluid containers can also be emptied or filled by R-Clicking");
         var depot=new BlockPos(2,1,4); show(s,util,depot,AllBlocks.DEPOT.getDefaultState());
         s.world().createItemOnBeltLike(depot,Direction.NORTH,com.simibubi.create.AllItems.CRUSHED_IRON.asStack());
-        text(s,util,depot,"The stored fluid determines the processing effect of the air current");
+        text(s,util,depot,"Air currents passing through the Atomizer can process items in bulk");
         s.world().modifyBlock(B,state->state.setValue(FluidAtomizerBlock.POWERED,true),false);
         text(s,util,B,"A Redstone Signal stops atomizing without stopping the air current"); s.markAsFinished();
     }
@@ -199,10 +231,10 @@ public final class CCDPonderScenes {
         s.world().setKineticSpeed(util.select().position(B),32);
         text(s,util,B,"Booster Pumps govern the flow of their attached pipe networks");
         water(s,source,2000); water(s,target,2000);
-        text(s,util,B,"The direction marker indicates the direction of flow");
+        text(s,util,B,"Their arrow indicates the direction of flow");
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(com.simibubi.create.AllItems.WRENCH.asStack());
         s.world().modifyBlock(B,state->state.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING,Direction.NORTH),false);
-        text(s,util,B,"Use a Wrench to reverse the flow; input rotation direction does not affect it");
+        text(s,util,B,"A Wrench can be used to reverse the direction");
         text(s,util,B,"Greater pumping pressure and range come with a higher Stress Impact"); s.markAsFinished();
     }
 }
