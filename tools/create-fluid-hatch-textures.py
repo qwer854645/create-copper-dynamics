@@ -65,7 +65,15 @@ BRASS_WIDE = _rgb([
     "D7AA5E", "E4B763", "EEC168", "F7CB6C", "FBDC7D", "FFEB8C",   # create:block/brass_block.png
 ])
 
-TINT = {"copper": COPPER_WIDE, "brass": BRASS_WIDE}
+# The body ramps start at a mid tone, not at the darkest seam. A saturated copper tone reads
+# darker than a neutral grey of the same luminance, so a ramp that reaches down to #3D161E
+# (lum 31) made the whole hatch look muddy even though the measured mean luminance barely
+# moved. These lifted ramps keep the body in the 94..149 (copper) / 114..232 (brass) band.
+COPPER_BODY = _rgb(["9A5038", "A75A40", "B26247", "C26B4C", "C87456", "D67B5B", "E3826C"])
+BRASS_BODY = _rgb(["9E6947", "AF794F", "BF8E55", "C79758", "CEA05A", "D7AA5E",
+                   "E4B763", "EEC168", "F7CB6C", "FBDC7D", "FFEB8C"])
+
+TINT = {"copper": COPPER_BODY, "brass": BRASS_BODY}
 
 
 def load_create(src: Path, rel: str) -> Image.Image:
