@@ -14,15 +14,15 @@ ROOT=Path(__file__).resolve().parents[1]
 ASSETS=ROOT/'src/main/resources/assets/ccd'
 OUT=ROOT/'outputs/fluid-access'
 JAR=next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar'))
-COPPER=['#663525','#83432d','#a15437','#b56343','#c57450','#d48760','#e49a73','#f0b28a']
+COPPER=['#793b2b','#904931','#9a5038','#a75a40','#b26247','#c26b4c','#d67b5b','#e3826c']
 BRASS=['#724731','#a46b47','#af794f','#c79758','#d7aa5e','#e4b763','#f7cb6c','#fbdc7d']
 IRON=['#353438','#4f4f4f','#686d65','#818783','#b4b5a7']
 # Original panel clusters. Edge folds and small broad highlights, no tiled noise.
 PANEL=[
- '0122222222222210','1677776666555661','1656654455666541','1655443345665541',
- '1554333455665441','1543345554433441','1544556654334541','1555666543345541',
- '1556654433456541','1545543334566441','1544334556665541','1553345566544341',
- '1654455665443341','1555544443334441','1233333333333321','0011111111111100']
+ '0133333333333310','1676666556665661','1655444555544541','1554434555445541',
+ '1544334455555541','1544334555444541','1554455554433541','1555555444334541',
+ '1555544443345541','1544444554455541','1544455555444541','1554555544433541',
+ '1655554444334541','1554444334445541','1233333333333321','0011111111111100']
 
 def save(path,data):
     path.parent.mkdir(parents=True,exist_ok=True)
@@ -35,18 +35,19 @@ def texture(name,ramp,socket=False,band=False):
     if socket:
         # Original 10x10 socket face: folded metal, recessed inner wall,
         # connected highlight clusters and a clean dark central opening.
-        metal=['#292b2b','#414642','#5c655e','#7d877b','#abb19e','#d0d0b9']
+        # Actual stock_link iron palette, including its warm silver and grey-green shadow.
+        metal=['#2b2b2e','#3e3d41','#535751','#696962','#848277','#9f9b93','#bcb6ae']
         socket_rows=[
-            '0124444430',
-            '1455433321',
-            '2431111231',
-            '2310000131',
-            '2310000121',
-            '2310000121',
-            '2310000131',
-            '2321111231',
-            '1233222210',
-            '0111111100',
+            '0235555430',
+            '2566655542',
+            '3542222452',
+            '3521001242',
+            '3420001232',
+            '3420001232',
+            '3521001242',
+            '3542222342',
+            '2454444321',
+            '0122222210',
         ]
         for y,row in enumerate(socket_rows,3):
             for x,index in enumerate(row,3): c.set(x,y,metal[int(index)])
