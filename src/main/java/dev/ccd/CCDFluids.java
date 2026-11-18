@@ -31,6 +31,17 @@ public final class CCDFluids {
     private CCDFluids() {}
     private static final DeferredRegister<FluidType> TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, CopperDynamics.ID);
     private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, CopperDynamics.ID);
+    public static final DeferredHolder<FluidType, FluidType> QUICKSAND_TYPE = TYPES.register("quicksand", () -> new FluidType(
+        FluidType.Properties.create().descriptionId("fluid_type.ccd.quicksand").density(1800).viscosity(3000)
+            .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Source> QUICKSAND = FLUIDS.register("quicksand",
+        () -> new BaseFlowingFluid.Source(quicksandProperties()));
+    public static final DeferredHolder<Fluid, BaseFlowingFluid.Flowing> FLOWING_QUICKSAND = FLUIDS.register("flowing_quicksand",
+        () -> new BaseFlowingFluid.Flowing(quicksandProperties()));
+    private static BaseFlowingFluid.Properties quicksandProperties() {
+        return new BaseFlowingFluid.Properties(QUICKSAND_TYPE, QUICKSAND, FLOWING_QUICKSAND)
+            .block(CopperDynamics.QUICKSAND_BLOCK).bucket(CopperDynamics.QUICKSAND_BUCKET).tickRate(15).levelDecreasePerBlock(2);
+    }
     public static final DeferredHolder<FluidType, FluidType> POWDER_SNOW_TYPE = TYPES.register("powder_snow", () -> new FluidType(
         FluidType.Properties.create().descriptionId("fluid_type.ccd.powder_snow").temperature(263).density(500).viscosity(2000)
             .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_POWDER_SNOW)

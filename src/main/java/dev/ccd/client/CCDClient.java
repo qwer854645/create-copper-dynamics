@@ -75,6 +75,10 @@ public final class CCDClient {
     }
     @SubscribeEvent public static void fluidExtensions(RegisterClientExtensionsEvent event) {
         event.registerFluidType(new IClientFluidTypeExtensions() {
+            @Override public ResourceLocation getStillTexture() { return ResourceLocation.fromNamespaceAndPath("ccd","block/quicksand_still"); }
+            @Override public ResourceLocation getFlowingTexture() { return ResourceLocation.fromNamespaceAndPath("ccd","block/quicksand_flow"); }
+        },CCDFluids.QUICKSAND_TYPE.get());
+        event.registerFluidType(new IClientFluidTypeExtensions() {
             private static final ResourceLocation SNOW = ResourceLocation.withDefaultNamespace("block/powder_snow");
             @Override public ResourceLocation getStillTexture() { return SNOW; }
             @Override public ResourceLocation getFlowingTexture() { return SNOW; }

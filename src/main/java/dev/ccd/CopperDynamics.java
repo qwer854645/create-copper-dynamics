@@ -92,6 +92,8 @@ public final class CopperDynamics {
     public static final DeferredRegister<ArmInteractionPointType> ARM_POINTS = DeferredRegister.create(CreateRegistries.ARM_INTERACTION_POINT_TYPE, ID);
     public static final DeferredRegister<FanProcessingType> FAN_TYPES = DeferredRegister.create(CreateRegistries.FAN_PROCESSING_TYPE, ID);
     public static final DeferredHolder<FanProcessingType, AtomizingFanType> ATOMIZING_FAN_TYPE = FAN_TYPES.register("atomizing", AtomizingFanType::new);
+    public static final DeferredHolder<FanProcessingType, dev.ccd.atomizing.SandblastingType> SANDBLASTING =
+        FAN_TYPES.register("sandblasting", dev.ccd.atomizing.SandblastingType::new);
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, ID);
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, ID);
     public static final DeferredHolder<RecipeType<?>, RecipeType<AtomizingRecipe>> ATOMIZING_TYPE = RECIPE_TYPES.register("atomizing",
@@ -118,6 +120,12 @@ public final class CopperDynamics {
         ITEMS.register("copper_bucket", () -> new CopperBucketItem(new Item.Properties().stacksTo(1)));
     public static final DeferredHolder<Item, HoneycombMoldItem> HONEYCOMB_MOLD =
         ITEMS.register("honeycomb_mold", () -> new HoneycombMoldItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.LiquidBlock> QUICKSAND_BLOCK =
+        BLOCKS.register("quicksand", () -> new net.minecraft.world.level.block.LiquidBlock(CCDFluids.QUICKSAND.get(),
+            BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.WATER)));
+    public static final DeferredHolder<Item, net.minecraft.world.item.BucketItem> QUICKSAND_BUCKET =
+        ITEMS.register("quicksand_bucket", () -> new net.minecraft.world.item.BucketItem(CCDFluids.QUICKSAND.get(),
+            new Item.Properties().craftRemainder(net.minecraft.world.item.Items.BUCKET).stacksTo(1)));
     public static final DeferredHolder<Item, FluidPackageItem> FLUID_PACKAGE =
         ITEMS.register("fluid_package", () -> new FluidPackageItem(new Item.Properties().stacksTo(1)));
     // Internal native-arm cargo representation; deliberately absent from creative tabs and recipes.
@@ -344,6 +352,7 @@ public final class CopperDynamics {
                 output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
                 output.accept(SMART_COLLECTION_GRATE_ITEM.get());
                 output.accept(COPPER_BUCKET.get());
+                output.accept(QUICKSAND_BUCKET.get());
                 output.accept(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET);
                 output.accept(HONEYCOMB_MOLD.get());
                 output.accept(FLUID_ATOMIZER_ITEM.get());

@@ -292,5 +292,10 @@
   "ccd.fluid_access.no_storage": "No internal storage; external devices perform transfers",
   "block.ccd.fluid_access_port.tooltip.summary": "Extends the attached container's _fluid access faces_ without pumping or storage.",
   "block.ccd.fluid_bridge.tooltip.summary": "Access both end containers from the sides. End filters restrict _fluid reads and transfers_.",
-  "block.ccd.horizontal_smart_fluid_tank": "Horizontal Smart Fluid Tank"
+  "block.ccd.horizontal_smart_fluid_tank": "Horizontal Smart Fluid Tank",
+  "fluid_type.ccd.quicksand": "Quicksand",
+  "fluid.ccd.quicksand": "Quicksand",
+  "fluid.ccd.flowing_quicksand": "Quicksand",
+  "block.ccd.quicksand": "Quicksand",
+  "item.ccd.quicksand_bucket": "Quicksand Bucket"
 }
