@@ -20,7 +20,7 @@ for element in geometry:
     for face in element['faces'].values():
         face['uv']=[0,0,16,16]
         face.pop('rotation',None)
-for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fluid_hatch','brass_casing','brass_block')]:
+for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fluid_hatch','brass_block','brass_block')]:
     elements=copy.deepcopy(geometry)
     # Restore the native triangular transparency and its precise rotated UVs on
     # the inclined part's two side faces only. All other material references stay.

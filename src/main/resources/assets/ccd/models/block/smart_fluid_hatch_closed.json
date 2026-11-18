@@ -1,13 +1,13 @@
 {
   "parent": "create:block/item_hatch/block_closed",
   "textures": {
-    "0": "create:block/brass_casing",
+    "0": "create:block/brass_block",
     "1": "create:block/copper_underside",
     "side": "ccd:block/smart_fluid_hatch/side_clipped",
     "front_copper": "create:block/fluid_tank",
     "filter": "create:block/smart_pipe_2",
     "pipe": "create:block/pipes",
-    "particle": "create:block/brass_casing"
+    "particle": "create:block/brass_block"
   },
   "render_type": "minecraft:cutout_mipped",
   "elements": [
