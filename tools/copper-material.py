@@ -117,33 +117,77 @@ def already_relit(im: Image.Image, palette) -> bool:
     return all(px in allowed for px in im.getdata())
 
 
-def cap(n=16):
-    """Concentric recessed cover, lit from the top-left, drawn straight onto Create's copper.
+def _shift(g, delta):
+    hi = len(PAL_COPPER) - 1
+    return [[max(0, min(hi, v + delta)) for v in row] for row in g]
 
-    Generated from ring geometry rather than from a stored bitmap, so it is deterministic and
-    a second run produces exactly the same pixels.
+
+def cap(n=16):
+    """Copper top plate: thin lit rim, dark inner shadow ring, sunken floor with a drain.
+
+    Used by copper_water_supply for BOTH the visible top ring (`copper_top.up`) and the floor
+    of the 12x12 recess (`copper_base.up`), each at full 0..16 UV, so the artwork has to read
+    as a frame around a sunken middle.
+
+    Only one pixel of the rim is bright: an earlier version spent three rings on highlight
+    tones, which made the plate read pale even though it spanned the full ramp.
     """
-    g = [[4] * n for _ in range(n)]
+    g = [[3] * n for _ in range(n)]
     for y in range(n):
         for x in range(n):
             ring = min(x, y, n - 1 - x, n - 1 - y)
             lit = (x + y) < (n - 1)
             if ring == 0:
-                g[y][x] = 2 if lit else 0
+                g[y][x] = 2 if lit else 1          # outer seam
             elif ring == 1:
-                g[y][x] = 6 if lit else 3
+                g[y][x] = 7 if lit else 4          # the one bright rim pixel
             elif ring == 2:
-                g[y][x] = 1
+                g[y][x] = 3 if lit else 2
+            elif ring == 3:
+                g[y][x] = 1                        # shadow where the rim drops into the floor
             else:
-                v = 4
-                if lit:
-                    v += 1
-                if 5 <= x <= 10 and 5 <= y <= 10:
-                    v = 5
-                if 7 <= x <= 8 and 7 <= y <= 8:
-                    v = 6
-                g[y][x] = min(6, v)
-    return _to_image(g, PAL_COPPER)
+                v = 3 if lit else 2                # sunken floor
+                if ring >= 5 and not lit:
+                    v = 1
+                g[y][x] = v
+    # drain in the middle of the floor
+    for y in range(7, 11):
+        for x in range(7, 11):
+            g[y][x] = 2 if (x in (7, 10) or y in (7, 10)) else 0
+    return _to_image(_shift(g, SUPPLY_TONE_SHIFT), PAL_COPPER)
+
+
+# The whole supply box read pale: its base/top panels are thin bands, so the copper has to sit
+# one step deeper than Create's default plate. Measured as the mean luminance of the rendered
+# block: shift 0 -> 95.0, -1 -> 88.5, -2 -> 84.1. -2 loses the rim detail and goes muddy.
+SUPPLY_TONE_SHIFT = -1
+
+
+def supply_body(n=16):
+    """Copper frame atlas for copper_water_supply.
+
+    Its model samples only the outer two rows/columns as thin bands:
+        copper_base sides  v14..16      copper_top sides   v0..2
+        copper_post sides  u0..2 / 14..16
+    create:block/copper_underside was a poor fit there: rows 14..16 are that sheet's *bounce
+    light* band, so every box side came out as a bright strip and the whole block read pale.
+    Here the ring is laid out the way the model slices it - dark seam outside, one lit bevel,
+    shadowed underneath.
+    """
+    g = [[3] * n for _ in range(n)]
+    for y in range(n):
+        for x in range(n):
+            d = {"top": y, "bottom": n - 1 - y, "left": x, "right": n - 1 - x}
+            edge = min(d, key=d.get)
+            ring = d[edge]
+            if ring > 1:
+                continue
+            lit_edge = edge in ("top", "left")
+            if ring == 0:
+                g[y][x] = 2 if lit_edge else 1
+            else:
+                g[y][x] = 6 if edge == "top" else 5 if edge == "left" else 4
+    return _to_image(_shift(g, SUPPLY_TONE_SHIFT), PAL_COPPER)
 
 
 def core(n=16):
@@ -218,6 +262,7 @@ def derive(assets: Path, create_src: Path):
 
     # Concentric cap and dark recess: geometric, so they are deterministic across runs.
     out["block/copper_water_supply/cap.png"] = cap(16)
+    out["block/copper_water_supply/body.png"] = supply_body(16)
     out["block/fluid_arm/core.png"] = core(16)
 
     # block/smart_collection_grate/body.png used to be Create brass tiled 2x2 here. It is now

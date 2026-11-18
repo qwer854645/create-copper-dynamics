@@ -3,10 +3,10 @@
   "render_type": "minecraft:cutout",
   "ambientocclusion": false,
   "textures": {
-    "body": "create:block/copper_underside",
+    "body": "ccd:block/copper_water_supply/body",
     "cap": "ccd:block/copper_water_supply/cap",
     "glass": "ccd:block/copper_water_supply/glass",
-    "particle": "create:block/copper_underside",
+    "particle": "ccd:block/copper_water_supply/body",
     "cage": "minecraft:entity/conduit/cage",
     "eye": "minecraft:entity/conduit/open_eye"
   },

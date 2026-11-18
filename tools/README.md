@@ -23,8 +23,13 @@ Create 的贴图：
 | 贴图 | 来源 |
 |---|---|
 | `block/booster_pump/shaft_face.png` | Create `copper_underside` + 原生 gearbox 轴孔 |
-| `block/copper_water_supply/cap.png` | 同心凹槽按环几何生成，落在 Create 的 8 阶铜色 |
+| `block/copper_water_supply/cap.png` | 顶部圆环 + 凹槽底共用的铜板，按环几何生成 |
+| `block/copper_water_supply/body.png` | 潮涌箱专用的**边框图集**，按模型切片的 2px 条带排布 |
 | `block/fluid_arm/core.png` | 深色轴孔按环几何生成，落在深色阶 |
+
+`copper_water_supply` 原来把 `body` 指向 `create:block/copper_underside`，但它的 UV 是按边框图集
+采样的（`v14..16` / `v0..2`），正好落在那张图的反弹光带上，于是整个箱体发白。现在改用专用边框图。
+另外整块铜比默认深一档（`SUPPLY_TONE_SHIFT = -1`），见文档 §12。
 
 ### 集液栅（一格高模型专用）
 
