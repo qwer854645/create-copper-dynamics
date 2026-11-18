@@ -1,5 +1,11 @@
 # 流沙与批量喷砂
 
+## Connected 空触媒转换
+
+安装 `create_connected` 时，手持流沙桶、装有至少 1000 mB 流沙的铜桶或标准流体容器，右击 `create_connected:empty_fan_catalyst` 可转换为其原生 `fan_sanding_catalyst`。生存模式消耗 1000 mB 并保留容器余液／空桶，创造模式不扣液；兼容的朝向与含水属性保留。普通沙子交互仍由 Connected 自身决定。CCD 的喷砂类型也识别该触媒，所以只有 CCD＋Connected 时无需额外附属即可处理砂纸配方；已有其他喷砂类型时继续优先复用。
+
+本交互通过可选注册表查询实现，不硬依赖 Connected 类；合装环境交互尚未实际运行验证。
+
 - 流体 ID：`ccd:quicksand`、`ccd:flowing_quicksand`，桶为 `ccd:quicksand_bucket`。可通过管道、铜桶、储罐和流体物流处理，并可以在世界中放置。
 - 动力搅拌：1 个沙子 → 1000 mB 流沙，不要求加热。
 - 普通鼓风机：在气流路径中放置流沙，后方掉落物或传送带物品按 Create 原生批量加工机制喷砂。

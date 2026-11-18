@@ -28,6 +28,9 @@ public final class SandblastingType implements FanProcessingType {
         return CopperDynamics.SANDBLASTING.get();
     }
     @Override public boolean isValidAt(Level level,BlockPos pos) {
+        if(net.neoforged.fml.ModList.get().isLoaded("create_connected")
+            && net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock())
+                .equals(dev.ccd.compat.ConnectedQuicksandInteraction.SANDING)) return true;
         var state=level.getFluidState(pos);
         return !state.isEmpty() && state.getType().getFluidType()==CCDFluids.QUICKSAND_TYPE.get();
     }
