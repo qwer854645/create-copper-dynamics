@@ -46,7 +46,11 @@ GOLD = [(0x9E, 0x69, 0x47), (0xAF, 0x79, 0x4F), (0xBF, 0x8E, 0x55), (0xC7, 0x97,
 # create:block/industrial_iron_block.png, neutral greys - never a warm brown, so no wood read
 IRON = [(0x35, 0x34, 0x38), (0x3F, 0x3E, 0x42), (0x49, 0x48, 0x48), (0x4F, 0x4F, 0x4F)]
 
-SIDE_SEAM = {3, 12}
+# Seam rows sit directly against the brass bands. Create's own seams are on rows 3 / 12 / 15, but
+# the bands occupy rows 0..1 and 14..15, so row 2 (and 13) showed as a sliver of copper between the
+# gold and the black - the black line looked detached from the edging. Moving the seams to 2 / 13
+# makes them touch the band.
+SIDE_SEAM = {2, 13}
 
 # `fluid_tank.png` is a FRAME ATLAS, not one 16x16 face. From the model's UVs:
 #
@@ -119,7 +123,8 @@ CONN_PLAIN = (0, 48, 16, 16)
 
 # Rib rows of the connected side panel, read off Create's art: bright rib tops and dark seams.
 SIDE48_BAND = {0, 1, 2, 4, 9, 25, 41, 45}
-SIDE48_SEAM = {3, 8, 24, 40, 44, 47}
+# same adjustment as SIDE_SEAM: the seams nearest the rim bands were pulled in to touch them
+SIDE48_SEAM = {2, 8, 24, 40, 45, 47}
 
 
 def zone_connected_side(x, y):
