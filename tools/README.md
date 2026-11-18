@@ -45,23 +45,48 @@ Create 的贴图：
 一块黄色指示面板和箭头标记，用 `copper_underside` 2×2 铺贴会把指示器整个覆盖掉，箭头还会正好
 压在铺贴接缝上变成一坨十字。这三张连同模型里的 `body` 键都已回退到返修前的版本。
 
+### 流体舱口（继承 Create 物品舱口模型）
+
+`6e4f834` 之后两个舱口模型只有一行 `{"parent": "create:block/item_hatch/block_closed"}`，
+所以默认渲染得和 Create 物品舱口一模一样。父模型只开放 3 个可覆盖键，全部由
+`tools/create-fluid-hatch-textures.py` 填：
+
+| 键 | 贴图 | 做法 |
+|---|---|---|
+| `0` | `block/{fluid,smart_fluid}_hatch/housing.png`（32×32） | Create `hatch.png` 亮度重映射到宽色阶 + 在正面面板里压出管口凹槽 |
+| `1` | `block/{fluid,smart_fluid}_hatch/flap.png`（16×16） | Create `hatch_closed.png` 亮度重映射 |
+| `particle` | 同 `housing` | — |
+
+两个关键约束（都是渲染探针测出来的，别凭直觉改）：
+
+1. **正面是 `#0` 不是 `#1`**。把 `#0` 涂成品红、`#1` 涂成青色后渲染，正面/侧面全是品红，
+   青色只出现在斜门的**顶面**。所以“管口”必须画在 `#0`，画在闸门上从正面完全看不到。
+2. **可见面板在图集里的窗口是 x3..15 / y3..17**（帧的 north 面 uv `[1.5,1.5]-[7.5,8.5]`，
+   图集 32px → uv×2）。其中 x5..12 / y5..14 是 Create 的物品格栅，已替换成凹陷管口。
+
+色阶不能用窄的：Create 的 8 阶铜色只跨亮度 86..149，而 `hatch.png` 跨 45..183，
+套窄色阶会把对比压掉一半（实测 `std` 从 53 掉到 52 且明显发平）。改用宽色阶：
+铜 `#3D161E`→`#E3826C`（前两阶取自 `encased_pipe.png`），黄铜用 `brass_block.png` 的 13 阶。
+
 ## 生成器
 
 | 脚本 | 职责 | 依赖 |
 |---|---|---|
 | `copper-material.py` | 上面 3 张派生贴图；色板与 `metrics`/`symmetry` 工具 | Python + Pillow + Create 源 |
 | `create-collection-grate-textures.py` | 集液栅 4 张贴图，按模型的 UV 分带排布 | Python + Pillow |
+| `create-fluid-hatch-textures.py` | 两个流体舱口各 2 张（housing / flap） | Python + Pillow + Create 源 |
 | `recolor-rank.py` | 智能储罐 4 张按「秩」重新映射到黄铜（从 Create 像素出发） | Python + Pillow + Create 源 |
 | `repaint-smart-tank.py` | `recolor-rank.py` 的旧入口包装 | 同上 |
 | `symmetrize-fluid-housings.py` | 增压泵轴孔的原生细节合成 | 同上 |
 
-用法（`copper-material.py` 的第二个参数是 Create jar 或解包后的资源根）：
+用法（第二个参数是 Create jar 或解包后的资源根）：
 
 ```powershell
 python tools/copper-material.py src/main/resources/assets <create.jar>            # 写入
 python tools/copper-material.py src/main/resources/assets <create.jar> --check    # 只看指标
 python tools/copper-material.py src/main/resources/assets <create.jar> --verify   # 比对，有偏差返回 1
 python tools/create-collection-grate-textures.py src/main/resources/assets        # 集液栅 4 张
+python tools/create-fluid-hatch-textures.py src/main/resources/assets <create.jar>  # 流体舱口 4 张
 python tools/recolor-rank.py <create.jar>                                          # 智能储罐
 ```
 

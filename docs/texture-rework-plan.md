@@ -242,3 +242,66 @@ python tools/symmetrize-fluid-housings.py
 渲染用的是把 `tools/preview-fluid-packager.cjs` 的 `mesh()`/`render()` 一比一移植过来的
 Python 版（同样的面角顺序、UV 基准四边形、v=0 在图像顶部、光照与 z-buffer 规则），
 因为本机没有 `sharp`，跑不了原脚本。
+
+---
+
+## 11. 流体舱口：继承物品舱口模型后的贴图
+
+`6e4f834` 把两个舱口模型换成一行 parent 引用：
+
+```json
+{"parent": "create:block/item_hatch/block_closed"}
+```
+
+没有任何贴图覆盖，所以两个方块都渲染得和 Create 物品舱口完全一样。父模型只开放 3 个键：
+`0`（房体，32×32 图集 `hatch.png`）、`1`（闸门，16×16 `hatch_closed.png`）、`particle`。
+
+### 两个渲染探针测出来的事实
+
+**① 正面是 `#0`，不是 `#1`。** 把 `#0` 涂成品红、`#1` 涂成青色后渲染：
+
+| 视角 | 品红（#0 房体） | 青色（#1 闸门） |
+|---|---|---|
+| 正面 | 整个面板 | 无 |
+| 侧 3/4 | 整个可见面 | 无 |
+| 俯视 | 其余部分 | **只有斜门的顶面** |
+
+所以「管口」必须画在 `#0`。第一版我把凹槽画在闸门上，从正面一个像素都看不到。
+
+**② 可见面板在图集里的窗口是 x3..15 / y3..17。** 帧的 north 面 uv 为 `[1.5,1.5]-[7.5,8.5]`，
+图集 32px → uv×2。这块窗口内部 x5..12 / y5..14 是 Create 画的**物品格栅百叶**。
+
+### 做法
+
+| 文件 | 做法 |
+|---|---|
+| `block/{fluid,smart_fluid}_hatch/housing.png`（32×32） | Create `hatch.png` 按亮度重映射 + 在 x5..12/y5..14 压出凹陷管口 |
+| `block/{fluid,smart_fluid}_hatch/flap.png`（16×16） | Create `hatch_closed.png` 按亮度重映射（只从上面看得到，不需要改结构） |
+
+模型文件只加 `textures` 覆盖，几何与 UV 未动：
+
+```json
+{
+  "parent": "create:block/item_hatch/block_closed",
+  "textures": {
+    "0": "ccd:block/fluid_hatch/housing",
+    "1": "ccd:block/fluid_hatch/flap",
+    "particle": "ccd:block/fluid_hatch/housing"
+  }
+}
+```
+
+### 色阶必须用宽的
+
+Create 的 8 阶铜色只跨亮度 86..149，而 `hatch.png` 跨 45..183。第一版用
+`COPPER[1]→COPPER[7]` 内插，把对比压掉一半，房体明显发平。改成宽色阶后：
+
+| | 窄色阶 | 宽色阶 |
+|---|---|---|
+| copper housing `std` | 58.4 | **53.7**（但整体对比完好） |
+| brass housing `std` | 61.8 | **78.5** |
+
+宽色阶用 Create 自己的深铜/亮铜：`#3D161E`、`#5B2924`（`encased_pipe.png`）+ 标准 8 阶；
+黄铜直接用 `brass_block.png` 的 13 阶。没有引入新颜色。
+
+预览：`outputs/texture-rework/fluid-hatch.png`（Create 原件 / 铜版 / 黄铜版 × 3 视角）。

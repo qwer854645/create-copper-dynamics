@@ -1,3 +1,8 @@
 {
-  "parent": "create:block/item_hatch/block_closed"
+  "parent": "create:block/item_hatch/block_closed",
+  "textures": {
+    "0": "ccd:block/smart_fluid_hatch/housing",
+    "1": "ccd:block/smart_fluid_hatch/flap",
+    "particle": "ccd:block/smart_fluid_hatch/housing"
+  }
 }
