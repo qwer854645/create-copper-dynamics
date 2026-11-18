@@ -194,71 +194,77 @@ def swap_material(src: Image.Image, ramp, keep_silver=True, keep_black=True, war
 # The arm's dark end (#724731, #854A34, #875137) is not used: on this hatch it made the body read
 # too dark, because Create's hatch body carries more low-mid tones than the arm's flat panels do.
 # The slice now starts at #8E5B3D.
-EDGE_JUMP = 30.0          # luminance step that counts as an edge; high, so only real edges count
-BEVEL = 1                 # ramp steps added above an edge
+# ---------------------------------------------------------------- matching Create's brass values
+# Measured over every warm pixel:
+#
+#   create:block/brass_block      p50 174   frac<110  11%
+#   create:block/mechanical_arm   p50 174   frac<110  18%
+#   create:block/hatch  (source)  p50  79   frac<110  87%
+#
+# The item hatch is a DARK grey object and Create's brass parts are bright, so any linear grey->brass
+# ramp keeps the hatch dark: that is why every earlier attempt still read "too many dark tones".
+# The fix is to match the value DISTRIBUTION instead of the palette - each body pixel takes the
+# reference colour at its own quantile. Ordering is preserved (the map is monotone), so every edge,
+# slat and seam stays exactly where Create drew it.
+BRASS_REFERENCE = ("block/mechanical_arm", "block/brass_block")
 
 
-def bevel_details(src: Image.Image, ramp):
-    """Re-fill the body with a single lit pixel above each *strong* edge.
+def _warm(c):
+    r, g, b = c[0], c[1], c[2]
+    return r >= g >= b and (r - b) >= 18 and (g - b) >= 6
 
-    Two earlier versions bracket this one and both were rejected: a plain recolour read as flat,
-    and bevelling every edge at +-2 steps read as noise ("太乱了"). Create's item hatch has a lot
-    of one-pixel detailing, so bevelling all of it doubles the detail density.
 
-    This only touches edges with a big luminance jump and only lifts the upper side, by one step.
-    Nothing moves or is added - the value of pixels that already exist is nudged, so the frame and
-    the louvre keep Create's exact layout.
-    """
+def _lum(c):
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+
+
+def build_reference(create_src: Path, keys=BRASS_REFERENCE):
+    """Every warm pixel of the reference art, sorted - frequencies count, not just unique tones."""
+    out = []
+    for key in keys:
+        im = load_create(create_src, key.split("/", 1)[1] + ".png")
+        out += [c[:3] for c in im.getdata() if c[3] and _warm(c)]
+    out.sort(key=_lum)
+    return out
+
+
+def match_distribution(src: Image.Image, reference):
+    """Monotone remap of the body onto a reference value distribution."""
     px = src.load()
     out = src.copy()
     op = out.load()
-    w, h = src.size
-    steps = len(ramp) - 1
-
-    def body(c):
-        L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
-        return BLACK_MAX < L < SILVER_MIN, L
-
-    tones = sorted({px[x, y][:3] for y in range(h) for x in range(w)
-                    if px[x, y][3] and body(px[x, y][:3])[0]},
-                   key=lambda c: body(c)[1])
-    rank = {c: (k / (len(tones) - 1) if len(tones) > 1 else 0.5) for k, c in enumerate(tones)}
-    for y in range(h):
-        for x in range(w):
-            r, g, b, a = px[x, y]
-            if not a:
-                continue
-            ok, L = body((r, g, b))
-            if not ok:
-                continue
-            idx = round(rank[(r, g, b)] * steps)
-            if y > 0 and px[x, y - 1][3]:
-                up_ok, up_L = body(px[x, y - 1][:3])
-                if up_ok and up_L - L > EDGE_JUMP:
-                    idx = min(steps, idx + BEVEL)
-            op[x, y] = ramp[idx] + (a,)
+    body = [(x, y) for y in range(src.height) for x in range(src.width)
+            if px[x, y][3] and BLACK_MAX < _lum(px[x, y][:3]) < SILVER_MIN]
+    if not body or not reference:
+        return out
+    ordered = sorted(body, key=lambda p: _lum(px[p[0], p[1]][:3]))
+    n, m = len(ordered), len(reference)
+    for i, (x, y) in enumerate(ordered):
+        q = i / (n - 1) if n > 1 else 0.5
+        op[x, y] = reference[min(m - 1, int(q * m))] + (px[x, y][3],)
     return out
 
 
 def derive(assets: Path, create_src: Path):
-    """Pure material swap: Create's pixel layout is kept exactly, only the grey body tones move.
+    """Create's pixel layout is kept exactly; only the grey body tones move.
 
-    Earlier revisions repainted the visible face (bezel rings, a slate recess, a bevelled door).
-    All of that rearranged Create's artwork, and the result read as busy on the front and muddy on
-    the back. The frame contrast now comes from the ramp itself: Create's hatch already draws a
-    bright rim and dark seams, so a brass ramp with a low enough dark end makes those read as
-    brass edging without moving a single pixel.
+    Copper takes a straight palette slice. Brass is matched to the value distribution of
+    create:block/mechanical_arm + create:block/brass_block, because a straight slice keeps the
+    hatch's own dark value histogram (median 79) and reads muddy no matter which brass tones are
+    used. Neither path repaints, moves or adds a pixel.
     """
     housing_src = load_create(create_src, "hatch.png")
     flap_src = load_create(create_src, "hatch_closed.png")
+    reference = build_reference(create_src)
     out = {}
     for material, key in (("fluid_hatch", "copper"), ("smart_fluid_hatch", "brass")):
         ramp = TINT[key]
-        # brass: recolour, then run a bevel pass over the edges Create already drew. Copper stays a
-        # plain swap. Neither touches the layout.
-        fill = bevel_details if key == "brass" else swap_material
-        out[f"block/{material}/housing.png"] = fill(housing_src, ramp)
-        out[f"block/{material}/flap.png"] = fill(flap_src, ramp)
+        if key == "brass":
+            out[f"block/{material}/housing.png"] = match_distribution(housing_src, reference)
+            out[f"block/{material}/flap.png"] = match_distribution(flap_src, reference)
+        else:
+            out[f"block/{material}/housing.png"] = swap_material(housing_src, ramp)
+            out[f"block/{material}/flap.png"] = swap_material(flap_src, ramp)
     return out
 
 
