@@ -26,6 +26,7 @@ for name,color in colors.items():
     icon.save(A/f'textures/item/{name}_bucket.png')
     (A/f'models/item/{name}_bucket.json').write_text(json.dumps({'parent':'minecraft:item/generated',
         'textures':{'layer0':f'ccd:item/{name}_bucket'}},indent=2)+'\n')
-# Generic copper bucket has one stable shell icon; tooltip and bar show actual contents.
-(A/'models/item/copper_bucket.json').write_text(json.dumps({'parent':'minecraft:item/generated',
-    'textures':{'layer0':'ccd:item/copper_bucket'}},indent=2)+'\n')
+# Generic copper bucket keeps dynamic content display; dedicated fluid buckets stay static.
+(A/'models/item/copper_bucket.json').write_text(json.dumps({'parent':'neoforge:item/bucket',
+    'textures':{'base':'ccd:item/copper_bucket'},'loader':'neoforge:fluid_container',
+    'fluid':'minecraft:empty','flip_gas':False},indent=2)+'\n')

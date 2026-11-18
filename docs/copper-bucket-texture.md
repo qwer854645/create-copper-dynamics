@@ -1,5 +1,7 @@
 # 铜桶贴图
 
+当前铜桶已恢复 NeoForge 动态流体容器模型：铜壳使用自绘铜色稿，桶内显示实际流体纹理、颜色和动画；原生 Colors 处理器继续生效。其他专用流体桶保持静态图标，批量生成脚本不会再把铜桶覆盖回静态模型。
+
 使用 `outputs/copper-bucket/vanilla-copper/empty.png` 的 16×16 铜色稿。
 保留 Minecraft 铁桶轮廓、透明度和明暗像素布局，通过 pixel-art 工具逐色映射为 CCD 铜色色阶。
 该资源为 Mojang 原版贴图的改色衍生，不标为 CCD 原创；上游美术权利归原权利方。
