@@ -16,7 +16,7 @@ const save=(p,d)=>fs.writeFileSync(p,JSON.stringify(d,null,2)+'\n');
 const brass=[[73,47,27],[114,71,49],[164,107,71],[191,142,85],[215,170,94],
  [228,183,99],[247,203,108],[251,220,125],[255,235,140]];
 const sourcePanel=loadModel('create:block/smart_fluid_pipe/block').elements[2];
-const panel={name:'front_filter_panel',from:[5.5,2,14],to:[10.5,7,15.5],faces:{}};
+const panel={name:'front_filter_panel',from:[5.5,8,14],to:[10.5,13,15.5],faces:{}};
 const reversed={north:'south',south:'north',east:'west',west:'east',up:'up',down:'down'};
 for(const [side,source]of Object.entries(sourcePanel.faces))panel.faces[reversed[side]]={...source,texture:'#filter'};
 async function main(){
@@ -57,7 +57,7 @@ async function main(){
  save(path.join(assets,'models/item/smart_collection_grate.json'),{parent:'ccd:block/smart_collection_grate',
   textures:{filter:'create:block/smart_pipe_2'},elements:[...body.elements,panel]});
  const faces=[...await mesh('ccd:block/smart_collection_grate'),...await mesh('ccd:block/smart_collection_grate_filter')];
- const water={name:'preview_water',from:[3.0625,3.0625,3.0625],to:[12.9375,5.8125,12.9375],faces:{}};
+ const water={name:'preview_water',from:[3.0625,3.0625,3.0625],to:[12.9375,13.8125,12.9375],faces:{}};
  for(const [side,uv]of Object.entries({north:[3.0625,10.1875,12.9375,12.9375],south:[3.0625,10.1875,12.9375,12.9375],
   east:[3.0625,10.1875,12.9375,12.9375],west:[3.0625,10.1875,12.9375,12.9375],
   up:[3.0625,3.0625,12.9375,12.9375],down:[3.0625,3.0625,12.9375,12.9375]}))water.faces[side]={texture:'#water',uv};
@@ -90,7 +90,7 @@ async function main(){
   materials:{body:'copper',topLip:'brass on all faces of the four lip elements',filter:'native brass bezel',bars:'native grey iron'},
   topLipStyle:{references:['create:block/mechanical_arm_side','create:block/mechanical_arm','create:block/brass_block'],
    layout:'redrawn 32px pixel art: brown outer fold, narrow bright gold rail, warm flat, inner brown reveal',sideUVRows:[4,5]},
-  panelFaceCenter:[8,4.5,15.5],interactionCenter:[8,4.5,15.5625],filterScale:.25,
+  panelFaceCenter:[8,10.5,15.5],interactionCenter:[8,10.5,15.5625],filterScale:.25,
   filter:'native FilteringBehaviour.forFluids and ValueBoxTransform.Sided, front only',
   facingRotations:{south:0,north:180,east:270,west:90},capacity:2000,
   unchanged:['collection','search','redstone pause','native bottom pipe','fluid rendering'],
