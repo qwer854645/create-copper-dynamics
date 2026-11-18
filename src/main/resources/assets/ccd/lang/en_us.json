@@ -84,7 +84,7 @@
   "block.ccd.copper_water_basin": "Copper Water Basin",
   "ccd.water_basin.infinite": "Infinite supply: water",
   "ccd.water_basin.disposal": "Incoming fluids are discarded",
-  "block.ccd.copper_water_supply": "Copper Water Supply Box",
+  "block.ccd.copper_water_supply": "Conduit Box",
   "ccd.water_supply.active": "Automatic supply: enabled",
   "ccd.water_supply.paused": "Automatic supply: paused by redstone",
   "ccd.water_supply.disabled": "Automatic supply: disabled",
@@ -260,8 +260,8 @@
   "ccd.configuration.fluidArm.tooltip": "Settings for the Mechanical Pipetting Arm. Reopen the world to apply changes.",
   "ccd.configuration.smartTank": "Smart Fluid Tank",
   "ccd.configuration.smartTank.tooltip": "Settings for the Smart Fluid Tank. Reopen the world to apply changes.",
-  "ccd.configuration.waterSupply": "Copper Water Supply Box",
-  "ccd.configuration.waterSupply.tooltip": "Settings for the Copper Water Supply Box. Reopen the world to apply changes.",
+  "ccd.configuration.waterSupply": "Conduit Box",
+  "ccd.configuration.waterSupply.tooltip": "Settings for the Conduit Box. Reopen the world to apply changes.",
   "ccd.configuration.atomizer": "Fluid Atomizer",
   "ccd.configuration.atomizer.tooltip": "Settings for the Fluid Atomizer. Reopen the world to apply changes.",
   "ccd.configuration.boosterPump.stressMultiplier": "Stress Multiplier",
@@ -285,5 +285,5 @@
   "block.ccd.copper_water_supply.tooltip.control1": "R-Click with a Container",
   "block.ccd.copper_water_supply.tooltip.action1": "_Fills_ it with water without replacing another fluid.",
   "block.ccd.copper_water_supply.tooltip.control2": "Sneak + R-Click with a Filled Container",
-  "block.ccd.copper_water_supply.tooltip.action2": "_Discards_ the fluid poured into the supply box."
+  "block.ccd.copper_water_supply.tooltip.action2": "_Discards_ the fluid poured into the Conduit Box."
 }

@@ -246,7 +246,7 @@ public final class CopperDynamics {
 
     public static final DeferredHolder<net.minecraft.world.level.block.Block, CopperWaterSupplyBlock> COPPER_WATER_SUPPLY =
         BLOCKS.register("copper_water_supply", () -> new CopperWaterSupplyBlock(BlockBehaviour.Properties.of()
-            .mapColor(MapColor.COLOR_ORANGE).strength(3.0F).requiresCorrectToolForDrops()
+            .mapColor(MapColor.COLOR_ORANGE).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()
             .sound(net.minecraft.world.level.block.SoundType.COPPER)));
     public static final DeferredHolder<Item, BlockItem> COPPER_WATER_SUPPLY_ITEM =
         ITEMS.register("copper_water_supply", () -> new BlockItem(COPPER_WATER_SUPPLY.get(), new Item.Properties()));

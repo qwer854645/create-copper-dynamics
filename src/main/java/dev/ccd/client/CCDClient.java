@@ -63,6 +63,7 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FLUID_TANK_BE.get(), SmartFluidTankRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_WATER_BASIN_BE.get(),
             CopperWaterBasinRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.COPPER_WATER_SUPPLY_BE.get(), ConduitBoxRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.COPPER_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_COLLECTION_GRATE_BE.get(), CopperCollectionGrateRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_ATOMIZER_BE.get(), com.simibubi.create.content.kinetics.fan.EncasedFanRenderer::new);

@@ -84,7 +84,7 @@
   "block.ccd.copper_water_basin": "铜水槽",
   "ccd.water_basin.infinite": "无限供应：水",
   "ccd.water_basin.disposal": "输入的流体会被清除",
-  "block.ccd.copper_water_supply": "铜供水箱",
+  "block.ccd.copper_water_supply": "潮涌箱",
   "ccd.water_supply.active": "自动供水：已开启",
   "ccd.water_supply.paused": "自动供水：已暂停（红石控制）",
   "ccd.water_supply.disabled": "自动供水：已禁用",
@@ -260,8 +260,8 @@
   "ccd.configuration.fluidArm.tooltip": "调整动力移液臂的工作参数。更改后重新进入世界生效。",
   "ccd.configuration.smartTank": "智能储罐",
   "ccd.configuration.smartTank.tooltip": "调整智能储罐的工作参数。更改后重新进入世界生效。",
-  "ccd.configuration.waterSupply": "铜供水箱",
-  "ccd.configuration.waterSupply.tooltip": "调整铜供水箱的工作参数。更改后重新进入世界生效。",
+  "ccd.configuration.waterSupply": "潮涌箱",
+  "ccd.configuration.waterSupply.tooltip": "调整潮涌箱的工作参数。更改后重新进入世界生效。",
   "ccd.configuration.atomizer": "流体雾化器",
   "ccd.configuration.atomizer.tooltip": "调整流体雾化器的工作参数。更改后重新进入世界生效。",
   "ccd.configuration.boosterPump.stressMultiplier": "应力倍率",
@@ -285,5 +285,5 @@
   "block.ccd.copper_water_supply.tooltip.control1": "手持容器右击",
   "block.ccd.copper_water_supply.tooltip.action1": "为容器_装水_，不会覆盖已有的其他流体。",
   "block.ccd.copper_water_supply.tooltip.control2": "手持装液容器潜行右击",
-  "block.ccd.copper_water_supply.tooltip.action2": "将其中的流体倒入供水箱并_清除_。"
+  "block.ccd.copper_water_supply.tooltip.action2": "将其中的流体倒入潮涌箱并_清除_。"
 }
