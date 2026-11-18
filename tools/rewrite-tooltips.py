@@ -199,6 +199,54 @@ for suffix,zh,en,zt,et in configs:
     put('ccd.configuration.'+suffix+'.tooltip',zt+' 重新进入世界后生效。',et+' Reopen the world to apply changes.')
 for suffix in ['boosterPump','fluidArm','smartTank','waterSupply','atomizer']:
     put('ccd.configuration.'+suffix+'.tooltip','调整该设备的服务端参数，重新进入世界后生效。','Server-side settings for this device. Reopen the world to apply changes.')
+# Final editorial pass: match Create terminology and concise condition/behaviour
+# descriptions. Do not expose implementation, compatibility-loading or sample notes.
+from zipfile import ZipFile
+with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar'))) as archive:
+    native={locale:json.loads(archive.read(f'assets/create/lang/{locale}.json')) for locale in data}
+for locale,entries in data.items():
+    for key,value in list(entries.items()):
+        if '.tooltip.' not in key or key.startswith('ccd.configuration.'): continue
+        if locale=='zh_cn':
+            value=value.replace('接收到红石信号时','接收红石信号时').replace('接入旋转动力时','接入动力时')
+            value=value.replace('分液池注液配方','分液池配方')
+        else:
+            value=value.replace('When Supplied with Rotation','When Rotational Force is Applied')
+        entries[key]=value
+    for local,upstream in {
+        'ccd.gui.goggles.smart_tank':'create.gui.goggles.fluid_container',
+        'ccd.gauge.target_amount':'create.factory_panel.target_amount',
+        'ccd.gauge.amount_tip':'create.factory_panel.hold_to_set_amount',
+    }.items(): entries[local]=native[locale][upstream]
+
+describe('item.ccd.fluid_package',('用于_运输流体_的密封包裹。','A sealed package for _transporting fluids_.'),[
+    (('送入流体打包机时','When inserted into a Fluid Packager'),('将其中的流体_存入_所连接的容器。','_Empties_ its fluid into the attached container.'))],
+    [(('使用剪贴板时','When using a Clipboard'),('在物品栏中右击_复制地址_，左击_粘贴地址_。','R-Click in the inventory to _copy the address_; L-Click to _paste_.'))])
+describe('item.ccd.composite_package',('用于同时运输_物品_和_流体_的包裹。','A package for transporting _items_ and _fluids_ together.'),[
+    (('使用理包机时','When using a Repackager'),('将同一订单的物品与流体_合并打包_。','_Combines_ items and fluids from the same order.'))],
+    [(('潜行右击时','When R-Clicked while Sneaking'),('_取出物品_，流体分装为_铜包裹_。','_Returns the items_ and separates fluids into _Copper Packages_.'))])
+describe('block.ccd.fluid_access_port',('扩展所连接容器的_流体存取面_。','Extends the _fluid access faces_ of an attached container.'),[
+    (('连接容器时','When attached to a container'),('其余五面可连接_流体管道_或其他设备。不能连接另一个扩展端口。','The other five faces accept _Fluid Pipes_ or other devices. Cannot extend another Access Port.'))])
+describe('block.ccd.fluid_bridge',('从同一入口访问_两端容器_中的流体。','Accesses fluid in _two containers_ through a single connection.'),[
+    (('设置过滤器时','When a filter is set'),('对应一端仅允许_匹配流体_进出。','Only _matching fluid_ can enter or leave that end.'))],
+    [(('右击连接端面时','When R-Clicked on an end face'),('设置该端的_流体过滤器_。','Sets that end’s _fluid filter_.'))])
+describe('block.ccd.fluid_atomizer',('使用流体进行_鼓风机加工_。','Uses fluids for _Fan Processing_.'),[
+    (('接入动力时','When Rotational Force is Applied'),('消耗储存的_流体_，使气流获得对应的_加工效果_。','Consumes stored _fluid_ to apply its _processing effect_ to the air current.')),
+    (('装入药水流体时','When filled with Potion Fluid'),('对气流中的生物施加_药水效果_。','Applies _potion effects_ to entities in the air current.')),
+    (('接收红石信号时','When Powered by Redstone'),('_停止雾化_，保留气流。','_Stops atomizing_ without stopping the air current.'))],
+    [(('手持流体容器右击时','When R-Clicked with a Fluid Container'),('_存入_或_取出_流体。管道可连接四个侧面。','_Inserts_ or _extracts_ fluid. Pipes connect to the four sides.'))])
+for id,zh,en,mod in media:
+    describe('item.ccd.'+id+'_bucket',(f'用于_{zh}_的流体。',f'A fluid for _{en}_.'),[
+        (('装入流体雾化器时','When inserted into a Fluid Atomizer'),(f'使气流获得_{zh}_加工效果。',f'Applies _{en}_ processing to the air current.'))])
+for locale,entries in data.items():
+    for key,value in list(entries.items()):
+        if '.tooltip.' not in key or key.startswith('ccd.configuration.'): continue
+        # Remove secondary caveats and developer-facing explanations from item help.
+        for sentence in ['空款只用于查看外观。',' Empty variants are display samples.',
+                         '服务端可允许直接选择容器。',' Server settings can allow direct container access.',
+                         '拆除后超出剩余容量的流体会损失。',' Breaking the structure loses fluid beyond its remaining capacity.']:
+            value=value.replace(sentence,'')
+        entries[key]=value.strip()
 for locale,entries in data.items():
     for key,value in entries.items():
         if '.tooltip.' in key and not key.startswith('ccd.configuration.'):

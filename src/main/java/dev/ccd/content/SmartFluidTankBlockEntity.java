@@ -172,18 +172,18 @@ public class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
         super.destroy();
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        CCDTooltip.heading(tooltip, "ccd.gui.goggles.smart_tank");
         var view = inventory.snapshot();
         if (view == null) {
+            CCDTooltip.heading(tooltip, "create.gui.goggles.fluid_container");
             CCDTooltip.line(tooltip, ChatFormatting.YELLOW, "ccd.smart_tank.unavailable");
             return true;
         }
+        CCDTooltip.fluidContents(tooltip, view.fluids(), view.capacity());
         var root = getControllerBE();
         CCDTooltip.line(tooltip, "ccd.smart_tank.total", CCDTooltip.amount(view.amount()), CCDTooltip.amount(view.capacity()));
         CCDTooltip.line(tooltip, "ccd.smart_tank.types", CCDTooltip.number(view.kinds()), CCDTooltip.number(CCDConfig.SMART_TANK_MAX_FLUIDS.get()));
         if (sneaking) CCDTooltip.line(tooltip, "ccd.smart_tank.structure", CCDTooltip.number(root.getWidth()),
             CCDTooltip.number(root.getHeight()), CCDTooltip.number(view.blocks()));
-        for (var fluid : view.fluids()) CCDTooltip.line(tooltip, "ccd.smart_tank.fluid", fluid.getHoverName(), CCDTooltip.amount(fluid.getAmount()));
         return true;
     }
 }

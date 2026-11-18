@@ -19,7 +19,7 @@ public final class FluidGaugeScreen extends FactoryPanelScreen {
     public FluidGaugeScreen(FluidGaugeBehaviour panel) { super(panel); this.panel = panel; }
     @Override protected void init() {
         super.init();
-        target = new EditBox(font, guiLeft + 58, guiTop - 42, 88, 18, Component.translatable("ccd.gauge.target_amount"));
+        target = new EditBox(font, guiLeft + 58, guiTop - 42, 88, 18, Component.translatable("create.factory_panel.target_amount"));
         target.setMaxLength(6);
         target.setFilter(value -> value.isEmpty() || value.matches("[0-9]{1,6}") && Integer.parseInt(value) <= 100_000);
         target.setValue(Integer.toString(panel.count));

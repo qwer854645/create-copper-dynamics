@@ -54,10 +54,14 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
             if(existing.isPresent()) existing.get().setAmount((int)Math.min(Integer.MAX_VALUE,(long)existing.get().getAmount()+fluid.getAmount()));
             else fluids.add(fluid.copy());
         }
-        dev.ccd.CCDTooltip.heading(tooltip,"ccd.gui.goggles.connection");
-        for(var fluid:fluids) dev.ccd.CCDTooltip.line(tooltip,"ccd.smart_tank.fluid",fluid.getHoverName(),dev.ccd.CCDTooltip.amount(fluid.getAmount()));
+        // Filtered multi-fluid views can expose shared virtual slots. Do not sum
+        // their capacities into an invented physical storage size.
+        dev.ccd.CCDTooltip.heading(tooltip,"create.gui.goggles.fluid_container");
+        for(var fluid:fluids) {
+            com.simibubi.create.foundation.utility.CreateLang.fluidName(fluid).style(net.minecraft.ChatFormatting.GRAY).forGoggles(tooltip,1);
+            com.simibubi.create.foundation.utility.CreateLang.builder().add(dev.ccd.CCDTooltip.amount(fluid.getAmount())).forGoggles(tooltip,1);
+        }
         dev.ccd.CCDTooltip.line(tooltip,"ccd.fluid_access.sources",dev.ccd.CCDTooltip.number(sources().stream().map(FluidAccess.Source::identity).distinct().count()));
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.fluid_access.no_storage");
         return true;
     }
 }

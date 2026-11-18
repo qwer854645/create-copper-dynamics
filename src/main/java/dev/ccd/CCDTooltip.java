@@ -13,6 +13,18 @@ public final class CCDTooltip {
         if (!tooltip.isEmpty()) tooltip.add(Component.empty());
         CreateLang.builder().add(Component.translatable(key)).forGoggles(tooltip);
     }
+    /** Match Create's fluid container title, fluid-name rows and quantity colours.
+     * Multi-fluid storage has one shared capacity, shown once rather than per fluid. */
+    public static void fluidContents(List<Component> tooltip,
+        List<net.neoforged.neoforge.fluids.FluidStack> fluids, long capacity) {
+        heading(tooltip, "create.gui.goggles.fluid_container");
+        for (var fluid : fluids) {
+            CreateLang.fluidName(fluid).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+            CreateLang.builder().add(amount(fluid.getAmount())).forGoggles(tooltip, 1);
+        }
+        CreateLang.translate("gui.goggles.fluid_container.capacity")
+            .add(amount(capacity)).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
+    }
     public static void line(List<Component> tooltip, String key, Object... args) {
         line(tooltip, ChatFormatting.GRAY, key, args);
     }
