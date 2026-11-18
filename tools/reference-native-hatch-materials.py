@@ -43,18 +43,11 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
                         ('right',[13,0,12.55],[14,10.6,12.6]),
                         ('bottom',[3,0,12.55],[13,.3,12.6]),
                          ('top',[3,10.3,12.55],[13,10.6,12.6])]
-    if name=='smart_fluid_hatch':
-        # Cut the opening into the original brass cover itself: four coplanar
-        # strips retain continuous UVs, with no copper pipe fitting on this model.
-        strips=[('left',[2,0,12.55],[4,10.6,12.6]),
-                ('right',[12,0,12.55],[14,10.6,12.6]),
-                ('bottom',[4,0,12.55],[12,1.5,12.6]),
-                ('top',[4,9.1,12.55],[12,10.6,12.6])]
     for label,lo,hi in strips:
         elements.append({'name':'mouth_surround_'+label,'from':lo,'to':hi,
             'rotation':copy.deepcopy(original[2]['rotation']),
             'faces':{'south':{'texture':'#1','uv':[lo[0],16-hi[1],hi[0],16-lo[1]]}}})
-    for part_index,part in enumerate(pipe_parts if name=='fluid_hatch' else []):
+    for part_index,part in enumerate(pipe_parts):
         for native_part in part['elements']:
             mouth=copy.deepcopy(native_part)
             mouth['name']='native_inclined_pipe_mouth_'+str(part_index)
