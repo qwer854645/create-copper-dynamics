@@ -193,6 +193,9 @@ Create 原图里是透明像素。
 | `recolor-rank.py` → `create-smart-tank-textures.py` | 智能储罐 8 张：铜身 + 黄铜框带（按行分区，暗缝用中性灰） | Python + Pillow + Create 源 |
 | `repaint-smart-tank.py` | `recolor-rank.py` 的旧入口包装 | 同上 |
 | `symmetrize-fluid-housings.py` | 增压泵轴孔的原生细节合成 | 同上 |
+| `check-lang.py` | 语言文件守卫：中英键一致、`_…_` 成对、占位符一致、condition/control 不带句号、思索编号连续 | 无依赖 |
+
+文案本身的规范见 `docs/text-voice.md`；改动 `assets/ccd/lang/` 后先跑 `python tools/check-lang.py`。
 
 用法（第二个参数是 Create jar 或解包后的资源根）：
 
