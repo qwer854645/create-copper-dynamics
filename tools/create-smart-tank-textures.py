@@ -49,14 +49,25 @@ IRON = [(0x35, 0x34, 0x38), (0x3F, 0x3E, 0x42), (0x49, 0x48, 0x48), (0x4F, 0x4F,
 SIDE_BAND = {0, 1, 2, 4, 13, 14}
 SIDE_SEAM = {3, 12, 15}
 
+# Every block edge is wrapped in brass, not just the horizontal bands: 2 px matches the lid's
+# frame. The perimeter is tested first so the corners stay brass all the way round instead of
+# the seam rows cutting the vertical posts short.
+SIDE_FRAME = 2
+
 
 def _lum(c):
     return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
 
 
-def zone_side(x, y):
-    r = y % 16
-    return "brass" if r in SIDE_BAND else ("seam" if r in SIDE_SEAM else "copper")
+def zone_side(x, y, width=SIDE_FRAME):
+    lx, ly = x % 16, y % 16
+    if min(lx, ly, 15 - lx, 15 - ly) < width:
+        return "brass"
+    if ly in SIDE_SEAM:
+        return "seam"
+    if ly in SIDE_BAND:
+        return "brass"
+    return "copper"
 
 
 def zone_ring(x, y, w, h, width, seam=0, seam_row=None):
@@ -85,17 +96,19 @@ SIDE48_BAND = {0, 1, 2, 4, 9, 25, 41, 45}
 SIDE48_SEAM = {3, 8, 24, 40, 44, 47}
 
 
-def zone_connected_side(x, y, width=2):
+def zone_connected_side(x, y, width=SIDE_FRAME):
     rx, ry, rw, rh = CONN_REGION
     if rx <= x < rx + rw and ry <= y < ry + rh:
         sx, sy = x - rx, y - ry
-        if sy in SIDE48_BAND:
+        if min(sx, sy, rw - 1 - sx, rh - 1 - sy) < width:
             return "brass"
         if sy in SIDE48_SEAM:
             return "seam"
-        return "brass" if min(sx, sy, rw - 1 - sx, rh - 1 - sy) < width else "copper"
+        if sy in SIDE48_BAND:
+            return "brass"
+        return "copper"
     if y >= CONN_PLAIN[1]:
-        return zone_side(x, y)          # the plain 16x16 face keeps the standalone grammar
+        return zone_side(x, y, width)   # the plain 16x16 face keeps the standalone grammar
     return "copper"
 
 
