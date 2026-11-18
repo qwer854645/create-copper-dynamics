@@ -50,8 +50,6 @@ IRON = [(0x35, 0x34, 0x38), (0x3F, 0x3E, 0x42), (0x49, 0x48, 0x48), (0x4F, 0x4F,
 # the bands occupy rows 0..1 and 14..15, so row 2 (and 13) showed as a sliver of copper between the
 # gold and the black - the black line looked detached from the edging. Moving the seams to 2 / 13
 # makes them touch the band.
-SIDE_SEAM = {2, 13}
-
 # `fluid_tank.png` is a FRAME ATLAS, not one 16x16 face. From the model's UVs:
 #
 #   rows 0..3   (uv [0,0,16,4])    the lid's side band      -> horizontal edge, top
@@ -65,16 +63,23 @@ SIDE_SEAM = {2, 13}
 # The two axes still get different values, because the horizontal edge is shared with the block
 # above/below: bright brass there turns a tall tank into a stack of stripes.
 V_STRIP = {0, 1, 2, 3, 12, 13, 14, 15}     # columns of the vertical strips
-H_BAND_TOP = {0, 1}                          # dim brass rim rows (top end)
-H_BAND_BOT = {14, 15}                        # dim brass rim rows (bottom end)
+H_BAND_TOP = {0, 1, 2}                       # brass rim rows (top end), lit lip outermost
+H_BAND_BOT = {13, 14, 15}                    # brass rim rows (bottom end), lit lip outermost
 
-# Bands and posts map the source tone into a NARROW gold range instead of a single pinned colour.
-# A pinned colour filled the whole band/plate with one flat value, which read as a big dead colour
-# block ("这样大色块有些不太好看"). A two-step range keeps the band reading as one brass band while
-# letting Create's own shading show through, so the surface still has texture.
-POST_HI_LO, POST_HI_HI = 7, 9      # outer post pixel
-POST_LO_LO, POST_LO_HI = 5, 7      # second post pixel
-EDGE_LO, EDGE_HI = 2, 5            # horizontal rim
+# No horizontal seam rows any more. They were drawn at the block boundary, and that produced two
+# reported artefacts: in a tall tank every level picked up a black band through the middle, and on
+# a single block the band's brightness varies along the row (Create's art is brighter in the
+# middle), so the black line looked like it had a yellow patch in it. The rim is now a pure brass
+# falloff and the only dark accent left is the 1 px line down the inside of each corner post.
+#
+# Each step is a two-entry window rather than one pinned colour: a pinned colour made the whole
+# band one dead flat value ("大色块"), while a two-step window keeps a little of Create's own
+# shading without letting the row swing bright in the middle.
+POST_HI_LO, POST_HI_HI = 8, 9      # corner post, outer pixel (lit lip)
+POST_LO_LO, POST_LO_HI = 6, 7      # corner post, second pixel
+LIP_LO, LIP_HI = 8, 9              # rim step 0, the outer row
+BODY_LO, BODY_HI = 6, 7            # rim step 1
+INNER_LO, INNER_HI = 4, 5          # rim step 2, innermost rim row
 
 
 def _lum(c):
@@ -92,11 +97,10 @@ def _band_step(ly):
     return min(d_top, d_bot)
 
 
-# Per-step gold windows. Each is a two-entry range so Create's own shading still varies inside the
-# step instead of filling it with one flat value.
-BAND_STEPS = ((POST_HI_LO, POST_HI_HI),      # 0: lit lip
-              (POST_LO_LO, POST_LO_HI),      # 1: body
-              (EDGE_LO, EDGE_HI))            # 2: dimmer inner row
+# Per-step gold windows, outermost step first.
+BAND_STEPS = ((LIP_LO, LIP_HI),      # 0: lit lip
+              (BODY_LO, BODY_HI),    # 1: body
+              (INNER_LO, INNER_HI))  # 2: innermost rim row
 
 
 def zone_side(x, y):
@@ -108,17 +112,13 @@ def zone_side(x, y):
             return ("gold_range", POST_HI_LO, POST_HI_HI)
         if lx in (1, 14):
             return ("gold_range", POST_LO_LO, POST_LO_HI)
-        # column 3 / 12 is normally copper (the innermost pixel of the strip), but on a seam row it
-        # has to continue the black line - otherwise the seam stopped one pixel short of the post
-        # and left a copper dot at each end ("黑线两端还有铜")
-        if lx in (2, 13) or ly in SIDE_SEAM:
+        # one dark pixel just inside the post: the only dark accent left on the face
+        if lx in (2, 13):
             return "seam"
         return "copper"
     if top_or_bot:
         lo, hi = BAND_STEPS[min(_band_step(ly), len(BAND_STEPS) - 1)]
         return ("gold_range", lo, hi)
-    if ly in SIDE_SEAM:
-        return "seam"
     return "copper"
 
 
@@ -143,37 +143,31 @@ def zone_ring(x, y, w, h, width, seam=0, seam_row=None):
 CONN_REGION = (16, 0, 48, 48)
 CONN_PLAIN = (0, 48, 16, 16)
 
-# Rib rows of the connected side panel, read off Create's art: bright rib tops and dark seams.
-SIDE48_BAND = {0, 1, 2, 4, 9, 25, 41, 45}
-# same adjustment as SIDE_SEAM: the seams nearest the rim bands were pulled in to touch them
-SIDE48_SEAM = {2, 8, 24, 40, 45, 47}
-
-# The 48 px panel covers three blocks stacked, so the structure's face has a block boundary every
-# 16 rows. Banding only the panel's own outer rows left every middle segment as bare copper - the
-# "no edging once you build taller" report. Repeating the band at each boundary fixes it, and the
-# same three-step falloff as the 16 px sheet keeps the light/dark bevel.
+# The 48 px panel covers three blocks in both directions, so its block grid is 16 px. The rim and
+# the corner posts therefore repeat on that grid rather than sitting on the panel's outer edge:
+# banding only the panel rim left every middle segment as bare copper ("搭高后没有包边"), and
+# anchoring the posts to the panel edge meant a 1-wide column could land on a slice with no posts
+# at all. Both axes now repeat every CONN_TILE.
+#
+# No horizontal seam rows: the user asked for the black between the levels to go and only the
+# edging to remain. The single dark accent is the 1 px line inside each corner post.
 CONN_TILE = 16
 
 
 def zone_connected_side(x, y):
     rx, ry, rw, rh = CONN_REGION
     if rx <= x < rx + rw and ry <= y < ry + rh:
-        sx, sy = x - rx, y - ry
-        # vertical corner posts belong to the structure, not to each block
-        if sx in (0, rw - 1):
+        lx = (x - rx) % CONN_TILE
+        ly = (y - ry) % CONN_TILE
+        if lx in (0, CONN_TILE - 1):
             return ("gold_range", POST_HI_LO, POST_HI_HI)
-        if sx in (1, rw - 2):
+        if lx in (1, CONN_TILE - 2):
             return ("gold_range", POST_LO_LO, POST_LO_HI)
-        if sx in (2, rw - 3):
+        if lx in (2, CONN_TILE - 3):
             return "seam"
-        ly = sy % CONN_TILE
         if ly in H_BAND_TOP or ly in H_BAND_BOT:
             lo, hi = BAND_STEPS[min(_band_step(ly), len(BAND_STEPS) - 1)]
             return ("gold_range", lo, hi)
-        if ly in SIDE_SEAM:
-            return "seam"
-        if sy in SIDE48_SEAM:
-            return "seam"
         return "copper"
     if y >= CONN_PLAIN[1]:
         return zone_side(x, y)          # the plain 16x16 face keeps the standalone grammar
