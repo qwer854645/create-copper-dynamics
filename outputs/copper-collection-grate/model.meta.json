@@ -315,7 +315,8 @@
       ]
     }
   ],
-  "smart": "inherits geometry, brass override and updated top filter height; front panel styling deferred",
+  "smart": "inherits bowl geometry; separate CCD brass skin, front filter and horizontal rotation",
+  "textureStyle": "approved booster-pump copper panel and palette, continuous offset UVs, clean folded rim; native industrial iron bars",
   "behavior": "capacity, collection, search and draining unchanged; outline and fluid rendering follow new geometry",
-  "artwork": "CCD copper/liner/grate textures; native pipe geometry and texture belong to Create, preview water to Mojang"
+  "artwork": "CCD approved booster-pump copper material and rim; iron/grate pixels and native pipe geometry/texture belong to Create, preview water to Mojang"
 }

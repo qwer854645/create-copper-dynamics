@@ -237,7 +237,7 @@
   "block.ccd.smart_collection_grate.tooltip.behaviour1": "只收集_符合条件_的流体。已有存液仍可抽出；未设置过滤时接收所有流体。",
   "block.ccd.smart_collection_grate.tooltip.condition2": "收到红石信号时",
   "block.ccd.smart_collection_grate.tooltip.behaviour2": "_暂停_自动收集和向下排液，仍可通过容器或管道取放存液。",
-  "block.ccd.smart_collection_grate.tooltip.control1": "对顶部过滤槽使用装液容器",
+  "block.ccd.smart_collection_grate.tooltip.control1": "对正面过滤槽使用装液容器",
   "block.ccd.smart_collection_grate.tooltip.action1": "选择要收集的_流体_。",
   "block.ccd.fluid_atomizer.tooltip.summary": "用内部流体产生_加工气流_，或向气流中的生物喷洒_药水效果_。",
   "block.ccd.fluid_atomizer.tooltip.condition1": "连接动力并装入合适的流体时",

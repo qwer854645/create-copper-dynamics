@@ -1,1 +1,74 @@
-{"variants":{"":{"model":"ccd:block/smart_collection_grate"}}}
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate"
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate_filter"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate_filter",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate_filter",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate_filter",
+        "y": 90
+      }
+    }
+  ]
+}

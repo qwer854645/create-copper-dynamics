@@ -237,7 +237,7 @@
   "block.ccd.smart_collection_grate.tooltip.behaviour1": "Only _matching fluids_ are collected. Existing contents remain drainable. An empty filter accepts all fluids.",
   "block.ccd.smart_collection_grate.tooltip.condition2": "When Powered by Redstone",
   "block.ccd.smart_collection_grate.tooltip.behaviour2": "_Pauses_ automatic collection and downward output. Manual and piped access remain available.",
-  "block.ccd.smart_collection_grate.tooltip.control1": "Use a Filled Container on the Top Filter Slot",
+  "block.ccd.smart_collection_grate.tooltip.control1": "Use a Filled Container on the Front Filter Slot",
   "block.ccd.smart_collection_grate.tooltip.action1": "Selects the _fluid_ to collect.",
   "block.ccd.fluid_atomizer.tooltip.summary": "Uses stored fluid to create _processing air currents_ or apply _potion effects_ to creatures in the current.",
   "block.ccd.fluid_atomizer.tooltip.condition1": "When Powered and Filled with a Suitable Fluid",

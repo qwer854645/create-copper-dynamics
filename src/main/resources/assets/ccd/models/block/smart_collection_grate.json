@@ -1,4 +1,8 @@
 {
   "parent": "ccd:block/copper_collection_grate",
-  "textures": {"particle": "create:block/brass_casing", "copper": "create:block/brass_casing"}
+  "textures": {
+    "copper": "ccd:block/smart_collection_grate/body",
+    "rim": "ccd:block/smart_collection_grate/rim",
+    "particle": "ccd:block/smart_collection_grate/body"
+  }
 }

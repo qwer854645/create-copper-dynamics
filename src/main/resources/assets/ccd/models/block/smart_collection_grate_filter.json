@@ -1,0 +1,81 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "filter": "create:block/smart_pipe_2"
+  },
+  "elements": [
+    {
+      "name": "front_filter_panel",
+      "from": [
+        5.5,
+        2,
+        14
+      ],
+      "to": [
+        10.5,
+        7,
+        15.5
+      ],
+      "faces": {
+        "south": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#filter"
+        },
+        "west": {
+          "uv": [
+            13,
+            0,
+            16,
+            8
+          ],
+          "texture": "#filter"
+        },
+        "north": {
+          "uv": [
+            0,
+            8,
+            8,
+            16
+          ],
+          "texture": "#filter"
+        },
+        "east": {
+          "uv": [
+            13,
+            8,
+            16,
+            0
+          ],
+          "rotation": 180,
+          "texture": "#filter"
+        },
+        "up": {
+          "uv": [
+            13,
+            8,
+            16,
+            0
+          ],
+          "rotation": 270,
+          "texture": "#filter"
+        },
+        "down": {
+          "uv": [
+            13,
+            0,
+            16,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#filter"
+        }
+      }
+    }
+  ]
+}

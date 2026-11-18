@@ -1,0 +1,46 @@
+{
+  "textureSize": [
+    16,
+    16
+  ],
+  "base": "ccd:block/copper_collection_grate",
+  "panel": [
+    [
+      5.5,
+      2,
+      14
+    ],
+    [
+      10.5,
+      7,
+      15.5
+    ]
+  ],
+  "panelFaceCenter": [
+    8,
+    4.5,
+    15.5
+  ],
+  "interactionCenter": [
+    8,
+    4.5,
+    15.5625
+  ],
+  "filterScale": 0.25,
+  "filter": "native FilteringBehaviour.forFluids and ValueBoxTransform.Sided, front only",
+  "facingRotations": {
+    "south": 0,
+    "north": 180,
+    "east": 270,
+    "west": 90
+  },
+  "capacity": 2000,
+  "unchanged": [
+    "collection",
+    "search",
+    "redstone pause",
+    "native bottom pipe",
+    "fluid rendering"
+  ],
+  "artwork": "CCD brass recoloring of the approved booster-pump copper pixels; iron bars/liner, filter bezel UVs/texture and pipe belong to Create"
+}

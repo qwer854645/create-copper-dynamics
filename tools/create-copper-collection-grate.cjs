@@ -7,13 +7,11 @@ const reference=path.resolve(process.argv[2]);
 const textures=path.join(assets,'textures/block/copper_collection_grate'),output=path.join(root,'outputs/copper-collection-grate');
 for(const dir of [textures,output])fs.mkdirSync(dir,{recursive:true});
 const save=(p,d)=>fs.writeFileSync(p,JSON.stringify(d,null,2)+'\n');
-const copper=[[63,32,22],[96,46,31],[123,61,41],[144,73,49],[167,90,64],[194,107,76],[214,123,91],[227,130,108],[239,156,128]];
-const metal=[[40,41,44],[53,52,56],[67,68,69],[79,79,79],[103,97,97],[130,132,124],[159,163,153]];
-const clusters=[
- '5667777766665554','6667777666655544','6777776666555443','7777766665554433',
- '7776666555544433','6766665555544333','6666655555444332','6666555554444332',
- '6655555444443332','6555554444433332','6555544444433322','5555444554433322',
- '5554445555433222','5444455554433221','4444555544332211','3333444333222111'];
+// Exact approved booster-pump ramp and underlying panel, before its central shaft opening.
+const copper=[[70,32,24],[144,73,49],[154,80,56],[167,90,64],[178,98,71],[194,107,76],[200,116,86],[214,123,91],[227,130,108]];
+const panel=['277778776642','765666655543','765556655433','665555544433',
+ '655555444443','655544444543','655444455553','554444555543',
+ '554455555433','454555544433','343333333221','122211111110'];
 const paint=(pixels,x,y,rgb)=>pixels.set([...rgb,255],(y*16+x)*4);
 const face=(texture,uv)=>({texture:'#'+texture,uv});
 function box(name,from,to,texture){
@@ -26,21 +24,39 @@ function ring(name,o,O,i,I,y,Y,texture){
   box(name+'_west',[o,y,i],[i,Y,I],texture),box(name+'_east',[I,y,i],[O,Y,I],texture)];
 }
 async function main(){
- const body=Buffer.alloc(1024),inner=Buffer.alloc(1024),grate=Buffer.alloc(1024);
+ const approved=await sharp(path.join(assets,'textures/block/booster_pump/body.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ if(approved.info.width!==16||approved.info.height!==16)throw Error('Unexpected approved pump texture size');
+ const body=Buffer.from(approved.data);
+ // Restore only the pump's special hub pixels to the original copper panel material.
+ for(let y=6;y<10;y++)for(let x=6;x<10;x++)paint(body,x,y,copper[Number(panel[y-2][x-2])]);
+ const rim=Buffer.from(body);
  for(let y=0;y<16;y++)for(let x=0;x<16;x++){
-  let c=Number(clusters[y][x]);
-  if(x===0||y===0)c=6;else if(x===15||y===15)c=1;
-  paint(body,x,y,copper[c]);
-  paint(inner,x,y,metal[Math.min(3,Math.floor(Number(clusters[y][x])/2))]);
-  paint(grate,x,y,metal[Math.min(6,2+Math.floor(Number(clusters[y][x])/2))]);
+  let edge;
+  if(y===0)edge=x<12?7:6;
+  else if(y===15)edge=x<5?2:1;
+  else if(x===0)edge=y<10?6:5;
+  else if(x===15)edge=y<6?3:1;
+  else if(y===1||x===1)edge=5;
+  else if(y===14||x===14)edge=3;
+  if(edge!==undefined)paint(rim,x,y,copper[edge]);
  }
- for(const [name,data]of Object.entries({body,inner,grate}))
+ // Reuse Create's actual industrial-iron pixels instead of inventing another patch pattern.
+ const industrial=await sharp(path.join(reference,'assets/create/textures/block/industrial_iron_block.png'))
+  .ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ if(industrial.info.width!==16||industrial.info.height!==16)throw Error('Unexpected iron texture size');
+ const grate=Buffer.from(industrial.data),inner=Buffer.from(industrial.data);
+ for(let i=0;i<inner.length;i+=4)for(let c=0;c<3;c++)inner[i+c]=Math.round(inner[i+c]*.65);
+ for(const [name,data]of Object.entries({body,rim,inner,grate}))
   await sharp(data,{raw:{width:16,height:16,channels:4}}).png().toFile(path.join(textures,name+'.png'));
  const elements=[...ring('floor',2,14,6,10,2,3,'copper'),...ring('lower_bowl',2,14,3,13,3,5,'copper'),
   ...ring('upper_bowl',1,15,3,13,5,7,'copper'),...ring('raised_copper_lip',0,16,2,14,7,8,'copper')];
  // Inner metal liner shares the wall geometry; no overlapping decorative faces.
  for(const e of elements){
+  // Sample the approved pump's upper material continuously across all short bowl tiers.
+  // This is an offset, not scaling: texels keep their original one-pixel density.
+  for(const side of ['north','south','east','west']){e.faces[side].uv[1]-=6;e.faces[side].uv[3]-=6;}
   if(e.name.startsWith('floor'))e.faces.up.texture='#inner';
+  if(e.name.startsWith('raised_copper_lip'))e.faces.up.texture='#rim';
   if(e.name.startsWith('lower_bowl')||e.name.startsWith('upper_bowl')){
    const side=e.name.split('_').at(-1),inside={north:'south',south:'north',west:'east',east:'west'}[side];
    e.faces[inside].texture='#inner';
@@ -56,7 +72,7 @@ async function main(){
   }
  }
  const model={parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',textures:{
-  copper:'ccd:block/copper_collection_grate/body',inner:'ccd:block/copper_collection_grate/inner',
+  copper:'ccd:block/copper_collection_grate/body',rim:'ccd:block/copper_collection_grate/rim',inner:'ccd:block/copper_collection_grate/inner',
   grate:'ccd:block/copper_collection_grate/grate',pipe:'create:block/pipes',particle:'#copper'},elements};
  save(path.join(assets,'models/block/copper_collection_grate.json'),model);
  const faces=await mesh('ccd:block/copper_collection_grate');
@@ -78,15 +94,16 @@ async function main(){
  }
  const labels=Buffer.from(`<svg width="1500" height="620" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜集液栅 · 半格集液斗试版</text><text x="750" y="77" font-size="16">外扩铜框 · 下沉金属栅条 · 两级收口槽体 · 原生底部管口</text><text x="250" y="566" font-size="19">空槽与栅口</text><text x="750" y="566" font-size="19">存液示意</text><text x="1250" y="566" font-size="19">底部排液口</text><text x="750" y="605" font-size="14" fill="#677070">实际模型离线预览 / 液面随库存变化，预览为定格水纹 / 未构建或启动客户端</text></g></svg>`);
  await sharp({create:{width:1500,height:620,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
- const swatches=[];for(const [i,name]of ['body','inner','grate'].entries())swatches.push({
+ const swatches=[];for(const [i,name]of ['body','rim','inner','grate'].entries())swatches.push({
   input:await sharp(path.join(textures,name+'.png')).resize(192,192,{kernel:'nearest'}).png().toBuffer(),left:i*208,top:0});
- await sharp({create:{width:608,height:192,channels:4,background:'#e5e8e2'}}).composite(swatches).png().toFile(path.join(output,'textures.png'));
+ await sharp({create:{width:816,height:192,channels:4,background:'#e5e8e2'}}).composite(swatches).png().toFile(path.join(output,'textures.png'));
  save(path.join(output,'model.meta.json'),{stage:'half-height bowl study',height:8,barTop:7,lipTop:8,
   innerBounds:[3,13],liquidBounds:{from:water.from,to:water.to},textureSize:[16,16],nativeParts,
   geometry:elements.map(({name,from,to})=>({name,from,to})),
-  smart:'inherits geometry, brass override and updated top filter height; front panel styling deferred',
+  smart:'inherits bowl geometry; separate CCD brass skin, front filter and horizontal rotation',
+  textureStyle:'approved booster-pump copper panel and palette, continuous offset UVs, clean folded rim; native industrial iron bars',
   behavior:'capacity, collection, search and draining unchanged; outline and fluid rendering follow new geometry',
-  artwork:'CCD copper/liner/grate textures; native pipe geometry and texture belong to Create, preview water to Mojang'});
+  artwork:'CCD approved booster-pump copper material and rim; iron/grate pixels and native pipe geometry/texture belong to Create, preview water to Mojang'});
  console.log(JSON.stringify({preview:path.join(output,'preview.png'),elements:elements.length}));
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

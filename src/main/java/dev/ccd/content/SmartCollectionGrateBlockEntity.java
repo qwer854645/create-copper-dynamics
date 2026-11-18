@@ -1,8 +1,6 @@
 package dev.ccd.content;
 
 import java.util.List;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import com.simibubi.create.content.fluids.FluidPropagator;
 import com.simibubi.create.content.fluids.pump.PumpBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -15,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -28,10 +25,12 @@ public final class SmartCollectionGrateBlockEntity extends CopperCollectionGrate
     }
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-        behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform() {
-            @Override public Vec3 getLocalOffset(LevelAccessor level, BlockPos pos, BlockState state) { return new Vec3(.5, .51, .5); }
-            @Override public void rotate(LevelAccessor level, BlockPos pos, BlockState state, PoseStack pose) { pose.mulPose(Axis.XP.rotationDegrees(90)); }
-            @Override public float getScale() { return .3f; }
+        behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform.Sided() {
+            @Override protected Vec3 getSouthLocation() { return new Vec3(.5, 4.5 / 16, 15.5625 / 16); }
+            @Override public float getScale() { return .25f; }
+            @Override protected boolean isSideActive(BlockState state, Direction side) {
+                return side == state.getValue(SmartCollectionGrateBlock.FACING);
+            }
         }).forFluids().withCallback(this::filterChanged));
     }
     @Override protected boolean automaticEnabled() { return !getBlockState().getValue(SmartCollectionGrateBlock.POWERED); }

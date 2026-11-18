@@ -31,7 +31,7 @@ import net.neoforged.neoforge.common.Tags;
 public class CopperCollectionGrateBlock extends CauldronBlock implements IBE<CopperCollectionGrateBlockEntity>, IWrenchable {
     // CauldronBlock's codec return type is invariant; the factory still creates this grate subtype.
     public static final MapCodec<CauldronBlock> CODEC = simpleCodec(CopperCollectionGrateBlock::new);
-    private static final VoxelShape SHAPE = Shapes.or(
+    protected static final VoxelShape SHAPE = Shapes.or(
         box(3, 0, 3, 13, 2, 13), box(4, 0, 4, 12, 4, 12),
         ring(2, 14, 6, 10, 2, 3), ring(2, 14, 3, 13, 3, 5),
         ring(1, 15, 3, 13, 5, 7), ring(0, 16, 2, 14, 7, 8),
