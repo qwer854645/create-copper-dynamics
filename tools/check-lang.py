@@ -1,10 +1,11 @@
 """Lang file guard for CCD: key parity, emphasis markers, placeholders, tooltip structure.
 
-Run before committing any change to `assets/ccd/lang/`:
+Structural checks only - it says nothing about voice. Run before committing any change to
+`assets/ccd/lang/`:
 
     python tools/check-lang.py
 
-Exit code 0 means the files agree with each other and with docs/text-voice.md.
+Exit code 0 means the two languages agree with each other and the tooltip groups are complete.
 """
 from __future__ import annotations
 
