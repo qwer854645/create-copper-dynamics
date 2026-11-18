@@ -18,14 +18,28 @@ Create 的贴图：
 
 ## 还剩下的自绘贴图
 
-只保留 4 张派生贴图，全部由 Create 的像素派生或按几何生成（没有新调色板）：
+只保留 3 张派生贴图 + 4 张集液栅专用贴图，全部使用 Create 的现成色板（没有新颜色）：
 
 | 贴图 | 来源 |
 |---|---|
 | `block/booster_pump/shaft_face.png` | Create `copper_underside` + 原生 gearbox 轴孔 |
-| `block/smart_collection_grate/body.png` | Create `brass_block` 2×2 铺贴（32×32 面） |
 | `block/copper_water_supply/cap.png` | 同心凹槽按环几何生成，落在 Create 的 8 阶铜色 |
 | `block/fluid_arm/core.png` | 深色轴孔按环几何生成，落在深色阶 |
+
+### 集液栅（一格高模型专用）
+
+`d48566a` 把集液栅改成了一格高（16px 深），侧壁 UV 是按 **每个模型像素一个纹素** 重新算的，
+所以贴图必须按模型实际采样的条带来排布，不能再用通用铜板：
+
+| 贴图 | 被谁采样 |
+|---|---|
+| `block/copper_collection_grate/wall.png` | 外壳四壁（上层 v3..9、下层 v5..11）+ 悬挑底面（v1..3） |
+| `block/copper_collection_grate/rim.png` | 顶部凸沿的上表面，只采样最外 2 行/2 列组成的环 |
+| `block/smart_collection_grate/body.png` | 智能版凸沿的侧面（只采样 v2..3） |
+| `block/smart_collection_grate/rim.png` | 智能版凸沿的上下表面（同上，环） |
+
+`create:block/copper_underside` 在这里不可用：它的高光正好落在第 1 行，而那一行是悬挑底面的
+位置（应该是暗的），而且它没有垂直衰减，会把两层读成一整块平板。
 
 另外 `block/fluid_transmitter/{body,side,top}` **保持原设计，不参与派生**：那两张 32×32 面带
 一块黄色指示面板和箭头标记，用 `copper_underside` 2×2 铺贴会把指示器整个覆盖掉，箭头还会正好
@@ -35,17 +49,19 @@ Create 的贴图：
 
 | 脚本 | 职责 | 依赖 |
 |---|---|---|
-| `copper-material.py` | 上面 6 张派生贴图；色板与 `metrics`/`symmetry` 工具 | Python + Pillow + Create 源 |
+| `copper-material.py` | 上面 3 张派生贴图；色板与 `metrics`/`symmetry` 工具 | Python + Pillow + Create 源 |
+| `create-collection-grate-textures.py` | 集液栅 4 张贴图，按模型的 UV 分带排布 | Python + Pillow |
 | `recolor-rank.py` | 智能储罐 4 张按「秩」重新映射到黄铜（从 Create 像素出发） | Python + Pillow + Create 源 |
 | `repaint-smart-tank.py` | `recolor-rank.py` 的旧入口包装 | 同上 |
-| `symmetrize-fluid-housings.py` | 增压泵 / 传讯器的原生细节合成 | 同上 |
+| `symmetrize-fluid-housings.py` | 增压泵轴孔的原生细节合成 | 同上 |
 
-用法（第一个参数是资产根，第二个是 Create jar 或解包后的资源根）：
+用法（`copper-material.py` 的第二个参数是 Create jar 或解包后的资源根）：
 
 ```powershell
 python tools/copper-material.py src/main/resources/assets <create.jar>            # 写入
 python tools/copper-material.py src/main/resources/assets <create.jar> --check    # 只看指标
 python tools/copper-material.py src/main/resources/assets <create.jar> --verify   # 比对，有偏差返回 1
+python tools/create-collection-grate-textures.py src/main/resources/assets        # 集液栅 4 张
 python tools/recolor-rank.py <create.jar>                                          # 智能储罐
 ```
 

@@ -206,3 +206,39 @@ python tools/symmetrize-fluid-housings.py
 
 **结论性教训**：带指示灯、刻度、箭头这类「信息像素」的面，不能套通用金属板；
 `copper_underside` 只适合纯结构面。
+
+---
+
+## 10. 集液栅改成一格高之后的贴图
+
+`d48566a` 把两个集液栅从 8px 深的水盆改成 16px（一格高），`tools/resize-collection-grates.py`
+在改几何的同时把侧壁 UV 一起放大了（`uv[3] = uv[1] + 6`），所以侧壁现在是 **一个模型像素对一个纹素**。
+继续套 `copper_underside` 就出问题了：
+
+| 现象 | 原因 |
+|---|---|
+| 两层墙壁读成一整块平板 | 上层采样 v3..9、下层采样 v5..11，而 `copper_underside` 没有垂直衰减 |
+| 悬挑底面是**亮**的 | 悬挑底面采样 v1..3，而 `copper_underside` 的高光正好在第 1 行 |
+| 凸沿只是一条平色带 | 凸沿上表面只采样最外 2 行/2 列，那圈在原图里没有设计 |
+| 智能版凸沿发绿、有接缝 | 用的是 `brass_block` 2×2 铺贴，采样的 v2..3 正好是拼缝 |
+
+改为 `tools/create-collection-grate-textures.py` 按模型的采样条带专门排布：
+
+| 贴图 | 条带 | 设计 |
+|---|---|---|
+| `copper_collection_grate/wall.png` | v0..2 悬挑底面 / v3 上层顶边 / v5 层间接缝凹槽 / v7 地板侧沿 / v9 上层底 / v11 下层底 | 垂直衰减 + 层间暗缝 |
+| `copper_collection_grate/rim.png` | 最外 2 行/2 列组成的环 | 外圈亮倒角 + 内圈暗影线 |
+| `smart_collection_grate/body.png` | v2..3 | 黄铜凸沿侧面亮带 |
+| `smart_collection_grate/rim.png` | 环 | 同上，黄铜色 |
+
+模型的唯一改动是 `copper_collection_grate.json` 的 `copper` 键：
+`create:block/copper_underside` → `ccd:block/copper_collection_grate/wall`。几何、UV 未动。
+
+关键约束：`v3..9` 与 `v5..11` 在 5..9 重叠，所以那几行被两层共用，不能分开调。
+第 5 行同时是「下层墙顶（在悬挑下面，应该是暗的）」和「上层墙顶下方 2px」，
+两者都偏暗，于是定成一条刻意的凹槽。
+
+预览：`outputs/texture-rework/collection-grate.png`（`git HEAD` 前后对照，4 个视角）。
+渲染用的是把 `tools/preview-fluid-packager.cjs` 的 `mesh()`/`render()` 一比一移植过来的
+Python 版（同样的面角顺序、UV 基准四边形、v=0 在图像顶部、光照与 z-buffer 规则），
+因为本机没有 `sharp`，跑不了原脚本。

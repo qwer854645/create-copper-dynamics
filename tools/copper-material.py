@@ -216,12 +216,13 @@ def derive(assets: Path, create_src: Path):
         face.paste(old.crop((4, 4, 12, 12)), (4, 4))
         out["block/booster_pump/shaft_face.png"] = face
 
-    # 32 px brass body: Create brass tiled 2x2, which reads as four joined brass plates.
-    out["block/smart_collection_grate/body.png"] = tile(brass_block, 2)
-
     # Concentric cap and dark recess: geometric, so they are deterministic across runs.
     out["block/copper_water_supply/cap.png"] = cap(16)
     out["block/fluid_arm/core.png"] = core(16)
+
+    # block/smart_collection_grate/body.png used to be Create brass tiled 2x2 here. It is now
+    # the brass lip side band of the one-block grate and is owned by
+    # tools/create-collection-grate-textures.py, which knows the model's UV bands.
 
     return out
 
