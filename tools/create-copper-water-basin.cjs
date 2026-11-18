@@ -1,7 +1,7 @@
-// Plain copper cabinet basin: no doors or faucet, with an original iron-ingot-style silver rim.
+// Plain copper cabinet basin, bright iron rim and a half-size instance of CCD's copper faucet.
 // Usage: node tools/create-copper-water-basin.cjs <extracted Create source root>
 const fs=require('node:fs'),path=require('node:path'),sharp=require('sharp');
-const {mesh,render}=require('./preview-fluid-packager.cjs');
+const {mesh,render,model:loadModel}=require('./preview-fluid-packager.cjs');
 const root=path.resolve(__dirname,'..'),assets=path.join(root,'src/main/resources/assets/ccd');
 const textures=path.join(assets,'textures/block/copper_water_basin'),output=path.join(root,'outputs/copper-water-basin');
 for(const dir of [textures,output])fs.mkdirSync(dir,{recursive:true});
@@ -75,12 +75,31 @@ async function main(){
   for(const side of ['north','south'])e.faces[side].uv=[e.from[0],0,e.to[0],1];
   for(const side of ['east','west'])e.faces[side].uv=[e.from[2],15,e.to[2],16];
  }
- const model={parent:'minecraft:block/block',textures:{particle:'ccd:block/copper_water_basin/outer',
+ const tapSource='ccd:block/faucet_open',tap=loadModel(tapSource),tapScale=.5,tapOffset=[4,17,1.5];
+ const tapTextures={};
+ for(const [key,value]of Object.entries(tap.textures))if(key!=='particle')tapTextures['tap_'+key]=value;
+ const transform=p=>p.map((v,i)=>v*tapScale+tapOffset[i]);
+ const mount=box('tap_mount',[6.5,16,0],[9.5,16.5,2],'rim');
+ const riser=box('tap_riser',[7,16.5,.25],[9,21.5,1.75],'tap_body');
+ elements.push(mount,riser);
+ for(const original of tap.elements){
+  const e=JSON.parse(JSON.stringify(original));
+  e.name='scaled_faucet_'+(e.name||elements.length);
+  e.from=transform(e.from);e.to=transform(e.to);
+  if(e.rotation)e.rotation.origin=transform(e.rotation.origin);
+  for(const f of Object.values(e.faces)){
+   f.texture=f.texture.replace(/^#/,'#tap_');
+   // A miniature pipe mouth is inside the sink block, not on its block boundary.
+   delete f.cullface;
+  }
+  elements.push(e);
+ }
+ const model={parent:'minecraft:block/block',render_type:'minecraft:cutout_mipped',textures:{particle:'ccd:block/copper_water_basin/outer',
   outer:'ccd:block/copper_water_basin/outer',inner:'ccd:block/copper_water_basin/inner',
-  floor:'ccd:block/copper_water_basin/floor',rim:'ccd:block/copper_water_basin/rim'},elements};
+  floor:'ccd:block/copper_water_basin/floor',rim:'ccd:block/copper_water_basin/rim',...tapTextures},elements};
  save(path.join(assets,'models/block/copper_water_basin.json'),model);
  save(path.join(assets,'models/item/copper_water_basin.json'),{parent:'ccd:block/copper_water_basin',
-  display:{gui:{rotation:[25,225,0],translation:[0,0,0],scale:[.625,.625,.625]}}});
+  display:{gui:{rotation:[25,225,0],translation:[0,-1,0],scale:[.55,.55,.55]}}});
  const variants={};for(const [facing,y]of [['south',0],['west',90],['north',180],['east',270]])
   variants['facing='+facing]={model:'ccd:block/copper_water_basin',...(y?{y}:{})};
  save(path.join(assets,'blockstates/copper_water_basin.json'),{variants});
@@ -95,18 +114,19 @@ async function main(){
  const panels=[];
  for(const [i,faces,name,view]of [[0,[...shell,surface],'front',[25,24,34]],[1,shell,'empty',[25,30,34]],
   [2,[...shell,surface],'rear',[-26,24,-34]]]){
-  const buffer=await render(faces,500,510,view,{center:[8,8,8],scale:18});
+  const buffer=await render(faces,500,510,view,{center:[8,11,8],scale:18});
   await sharp(buffer).png().toFile(path.join(output,name+'.png'));panels.push({input:buffer,left:i*500,top:95});
  }
- const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · 素面柜体与铁质银边</text><text x="750" y="78" font-size="16">完整铜柜体 · 无柜门、无把手、无龙头 · 铁锭风格银色包边</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽结构</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 原创 16×16 像素贴图，水面沿用 Create 原生渲染 / 未启动游戏</text></g></svg>`);
+ const labels=Buffer.from(`<svg width="1500" height="700" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="40" font-size="29">铜水槽 · 半尺寸铜龙头</text><text x="750" y="78" font-size="16">保留素面柜体与明亮银边 · 原有铜龙头整体缩小一半 · 铜立管安装</text><text x="250" y="647" font-size="19">正面 · 水面示意</text><text x="750" y="647" font-size="19">空槽结构</text><text x="1250" y="647" font-size="19">背面</text><text x="750" y="683" font-size="14" fill="#677070">实际模型离线预览 / 缩小龙头沿用原有模型与 UV，不新增开关操作 / 未启动游戏</text></g></svg>`);
  await sharp({create:{width:1500,height:700,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:labels,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  save(path.join(output,'model.meta.json'),{textureSize:[16,16],geometry:elements.map(({name,from,to})=>({name,from,to})),
   front:'south',facing:'four horizontal directions',rimHeight:16,nativeWaterScaleY:.625,nativeWaterOffsetY:6.5,fullWaterSurfaceY:14,
   opening:[[2,2],[14,14]],bowlStepHeight:[9,11],countertopUV:'one continuous 16x16 X/Z layout, four strips use absolute UVs',
+  faucet:{source:tapSource,scale:tapScale,offset:tapOffset,geometry:'all source elements uniformly scaled; UVs unchanged; embedded mouth cullfaces removed',state:'fixed open appearance'},
   waterRendering:'native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved',
   inventoryAndInteraction:'unchanged infinite fixed water; ordinary right click fills, sneak disposes',
   reference:'new user-directed structure; vanilla iron-ingot palette/bevel inspiration only',
-  artwork:'CCD original geometry and pixels; plain copper cabinet and original silver rim, no external texture copied',
+  artwork:'CCD sink artwork plus existing CCD faucet; native pipe mouth and spout art retain Create ownership',
   pixelStyle:'plain copper clusters without seams or doors; neutral silver-white iron-ingot-style bevel; four original 16x16 textures'});
  const swatches=[];
  for(const [i,name]of ['outer','rim','inner','floor'].entries())swatches.push({
