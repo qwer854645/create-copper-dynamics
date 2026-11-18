@@ -23,6 +23,21 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
                 value=round(.2126*r+.7152*g+.0722*b,3)
                 index=round(values.index(value)/(len(values)-1)*(len(ramp)-1))
                 image.putpixel((x,y),(*ramp[index],a))
+        if name=='brass':
+            # Mechanical-arm style brown folds, confined to structural seams.
+            # Preserve paper-derived face grain and keep a narrow adjacent gold lip.
+            for tile in range(5):
+                left,top=36,1+tile*12
+                if tile<3:
+                    for x in range(12):
+                        image.putpixel((left+x,top+11),(*ramp[2],255))
+                    for x in range(1,11):
+                        if x not in (5,6): image.putpixel((left+x,top+1),(*ramp[3],255))
+                    for y in range(2,11): image.putpixel((left+7,top+y),(*ramp[3],255))
+                else:
+                    for y in range(12): image.putpixel((left+7,top+y),(*ramp[3],255))
+                    for x in list(range(1,5))+list(range(8,11)):
+                        image.putpixel((left+x,top+5),(*ramp[3],255))
         image.save(A/f'textures/item/native_package_{name}.png')
         model=json.loads(json.dumps(native)); model['textures']['0']=f'ccd:item/native_package_{name}'
         model['textures']['particle']=model['textures']['0']
