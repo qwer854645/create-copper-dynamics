@@ -54,9 +54,10 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
             if(existing.isPresent()) existing.get().setAmount((int)Math.min(Integer.MAX_VALUE,(long)existing.get().getAmount()+fluid.getAmount()));
             else fluids.add(fluid.copy());
         }
-        for(var fluid:fluids) tooltip.add(fluid.getHoverName().copy().append(" · ").append(dev.ccd.CCDTooltip.amount(fluid.getAmount())));
-        tooltip.add(Component.translatable("ccd.fluid_access.sources",sources().stream().map(FluidAccess.Source::identity).distinct().count()));
-        tooltip.add(Component.translatable("ccd.fluid_access.no_storage"));
+        dev.ccd.CCDTooltip.heading(tooltip,"ccd.gui.goggles.connection");
+        for(var fluid:fluids) dev.ccd.CCDTooltip.line(tooltip,"ccd.smart_tank.fluid",fluid.getHoverName(),dev.ccd.CCDTooltip.amount(fluid.getAmount()));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.fluid_access.sources",dev.ccd.CCDTooltip.number(sources().stream().map(FluidAccess.Source::identity).distinct().count()));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.fluid_access.no_storage");
         return true;
     }
 }

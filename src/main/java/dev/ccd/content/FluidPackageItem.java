@@ -81,7 +81,7 @@ public class FluidPackageItem extends PackageItem {
             lines.add(CCDTooltip.amount(fluid.getAmount()));
         }
         String address = PackageItem.getAddress(stack);
-        if (!address.isBlank()) lines.add(Component.literal("→ " + address).withStyle(ChatFormatting.GOLD));
+        if (!address.isBlank()) lines.add(Component.translatable("ccd.package.address", address).withStyle(ChatFormatting.GOLD));
     }
 
     @Override
