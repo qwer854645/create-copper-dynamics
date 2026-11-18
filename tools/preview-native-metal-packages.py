@@ -31,13 +31,13 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
         # Draw metal afresh instead of retaining paper grain/creases from the source.
         panels={
             'copper':[
-                '277777777772','765555655553','754445655443','754334554443',
-                '754334444553','755444433553','765554433443','754444445543',
-                '754334455543','754334444443','755444433453','133333333331'],
+                '266766676662','655665565553','654554655453','655445654553',
+                '645455544563','654565445553','655654455453','645554565553',
+                '654455654543','655465545453','654554455553','233333433332'],
             'brass':[
-                '388888888883','876666776664','865555776554','865566655554',
-                '866666555664','865666555664','865566776554','865555776554',
-                '866655665554','876655556664','865555555554','244444444442']}
+                '377877787773','766776676664','765665766564','766556765664',
+                '756566655674','765676556664','766765566564','756665676664',
+                '765566765654','766576656564','765665566664','344444544443']}
         for tile in range(5):
             c=Canvas(12,12)
             for y,row in enumerate(panels[name]):
@@ -46,18 +46,18 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
             # Flush metal sealing band, lighter folded lip with dark right edge.
             if tile in (0,1,2):
                 for y in range(12):
-                    c.set(5,y,ramp[7 if name=='copper' else 8])
+                    c.set(5,y,ramp[6 if name=='copper' else 7])
                     c.set(6,y,ramp[5 if name=='copper' else 6])
-                    c.set(7,y,ramp[2])
+                    c.set(7,y,ramp[4 if name=='copper' else 5])
                 # Horizontal lid fold is defined through pixels, no extra cuboids.
                 for x in range(1,11):
-                    if x not in (5,6,7): c.set(x,2,ramp[2])
+                    if x not in (5,6,7): c.set(x,2,ramp[4 if name=='copper' else 5])
             else:
                 for y in range(12):
-                    c.set(5,y,ramp[7 if name=='copper' else 8]); c.set(6,y,ramp[5 if name=='copper' else 6]); c.set(7,y,ramp[2])
+                    c.set(5,y,ramp[6 if name=='copper' else 7]); c.set(6,y,ramp[5 if name=='copper' else 6]); c.set(7,y,ramp[4 if name=='copper' else 5])
                 # Inset lid seam following original folded package construction.
                 for x in list(range(1,5))+list(range(8,11)):
-                    c.set(x,5,ramp[2]); c.set(x,6,ramp[6])
+                    c.set(x,5,ramp[4 if name=='copper' else 5]); c.set(x,6,ramp[5 if name=='copper' else 6])
             image.alpha_composite(c.img,(36,1+tile*12))
         image.save(texture)
         model=json.loads(json.dumps(native)); model['textures']['0']=f'ccd:item/native_package_{name}'
