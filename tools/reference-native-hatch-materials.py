@@ -32,7 +32,23 @@ for name,body,lid in [('fluid_hatch','fluid_tank','copper_underside'),('smart_fl
     for side in ('east','west'):
         elements[2]['faces'][side]=copy.deepcopy(original[2]['faces'][side])
         elements[2]['faces'][side]['texture']='#side'
+    if name=='smart_fluid_hatch':
+        # The outward face sits just behind HatchFilterSlot's (8,5.15,9.5)
+        # origin, with its native -45 degree tilt. Icon and hitbox stay unchanged.
+        elements.append({
+            'name':'smart_pipe_filter_slot',
+            'from':[4,1.15,9.28],'to':[12,9.15,9.48],
+            'rotation':{'angle':-45,'axis':'x','origin':[8,5.15,9.5]},
+            'faces':{
+                'south':{'texture':'#filter','uv':[8,8,16,16]},
+                'north':{'texture':'#filter','uv':[0,8,8,16]},
+                'east':{'texture':'#filter','uv':[13,0,16,8]},
+                'west':{'texture':'#filter','uv':[13,8,16,0]},
+                'up':{'texture':'#filter','uv':[13,8,16,0],'rotation':270},
+                'down':{'texture':'#filter','uv':[13,0,16,8],'rotation':90}
+            }})
     model={'parent':'create:block/item_hatch/block_closed','textures':{
         '0':'create:block/'+body,'1':'create:block/'+lid,'side':f'ccd:block/{name}/side_clipped',
+        'filter':'create:block/smart_pipe_2',
         'particle':'create:block/'+body},'render_type':'minecraft:cutout_mipped','elements':elements}
     (root/f'src/main/resources/assets/ccd/models/block/{name}_closed.json').write_text(json.dumps(model,indent=2)+'\n',encoding='utf-8')

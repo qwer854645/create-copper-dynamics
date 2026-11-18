@@ -4,6 +4,7 @@
     "0": "create:block/fluid_tank",
     "1": "create:block/copper_underside",
     "side": "ccd:block/fluid_hatch/side_clipped",
+    "filter": "create:block/smart_pipe_2",
     "particle": "create:block/fluid_tank"
   },
   "render_type": "minecraft:cutout_mipped",

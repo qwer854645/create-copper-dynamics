@@ -4,6 +4,7 @@
     "0": "create:block/brass_casing",
     "1": "create:block/brass_block",
     "side": "ccd:block/smart_fluid_hatch/side_clipped",
+    "filter": "create:block/smart_pipe_2",
     "particle": "create:block/brass_casing"
   },
   "render_type": "minecraft:cutout_mipped",
@@ -211,6 +212,86 @@
             16
           ],
           "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "smart_pipe_filter_slot",
+      "from": [
+        4,
+        1.15,
+        9.28
+      ],
+      "to": [
+        12,
+        9.15,
+        9.48
+      ],
+      "rotation": {
+        "angle": -45,
+        "axis": "x",
+        "origin": [
+          8,
+          5.15,
+          9.5
+        ]
+      },
+      "faces": {
+        "south": {
+          "texture": "#filter",
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ]
+        },
+        "north": {
+          "texture": "#filter",
+          "uv": [
+            0,
+            8,
+            8,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#filter",
+          "uv": [
+            13,
+            0,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#filter",
+          "uv": [
+            13,
+            8,
+            16,
+            0
+          ]
+        },
+        "up": {
+          "texture": "#filter",
+          "uv": [
+            13,
+            8,
+            16,
+            0
+          ],
+          "rotation": 270
+        },
+        "down": {
+          "texture": "#filter",
+          "uv": [
+            13,
+            0,
+            16,
+            8
+          ],
+          "rotation": 90
         }
       }
     }
