@@ -172,6 +172,32 @@ def swap_material(src: Image.Image, ramp, keep_silver=True, keep_black=True, war
 # If a stronger fluid cue is ever wanted, put a small droplet badge in a corner instead of
 # replacing the door.
 
+# The visible front panel is this window of the 32 px atlas.
+PANEL = (3, 3, 15, 17)
+
+
+def bezel(im, thickness=1, bright=None, dark=None):
+    """Ring the front panel the way Create's brass casings are built: lit gold rim, dark seam.
+
+    Only the smart hatch gets this. Create's brass parts are never a flat brass sheet - they are
+    a bright gold frame around a recessed dark face (`brass_casing` is the extreme version of
+    it). Without a real bezel the smart hatch was just the copper hatch recoloured, with nothing
+    that reads as brass hardware.
+    """
+    bright = bright if bright is not None else BRASS_BODY[10]   # #FBDC7D
+    dark = dark if dark is not None else BRASS_BODY[0]          # #724731
+    x0, y0, x1, y1 = PANEL
+    out = im.copy()
+    px = out.load()
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            edge = min(x - x0, y - y0, x1 - x, y1 - y)
+            if edge == 0:
+                px[x, y] = bright + (255,)
+            elif edge == 1 and thickness >= 2:
+                px[x, y] = dark + (255,)
+    return out
+
 
 def derive(assets: Path, create_src: Path):
     housing_src = load_create(create_src, "hatch.png")
@@ -179,7 +205,10 @@ def derive(assets: Path, create_src: Path):
     out = {}
     for material, key in (("fluid_hatch", "copper"), ("smart_fluid_hatch", "brass")):
         ramp = TINT[key]
-        out[f"block/{material}/housing.png"] = swap_material(housing_src, ramp)
+        housing = swap_material(housing_src, ramp)
+        if key == "brass":
+            housing = bezel(housing, thickness=2)
+        out[f"block/{material}/housing.png"] = housing
         out[f"block/{material}/flap.png"] = swap_material(flap_src, ramp)
     return out
 

@@ -58,9 +58,13 @@ Create 的贴图：
 
 | 键 | 贴图 | 做法 |
 |---|---|---|
-| `0` | `block/{fluid,smart_fluid}_hatch/housing.png`（32×32） | Create `hatch.png` 的**中间灰**换成铜/黄铜，黑与银原样保留 |
+| `0` | `block/{fluid,smart_fluid}_hatch/housing.png`（32×32） | Create `hatch.png` 的**中间灰**换成铜/黄铜，黑与银原样保留；黄铜版额外压一道亮金包边 |
 | `1` | `block/{fluid,smart_fluid}_hatch/flap.png`（16×16） | 同上 |
 | `particle` | 同 `housing` | — |
+
+**黄铜包边**：Create 的黄铜件是"亮金框 + 内凹暗面"，不是一张平黄铜板。smart 版在正面窗口
+（`x3..15 / y3..17`）压最外 1 像素 `#FBDC7D` + 第 2 圈 `#724731` 暗缝；3px 会啃掉格栅，别加厚。
+铜版不加，两个变体靠这一点区分。
 
 两个关键约束（都是渲染探针测出来的，别凭直觉改）：
 
