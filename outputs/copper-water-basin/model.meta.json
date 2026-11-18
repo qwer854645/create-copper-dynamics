@@ -18,20 +18,7 @@
       ]
     },
     {
-      "name": "cabinet_and_bowl_floor",
-      "from": [
-        1,
-        1,
-        1
-      ],
-      "to": [
-        15,
-        9,
-        15
-      ]
-    },
-    {
-      "name": "back_wall",
+      "name": "plain_cabinet_and_bowl_floor",
       "from": [
         0,
         1,
@@ -39,15 +26,28 @@
       ],
       "to": [
         16,
-        15,
-        3
+        9,
+        16
       ]
     },
     {
-      "name": "front_cabinet",
+      "name": "back_wall",
       "from": [
         0,
-        1,
+        9,
+        0
+      ],
+      "to": [
+        16,
+        15,
+        2
+      ]
+    },
+    {
+      "name": "front_wall",
+      "from": [
+        0,
+        9,
         14
       ],
       "to": [
@@ -60,8 +60,8 @@
       "name": "left_wall",
       "from": [
         0,
-        1,
-        3
+        9,
+        2
       ],
       "to": [
         2,
@@ -73,8 +73,8 @@
       "name": "right_wall",
       "from": [
         14,
-        1,
-        3
+        9,
+        2
       ],
       "to": [
         16,
@@ -92,7 +92,7 @@
       "to": [
         16,
         16,
-        3
+        2
       ]
     },
     {
@@ -113,7 +113,7 @@
       "from": [
         0,
         15,
-        3
+        2
       ],
       "to": [
         2,
@@ -126,7 +126,7 @@
       "from": [
         14,
         15,
-        3
+        2
       ],
       "to": [
         16,
@@ -135,107 +135,16 @@
       ]
     },
     {
-      "name": "tap_foot",
-      "from": [
-        6.5,
-        16,
-        0.5
-      ],
-      "to": [
-        9.5,
-        17,
-        3.5
-      ]
-    },
-    {
-      "name": "tap_stem",
-      "from": [
-        7.5,
-        17,
-        1.5
-      ],
-      "to": [
-        8.5,
-        21,
-        2.5
-      ]
-    },
-    {
-      "name": "tap_arch",
-      "from": [
-        7.5,
-        20,
-        2.5
-      ],
-      "to": [
-        8.5,
-        21,
-        7
-      ]
-    },
-    {
-      "name": "tap_nozzle",
-      "from": [
-        7.5,
-        18.5,
-        6
-      ],
-      "to": [
-        8.5,
-        20,
-        7
-      ]
-    },
-    {
-      "name": "mixer_lever",
-      "from": [
-        9,
-        17,
-        1
-      ],
-      "to": [
-        11,
-        17.75,
-        2
-      ]
-    },
-    {
-      "name": "left_cabinet_handle",
-      "from": [
-        6,
-        7,
-        15.75
-      ],
-      "to": [
-        6.75,
-        10,
-        16.25
-      ]
-    },
-    {
-      "name": "right_cabinet_handle",
-      "from": [
-        9.25,
-        7,
-        15.75
-      ],
-      "to": [
-        10,
-        10,
-        16.25
-      ]
-    },
-    {
       "name": "bowl_step_back",
       "from": [
         2,
         9,
-        3
+        2
       ],
       "to": [
         14,
         11,
-        4
+        3
       ]
     },
     {
@@ -256,7 +165,7 @@
       "from": [
         2,
         9,
-        4
+        3
       ],
       "to": [
         3,
@@ -269,7 +178,7 @@
       "from": [
         13,
         9,
-        4
+        3
       ],
       "to": [
         14,
@@ -287,7 +196,7 @@
   "opening": [
     [
       2,
-      3
+      2
     ],
     [
       14,
@@ -301,7 +210,7 @@
   "countertopUV": "one continuous 16x16 X/Z layout, four strips use absolute UVs",
   "waterRendering": "native FluidTankRenderer inside a scaled pose; actual texture, tint and animation preserved",
   "inventoryAndInteraction": "unchanged infinite fixed water; ordinary right click fills, sneak disposes",
-  "reference": "https://github.com/TwelveIterations/CookingForBlockheads/blob/26.3/common/src/main/resources/assets/cookingforblockheads/models/block/sink.json",
-  "artwork": "CCD original geometry and pixels; external reference applies to structure only, not textures",
-  "pixelStyle": "approved CCD booster pump: copper cabinet and separately drawn folded copper countertop; iron bowl and tap; original 16x16 clusters"
+  "reference": "new user-directed structure; vanilla iron-ingot palette/bevel inspiration only",
+  "artwork": "CCD original geometry and pixels; plain copper cabinet and original silver rim, no external texture copied",
+  "pixelStyle": "plain copper clusters without seams or doors; neutral silver-white iron-ingot-style bevel; four original 16x16 textures"
 }

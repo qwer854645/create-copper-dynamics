@@ -26,26 +26,19 @@ public final class CopperKitchenSinkBlock extends CopperWaterBasinBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final VoxelShaper SHAPE = VoxelShaper.forHorizontal(Shapes.or(
         Block.box(1, 0, 1, 15, 1, 15),
-        Block.box(1, 1, 1, 15, 9, 15),
-        Block.box(0, 1, 0, 16, 15, 3),
-        Block.box(0, 1, 14, 16, 15, 16),
-        Block.box(0, 1, 3, 2, 15, 14),
-        Block.box(14, 1, 3, 16, 15, 14),
-        Block.box(0, 15, 0, 16, 16, 3),
+        Block.box(0, 1, 0, 16, 9, 16),
+        Block.box(0, 9, 0, 16, 15, 2),
+        Block.box(0, 9, 14, 16, 15, 16),
+        Block.box(0, 9, 2, 2, 15, 14),
+        Block.box(14, 9, 2, 16, 15, 14),
+        Block.box(0, 15, 0, 16, 16, 2),
         Block.box(0, 15, 14, 16, 16, 16),
-        Block.box(0, 15, 3, 2, 16, 14),
-        Block.box(14, 15, 3, 16, 16, 14),
-        Block.box(6.5, 16, 0.5, 9.5, 17, 3.5),
-        Block.box(7.5, 17, 1.5, 8.5, 21, 2.5),
-        Block.box(7.5, 20, 2.5, 8.5, 21, 7),
-        Block.box(7.5, 18.5, 6, 8.5, 20, 7),
-        Block.box(9, 17, 1, 11, 17.75, 2),
-        Block.box(6, 7, 15.75, 6.75, 10, 16.25),
-        Block.box(9.25, 7, 15.75, 10, 10, 16.25),
-        Block.box(2, 9, 3, 14, 11, 4),
+        Block.box(0, 15, 2, 2, 16, 14),
+        Block.box(14, 15, 2, 16, 16, 14),
+        Block.box(2, 9, 2, 14, 11, 3),
         Block.box(2, 9, 13, 14, 11, 14),
-        Block.box(2, 9, 4, 3, 11, 13),
-        Block.box(13, 9, 4, 14, 11, 13)), Direction.SOUTH);
+        Block.box(2, 9, 3, 3, 11, 13),
+        Block.box(13, 9, 3, 14, 11, 13)), Direction.SOUTH);
 
     public CopperKitchenSinkBlock(Properties properties) {
         super(properties);
