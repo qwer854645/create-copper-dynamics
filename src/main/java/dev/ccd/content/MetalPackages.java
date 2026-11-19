@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-/** Additional native sizes; the historical item IDs remain the 12x12 carriers. */
+/** Native-style item-per-shape registration, with separate material selection pools. */
 public final class MetalPackages {
     public record Variant(String id,String material,String size,DeferredHolder<Item,? extends Item> item) {}
     public static final List<Variant> VARIANTS=new ArrayList<>();
@@ -22,4 +22,11 @@ public final class MetalPackages {
         }
     }
     public static void register() {}
+    public static net.minecraft.world.item.ItemStack randomBox(boolean brass) {
+        var choices=new ArrayList<Item>();
+        choices.add(brass?CopperDynamics.COMPOSITE_PACKAGE.get():CopperDynamics.FLUID_PACKAGE.get());
+        String material=brass?"brass":"copper";
+        for(var variant:VARIANTS) if(variant.material().equals(material)) choices.add(variant.item().get());
+        return new net.minecraft.world.item.ItemStack(choices.get(java.util.concurrent.ThreadLocalRandom.current().nextInt(choices.size())));
+    }
 }

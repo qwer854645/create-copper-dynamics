@@ -58,7 +58,7 @@ public final class CompositePackageItem extends PackageItem {
     }
     public static ItemStack containing(ItemStackHandler items, List<FluidStack> fluids) {
         if (items.getSlots() != PackageItem.SLOTS) throw new IllegalArgumentException("Expected native package slots");
-        ItemStack box = new ItemStack(CopperDynamics.COMPOSITE_PACKAGE.get());
+        ItemStack box = MetalPackages.randomBox(true);
         box.set(AllDataComponents.PACKAGE_CONTENTS, ItemHelper.containerContentsFromHandler(items));
         box.set(CopperDynamics.COMPOSITE_FLUIDS.get(), new CompositeFluids(fluids.stream().map(FluidCargo::new).toList()));
         if (!isValid(box)) throw new IllegalArgumentException("Invalid or oversized composite contents");

@@ -59,7 +59,7 @@ public class FluidPackageItem extends PackageItem {
     /** No capacity check here: saved packages must remain recoverable after configuration changes. */
     public static ItemStack containingFluid(FluidStack fluid) {
         if (fluid.isEmpty()) throw new IllegalArgumentException("Cannot package empty fluid");
-        ItemStack box = new ItemStack(CopperDynamics.FLUID_PACKAGE.get());
+        ItemStack box = MetalPackages.randomBox(false);
         box.set(CopperDynamics.FLUID_CARGO.get(), new FluidCargo(fluid));
         return box;
     }
