@@ -149,9 +149,4 @@ public final class SmartFaucetBlockEntity extends FaucetBlockEntity {
         if (committed[0]) splash(actual, 2);
         else returnUndelivered(plan.source(), actual);
     }
-    @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        super.addToGoggleTooltip(tooltip, sneaking);
-        CCDTooltip.line(tooltip, "ccd.smart_faucet.items");
-        return true;
-    }
 }

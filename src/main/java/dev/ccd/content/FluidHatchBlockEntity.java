@@ -88,9 +88,10 @@ public class FluidHatchBlockEntity extends ItemHatchBlockEntity implements IHave
 
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         boolean connected = containedFluidTooltip(tooltip, sneaking, unsided);
-        CCDTooltip.heading(tooltip, "ccd.gui.goggles.connection");
-        CCDTooltip.line(tooltip, connected ? ChatFormatting.GRAY : ChatFormatting.YELLOW,
-            connected ? "ccd.fluid_hatch.proxy" : "ccd.fluid_hatch.no_container");
+        if (!connected) {
+            CCDTooltip.heading(tooltip, "ccd.gui.goggles.connection");
+            CCDTooltip.line(tooltip, ChatFormatting.YELLOW, "ccd.fluid_hatch.no_container");
+        }
         return true;
     }
 

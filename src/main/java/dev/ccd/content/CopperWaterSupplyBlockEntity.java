@@ -112,8 +112,6 @@ public final class CopperWaterSupplyBlockEntity extends CopperWaterBasinBlockEnt
         boolean paused = getBlockState().getValue(CopperWaterSupplyBlock.POWERED);
         CCDTooltip.line(tooltip, rate == 0 || paused ? ChatFormatting.YELLOW : ChatFormatting.AQUA,
             rate == 0 ? "ccd.water_supply.disabled" : paused ? "ccd.water_supply.paused" : "ccd.water_supply.active");
-        if (rate == -1) CCDTooltip.line(tooltip, "ccd.water_supply.unlimited");
-        else if (rate > 0) CCDTooltip.line(tooltip, "ccd.water_supply.rate", CCDTooltip.amount(rate));
         return true;
     }
 }

@@ -41,7 +41,6 @@ public class CopperWaterBasinBlockEntity extends FluidTankBlockEntity {
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         CCDTooltip.heading(tooltip, "ccd.gui.goggles.water_source");
         CCDTooltip.line(tooltip, ChatFormatting.AQUA, "ccd.water_basin.infinite");
-        CCDTooltip.line(tooltip, "ccd.water_basin.disposal");
         return true;
     }
 

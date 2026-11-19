@@ -133,8 +133,6 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
         CCDTooltip.heading(tooltip, "ccd.gui.goggles.transfer");
         CCDTooltip.line(tooltip, paused() ? ChatFormatting.YELLOW : ChatFormatting.AQUA,
             "ccd.transmitter." + (paused() ? "paused" : "ready"));
-        CCDTooltip.line(tooltip, "ccd.transmitter.rate", CCDTooltip.amount(BATCH),
-            CCDTooltip.number(AllConfigs.server().logistics.defaultExtractionTimer.get()));
         return true;
     }
 }
