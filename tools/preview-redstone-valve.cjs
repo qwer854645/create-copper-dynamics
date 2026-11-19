@@ -8,6 +8,10 @@ const planes=texture=>[
  {name:'outer_dial_front',from:[2,14.01,2],to:[14,14.01,14],faces:{up:{texture,uv:[2,2,14,14]}}},
  {name:'outer_dial_back',from:[2,1.99,2],to:[14,1.99,14],faces:{down:{texture,uv:[2,14,14,2]}}},
 ];
+const glassPlanes=()=>[
+ {name:'outer_glass_up',from:[2,14.12,2],to:[14,14.12,14],faces:{up:{texture:'#glass',uv:[1,1,7,7]}}},
+ {name:'outer_glass_down',from:[2,1.88,2],to:[14,1.88,14],faces:{down:{texture:'#glass',uv:[1,1,7,7]}}},
+];
 function rotate(v,axis,angle,point){
  const a=angle*Math.PI/180,c=Math.cos(a),s=Math.sin(a),p=v.map(n=>n-(point?8:0)),q=[...p];
  const [i,j]=axis==='x'?[1,2]:[2,0];q[i]=p[i]*c-p[j]*s;q[j]=p[i]*s+p[j]*c;
@@ -31,13 +35,13 @@ async function main(){
     textures:{copper:'create:block/copper_underside'},elements:sealShaftFaces(native)},null,2)+'\n');
  }
  for(const state of ['closed','open'])fs.writeFileSync(path.join(assets,'models/block/redstone_fluid_valve/dial_'+state+'.json'),
-  JSON.stringify({ambientocclusion:false,render_type:'minecraft:cutout_mipped',textures:{dial:'create:block/valve_'+state},elements:planes('#dial')},null,2)+'\n');
+  JSON.stringify({ambientocclusion:false,render_type:'minecraft:cutout_mipped',textures:{dial:'create:block/valve_'+state,glass:'create:block/fluid_valve'},elements:[...planes('#dial'),...glassPlanes()]},null,2)+'\n');
  const nativeItem=loadModel('create:block/fluid_valve/item'),nativePointer=loadModel('create:block/fluid_valve/pointer');
  const pointerElements=JSON.parse(JSON.stringify(nativePointer.elements));
  for(const e of pointerElements){e.name='outer_native_pointer';for(const endpoint of [e.from,e.to])endpoint[1]=8+(endpoint[1]-8)*6.02/5.5;}
  const item={parent:'create:block/fluid_valve/item',ambientocclusion:false,render_type:'minecraft:cutout_mipped',textures:{...nativeItem.textures,
-  copper:'create:block/copper_underside',dial:'create:block/valve_open'},
-  elements:[...sealShaftFaces(nativeItem).filter(e=>e.name!=='Axis'),...planes('#dial'),...transformPointerElements(pointerElements)]};
+  copper:'create:block/copper_underside',dial:'create:block/valve_open',glass:'create:block/fluid_valve'},
+  elements:[...sealShaftFaces(nativeItem).filter(e=>e.name!=='Axis'),...planes('#dial'),...glassPlanes(),...transformPointerElements(pointerElements)]};
  fs.writeFileSync(path.join(assets,'models/item/redstone_fluid_valve.json'),JSON.stringify(item,null,2)+'\n');
  const pointer=(await mesh('create:block/fluid_valve/pointer')).map(f=>({...f,vertices:f.vertices.map(([x,y,z])=>[x,8+(y-8)*6.02/5.5,z])}));
  const panels=[];

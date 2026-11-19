@@ -2,7 +2,8 @@
   "ambientocclusion": false,
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "dial": "create:block/valve_open"
+    "dial": "create:block/valve_open",
+    "glass": "create:block/fluid_valve"
   },
   "elements": [
     {
@@ -49,6 +50,54 @@
             14,
             14,
             2
+          ]
+        }
+      }
+    },
+    {
+      "name": "outer_glass_up",
+      "from": [
+        2,
+        14.12,
+        2
+      ],
+      "to": [
+        14,
+        14.12,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
+    },
+    {
+      "name": "outer_glass_down",
+      "from": [
+        2,
+        1.88,
+        2
+      ],
+      "to": [
+        14,
+        1.88,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
           ]
         }
       }

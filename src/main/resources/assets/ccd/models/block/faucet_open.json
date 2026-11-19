@@ -34,43 +34,39 @@
       "faces": {
         "east": {
           "uv": [
-            4,
-            0,
             8,
-            2
+            8,
+            9,
+            9
           ],
-          "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#base"
         },
         "west": {
           "uv": [
-            4,
-            2,
             8,
-            0
+            8,
+            9,
+            9
           ],
-          "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#base"
         },
         "up": {
           "uv": [
-            4,
-            2,
             8,
-            0
+            8,
+            9,
+            9
           ],
-          "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#base"
         },
         "down": {
           "uv": [
-            4,
-            0,
             8,
-            2
+            8,
+            9,
+            9
           ],
-          "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#base"
         }
       }
     },
@@ -107,12 +103,12 @@
         },
         "east": {
           "uv": [
-            10.5,
-            11,
-            9.5,
-            16
+            8,
+            8,
+            9,
+            9
           ],
-          "texture": "#pipe"
+          "texture": "#base"
         },
         "south": {
           "uv": [
@@ -125,32 +121,30 @@
         },
         "west": {
           "uv": [
-            9.5,
-            16,
-            10.5,
-            11
+            8,
+            8,
+            9,
+            9
           ],
-          "texture": "#pipe"
+          "texture": "#base"
         },
         "up": {
           "uv": [
-            10.5,
-            11,
-            9.5,
-            16
+            8,
+            8,
+            9,
+            9
           ],
-          "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#base"
         },
         "down": {
           "uv": [
-            9.5,
-            16,
-            10.5,
-            11
+            8,
+            8,
+            9,
+            9
           ],
-          "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#base"
         }
       },
       "name": "native_rim_north_0"
