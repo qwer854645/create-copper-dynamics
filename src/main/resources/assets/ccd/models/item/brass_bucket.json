@@ -1,0 +1,7 @@
+{
+  "parent": "neoforge:item/bucket",
+  "textures": {"base": "ccd:item/brass_bucket"},
+  "loader": "neoforge:fluid_container",
+  "fluid": "minecraft:empty",
+  "flip_gas": false
+}

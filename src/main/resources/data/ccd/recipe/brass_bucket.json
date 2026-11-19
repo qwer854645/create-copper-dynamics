@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["B B", "B B", " B "],
+  "key": {"B": {"item": "create:brass_ingot"}},
+  "result": {"id": "ccd:brass_bucket", "count": 1}
+}

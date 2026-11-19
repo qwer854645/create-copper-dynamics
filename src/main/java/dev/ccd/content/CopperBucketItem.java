@@ -39,23 +39,26 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 /** One generic handheld tank; native item capability supplies Create filling, emptying and filter samples. */
 public final class CopperBucketItem extends Item {
     public static final int CAPACITY = 4000;
+    public static final int BRASS_CAPACITY = 8000;
+    private final int capacity;
     private static final int WORLD_AMOUNT = FluidType.BUCKET_VOLUME;
-    public CopperBucketItem(Properties properties) { super(properties); }
+    public CopperBucketItem(Properties properties) { this(properties, CAPACITY); }
+    public CopperBucketItem(Properties properties, int capacity) { super(properties); this.capacity=capacity; }
     public static FluidStack contents(ItemStack stack) {
         return stack.getOrDefault(CopperDynamics.COPPER_BUCKET_FLUID.get(), SimpleFluidContent.EMPTY).copy();
     }
     @Override public Component getName(ItemStack stack) {
         FluidStack fluid = contents(stack);
-        return fluid.isEmpty() ? super.getName(stack) : Component.translatable("item.ccd.copper_bucket.filled", fluid.getHoverName());
+        return fluid.isEmpty() ? super.getName(stack) : Component.translatable(getDescriptionId()+".filled", fluid.getHoverName());
     }
     @Override public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
         tooltip.add(Component.translatable("ccd.copper_bucket.amount", CCDTooltip.amount(contents(stack).getAmount()),
-            CCDTooltip.amount(CAPACITY)).withStyle(ChatFormatting.GRAY));
+            CCDTooltip.amount(capacity)).withStyle(ChatFormatting.GRAY));
     }
     @Override public boolean isBarVisible(ItemStack stack) { return !contents(stack).isEmpty(); }
-    @Override public int getBarWidth(ItemStack stack) { return Math.clamp(Math.round(contents(stack).getAmount() * 13f / CAPACITY), 0, 13); }
-    @Override public int getBarColor(ItemStack stack) { return 0xd88a60; }
+    @Override public int getBarWidth(ItemStack stack) { return Math.clamp(Math.round(contents(stack).getAmount() * 13f / capacity), 0, 13); }
+    @Override public int getBarColor(ItemStack stack) { return capacity==BRASS_CAPACITY?0xe4b763:0xd88a60; }
 
     @Override public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
         // Block interaction runs before useOn. Create's creative-player filling helper discards the filled copy.
@@ -78,8 +81,8 @@ public final class CopperBucketItem extends Item {
         if (!level.mayInteract(player, pos) || !player.mayUseItemAt(pos, context.getClickedFace(), stack)) return InteractionResult.FAIL;
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         FluidActionResult result = player.isShiftKeyDown()
-            ? FluidUtil.tryEmptyContainer(stack, target, CAPACITY, player, true)
-            : FluidUtil.tryFillContainer(stack, target, CAPACITY, player, true);
+            ? FluidUtil.tryEmptyContainer(stack, target, capacity, player, true)
+            : FluidUtil.tryFillContainer(stack, target, capacity, player, true);
         if (!result.isSuccess()) return InteractionResult.FAIL;
         player.setItemInHand(context.getHand(), player.isCreative() && player.isShiftKeyDown() ? stack : result.getResult());
         player.awardStat(Stats.ITEM_USED.get(this));
@@ -90,7 +93,7 @@ public final class CopperBucketItem extends Item {
         var handler = stack.getCapability(Capabilities.FluidHandler.ITEM);
         if (handler == null) return InteractionResultHolder.fail(stack);
         FluidStack fluid = contents(stack);
-        if (!player.isShiftKeyDown() && CAPACITY - fluid.getAmount() >= WORLD_AMOUNT) {
+        if (!player.isShiftKeyDown() && capacity - fluid.getAmount() >= WORLD_AMOUNT) {
             BlockHitResult pickupHit = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
             if (pickupHit.getType() == HitResult.Type.BLOCK && (level.getFluidState(pickupHit.getBlockPos()).isSource()
                 || level.getBlockState(pickupHit.getBlockPos()).is(Blocks.POWDER_SNOW)))

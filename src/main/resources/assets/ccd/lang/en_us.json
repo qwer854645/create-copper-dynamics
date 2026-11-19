@@ -365,5 +365,14 @@
   "block.ccd.fluid_atomizer.tooltip.behaviour1": "Applies _potion effects_ to entities in the air current.",
   "block.ccd.three_way_valve.tooltip.control1": "R-Click with a Wrench",
   "block.ccd.three_way_valve.tooltip.action1": "Adjusts the branch orientation or rotates the valve.",
-  "ccd.hint.fluid_arm_no_targets": "No inputs or outputs configured for this Mechanical Fluid Arm"
+  "ccd.hint.fluid_arm_no_targets": "No inputs or outputs configured for this Mechanical Fluid Arm",
+  "item.ccd.brass_bucket.tooltip.summary": "A large bucket that holds _Eight Buckets_ of a single fluid.",
+  "item.ccd.brass_bucket.tooltip.condition1": "When Used in the World",
+  "item.ccd.brass_bucket.tooltip.behaviour1": "Picks up or places _1000 mB_ at a time. Collects source fluid only; creative placement preserves contents.",
+  "item.ccd.brass_bucket.tooltip.control1": "R-Click a Container",
+  "item.ccd.brass_bucket.tooltip.action1": "_Fills_ from the clicked face, up to capacity.",
+  "item.ccd.brass_bucket.tooltip.control2": "Sneak + R-Click",
+  "item.ccd.brass_bucket.tooltip.action2": "_Empties_ into a container or forces world placement.",
+  "item.ccd.brass_bucket": "Brass Bucket",
+  "item.ccd.brass_bucket.filled": "Brass Bucket of %s"
 }

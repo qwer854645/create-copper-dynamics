@@ -158,7 +158,7 @@ public final class CCDClient {
     }
     @SubscribeEvent public static void colors(RegisterColorHandlersEvent.Item event) {
         var bucketColors = new net.neoforged.neoforge.client.model.DynamicFluidContainerModel.Colors();
-        event.register(bucketColors, CopperDynamics.COPPER_BUCKET.get());
+        event.register(bucketColors, CopperDynamics.COPPER_BUCKET.get(), CopperDynamics.BRASS_BUCKET.get());
         event.register((stack, layer) -> {
             var fluid = FluidPackageItem.contents(stack);
             return layer != 0 || fluid.isEmpty() ? -1 : IClientFluidTypeExtensions.of(fluid.getFluid()).getTintColor(fluid);

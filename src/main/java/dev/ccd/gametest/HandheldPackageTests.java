@@ -15,6 +15,22 @@ import net.neoforged.neoforge.gametest.*;
 @PrefixGameTestTemplate(false)
 public class HandheldPackageTests {
     @GameTest(template="empty")
+    public static void brassBucketHoldsEightBucketsAndAcceptsTwoParcels(GameTestHelper h) {
+        var player=h.makeMockPlayer(GameType.SURVIVAL);player.setShiftKeyDown(true);
+        player.setItemInHand(InteractionHand.OFF_HAND,new ItemStack(CopperDynamics.BRASS_BUCKET.get()));
+        for(int i=0;i<2;i++) {
+            player.setItemInHand(InteractionHand.MAIN_HAND,FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,4000)));
+            h.assertTrue(HandheldPackageOpening.unpack(player),"Brass bucket rejected parcel");
+        }
+        var full=player.getOffhandItem().copy();
+        h.assertTrue(CopperBucketItem.contents(full).getAmount()==8000,"Incorrect brass capacity");
+        player.setItemInHand(InteractionHand.MAIN_HAND,FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,1)));
+        h.assertTrue(!HandheldPackageOpening.unpack(player) && ItemStack.matches(full,player.getOffhandItem()),"Full brass bucket changed");
+        var handler=full.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
+        h.assertTrue(handler.getTankCapacity(0)==8000,"Wrong item capability capacity");
+        h.succeed();
+    }
+    @GameTest(template="empty")
     public static void wholeParcelFitsOrNothingChanges(GameTestHelper h) {
         var player=h.makeMockPlayer(GameType.SURVIVAL);player.setShiftKeyDown(true);
         for(var parcelHand:InteractionHand.values()) {

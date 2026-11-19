@@ -117,6 +117,8 @@ public final class CopperDynamics {
             .persistent(SimpleFluidContent.CODEC).networkSynchronized(SimpleFluidContent.STREAM_CODEC).build());
     public static final DeferredHolder<Item, CopperBucketItem> COPPER_BUCKET =
         ITEMS.register("copper_bucket", () -> new CopperBucketItem(new Item.Properties().stacksTo(1)));
+    public static final DeferredHolder<Item, CopperBucketItem> BRASS_BUCKET =
+        ITEMS.register("brass_bucket", () -> new CopperBucketItem(new Item.Properties().stacksTo(1), CopperBucketItem.BRASS_CAPACITY));
     public static final DeferredHolder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.LiquidBlock> QUICKSAND_BLOCK =
         BLOCKS.register("quicksand", () -> new net.minecraft.world.level.block.LiquidBlock(CCDFluids.QUICKSAND.get(),
             BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.WATER)));
@@ -351,6 +353,7 @@ public final class CopperDynamics {
                 output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
                 output.accept(SMART_COLLECTION_GRATE_ITEM.get());
                 output.accept(COPPER_BUCKET.get());
+                output.accept(BRASS_BUCKET.get());
                 output.accept(QUICKSAND_BUCKET.get());
                 for(var medium:dev.ccd.compat.ProcessingMedia.ALL) if(medium.available()) output.accept(medium.bucket.get());
                 output.accept(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET);
@@ -381,6 +384,8 @@ public final class CopperDynamics {
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ATOMIZER_BE.get(), FluidAtomizerBlockEntity::fluidHandler);
         event.registerItem(Capabilities.FluidHandler.ITEM,
             (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.CAPACITY), COPPER_BUCKET.get());
+        event.registerItem(Capabilities.FluidHandler.ITEM,
+            (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.BRASS_CAPACITY), BRASS_BUCKET.get());
         // Use the native handler so frogports also recognize the direct packager path.
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, FLUID_PACKAGER_BE.get(),
             (be, side) -> be.inventory);
