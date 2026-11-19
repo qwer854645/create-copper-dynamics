@@ -1,4 +1,5 @@
 {
+  "ccd.package.container_too_small": "容器无法装下整包流体",
   "ccd.courier.transfer_unavailable": "无法加入这些原料，请检查订单槽位是否已满。",
   "itemGroup.ccd": "机械动力：流体工程",
   "block.ccd.smart_fluid_tank": "智能储罐",

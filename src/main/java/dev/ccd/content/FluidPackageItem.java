@@ -86,6 +86,10 @@ public class FluidPackageItem extends PackageItem {
 
     @Override
     public InteractionResultHolder<ItemStack> open(Level level, Player player, InteractionHand hand) {
+        if(dev.ccd.compat.HandheldPackageOpening.applies(player)) {
+            dev.ccd.compat.HandheldPackageOpening.unpack(player);
+            return InteractionResultHolder.success(player.getItemInHand(hand));
+        }
         if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.package.use_packager").withStyle(ChatFormatting.YELLOW), true);
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
     }

@@ -1,4 +1,5 @@
 {
+  "ccd.package.container_too_small": "The container cannot accept the entire fluid package",
   "ccd.courier.transfer_unavailable": "Cannot add these ingredients to the request. Check available request slots.",
   "itemGroup.ccd": "Create: Copper Dynamics",
   "block.ccd.smart_fluid_tank": "Smart Fluid Tank",
