@@ -1,7 +1,6 @@
 {
   "credit": "Made with Blockbench",
   "parent": "block/block",
-  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "3": "create:block/funnel/andesite_funnel_frame",
     "back": "ccd:block/fluid_atomizer/back",

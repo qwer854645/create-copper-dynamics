@@ -1,4 +1,4 @@
-"""Native fan geometry adapted for a rear rotor and a front fluid display."""
+"""Native fan geometry with an unobstructed rotor and a front fluid display."""
 import json
 from pathlib import Path
 from zipfile import ZipFile
@@ -17,9 +17,6 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
             if r>g>b: image.putpixel((x,y),copper.getpixel((x,y)))
     target=A/'textures/block/fluid_atomizer/back.png'; target.parent.mkdir(parents=True,exist_ok=True); image.save(target)
     rotor=json.loads(z.read('assets/create/models/block/encased_fan/propeller.json'))
-    for e in rotor['elements']:
-        for k in ['from','to']: e[k][2]+=6
-        if 'rotation' in e: e['rotation']['origin'][2]+=6
     save(A/'models/block/fluid_atomizer/propeller.json',rotor)
     for kind in ['block','item']:
         model=json.loads(z.read(f'assets/create/models/block/encased_fan/{kind}.json'))
@@ -27,8 +24,4 @@ with ZipFile(next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.
         model['textures'].update(fan_side='create:block/copper_casing',back='ccd:block/fluid_atomizer/back',particle='create:block/copper_casing')
         if kind=='item':
             model['textures']['2']='ccd:block/fluid_atomizer/back'
-            for e in model['elements']:
-                if e.get('name','').lower() in ['fan','shaft']:
-                    for k in ['from','to']: e[k][2]+=6
-                    if 'rotation' in e: e['rotation']['origin'][2]+=6
         save(A/('models/block/fluid_atomizer.json' if kind=='block' else 'models/item/fluid_atomizer.json'),model)
