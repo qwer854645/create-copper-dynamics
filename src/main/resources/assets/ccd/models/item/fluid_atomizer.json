@@ -1,6 +1,7 @@
 {
   "credit": "Made with Blockbench",
   "parent": "block/block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "2": "ccd:block/fluid_atomizer/back",
     "fan_casing": "create:block/fan_casing",
