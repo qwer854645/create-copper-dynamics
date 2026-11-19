@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "CourierPlaneMixin",
+    "CourierStockMixin",
     "PhantomPackagePreviewMixin",
     "MobilePackagePreviewMixin",
     "QuicksandFanTypeMixin",
@@ -29,6 +30,10 @@
     "defaultRequire": 1
   },
   "client": [
+    "MobileTickerAmountMixin",
+    "CourierJeiTransferMixin",
+    "PhantomJeiTransferMixin",
+    "CourierAmountDisplayMixin",
     "AtomizerRotorRendererMixin",
     "AtomizerRotorVisualMixin",
     "CanisterPartialModelAccessor",

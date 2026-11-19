@@ -1,4 +1,5 @@
 {
+  "ccd.courier.transfer_unavailable": "Cannot add these ingredients to the request. Check available request slots.",
   "itemGroup.ccd": "Create: Copper Dynamics",
   "block.ccd.smart_fluid_tank": "Smart Fluid Tank",
   "ccd.smart_tank.structure": "Cross-section: %s wide; length: %s; blocks: %s",

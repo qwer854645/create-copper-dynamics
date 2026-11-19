@@ -19,6 +19,15 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @PrefixGameTestTemplate(false)
 public final class CourierPackageTests {
     @GameTest(template="empty")
+    public static void portableAmountsRespectUnitsAndBounds(GameTestHelper h) {
+        h.assertTrue(dev.ccd.compat.CourierAmounts.adjust(0,true,false,false,0,5000,1)==1000,"Bucket increment incorrect");
+        h.assertTrue(dev.ccd.compat.CourierAmounts.adjust(1000,true,true,false,0,5000,1)==1100,"Shift increment incorrect");
+        h.assertTrue(dev.ccd.compat.CourierAmounts.adjust(1000,false,false,true,0,5000,1)==999,"Precise decrement incorrect");
+        h.assertTrue(dev.ccd.compat.CourierAmounts.adjust(1000,true,false,false,0,1500,3)==1500,"Available stock exceeded");
+        h.assertTrue(dev.ccd.compat.CourierAmounts.adjust(100,false,false,false,0,5000,1)==0,"Negative order amount");
+        h.succeed();
+    }
+    @GameTest(template="empty")
     public static void previewKeepsAmountsAndDoesNotChangeCargo(GameTestHelper h) {
         var items=new ItemStackHandler(9);
         items.setStackInSlot(0,new ItemStack(Items.DIAMOND,3));
