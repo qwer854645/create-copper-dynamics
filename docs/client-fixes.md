@@ -1,5 +1,11 @@
 # 客户端反馈修正
 
+## 横向储罐连接纹理错位
+
+横罐模型经过 X90（Z 轴）或 X90/Y90（X 轴）旋转，旧实现只重设 CT 上方向，仍使用世界坐标下的左右方向，可能使邻接判断轴重合或取错图集块。现从原模型面的 UV 基向量出发，完整旋转上下左右，再生成 RECTANGLE 上下左右连接状态。玻璃等非储罐框架 sprite 返回 null，不参与铜面图集替换。
+
+同时修正窗口象限：旋转后的 local Z 对应世界高度正向；Z 轴横罐的模型 local +Y 指向世界 -Z，因此端盖的 TOP/BOTTOM 顺序需要反转。新增 X/Z 方向 2×2 截面、3 格长度的窗口角与端盖测试，全部 38 项 GameTest 通过。客户端实际贴图拼接尚未复验；不修改 PNG、库存容量或流体数据。
+
 ## 横向智能储罐连接纹理崩溃
 
 用户报告 `crash-2026-11-19_01.50.59-client.txt`：区块网格构建经过 Create `ConnectedTextureBehaviour.Base.getDataType` 时，原生代码以 null sprite 查询连接纹理类型。CCD 横罐 getShift 未处理该合法查询，调用 sprite.contents() 导致空指针。已增加空值判断，查询阶段按面轴选择同为 RECTANGLE 的连接类型；实际贴图阶段仍识别内壁。报告涉及 (38,0,58) 的横罐，不是报告头部 Sable 提示或 FluidLogistics 本身的异常。尚未在用户的完整 Sodium／Iris／Copycats 环境复现验证。
