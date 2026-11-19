@@ -18,11 +18,23 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 /** Native valve geometry and pipe behaviour, operated by a redstone actuator instead of shafts. */
 public final class RedstoneFluidValveBlock extends FluidValveBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    private final java.util.Map<BlockState,net.minecraft.world.phys.shapes.VoxelShape> outlines = new java.util.HashMap<>();
 
     public RedstoneFluidValveBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(POWERED, false));
+        for(var state:getStateDefinition().getPossibleStates()) {
+            var nativeShape=super.getShape(state,net.minecraft.world.level.EmptyBlockGetter.INSTANCE,BlockPos.ZERO,
+                net.minecraft.world.phys.shapes.CollisionContext.empty());
+            outlines.put(state,net.minecraft.world.phys.shapes.Shapes.create(nativeShape.bounds()));
+        }
     }
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,
+        BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context) { return outlines.get(state); }
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,net.minecraft.world.level.BlockGetter level,
+        BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context) { return getShape(state,level,pos,context); }
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getInteractionShape(BlockState state,net.minecraft.world.level.BlockGetter level,
+        BlockPos pos) { return outlines.get(state); }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(POWERED);

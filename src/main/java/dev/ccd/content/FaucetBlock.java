@@ -35,12 +35,11 @@ public class FaucetBlock extends HorizontalDirectionalBlock
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     private static final VoxelShape BODY = Shapes.or(
-        Block.box(4, 4, 0, 12, 12, 4), Block.box(3, 3, 0, 13, 13, 2),
-        Block.box(6, 7, 3, 10, 11, 10), Block.box(6, 6, 6, 10, 8, 10),
-        Block.box(5, 4, 5, 11, 6, 11), Block.box(6, 1, 6, 10, 4, 10),
-        Block.box(7, 11, 7, 9, 12, 9));
-    protected static final VoxelShape CLOSED_SHAPE = Shapes.or(BODY, Block.box(7, 12, 4, 9, 14, 12));
-    protected static final VoxelShape OPEN_SHAPE = Shapes.or(BODY, Block.box(4, 12, 7, 12, 14, 9));
+        Block.box(3, 3, 0, 13, 13, 4),
+        Block.box(4, 4, 4, 12, 14, 12),
+        Block.box(6, 1, 6, 10, 4, 10)).optimize();
+    protected static final VoxelShape CLOSED_SHAPE = BODY;
+    protected static final VoxelShape OPEN_SHAPE = BODY;
     private static final VoxelShaper CLOSED_SHAPES = VoxelShaper.forHorizontal(CLOSED_SHAPE, Direction.SOUTH);
     private static final VoxelShaper OPEN_SHAPES = VoxelShaper.forHorizontal(OPEN_SHAPE, Direction.SOUTH);
     public FaucetBlock(Properties properties) {

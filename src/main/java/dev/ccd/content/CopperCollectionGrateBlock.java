@@ -32,11 +32,9 @@ public class CopperCollectionGrateBlock extends CauldronBlock implements IBE<Cop
     // CauldronBlock's codec return type is invariant; the factory still creates this grate subtype.
     public static final MapCodec<CauldronBlock> CODEC = simpleCodec(CopperCollectionGrateBlock::new);
     protected static final VoxelShape SHAPE = Shapes.or(
-        box(3, 0, 3, 13, 2, 13), box(4, 0, 4, 12, 4, 12),
-        ring(2, 14, 6, 10, 2, 3), ring(2, 14, 3, 13, 3, 9),
-        ring(1, 15, 3, 13, 9, 15), ring(0, 16, 2, 14, 15, 16),
-        box(3, 14, 3, 4, 15, 13), box(6, 14, 3, 7, 15, 13),
-        box(9, 14, 3, 10, 15, 13), box(12, 14, 3, 13, 15, 13));
+        box(3, 0, 3, 13, 3, 13),
+        ring(0, 16, 3, 13, 3, 14),
+        box(0, 14, 0, 16, 16, 16)).optimize();
     private static VoxelShape ring(int outerMin, int outerMax, int innerMin, int innerMax, int bottom, int top) {
         return Shapes.or(box(outerMin, bottom, outerMin, outerMax, top, innerMin),
             box(outerMin, bottom, innerMax, outerMax, top, outerMax),
