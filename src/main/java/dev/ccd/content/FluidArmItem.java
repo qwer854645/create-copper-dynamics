@@ -16,7 +16,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
+import com.simibubi.create.content.kinetics.mechanicalArm.ArmItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 /** Server-authoritative preselection through the normal item-use packet, before a container opens. */
-public final class FluidArmItem extends BlockItem {
+public final class FluidArmItem extends ArmItem {
     private static final String KEY = "CCDFluidArmSelection";
     public record Selected(BlockPos pos, Direction face, boolean input) {}
     public FluidArmItem(Block block, Properties properties) { super(block, properties); }
@@ -47,8 +47,10 @@ public final class FluidArmItem extends BlockItem {
         for (int i = 0; i < Math.min(points.size(), FluidArmBlockEntity.MAX_POINTS); i++) {
             CompoundTag tag = points.getCompound(i);
             int face = tag.getInt("Face");
-            if (face < 0 || face >= Direction.values().length || !tag.contains("Pos", Tag.TAG_COMPOUND)) continue;
-            result.add(new Selected(NBTHelper.readBlockPos(tag, "Pos"), Direction.from3DDataValue(face), tag.getBoolean("Input")));
+            if (face < 0 || face >= Direction.values().length || !tag.contains("Pos", Tag.TAG_INT_ARRAY)) continue;
+            var position=NbtUtils.readBlockPos(tag,"Pos");
+            if(position.isEmpty()) continue;
+            result.add(new Selected(position.get(), Direction.from3DDataValue(face), tag.getBoolean("Input")));
         }
         return result;
     }
@@ -79,12 +81,9 @@ public final class FluidArmItem extends BlockItem {
         int index = -1;
         for (int i = 0; i < points.size(); i++) if (points.get(i).pos().equals(pos) && points.get(i).face() == face) { index = i; break; }
         String action;
-        if (index >= 0 && (player.isShiftKeyDown() || !points.get(index).input())) {
-            points.remove(index); action = "removed";
-        } else if (index >= 0) {
-            points.set(index, new Selected(pos.immutable(), face, false)); action = "output";
-        } else if (player.isShiftKeyDown()) {
-            return InteractionResult.SUCCESS;
+        if (index >= 0) {
+            boolean input=!points.get(index).input();
+            points.set(index, new Selected(pos.immutable(), face, input)); action = input?"input":"output";
         } else {
             if (points.size() >= FluidArmBlockEntity.MAX_POINTS) {
                 player.displayClientMessage(Component.translatable("ccd.fluid_arm.limit", FluidArmBlockEntity.MAX_POINTS).withStyle(ChatFormatting.RED), true);
@@ -92,6 +91,13 @@ public final class FluidArmItem extends BlockItem {
             }
             points.add(new Selected(pos.immutable(), face, true)); action = "input";
         }
+        savePoints(stack,level,points);
+        player.getInventory().setChanged();
+        player.displayClientMessage(Component.translatable("ccd.fluid_arm." + action).withStyle(
+            action.equals("input") ? ChatFormatting.AQUA : ChatFormatting.GOLD), true);
+        return InteractionResult.SUCCESS;
+    }
+    private static void savePoints(ItemStack stack,Level level,List<Selected> points) {
         CompoundTag selection = new CompoundTag();
         selection.putString("Dimension", level.dimension().location().toString());
         ListTag tags = new ListTag();
@@ -104,10 +110,26 @@ public final class FluidArmItem extends BlockItem {
         }
         selection.put("Points", tags);
         save(stack, selection);
-        player.getInventory().setChanged();
-        player.displayClientMessage(Component.translatable("ccd.fluid_arm." + action).withStyle(
-            action.equals("input") ? ChatFormatting.AQUA : action.equals("output") ? ChatFormatting.GOLD : ChatFormatting.GRAY), true);
-        return InteractionResult.SUCCESS;
+    }
+    public static boolean deselect(ItemStack stack,Level level,BlockPos pos,Player player) {
+        var points=new ArrayList<>(selected(stack,level));
+        if(!points.removeIf(point->point.pos().equals(pos))) return false;
+        if(!level.isClientSide()) {
+            savePoints(stack,level,points);
+            player.getInventory().setChanged();
+            player.displayClientMessage(Component.translatable("ccd.fluid_arm.removed"),true);
+        }
+        return true;
+    }
+    @Override public boolean canAttackBlock(BlockState state,Level level,BlockPos pos,Player player) {
+        return !selected(player.getMainHandItem(),level).stream().anyMatch(point->point.pos().equals(pos))
+            && !(FluidArmPoint.canTarget(level,pos) && java.util.Arrays.stream(Direction.values())
+                .anyMatch(face->FluidArmPoint.interactionHandler(level,pos,face)!=null));
+    }
+    @Override public InteractionResult useOn(UseOnContext context) {
+        // onItemUseFirst handles fluid selection; do not consume unrelated
+        // item inventories through ArmItem's item-target detection.
+        return place(new net.minecraft.world.item.context.BlockPlaceContext(context));
     }
     private boolean apply(ItemStack stack, Level level, FluidArmBlockEntity arm, Player player) {
         List<Selected> selected = selected(stack, level);
@@ -137,7 +159,9 @@ public final class FluidArmItem extends BlockItem {
     }
     @Override protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, Player player,
         ItemStack stack, BlockState state) {
-        boolean applied = super.updateCustomBlockEntityTag(pos, level, player, stack, state);
+        // ArmItem sends an item-only placement request here. Fluid selections
+        // already arrived through normal item-use packets, including their faces.
+        boolean applied = false;
         if (!level.isClientSide() && player != null && !selected(stack, level).isEmpty()
             && level.getBlockEntity(pos) instanceof FluidArmBlockEntity arm) applied |= apply(stack, level, arm, player);
         return applied;
