@@ -73,6 +73,10 @@ public class FaucetBlock extends HorizontalDirectionalBlock
     }
     @Override protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
         Player player, BlockHitResult hit) {
+        // Let the held wrench reach IWrenchable instead of toggling the handle.
+        if (player.getMainHandItem().is(net.neoforged.neoforge.common.Tags.Items.TOOLS_WRENCH)
+            || player.getOffhandItem().is(net.neoforged.neoforge.common.Tags.Items.TOOLS_WRENCH))
+            return InteractionResult.PASS;
         // Like the native lever, also allow the normal item-use fallback to operate the handle.
         if (!level.isClientSide()) level.setBlockAndUpdate(pos, state.cycle(OPEN));
         return InteractionResult.sidedSuccess(level.isClientSide());

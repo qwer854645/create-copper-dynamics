@@ -21,6 +21,8 @@ public final class FluidArmBlock extends ArmBlock {
     }
     @Override protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level,
         BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (stack.is(net.neoforged.neoforge.common.Tags.Items.TOOLS_WRENCH))
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (level.getBlockEntity(pos) instanceof FluidArmBlockEntity arm
             && !(AllItems.GOGGLES.isIn(stack) && !arm.wearingGoggles())
             && arm.unloadTo(player)) return ItemInteractionResult.SUCCESS;
