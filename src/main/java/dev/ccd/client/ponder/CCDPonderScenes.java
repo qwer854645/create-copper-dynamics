@@ -53,8 +53,8 @@ public final class CCDPonderScenes {
         text(s,util,A,"Packages inserted will be destroyed, unpacking the fluids into the container");
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(Items.WATER_BUCKET));
         text(s,util,B,"R-Click with a filled container to filter Redstone-triggered packaging");
-        show(s,util,C,AllBlocks.REPACKAGER.getDefaultState());
-        text(s,util,C,"A Repackager combines items and fluids from the same order into Brass Packages"); s.markAsFinished();
+        show(s,util,C,CopperDynamics.FLUID_REPACKAGER.get().defaultBlockState());
+        text(s,util,C,"A Fluid Repackager combines items and fluids from the same order into Brass Packages"); s.markAsFinished();
     }
     public static void hatches(SceneBuilder builder,SceneBuildingUtil util) {
         var s=begin(builder,"fluid_hatches","Accessing Fluids using Fluid Hatches");

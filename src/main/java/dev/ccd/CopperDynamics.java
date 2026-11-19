@@ -145,6 +145,14 @@ public final class CopperDynamics {
     public static final DeferredHolder<net.minecraft.world.level.block.Block, FluidPackagerBlock> FLUID_PACKAGER =
         BLOCKS.register("fluid_packager", () -> new FluidPackagerBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.COLOR_ORANGE).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.FluidRepackagerBlock> FLUID_REPACKAGER =
+        BLOCKS.register("fluid_repackager", () -> new dev.ccd.content.FluidRepackagerBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_ORANGE).strength(3.0F).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<Item, BlockItem> FLUID_REPACKAGER_ITEM =
+        ITEMS.register("fluid_repackager", () -> new BlockItem(FLUID_REPACKAGER.get(),new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<dev.ccd.content.FluidRepackagerBlockEntity>> FLUID_REPACKAGER_BE =
+        BLOCK_ENTITIES.register("fluid_repackager", () -> BlockEntityType.Builder.of(
+            dev.ccd.content.FluidRepackagerBlockEntity::new,FLUID_REPACKAGER.get()).build(null));
     public static final DeferredHolder<Item, BlockItem> FLUID_PACKAGER_ITEM =
         ITEMS.register("fluid_packager", () -> new BlockItem(FLUID_PACKAGER.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidPackagerBlockEntity>> FLUID_PACKAGER_BE =
@@ -334,6 +342,7 @@ public final class CopperDynamics {
             .icon(() -> new ItemStack(FLUID_PACKAGER_ITEM.get()))
             .displayItems((parameters, output) -> {
                 output.accept(FLUID_PACKAGER_ITEM.get());
+                output.accept(FLUID_REPACKAGER_ITEM.get());
                 output.accept(FLUID_GAUGE_ITEM.get());
                 output.accept(BOOSTER_PUMP_ITEM.get());
                 output.accept(FLUID_TRANSMITTER_ITEM.get());
@@ -388,6 +397,8 @@ public final class CopperDynamics {
             (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.BRASS_CAPACITY), BRASS_BUCKET.get());
         // Use the native handler so frogports also recognize the direct packager path.
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, FLUID_PACKAGER_BE.get(),
+            (be, side) -> be.inventory);
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, FLUID_REPACKAGER_BE.get(),
             (be, side) -> be.inventory);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SMART_FLUID_TANK_BE.get(),
             (be, side) -> be.inventory);

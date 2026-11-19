@@ -259,7 +259,7 @@
   "item.ccd.fluid_package.tooltip.control1": "使用剪贴板时",
   "item.ccd.fluid_package.tooltip.action1": "在物品栏中右击_复制地址_，左击_粘贴地址_。",
   "item.ccd.composite_package.tooltip.summary": "在同一包裹中运输_物品和流体_。",
-  "item.ccd.composite_package.tooltip.condition1": "使用理包机时",
+  "item.ccd.composite_package.tooltip.condition1": "使用流体理包机时",
   "item.ccd.composite_package.tooltip.behaviour1": "将同一订单的物品与流体_合并打包_。",
   "item.ccd.composite_package.tooltip.control1": "潜行右击时",
   "item.ccd.composite_package.tooltip.action1": "_取出物品_，流体分装为_铜包裹_。",
@@ -293,7 +293,7 @@
   "ccd.ponder.fluid_packaging.text_3": "它们可以被捡起，也可以进行运输，就像其他任何物品一样",
   "ccd.ponder.fluid_packaging.text_4": "放入流体打包机的包裹将被拆解，而流体将存放到容器中",
   "ccd.ponder.fluid_packaging.text_5": "使用装有流体的容器右击，可设置红石打包的过滤条件",
-  "ccd.ponder.fluid_packaging.text_6": "理包机可将同一订单的物品和流体合并为黄铜包裹",
+  "ccd.ponder.fluid_packaging.text_6": "流体理包机可将同一订单的物品和流体合并为黄铜包裹",
   "ccd.ponder.fluid_hatches.header": "使用流体舱口存取流体",
   "ccd.ponder.fluid_hatches.text_1": "流体舱口可用于存取其背后容器中的流体",
   "ccd.ponder.fluid_hatches.text_2": "手持流体容器右击舱口正面，即可存入或取出流体",
@@ -374,5 +374,7 @@
   "item.ccd.brass_bucket.tooltip.control2": "潜行右击",
   "item.ccd.brass_bucket.tooltip.action2": "向容器_倒液_，或强制进入世界放液模式。",
   "item.ccd.brass_bucket": "黄铜桶",
-  "item.ccd.brass_bucket.filled": "装有%s的黄铜桶"
+  "item.ccd.brass_bucket.filled": "装有%s的黄铜桶",
+  "block.ccd.fluid_repackager": "流体理包机",
+  "block.ccd.fluid_repackager.tooltip.summary": "将同一订单的_物品与流体_合并为黄铜包裹。"
 }

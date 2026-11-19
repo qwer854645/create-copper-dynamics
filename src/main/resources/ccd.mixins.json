@@ -10,7 +10,6 @@
     "MobilePackagePreviewMixin",
     "QuicksandFanTypeMixin",
     "PackagerGuardMixin",
-    "RepackagerMixin",
     "PackageEntityMixin",
     "FluidGaugeRestockMixin",
     "FluidAccessLogisticsMixin",

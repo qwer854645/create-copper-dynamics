@@ -259,7 +259,7 @@
   "item.ccd.fluid_package.tooltip.control1": "When using a Clipboard",
   "item.ccd.fluid_package.tooltip.action1": "R-Click in the inventory to _copy the address_; L-Click to _paste_.",
   "item.ccd.composite_package.tooltip.summary": "Transports _Items and Fluids_ in the same package.",
-  "item.ccd.composite_package.tooltip.condition1": "When using a Repackager",
+  "item.ccd.composite_package.tooltip.condition1": "When using a Fluid Repackager",
   "item.ccd.composite_package.tooltip.behaviour1": "_Combines_ items and fluids from the same order.",
   "item.ccd.composite_package.tooltip.control1": "When R-Clicked while Sneaking",
   "item.ccd.composite_package.tooltip.action1": "_Returns the items_ and separates fluids into _Copper Packages_.",
@@ -293,7 +293,7 @@
   "ccd.ponder.fluid_packaging.text_3": "These can be picked up and transported like any other item",
   "ccd.ponder.fluid_packaging.text_4": "Packages inserted will be destroyed, unpacking the fluids into the container",
   "ccd.ponder.fluid_packaging.text_5": "R-Click with a filled container to filter Redstone-triggered packaging",
-  "ccd.ponder.fluid_packaging.text_6": "A Repackager combines items and fluids from the same order into Brass Packages",
+  "ccd.ponder.fluid_packaging.text_6": "A Fluid Repackager combines items and fluids from the same order into Brass Packages",
   "ccd.ponder.fluid_hatches.header": "Accessing Fluids using Fluid Hatches",
   "ccd.ponder.fluid_hatches.text_1": "Fluid Hatches provide access to fluids in the container behind them",
   "ccd.ponder.fluid_hatches.text_2": "R-Click the front with a fluid container to empty or fill it",
@@ -374,5 +374,7 @@
   "item.ccd.brass_bucket.tooltip.control2": "Sneak + R-Click",
   "item.ccd.brass_bucket.tooltip.action2": "_Empties_ into a container or forces world placement.",
   "item.ccd.brass_bucket": "Brass Bucket",
-  "item.ccd.brass_bucket.filled": "Brass Bucket of %s"
+  "item.ccd.brass_bucket.filled": "Brass Bucket of %s",
+  "block.ccd.fluid_repackager": "Fluid Repackager",
+  "block.ccd.fluid_repackager.tooltip.summary": "Combines _Items and Fluids_ from the same order into Brass Packages."
 }
