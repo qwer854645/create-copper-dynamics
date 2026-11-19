@@ -28,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 public final class FluidArmPoint extends ArmInteractionPoint {
     public static final int BATCH = 1_000;
     private final Direction face;
+    public Direction face() { return face; }
     public FluidArmPoint(Level level, BlockPos pos, BlockState state, Direction face, Mode mode) {
         super(CopperDynamics.FLUID_ARM_POINT.get(), level, pos, state);
         this.face = face;

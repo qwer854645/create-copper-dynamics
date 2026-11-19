@@ -93,8 +93,11 @@ public final class FluidArmItem extends ArmItem {
         }
         savePoints(stack,level,points);
         player.getInventory().setChanged();
-        player.displayClientMessage(Component.translatable("ccd.fluid_arm." + action).withStyle(
-            action.equals("input") ? ChatFormatting.AQUA : ChatFormatting.GOLD), true);
+        Mode mode=action.equals("input")?Mode.TAKE:Mode.DEPOSIT;
+        com.simibubi.create.foundation.utility.CreateLang.builder()
+            .translate(mode.getTranslationKey(),com.simibubi.create.foundation.utility.CreateLang.blockName(level.getBlockState(pos))
+                .style(ChatFormatting.WHITE))
+            .color(mode.getColor()).sendStatus(player);
         return InteractionResult.SUCCESS;
     }
     private static void savePoints(ItemStack stack,Level level,List<Selected> points) {
