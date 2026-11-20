@@ -31,6 +31,9 @@ import com.simibubi.create.content.kinetics.mechanicalArm.ArmVisual;
 
 @EventBusSubscriber(modid = CopperDynamics.ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class CCDClient {
+    @SubscribeEvent public static void screens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
+        event.register(CopperDynamics.FLUID_FILTER_MENU.get(), FluidFilterScreen::new);
+    }
     /** Register before model baking; native package entities and conveyors use these maps. */
     public static void init() {
         net.createmod.ponder.foundation.PonderIndex.addPlugin(new dev.ccd.client.ponder.CCDPonderPlugin());

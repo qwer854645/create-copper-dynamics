@@ -13,6 +13,26 @@ import java.util.ArrayList;
 
 @JeiPlugin
 public final class CCDJeiPlugin implements IModPlugin {
+    @Override public void registerGuiHandlers(mezz.jei.api.registration.IGuiHandlerRegistration registration) {
+        registration.addGhostIngredientHandler(dev.ccd.client.FluidFilterScreen.class, new mezz.jei.api.gui.handlers.IGhostIngredientHandler<dev.ccd.client.FluidFilterScreen>() {
+            @Override public <I> java.util.List<Target<I>> getTargetsTyped(dev.ccd.client.FluidFilterScreen screen,
+                mezz.jei.api.ingredients.ITypedIngredient<I> ingredient, boolean start) {
+                FluidStack fluid = ingredient.getIngredient(NeoForgeTypes.FLUID_STACK).map(FluidStack::copy)
+                    .orElseGet(() -> ingredient.getIngredient(VanillaTypes.ITEM_STACK).map(dev.ccd.content.FluidStockItem::sample).orElse(FluidStack.EMPTY));
+                if (fluid.isEmpty()) return java.util.List.of();
+                var targets = new java.util.ArrayList<Target<I>>();
+                for (int i=0;i<dev.ccd.content.FluidFilterRules.SLOTS;i++) {
+                    final int slot=i;
+                    targets.add(new Target<I>() {
+                        @Override public net.minecraft.client.renderer.Rect2i getArea() { return screen.target(slot); }
+                        @Override public void accept(I ignored) { screen.acceptFluid(slot, fluid); }
+                    });
+                }
+                return targets;
+            }
+            @Override public void onComplete() {}
+        });
+    }
     @Override public ResourceLocation getPluginUid() { return ResourceLocation.fromNamespaceAndPath("ccd","visibility"); }
     @Override public void onRuntimeAvailable(IJeiRuntime runtime) {
         var items=new ArrayList<ItemStack>(); var fluids=new ArrayList<FluidStack>();

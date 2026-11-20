@@ -87,6 +87,18 @@ public final class CopperDynamics {
     public static final DeferredRegister<net.minecraft.world.level.block.Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ID);
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, ID);
+    public static final DeferredRegister<net.minecraft.world.inventory.MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, ID);
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<net.minecraft.world.item.component.CustomData>> FLUID_FILTER_DATA =
+        COMPONENTS.register("fluid_filter", () -> DataComponentType.<net.minecraft.world.item.component.CustomData>builder()
+            .persistent(net.minecraft.world.item.component.CustomData.CODEC)
+            .networkSynchronized(net.minecraft.world.item.component.CustomData.STREAM_CODEC).build());
+    public static final DeferredHolder<Item, dev.ccd.content.FluidFilterItem> FLUID_FILTER =
+        ITEMS.register("fluid_filter", () -> new dev.ccd.content.FluidFilterItem(new Item.Properties(), false));
+    public static final DeferredHolder<Item, dev.ccd.content.FluidFilterItem> FLUID_ATTRIBUTE_FILTER =
+        ITEMS.register("fluid_attribute_filter", () -> new dev.ccd.content.FluidFilterItem(new Item.Properties(), true));
+    public static final DeferredHolder<net.minecraft.world.inventory.MenuType<?>, net.minecraft.world.inventory.MenuType<dev.ccd.content.FluidFilterMenu>> FLUID_FILTER_MENU =
+        MENUS.register("fluid_filter", () -> net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create(
+            (id, inventory, buffer) -> new dev.ccd.content.FluidFilterMenu(id, inventory, ItemStack.STREAM_CODEC.decode(buffer))));
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ID);
     public static final DeferredRegister<ArmInteractionPointType> ARM_POINTS = DeferredRegister.create(CreateRegistries.ARM_INTERACTION_POINT_TYPE, ID);
     public static final DeferredRegister<FanProcessingType> FAN_TYPES = DeferredRegister.create(CreateRegistries.FAN_PROCESSING_TYPE, ID);
@@ -356,6 +368,8 @@ public final class CopperDynamics {
         BLOCKS.register(bus);
         BLOCK_ENTITIES.register(bus);
         COMPONENTS.register(bus);
+        MENUS.register(bus);
+        bus.addListener(dev.ccd.filter.FluidFilterPacket::register);
         ARM_POINTS.register(bus);
         FAN_TYPES.register(bus);
         RECIPE_TYPES.register(bus);
@@ -383,6 +397,8 @@ public final class CopperDynamics {
                 output.accept(SMART_FLUID_HATCH_ITEM.get());
                 output.accept(SMART_FLUID_TANK_ITEM.get());
                 output.accept(HORIZONTAL_SMART_TANK_ITEM.get());
+                output.accept(FLUID_FILTER.get());
+                output.accept(FLUID_ATTRIBUTE_FILTER.get());
                 output.accept(COPPER_WATER_BASIN_ITEM.get());
                 output.accept(COPPER_WATER_SUPPLY_ITEM.get());
                 output.accept(COPPER_COLLECTION_GRATE_ITEM.get());
