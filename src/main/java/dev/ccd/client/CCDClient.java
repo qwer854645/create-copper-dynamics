@@ -41,6 +41,7 @@ public final class CCDClient {
         SmartFluidTankModels.registerModels();
         RedstoneFluidValveRenderer.registerModels();
         ThreeWayValveRenderer.registerModels();
+        RedstoneFluidPumpRenderer.registerModels();
         registerPackageModel("fluid_package");
         registerPackageModel("fluid_arm_cargo");
         registerPackageModel("composite_package");
@@ -65,6 +66,7 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.THREE_WAY_VALVE_BE.get(), ThreeWayValveRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_GAUGE_BE.get(), FactoryPanelRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.BOOSTER_PUMP_BE.get(), BoosterPumpRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.REDSTONE_FLUID_PUMP_BE.get(), RedstoneFluidPumpRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_TRANSMITTER_BE.get(), SmartBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_ACCESS_PORT_BE.get(), SmartBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_BRIDGE_BE.get(), SmartBlockEntityRenderer::new);

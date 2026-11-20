@@ -376,5 +376,7 @@
   "item.ccd.brass_bucket": "黄铜桶",
   "item.ccd.brass_bucket.filled": "装有%s的黄铜桶",
   "block.ccd.fluid_repackager": "流体理包机",
-  "block.ccd.fluid_repackager.tooltip.summary": "将同一订单的_物品与流体_合并为黄铜包裹。"
+  "block.ccd.fluid_repackager.tooltip.summary": "将同一订单的_物品与流体_合并为黄铜包裹。",
+  "block.ccd.redstone_fluid_pump": "红石流体泵",
+  "block.ccd.redstone_fluid_pump.tooltip.summary": "使用旋转动力泵送流体，_红石信号_反转流向。"
 }

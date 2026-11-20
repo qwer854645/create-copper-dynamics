@@ -21,6 +21,7 @@
     "ccd:smart_collection_grate",
     "ccd:fluid_atomizer",
     "ccd:fluid_access_port",
-    "ccd:fluid_bridge"
+    "ccd:fluid_bridge",
+    "ccd:redstone_fluid_pump"
   ]
 }

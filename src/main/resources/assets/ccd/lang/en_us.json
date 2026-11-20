@@ -376,5 +376,7 @@
   "item.ccd.brass_bucket": "Brass Bucket",
   "item.ccd.brass_bucket.filled": "Brass Bucket of %s",
   "block.ccd.fluid_repackager": "Fluid Repackager",
-  "block.ccd.fluid_repackager.tooltip.summary": "Combines _Items and Fluids_ from the same order into Brass Packages."
+  "block.ccd.fluid_repackager.tooltip.summary": "Combines _Items and Fluids_ from the same order into Brass Packages.",
+  "block.ccd.redstone_fluid_pump": "Redstone Fluid Pump",
+  "block.ccd.redstone_fluid_pump.tooltip.summary": "Pumps fluids using rotational power. A _Redstone Signal_ reverses the flow."
 }
