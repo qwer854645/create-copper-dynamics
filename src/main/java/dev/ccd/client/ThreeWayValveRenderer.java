@@ -26,15 +26,14 @@ public final class ThreeWayValveRenderer extends SmartBlockEntityRenderer<ThreeW
             :axis!=Direction.Axis.Y && branch!=Direction.Axis.Y?Direction.UP:Direction.SOUTH;
         for(var side:new Direction[]{normal,normal.getOpposite()}) {
             pose.pushPose();pose.translate(.5,.5,.5);
-            switch(side) {
-                case DOWN -> pose.mulPose(Axis.XP.rotationDegrees(180));
-                case NORTH -> pose.mulPose(Axis.XP.rotationDegrees(-90));
-                case SOUTH -> pose.mulPose(Axis.XP.rotationDegrees(-270));
-                case EAST -> { pose.mulPose(Axis.YP.rotationDegrees(-90));pose.mulPose(Axis.XP.rotationDegrees(-90)); }
-                case WEST -> { pose.mulPose(Axis.YP.rotationDegrees(-270));pose.mulPose(Axis.XP.rotationDegrees(-90)); }
-                default -> { }
-            }
-            pose.mulPose(Axis.YP.rotationDegrees(-90*be.dial.getValue(pt)));
+            var front=state.getValue(ThreeWayValveBlock.FACING);
+            var z=new org.joml.Vector3f(front.getStepX(),front.getStepY(),front.getStepZ()).negate();
+            var y=new org.joml.Vector3f(side.getStepX(),side.getStepY(),side.getStepZ());
+            var x=new org.joml.Vector3f(y).cross(z);
+            pose.mulPose(new org.joml.Quaternionf().setFromNormalized(new org.joml.Matrix3f().setColumn(0,x).setColumn(1,y).setColumn(2,z)));
+            var target=ThreeWayValveBlock.branch(state);
+            float sign=x.dot(new org.joml.Vector3f(target.getStepX(),target.getStepY(),target.getStepZ()))>0?-1:1;
+            pose.mulPose(Axis.YP.rotationDegrees(sign*90*be.dial.getValue(pt)));
             pose.translate(-.5,-.5,-.5);
             CachedBuffers.partial(POINTER,state).light(light).overlay(overlay)
                 .renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));
