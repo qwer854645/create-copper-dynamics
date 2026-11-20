@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "details": "create:block/packager_details",
+    "copper": "create:block/copper_casing"
+  },
+  "elements": [
+    {
+      "name": "native_repackager_tray_with_copper_top",
+      "from": [2, 2, 2],
+      "to": [14, 4.01, 14],
+      "faces": {
+        "north": {"uv": [1, 14.5, 7, 15.5], "texture": "#details"},
+        "east": {"uv": [1, 14.5, 7, 15.5], "texture": "#details"},
+        "south": {"uv": [1, 14.5, 7, 15.5], "texture": "#details"},
+        "west": {"uv": [1, 14.5, 7, 15.5], "texture": "#details"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#copper"},
+        "down": {"uv": [1, 1, 7, 7], "texture": "#details"}
+      }
+    }
+  ]
+}

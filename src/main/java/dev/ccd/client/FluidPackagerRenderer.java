@@ -21,6 +21,8 @@ import net.minecraft.world.phys.Vec3;
 /** Native moving parts through Create's renderer API; CCD needs no Flywheel visual registration. */
 public final class FluidPackagerRenderer extends SmartBlockEntityRenderer<PackagerBlockEntity> {
     private static final PartialModel HATCH_OPEN = part("hatch_open"), HATCH_CLOSED = part("hatch_closed"), TRAY = part("tray");
+    private static final PartialModel REPACKAGER_TRAY = PartialModel.of(
+        ResourceLocation.fromNamespaceAndPath("ccd", "block/fluid_repackager/tray"));
     private static PartialModel part(String name) {
         return PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd", "block/fluid_packager/" + name));
     }
@@ -41,7 +43,7 @@ public final class FluidPackagerRenderer extends SmartBlockEntityRenderer<Packag
             .rotateXCenteredDegrees(AngleHelper.verticalAngle(rear))
             .light(light).renderInto(pose, buffers.getBuffer(RenderType.cutoutMipped()));
         float offset = be.getTrayOffset(partialTicks);
-        CachedBuffers.partial(fluidPackager?TRAY:com.simibubi.create.AllPartialModels.PACKAGER_TRAY_DEFRAG, state)
+        CachedBuffers.partial(fluidPackager?TRAY:REPACKAGER_TRAY, state)
             .translate(direction.scale(offset)).rotateYCenteredDegrees(rear.toYRot())
             .light(light).renderInto(pose, buffers.getBuffer(RenderType.cutoutMipped()));
         var box = be.getRenderedBox();
