@@ -36,6 +36,7 @@ public final class BoosterPumpBlock extends PumpBlock {
     /** Fixed internal shaft convention. Opposite ports rotate in opposite local directions;
      * the two perpendicular shaft axes mesh at 1:1. Network propagation and rendering share it. */
     public static float shaftModifier(BlockState state, Direction face) {
+        if (state.getBlock() instanceof TurningBoosterPumpBlock) return TurningBoosterPumpBlock.shaftModifier(state, face);
         Direction.Axis pipeAxis = state.getValue(FACING).getAxis();
         if (face.getAxis() == pipeAxis) return 0;
         Direction.Axis firstShaftAxis = pipeAxis == Direction.Axis.X ? Direction.Axis.Y : Direction.Axis.X;

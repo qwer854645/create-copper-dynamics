@@ -18,6 +18,8 @@
     "BoosterPumpConnectionMixin",
     "BoosterPumpDiscoveryMixin",
     "BoosterPumpShaftMixin",
+    "TurningPumpPortsMixin",
+    "TurningPumpBlockPortsMixin",
     "SmartFluidTankPlacementMixin",
     "FluidHatchHandheldMixin",
     "FluidValvePointerAccessor",

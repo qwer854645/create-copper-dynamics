@@ -5,9 +5,12 @@ import dev.ccd.CopperDynamics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
-public final class BoosterPumpBlockEntity extends PumpBlockEntity {
+public class BoosterPumpBlockEntity extends PumpBlockEntity {
     public BoosterPumpBlockEntity(BlockPos pos, BlockState state) {
-        super(CopperDynamics.BOOSTER_PUMP_BE.get(), pos, state);
+        this(CopperDynamics.BOOSTER_PUMP_BE.get(), pos, state);
+    }
+    protected BoosterPumpBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
     }
 
     @Override public void initialize() {

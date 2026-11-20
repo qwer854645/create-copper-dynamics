@@ -22,6 +22,7 @@
     "ccd:fluid_atomizer",
     "ccd:fluid_access_port",
     "ccd:fluid_bridge",
-    "ccd:redstone_fluid_pump"
+    "ccd:redstone_fluid_pump",
+    "ccd:turning_booster_pump"
   ]
 }
