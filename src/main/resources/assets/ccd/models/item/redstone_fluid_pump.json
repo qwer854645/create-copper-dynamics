@@ -1,17 +1,88 @@
 {
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
   "parent": "create:block/block",
-  "render_type": "minecraft:cutout_mipped",
   "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "valve": "create:block/fluid_valve",
     "pipe": "create:block/pipes",
     "dial": "create:block/valve_open",
-    "housing": "create:block/copper_underside",
     "particle": "create:block/copper_underside",
+    "housing": "create:block/copper_underside",
     "shaft_side": "create:block/axis",
     "shaft_end": "create:block/axis_top"
   },
   "elements": [
+    {
+      "name": "solid_dial_backing",
+      "from": [
+        2,
+        13,
+        2
+      ],
+      "to": [
+        14,
+        13.01,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        }
+      }
+    },
     {
       "name": "valve_housing",
       "from": [
@@ -26,58 +97,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#valve",
           "uv": [
             1,
             1,
             7,
             7
-          ]
-        },
-        "south": {
-          "texture": "#valve",
-          "uv": [
-            1,
-            1,
-            7,
-            7
-          ]
+          ],
+          "texture": "#valve"
         },
         "east": {
-          "texture": "#valve",
           "uv": [
             9,
             1,
             15,
             7
-          ]
+          ],
+          "texture": "#valve"
         },
-        "west": {
-          "texture": "#valve",
-          "uv": [
-            9,
-            1,
-            15,
-            7
-          ]
-        },
-        "up": {
-          "texture": "#valve",
+        "south": {
           "uv": [
             1,
             1,
             7,
             7
-          ]
+          ],
+          "texture": "#valve"
+        },
+        "west": {
+          "uv": [
+            9,
+            1,
+            15,
+            7
+          ],
+          "texture": "#valve"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ],
+          "texture": "#valve"
         },
         "down": {
-          "texture": "#housing",
           "uv": [
             2,
             2,
             14,
             14
-          ]
+          ],
+          "texture": "#housing"
         }
       }
     },
@@ -368,95 +439,63 @@
       }
     },
     {
-      "name": "solid_dial_backing",
+      "name": "dial",
       "from": [
         2,
-        13.9,
+        13.01,
         2
       ],
       "to": [
         14,
-        14,
+        14.01,
         14
       ],
       "faces": {
         "north": {
-          "texture": "#housing",
           "uv": [
             2,
             2,
             14,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
+            3
+          ],
+          "texture": "#dial"
         },
         "east": {
-          "texture": "#housing",
           "uv": [
             2,
-            2,
+            13,
             14,
             14
-          ]
+          ],
+          "texture": "#dial"
+        },
+        "south": {
+          "uv": [
+            2,
+            13,
+            14,
+            14
+          ],
+          "texture": "#dial"
         },
         "west": {
-          "texture": "#housing",
           "uv": [
             2,
             2,
             14,
-            14
-          ]
+            3
+          ],
+          "texture": "#dial"
         },
         "up": {
-          "texture": "#housing",
           "uv": [
             2,
             2,
             14,
             14
-          ]
-        },
-        "down": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        }
-      }
-    },
-    {
-      "name": "dial",
-      "from": [
-        2,
-        14.01,
-        2
-      ],
-      "to": [
-        14,
-        14.01,
-        14
-      ],
-      "faces": {
-        "up": {
-          "texture": "#dial",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
+          ],
+          "rotation": 0,
+          "texture": "#dial"
         }
       }
     },
@@ -472,15 +511,24 @@
         14.02,
         9
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          0
+        ]
+      },
       "faces": {
         "up": {
-          "texture": "#dial",
           "uv": [
             3,
             5,
             6,
             7
-          ]
+          ],
+          "texture": "#dial"
         }
       }
     },
@@ -496,39 +544,24 @@
         14.02,
         9
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          0
+        ]
+      },
       "faces": {
         "up": {
-          "texture": "#dial",
           "uv": [
             3,
             5,
             6,
             7
-          ]
-        }
-      }
-    },
-    {
-      "name": "dial_glass",
-      "from": [
-        2,
-        14.14,
-        2
-      ],
-      "to": [
-        14,
-        14.14,
-        14
-      ],
-      "faces": {
-        "up": {
-          "texture": "#valve",
-          "uv": [
-            1,
-            1,
-            7,
-            7
-          ]
+          ],
+          "texture": "#dial"
         }
       }
     },
@@ -542,18 +575,18 @@
       "to": [
         8.5,
         14.08,
-        8
+        8.5
       ],
       "faces": {
         "up": {
-          "texture": "#valve",
           "uv": [
-            2,
+            4,
             7.5,
-            3.75,
+            2,
             8
           ],
-          "rotation": 270
+          "rotation": 270,
+          "texture": "#valve"
         }
       }
     },

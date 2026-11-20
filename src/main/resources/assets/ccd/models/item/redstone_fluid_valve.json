@@ -6,9 +6,10 @@
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "2": "create:block/fluid_valve",
-    "4": "create:block/valve_open",
+    "4": "ccd:block/block_horizontal/lamp_off",
     "6": "create:block/pipes",
-    "particle": "create:block/valve_closed"
+    "particle": "create:block/valve_closed",
+    "lamp": "ccd:block/block_horizontal/lamp_off"
   },
   "elements": [
     {
@@ -40,7 +41,7 @@
             15,
             7
           ],
-          "texture": "#2"
+          "texture": "#lamp"
         },
         "east": {
           "uv": [
@@ -49,7 +50,7 @@
             7,
             15
           ],
-          "texture": "#2"
+          "texture": "#lamp"
         },
         "south": {
           "uv": [
@@ -58,7 +59,7 @@
             15,
             7
           ],
-          "texture": "#2"
+          "texture": "#lamp"
         },
         "west": {
           "uv": [
@@ -67,7 +68,7 @@
             7,
             15
           ],
-          "texture": "#2"
+          "texture": "#lamp"
         },
         "up": {
           "uv": [
@@ -76,7 +77,7 @@
             7,
             7
           ],
-          "texture": "#2"
+          "texture": "#lamp"
         },
         "down": {
           "uv": [
@@ -85,7 +86,7 @@
             7,
             7
           ],
-          "texture": "#2"
+          "texture": "#lamp"
         }
       }
     },
@@ -458,7 +459,7 @@
             16
           ],
           "rotation": 90,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "east": {
           "uv": [
@@ -468,7 +469,7 @@
             16
           ],
           "rotation": 180,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "up": {
           "uv": [
@@ -478,7 +479,7 @@
             16
           ],
           "rotation": 270,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "west": {
           "uv": [
@@ -488,7 +489,7 @@
             16
           ],
           "rotation": 0,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "north": {
           "uv": [
@@ -497,7 +498,7 @@
             6,
             16
           ],
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "south": {
           "uv": [
@@ -506,7 +507,7 @@
             6,
             16
           ],
-          "texture": "#6",
+          "texture": "#lamp",
           "rotation": 180
         }
       }
@@ -532,7 +533,7 @@
             16
           ],
           "rotation": 90,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "east": {
           "uv": [
@@ -542,7 +543,7 @@
             16
           ],
           "rotation": 180,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "up": {
           "uv": [
@@ -552,7 +553,7 @@
             16
           ],
           "rotation": 270,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "west": {
           "uv": [
@@ -562,7 +563,7 @@
             16
           ],
           "rotation": 0,
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "north": {
           "uv": [
@@ -571,7 +572,7 @@
             6,
             16
           ],
-          "texture": "#6"
+          "texture": "#lamp"
         },
         "south": {
           "uv": [
@@ -580,7 +581,7 @@
             6,
             16
           ],
-          "texture": "#6",
+          "texture": "#lamp",
           "rotation": 180
         }
       }

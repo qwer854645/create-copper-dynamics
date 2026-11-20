@@ -44,7 +44,7 @@ public final class RedstoneFluidValveRenderer extends SafeBlockEntityRenderer<Fl
         pose.translate(.5, .5, .5);
         pose.mulPose(Axis.YP.rotationDegrees(-90 * value));
         // Keep pointers outside the restored outer dial, below its glass rim.
-        pose.scale(1, 6.02f / 5.5f, 1);
+        pose.scale(1, 5.02f / 5.5f, 1);
         pose.translate(-.5, -.5, -.5);
         CachedBuffers.partial(AllPartialModels.FLUID_VALVE_POINTER, state)
             .light(light).overlay(overlay).renderInto(pose, buffers.getBuffer(RenderType.solid()));

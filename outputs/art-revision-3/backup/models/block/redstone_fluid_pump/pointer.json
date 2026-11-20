@@ -1,0 +1,37 @@
+{
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "valve": "create:block/fluid_valve",
+    "pipe": "create:block/pipes",
+    "dial": "create:block/valve_open",
+    "housing": "create:block/copper_underside",
+    "particle": "create:block/copper_underside"
+  },
+  "elements": [
+    {
+      "name": "flow_pointer",
+      "from": [
+        7.5,
+        14.08,
+        4.5
+      ],
+      "to": [
+        8.5,
+        14.08,
+        8
+      ],
+      "faces": {
+        "up": {
+          "texture": "#valve",
+          "uv": [
+            2,
+            7.5,
+            3.75,
+            8
+          ],
+          "rotation": 270
+        }
+      }
+    }
+  ]
+}
