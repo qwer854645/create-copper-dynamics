@@ -341,7 +341,7 @@ public final class CopperDynamics {
         BLOCKS.register("horizontal_smart_fluid_tank", () -> new dev.ccd.content.HorizontalSmartTankBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.COLOR_YELLOW).strength(3).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredHolder<Item, BlockItem> HORIZONTAL_SMART_TANK_ITEM =
-        ITEMS.register("horizontal_smart_fluid_tank", () -> new BlockItem(HORIZONTAL_SMART_TANK.get(), new Item.Properties()));
+        ITEMS.register("horizontal_smart_fluid_tank", () -> new dev.ccd.content.HorizontalSmartTankItem(HORIZONTAL_SMART_TANK.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<dev.ccd.content.HorizontalSmartTankBlockEntity>> HORIZONTAL_SMART_TANK_BE =
         BLOCK_ENTITIES.register("horizontal_smart_fluid_tank", () -> BlockEntityType.Builder.of(
             dev.ccd.content.HorizontalSmartTankBlockEntity::new, HORIZONTAL_SMART_TANK.get()).build(null));
