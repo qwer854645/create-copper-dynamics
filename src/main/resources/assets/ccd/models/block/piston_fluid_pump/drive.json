@@ -1,0 +1,152 @@
+{
+  "parent": "create:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "copper": "create:block/copper_underside",
+    "metal": "create:block/industrial_iron_block",
+    "brass": "create:block/brass_block",
+    "shaft": "ccd:block/booster_pump/shaft_face",
+    "pipe": "create:block/pipes",
+    "particle": "create:block/copper_underside"
+  },
+  "elements": [
+    {
+      "name": "left_support",
+      "from": [
+        1,
+        0,
+        5
+      ],
+      "to": [
+        3,
+        12,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            1,
+            4,
+            3,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            1,
+            4,
+            3,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            5,
+            4,
+            11,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#shaft",
+          "uv": [
+            1,
+            0,
+            15,
+            12
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            1,
+            5,
+            3,
+            11
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            1,
+            5,
+            3,
+            11
+          ]
+        }
+      }
+    },
+    {
+      "name": "right_support",
+      "from": [
+        13,
+        0,
+        5
+      ],
+      "to": [
+        15,
+        12,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            13,
+            4,
+            15,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            13,
+            4,
+            15,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#shaft",
+          "uv": [
+            1,
+            0,
+            15,
+            12
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            5,
+            4,
+            11,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            13,
+            5,
+            15,
+            11
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            13,
+            5,
+            15,
+            11
+          ]
+        }
+      }
+    }
+  ]
+}

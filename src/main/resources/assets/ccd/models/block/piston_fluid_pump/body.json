@@ -42,21 +42,21 @@
           ]
         },
         "east": {
-          "texture": "#shaft",
+          "texture": "#copper",
           "uv": [
-            2,
-            2,
-            14,
-            12
+            2.05,
+            4.01,
+            13.95,
+            14
           ]
         },
         "west": {
-          "texture": "#shaft",
+          "texture": "#copper",
           "uv": [
-            2,
-            2,
-            14,
-            12
+            2.05,
+            4.01,
+            13.95,
+            14
           ]
         },
         "up": {

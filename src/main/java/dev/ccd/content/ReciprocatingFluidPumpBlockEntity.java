@@ -11,9 +11,17 @@ public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
     private double phase;
     private double previousPhase;
     public double visualPhase(float partialTicks) { return previousPhase+(phase-previousPhase)*partialTicks; }
+    @Override protected net.minecraft.world.phys.AABB createRenderBoundingBox() {
+        return getBlockState().getBlock() instanceof TallReciprocatingPumpBlock
+            ?new net.minecraft.world.phys.AABB(worldPosition).expandTowards(0,1,0):super.createRenderBoundingBox();
+    }
     public ReciprocatingFluidPumpBlockEntity(BlockPos pos,BlockState state) { this(CopperDynamics.RECIPROCATING_PUMP_BE.get(),pos,state); }
     protected ReciprocatingFluidPumpBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
-    public float pumpingSpeed() { return getSpeed(); }
+    public float pumpingSpeed() {
+        if(getBlockState().getBlock() instanceof TallReciprocatingPumpBlock)
+            return level!=null&&level.getBlockEntity(worldPosition.above()) instanceof ReciprocatingPumpDriveBlockEntity drive?drive.getSpeed():0;
+        return getSpeed();
+    }
     protected double strokePhaseStep() { return Math.abs(pumpingSpeed())/1200.0; }
     public int targetFlow() { return CCDConfig.reciprocatingFlow(getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL)); }
     public int targetRange() { return CCDConfig.reciprocatingRange(getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL)); }
@@ -35,7 +43,7 @@ public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
     }
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking) {
         super.addToGoggleTooltip(tooltip,sneaking);
-        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.flow",getSpeed()==0||isOverStressed()?0:targetFlow())
+        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.flow",flowPressure()==0?0:targetFlow())
             .withStyle(net.minecraft.ChatFormatting.AQUA));
         tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.signal",getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL))
             .withStyle(net.minecraft.ChatFormatting.GRAY));

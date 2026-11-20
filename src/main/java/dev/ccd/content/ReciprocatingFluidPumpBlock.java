@@ -38,12 +38,13 @@ public class ReciprocatingFluidPumpBlock extends PumpBlock {
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block block,BlockPos from,boolean moving) {
         super.neighborChanged(state,level,pos,block,from,moving);
         if(level.isClientSide())return;
-        int signal=level.getBestNeighborSignal(pos);
+        int signal=redstoneSignal(level,pos);
         if(signal!=state.getValue(SIGNAL)) {
             level.setBlockAndUpdate(pos,state.setValue(SIGNAL,signal));
             if(level.getBlockEntity(pos) instanceof ReciprocatingFluidPumpBlockEntity pump)pump.updatePressureChange();
         }
     }
+    protected int redstoneSignal(Level level,BlockPos pos){return level.getBestNeighborSignal(pos);}
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context) {
         return net.minecraft.world.phys.shapes.Shapes.or(box(1,0,1,15,2,15),box(2,2,2,14,15,14));
     }
