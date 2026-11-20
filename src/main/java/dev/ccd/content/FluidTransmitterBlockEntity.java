@@ -53,7 +53,7 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
         var facing = state.getValue(FluidTransmitterBlock.FACING);
         Vec3 normal = Vec3.atLowerCornerOf(side.getNormal());
         Vec3 rear = Vec3.atLowerCornerOf(facing.getOpposite().getNormal());
-        return new Vec3(.5, .5, .5).add(normal.scale(8.5 / 16)).add(rear.scale(4.0 / 16));
+        return new Vec3(.5, .5, .5).add(normal.scale(8.5 / 16)).add(rear.scale(3.0 / 16));
     }
     private Direction front() { return getBlockState().getValue(FluidTransmitterBlock.FACING); }
     private boolean paused() { return getBlockState().getValue(FluidTransmitterBlock.POWERED); }
