@@ -8,6 +8,7 @@ def save(rel,data):
 jar=next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar'))
 faces={side:{'texture':'#valve','uv':[1,1,7,7]} for side in ('north','south','east','west','up','down')}
 for side in ('east','west'):faces[side]={'texture':'#valve','uv':[9,1,15,7]}
+faces['down']={'texture':'#housing','uv':[2,2,14,14]}
 elements=[{'name':'valve_housing','from':[2,2,2],'to':[14,14,14],'faces':faces}]
 with ZipFile(jar) as archive:
  for side in ('north','south'):
@@ -17,17 +18,24 @@ with ZipFile(jar) as archive:
     for f in e['faces'].values():f['texture']='#pipe';f.pop('cullface',None)
     elements.append(e)
 # One dial only. Its neutral scale is native artwork; needle points along the pipe axis.
+elements.append({'name':'solid_dial_backing','from':[2,13.9,2],'to':[14,14,14],
+ 'faces':{side:{'texture':'#housing','uv':[2,2,14,14]} for side in ('north','south','east','west','up','down')}})
 elements.append({'name':'dial','from':[2,14.01,2],'to':[14,14.01,14],
  'faces':{'up':{'texture':'#dial','uv':[2,2,14,14]}}})
 elements.append({'name':'dial_glass','from':[2,14.14,2],'to':[14,14.14,14],
  'faces':{'up':{'texture':'#valve','uv':[1,1,7,7]}}})
-pointer={'name':'flow_pointer','from':[7.5,14.08,4.5],'to':[8.5,14.08,11.5],
- 'faces':{'up':{'texture':'#valve','uv':[2,7.5,5.5,8],'rotation':270}}}
-textures={'valve':'create:block/fluid_valve','pipe':'create:block/pipes','dial':'create:block/valve_open','particle':'create:block/copper_underside'}
+pointer={'name':'flow_pointer','from':[7.5,14.08,4.5],'to':[8.5,14.08,8],
+ 'faces':{'up':{'texture':'#valve','uv':[2,7.5,3.75,8],'rotation':270}}}
+textures={'valve':'create:block/fluid_valve','pipe':'create:block/pipes','dial':'create:block/valve_open','housing':'create:block/copper_underside','particle':'create:block/copper_underside'}
 model={'parent':'minecraft:block/block','render_type':'minecraft:cutout_mipped','ambientocclusion':False,'textures':textures,'elements':elements}
 save('assets/ccd/models/block/redstone_fluid_pump/block.json',model)
 save('assets/ccd/models/block/redstone_fluid_pump/pointer.json',{'render_type':'minecraft:cutout_mipped','textures':textures,'elements':[pointer]})
-save('assets/ccd/models/item/redstone_fluid_pump.json',{**copy.deepcopy(model),'parent':'create:item/package_transforms','elements':copy.deepcopy(elements)+[pointer]})
+booster_item=json.loads((root/'assets/ccd/models/item/booster_pump.json').read_text())
+shafts=copy.deepcopy([e for e in booster_item['elements'] if e.get('name') in ('inventory_shaft_90','inventory_shaft_270')])
+assert len(shafts)==2
+save('assets/ccd/models/item/redstone_fluid_pump.json',{**copy.deepcopy(model),'parent':'create:block/block',
+ 'textures':{**textures,'shaft_side':booster_item['textures']['shaft_side'],'shaft_end':booster_item['textures']['shaft_end']},
+ 'elements':copy.deepcopy(elements)+[pointer]+shafts})
 variants={}
 for facing,rotation in {'north':{},'south':{'y':180},'east':{'y':90},'west':{'y':270},'up':{'x':90},'down':{'x':270}}.items():
  variants['facing='+facing]={'model':'ccd:block/redstone_fluid_pump/block',**rotation}
@@ -41,6 +49,6 @@ for tag in ('data/create/tags/block/wrench_pickup.json','data/minecraft/tags/blo
  save(tag,data)
 for locale in ('zh_cn','en_us'):
  p=root/f'assets/ccd/lang/{locale}.json';data=json.loads(p.read_text(encoding='utf-8'))
- data['block.ccd.redstone_fluid_pump']='红石流体泵' if locale=='zh_cn' else 'Redstone Fluid Pump'
+ data['block.ccd.redstone_fluid_pump']='红石双向动力泵' if locale=='zh_cn' else 'Redstone Bidirectional Mechanical Pump'
  data['block.ccd.redstone_fluid_pump.tooltip.summary']='使用旋转动力泵送流体，_红石信号_反转流向。' if locale=='zh_cn' else 'Pumps fluids using rotational power. A _Redstone Signal_ reverses the flow.'
  save(f'assets/ccd/lang/{locale}.json',data)

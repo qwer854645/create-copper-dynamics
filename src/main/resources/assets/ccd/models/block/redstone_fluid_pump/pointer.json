@@ -4,6 +4,7 @@
     "valve": "create:block/fluid_valve",
     "pipe": "create:block/pipes",
     "dial": "create:block/valve_open",
+    "housing": "create:block/copper_underside",
     "particle": "create:block/copper_underside"
   },
   "elements": [
@@ -17,7 +18,7 @@
       "to": [
         8.5,
         14.08,
-        11.5
+        8
       ],
       "faces": {
         "up": {
@@ -25,7 +26,7 @@
           "uv": [
             2,
             7.5,
-            5.5,
+            3.75,
             8
           ],
           "rotation": 270

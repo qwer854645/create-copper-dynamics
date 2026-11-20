@@ -6,6 +6,7 @@
     "valve": "create:block/fluid_valve",
     "pipe": "create:block/pipes",
     "dial": "create:block/valve_open",
+    "housing": "create:block/copper_underside",
     "particle": "create:block/copper_underside"
   },
   "elements": [
@@ -68,12 +69,12 @@
           ]
         },
         "down": {
-          "texture": "#valve",
+          "texture": "#housing",
           "uv": [
-            1,
-            1,
-            7,
-            7
+            2,
+            2,
+            14,
+            14
           ]
         }
       }
@@ -361,6 +362,75 @@
           ],
           "rotation": 270,
           "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "solid_dial_backing",
+      "from": [
+        2,
+        13.9,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "south": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "east": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "west": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "up": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#housing",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
         }
       }
     },
