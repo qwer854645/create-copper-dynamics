@@ -6,7 +6,10 @@
     "particle": "create:block/copper_underside",
     "common": "ccd:block/three_way_valve/pipe_common",
     "selected": "ccd:block/three_way_valve/pipe_selected",
-    "closed": "ccd:block/three_way_valve/pipe_closed"
+    "closed": "ccd:block/three_way_valve/pipe_closed",
+    "dial": "create:block/valve_open",
+    "needle": "create:block/industrial_iron_block",
+    "glass": "create:block/fluid_valve"
   },
   "elements": [
     {
@@ -503,6 +506,150 @@
         }
       },
       "name": "native_rim_up_0"
+    },
+    {
+      "name": "dial_item_east_dial",
+      "from": [
+        13.02,
+        3,
+        3
+      ],
+      "to": [
+        13.02,
+        13,
+        13
+      ],
+      "faces": {
+        "east": {
+          "texture": "#dial",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "dial_item_east_pointer",
+      "from": [
+        13.07,
+        7.6,
+        7.5
+      ],
+      "to": [
+        13.07,
+        8.4,
+        11.5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#needle",
+          "uv": [
+            0,
+            0,
+            4,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "dial_item_east_glass",
+      "from": [
+        13.1,
+        3,
+        3
+      ],
+      "to": [
+        13.1,
+        13,
+        13
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
+    },
+    {
+      "name": "dial_item_west_dial",
+      "from": [
+        2.9800000000000004,
+        3,
+        3
+      ],
+      "to": [
+        2.9800000000000004,
+        13,
+        13
+      ],
+      "faces": {
+        "west": {
+          "texture": "#dial",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "dial_item_west_pointer",
+      "from": [
+        2.9299999999999997,
+        7.6,
+        4.5
+      ],
+      "to": [
+        2.9299999999999997,
+        8.4,
+        8.5
+      ],
+      "faces": {
+        "west": {
+          "texture": "#needle",
+          "uv": [
+            0,
+            0,
+            4,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "dial_item_west_glass",
+      "from": [
+        2.9000000000000004,
+        3,
+        3
+      ],
+      "to": [
+        2.9000000000000004,
+        13,
+        13
+      ],
+      "faces": {
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
     }
   ]
 }

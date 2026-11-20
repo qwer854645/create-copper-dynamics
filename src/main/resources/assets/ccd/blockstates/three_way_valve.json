@@ -640,6 +640,1078 @@
       "apply": {
         "model": "ccd:block/three_way_valve/selected_west"
       }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "up",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "0",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "0",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "1",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "1",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "2",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "2",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "3",
+        "powered": "false"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_unpowered",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "down",
+        "roll": "3",
+        "powered": "true"
+      },
+      "apply": {
+        "model": "ccd:block/three_way_valve/dial_powered",
+        "x": 90
+      }
     }
   ]
 }

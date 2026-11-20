@@ -1,0 +1,84 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "dial": "create:block/valve_open",
+    "needle": "create:block/industrial_iron_block",
+    "glass": "create:block/fluid_valve"
+  },
+  "elements": [
+    {
+      "name": "dial",
+      "from": [
+        3,
+        13.02,
+        3
+      ],
+      "to": [
+        13,
+        13.02,
+        13
+      ],
+      "faces": {
+        "up": {
+          "texture": "#dial",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "pointer",
+      "from": [
+        7.6,
+        13.07,
+        4.5
+      ],
+      "to": [
+        8.4,
+        13.07,
+        8.5
+      ],
+      "faces": {
+        "up": {
+          "texture": "#needle",
+          "uv": [
+            0,
+            0,
+            4,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "glass",
+      "from": [
+        3,
+        13.1,
+        3
+      ],
+      "to": [
+        13,
+        13.1,
+        13
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
+    }
+  ]
+}
