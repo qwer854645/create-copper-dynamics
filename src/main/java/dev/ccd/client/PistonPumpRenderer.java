@@ -28,8 +28,8 @@ public final class PistonPumpRenderer extends SafeBlockEntityRenderer<Reciprocat
         pose.pushPose();pose.translate(.5,.5,.5);
         float yaw=switch(facing){case EAST->-90;case SOUTH->180;case WEST->90;default->0;};
         pose.mulPose(Axis.YP.rotationDegrees(yaw));pose.translate(-.5,-.5,-.5);
-        double offset=Math.sin(be.visualPhase(pt))*.6/16;
-        pose.pushPose();pose.translate(0,0,offset);draw(PISTON,be,pose,buffers,light);pose.popPose();
+        double offset=-(1-Math.cos(be.visualPhase(pt)))*1.5/16;
+        pose.pushPose();pose.translate(0,offset,0);draw(PISTON,be,pose,buffers,light);pose.popPose();
         pose.popPose();
         var axis=((ReciprocatingFluidPumpBlock)state.getBlock()).getRotationAxis(state);
         for(var side:Direction.values())if(side.getAxis()==axis)KineticBlockEntityRenderer.standardKineticRotationTransform(CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF,state,side),be,light).renderInto(pose,buffers.getBuffer(RenderType.solid()));

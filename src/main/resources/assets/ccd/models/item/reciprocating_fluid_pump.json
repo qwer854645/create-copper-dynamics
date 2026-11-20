@@ -2,112 +2,43 @@
   "parent": "create:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "copper": "create:block/copper_casing",
+    "copper": "create:block/copper_underside",
     "metal": "create:block/industrial_iron_block",
     "brass": "create:block/brass_block",
     "shaft": "ccd:block/booster_pump/shaft_face",
     "pipe": "create:block/pipes",
-    "particle": "create:block/copper_casing"
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {
-      "name": "pump_cylinder",
+      "name": "copper_pump_body",
       "from": [
         2,
-        3,
+        2,
         2.05
       ],
       "to": [
         14,
-        13,
-        6
-      ],
-      "faces": {
-        "north": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "drive_housing",
-      "from": [
-        2,
-        3,
-        11
-      ],
-      "to": [
-        14,
-        13,
+        11.99,
         13.95
       ],
       "faces": {
         "north": {
           "texture": "#copper",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            2,
+            4.01,
+            14,
+            14
           ]
         },
         "south": {
           "texture": "#copper",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            2,
+            4.01,
+            14,
+            14
           ]
         },
         "east": {
@@ -116,7 +47,7 @@
             2,
             2,
             14,
-            14
+            12
           ]
         },
         "west": {
@@ -125,25 +56,94 @@
             2,
             2,
             14,
-            14
+            12
           ]
         },
         "up": {
           "texture": "#copper",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            2,
+            2.05,
+            14,
+            13.95
           ]
         },
         "down": {
           "texture": "#copper",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            2,
+            2.05,
+            14,
+            13.95
+          ]
+        }
+      }
+    },
+    {
+      "name": "top_rod_guide",
+      "from": [
+        5,
+        11.99,
+        5
+      ],
+      "to": [
+        11,
+        12.5,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#brass",
+          "uv": [
+            5,
+            3.5,
+            11,
+            4.01
+          ]
+        },
+        "south": {
+          "texture": "#brass",
+          "uv": [
+            5,
+            3.5,
+            11,
+            4.01
+          ]
+        },
+        "east": {
+          "texture": "#brass",
+          "uv": [
+            5,
+            3.5,
+            11,
+            4.01
+          ]
+        },
+        "west": {
+          "texture": "#brass",
+          "uv": [
+            5,
+            3.5,
+            11,
+            4.01
+          ]
+        },
+        "up": {
+          "texture": "#brass",
+          "uv": [
+            5,
+            5,
+            11,
+            11
+          ]
+        },
+        "down": {
+          "texture": "#brass",
+          "uv": [
+            5,
+            5,
+            11,
+            11
           ]
         }
       }
@@ -435,139 +435,139 @@
       }
     },
     {
-      "name": "piston_rod",
+      "name": "vertical_push_rod",
       "from": [
-        6.5,
-        6.5,
-        5
+        7,
+        10,
+        7
       ],
       "to": [
-        9.5,
-        9.5,
-        12
+        9,
+        15.75,
+        9
       ],
       "faces": {
         "north": {
           "texture": "#metal",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            7,
+            0.25,
+            9,
+            6
           ]
         },
         "south": {
           "texture": "#metal",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            7,
+            0.25,
+            9,
+            6
           ]
         },
         "east": {
           "texture": "#metal",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            7,
+            0.25,
+            9,
+            6
           ]
         },
         "west": {
           "texture": "#metal",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            7,
+            0.25,
+            9,
+            6
           ]
         },
         "up": {
           "texture": "#metal",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            7,
+            7,
+            9,
+            9
           ]
         },
         "down": {
           "texture": "#metal",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            7,
+            7,
+            9,
+            9
           ]
         }
       }
     },
     {
-      "name": "piston_collar",
+      "name": "brass_piston_head",
       "from": [
-        5.5,
-        5.5,
-        8
+        5,
+        15.75,
+        5
       ],
       "to": [
-        10.5,
-        10.5,
-        9
+        11,
+        16,
+        11
       ],
       "faces": {
         "north": {
           "texture": "#brass",
           "uv": [
+            5,
             0,
-            0,
-            16,
-            16
+            11,
+            0.25
           ]
         },
         "south": {
           "texture": "#brass",
           "uv": [
+            5,
             0,
-            0,
-            16,
-            16
+            11,
+            0.25
           ]
         },
         "east": {
           "texture": "#brass",
           "uv": [
+            5,
             0,
-            0,
-            16,
-            16
+            11,
+            0.25
           ]
         },
         "west": {
           "texture": "#brass",
           "uv": [
+            5,
             0,
-            0,
-            16,
-            16
+            11,
+            0.25
           ]
         },
         "up": {
           "texture": "#brass",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            5,
+            5,
+            11,
+            11
           ]
         },
         "down": {
           "texture": "#brass",
           "uv": [
-            0,
-            0,
-            16,
-            16
+            5,
+            5,
+            11,
+            11
           ]
         }
       }
