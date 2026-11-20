@@ -1,81 +1,27 @@
 {
-  "parent": "minecraft:block/block",
-  "ambientocclusion": false,
-  "textures": {
-    "body": "create:block/copper_underside",
-    "socket": "ccd:block/fluid_access/connected_port",
-    "band": "ccd:block/fluid_access/copper_band",
-    "particle": "#body"
-  },
-  "elements": [
-    {
-      "name": "casing",
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#band",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#band",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    }
-  ]
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "ccd:block/fluid_access/copper_underside",
+		"body": "ccd:block/fluid_access/copper_underside",
+		"socket": "ccd:block/fluid_access/connected_port",
+		"band": "ccd:block/fluid_access/copper_band"
+	},
+	"elements": [
+		{
+			"name": "casing",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#band"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#band"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#socket"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#band"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#body"},
+				"down": {"uv": [0, 16, 16, 0], "texture": "#body"}
+			}
+		}
+	]
 }

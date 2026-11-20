@@ -1,703 +1,121 @@
 {
-  "parent": "minecraft:block/block",
-  "render_type": "minecraft:cutout",
-  "ambientocclusion": false,
-  "textures": {
-    "body": "ccd:block/copper_water_supply/body",
-    "cap": "ccd:block/copper_water_supply/cap",
-    "glass": "ccd:block/copper_water_supply/glass",
-    "particle": "ccd:block/copper_water_supply/body"
-  },
-  "elements": [
-    {
-      "name": "copper_base",
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        2,
-        16
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            0,
-            14,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            0,
-            14,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            0,
-            14,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            0,
-            14,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#cap",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "copper_top",
-      "from": [
-        0,
-        14,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            2
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            2
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            2
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            2
-          ]
-        },
-        "up": {
-          "texture": "#cap",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "copper_post_0_0",
-      "from": [
-        0,
-        2,
-        0
-      ],
-      "to": [
-        2,
-        14,
-        2
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            2,
-            2
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            2,
-            2
-          ]
-        }
-      }
-    },
-    {
-      "name": "copper_post_0_14",
-      "from": [
-        0,
-        2,
-        14
-      ],
-      "to": [
-        2,
-        14,
-        16
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            0,
-            14,
-            2,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            0,
-            14,
-            2,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "copper_post_14_0",
-      "from": [
-        14,
-        2,
-        0
-      ],
-      "to": [
-        16,
-        14,
-        2
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            14,
-            0,
-            16,
-            2
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            14,
-            0,
-            16,
-            2
-          ]
-        }
-      }
-    },
-    {
-      "name": "copper_post_14_14",
-      "from": [
-        14,
-        2,
-        14
-      ],
-      "to": [
-        16,
-        14,
-        16
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            0,
-            2,
-            2,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            14,
-            2,
-            16,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            14,
-            14,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            14,
-            14,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "north_glass",
-      "from": [
-        2,
-        2,
-        0.75
-      ],
-      "to": [
-        14,
-        14,
-        1
-      ],
-      "faces": {
-        "north": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#glass",
-          "uv": [
-            15,
-            2,
-            15.25,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#glass",
-          "uv": [
-            0.75,
-            2,
-            1,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            0.75,
-            14,
-            1
-          ]
-        },
-        "down": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            0.75,
-            14,
-            1
-          ]
-        }
-      }
-    },
-    {
-      "name": "south_glass",
-      "from": [
-        2,
-        2,
-        15
-      ],
-      "to": [
-        14,
-        14,
-        15.25
-      ],
-      "faces": {
-        "north": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#glass",
-          "uv": [
-            0.75,
-            2,
-            1,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#glass",
-          "uv": [
-            15,
-            2,
-            15.25,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            15,
-            14,
-            15.25
-          ]
-        },
-        "down": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            15,
-            14,
-            15.25
-          ]
-        }
-      }
-    },
-    {
-      "name": "west_glass",
-      "from": [
-        0.75,
-        2,
-        2
-      ],
-      "to": [
-        1,
-        14,
-        14
-      ],
-      "faces": {
-        "north": {
-          "texture": "#glass",
-          "uv": [
-            15,
-            2,
-            15.25,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#glass",
-          "uv": [
-            0.75,
-            2,
-            1,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#glass",
-          "uv": [
-            0.75,
-            2,
-            1,
-            14
-          ]
-        },
-        "down": {
-          "texture": "#glass",
-          "uv": [
-            0.75,
-            2,
-            1,
-            14
-          ]
-        }
-      }
-    },
-    {
-      "name": "east_glass",
-      "from": [
-        15,
-        2,
-        2
-      ],
-      "to": [
-        15.25,
-        14,
-        14
-      ],
-      "faces": {
-        "north": {
-          "texture": "#glass",
-          "uv": [
-            0.75,
-            2,
-            1,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#glass",
-          "uv": [
-            15,
-            2,
-            15.25,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#glass",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#glass",
-          "uv": [
-            15,
-            2,
-            15.25,
-            14
-          ]
-        },
-        "down": {
-          "texture": "#glass",
-          "uv": [
-            15,
-            2,
-            15.25,
-            14
-          ]
-        }
-      }
-    }
-  ]
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"ambientocclusion": false,
+	"render_type": "minecraft:cutout",
+	"textures": {
+		"particle": "ccd:block/copper_water_supply/body",
+		"body": "ccd:block/copper_water_supply/body",
+		"cap": "ccd:block/copper_water_supply/cap",
+		"glass": "ccd:block/copper_water_supply/glass"
+	},
+	"elements": [
+		{
+			"name": "copper_base",
+			"from": [0, 0, 0],
+			"to": [16, 3, 16],
+			"faces": {
+				"north": {"uv": [0, 13, 16, 16], "texture": "#body"},
+				"east": {"uv": [0, 13, 16, 16], "texture": "#body"},
+				"south": {"uv": [0, 13, 16, 16], "texture": "#body"},
+				"west": {"uv": [0, 13, 16, 16], "texture": "#body"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#cap"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#cap"}
+			}
+		},
+		{
+			"name": "copper_top",
+			"from": [0, 13, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 3], "texture": "#body"},
+				"east": {"uv": [0, 0, 16, 3], "texture": "#body"},
+				"south": {"uv": [0, 0, 16, 3], "texture": "#body"},
+				"west": {"uv": [0, 0, 16, 3], "texture": "#body"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#cap"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#cap"}
+			}
+		},
+		{
+			"name": "copper_post_0_0",
+			"from": [0, 3, 0],
+			"to": [3, 13, 3],
+			"faces": {
+				"north": {"uv": [13, 3, 16, 13], "texture": "#body"},
+				"east": {"uv": [16, 3, 13, 13], "texture": "#body"},
+				"south": {"uv": [3, 3, 0, 13], "texture": "#body"},
+				"west": {"uv": [0, 3, 3, 13], "texture": "#body"}
+			}
+		},
+		{
+			"name": "copper_post_0_14",
+			"from": [0, 3, 13],
+			"to": [3, 13, 16],
+			"faces": {
+				"north": {"uv": [16, 3, 13, 13], "texture": "#body"},
+				"east": {"uv": [3, 3, 0, 13], "texture": "#body"},
+				"south": {"uv": [0, 3, 3, 13], "texture": "#body"},
+				"west": {"uv": [13, 3, 16, 13], "texture": "#body"}
+			}
+		},
+		{
+			"name": "copper_post_14_0",
+			"from": [13, 3, 0],
+			"to": [16, 13, 3],
+			"faces": {
+				"north": {"uv": [0, 3, 3, 13], "texture": "#body"},
+				"east": {"uv": [13, 3, 16, 13], "texture": "#body"},
+				"south": {"uv": [16, 3, 13, 13], "texture": "#body"},
+				"west": {"uv": [3, 3, 0, 13], "texture": "#body"}
+			}
+		},
+		{
+			"name": "copper_post_14_14",
+			"from": [13, 3, 13],
+			"to": [16, 13, 16],
+			"faces": {
+				"north": {"uv": [3, 3, 0, 13], "texture": "#body"},
+				"east": {"uv": [0, 3, 3, 13], "texture": "#body"},
+				"south": {"uv": [13, 3, 16, 13], "texture": "#body"},
+				"west": {"uv": [16, 3, 13, 13], "texture": "#body"}
+			}
+		},
+		{
+			"name": "north_glass",
+			"from": [3, 3, 0.75],
+			"to": [13, 13, 0.75],
+			"faces": {
+				"north": {"uv": [2, 2, 13, 13], "texture": "#glass"},
+				"south": {"uv": [2, 2, 13, 13], "texture": "#glass"}
+			}
+		},
+		{
+			"name": "south_glass",
+			"from": [3, 3, 15.25],
+			"to": [13, 13, 15.25],
+			"faces": {
+				"north": {"uv": [2, 2, 13, 13], "texture": "#glass"},
+				"south": {"uv": [2, 2, 13, 13], "texture": "#glass"}
+			}
+		},
+		{
+			"name": "west_glass",
+			"from": [0.75, 3, 3],
+			"to": [0.75, 13, 13],
+			"faces": {
+				"east": {"uv": [2, 2, 13, 13], "texture": "#glass"},
+				"west": {"uv": [2, 2, 13, 13], "texture": "#glass"}
+			}
+		},
+		{
+			"name": "east_glass",
+			"from": [15.25, 3, 3],
+			"to": [15.25, 13, 13],
+			"faces": {
+				"east": {"uv": [2, 2, 13, 13], "texture": "#glass"},
+				"west": {"uv": [2, 2, 13, 13], "texture": "#glass"}
+			}
+		}
+	]
 }

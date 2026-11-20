@@ -1,79 +1,25 @@
 {
-  "parent": "minecraft:block/block",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "body": "create:block/copper_underside",
-    "particle": "create:block/copper_underside"
-  },
-  "elements": [
-    {
-      "name": "housing",
-      "from": [
-        3,
-        3,
-        3
-      ],
-      "to": [
-        13,
-        13,
-        13
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            13,
-            3,
-            3,
-            13
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            13,
-            3,
-            3,
-            13
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            3,
-            13,
-            13,
-            3
-          ]
-        }
-      }
-    }
-  ]
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"particle": "create:block/pipes",
+		"body": "create:block/pipes"
+	},
+	"elements": [
+		{
+			"name": "housing",
+			"from": [3, 3, 3],
+			"to": [13, 13, 13],
+			"faces": {
+				"north": {"uv": [6, 11, 1, 16], "texture": "#body"},
+				"east": {"uv": [6, 11, 1, 16], "texture": "#body"},
+				"south": {"uv": [1, 11, 6, 16], "texture": "#body"},
+				"west": {"uv": [1, 11, 6, 16], "texture": "#body"},
+				"up": {"uv": [1, 11, 6, 16], "texture": "#body"},
+				"down": {"uv": [1, 16, 6, 11], "texture": "#body"}
+			}
+		}
+	]
 }

@@ -1,16 +1,14 @@
 {
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
   "parent": "create:block/fluid_valve/item",
   "ambientocclusion": false,
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "2": "create:block/fluid_valve",
     "4": "create:block/valve_open",
-    "1_1": "create:block/axis_top",
-    "1_0": "create:block/axis",
-    "particle": "create:block/valve_closed",
-    "copper": "create:block/copper_underside",
-    "dial": "create:block/valve_open",
-    "glass": "create:block/fluid_valve"
+    "6": "create:block/pipes",
+    "particle": "create:block/valve_closed"
   },
   "elements": [
     {
@@ -37,12 +35,12 @@
       "faces": {
         "north": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            9,
+            1,
+            15,
+            7
           ],
-          "texture": "#copper"
+          "texture": "#2"
         },
         "east": {
           "uv": [
@@ -55,12 +53,12 @@
         },
         "south": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            9,
+            1,
+            15,
+            7
           ],
-          "texture": "#copper"
+          "texture": "#2"
         },
         "west": {
           "uv": [
@@ -407,14 +405,15 @@
       }
     },
     {
+      "name": "outer_native_pointer",
       "from": [
         4.5,
-        2.5,
+        1.98,
         7.5
       ],
       "to": [
         11.5,
-        2.5,
+        1.98,
         8.5
       ],
       "rotation": {
@@ -422,7 +421,7 @@
         "axis": "y",
         "origin": [
           8,
-          2.5,
+          8,
           8
         ]
       },
@@ -434,174 +433,157 @@
             5.5,
             8
           ],
+          "texture": "#2"
+        }
+      }
+    },
+    {
+      "name": "ValveCenter",
+      "from": [
+        3,
+        3.0,
+        1.0
+      ],
+      "to": [
+        13,
+        13.0,
+        2.0
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            10,
+            11,
+            10.5,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#6"
+        },
+        "east": {
+          "uv": [
+            10,
+            11,
+            10.5,
+            16
+          ],
           "rotation": 180,
-          "texture": "#2"
-        }
-      }
-    },
-    {
-      "name": "outer_dial_front",
-      "from": [
-        2,
-        14.01,
-        2
-      ],
-      "to": [
-        14,
-        14.01,
-        14
-      ],
-      "faces": {
-        "up": {
-          "texture": "#dial",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        }
-      }
-    },
-    {
-      "name": "outer_dial_back",
-      "from": [
-        2,
-        1.99,
-        2
-      ],
-      "to": [
-        14,
-        1.99,
-        14
-      ],
-      "faces": {
-        "down": {
-          "texture": "#dial",
-          "uv": [
-            2,
-            14,
-            14,
-            2
-          ]
-        }
-      }
-    },
-    {
-      "name": "outer_glass_up",
-      "from": [
-        2,
-        14.12,
-        2
-      ],
-      "to": [
-        14,
-        14.12,
-        14
-      ],
-      "faces": {
-        "up": {
-          "texture": "#glass",
-          "uv": [
-            1,
-            1,
-            7,
-            7
-          ]
-        }
-      }
-    },
-    {
-      "name": "outer_glass_down",
-      "from": [
-        2,
-        1.88,
-        2
-      ],
-      "to": [
-        14,
-        1.88,
-        14
-      ],
-      "faces": {
-        "down": {
-          "texture": "#glass",
-          "uv": [
-            1,
-            1,
-            7,
-            7
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        4.5,
-        14.02,
-        7.5
-      ],
-      "to": [
-        11.5,
-        14.02,
-        8.5
-      ],
-      "rotation": {
-        "origin": [
-          8,
-          8,
-          8
-        ],
-        "axis": "y",
-        "angle": 0
-      },
-      "faces": {
+          "texture": "#6"
+        },
         "up": {
           "uv": [
-            2,
-            7.5,
-            5.5,
-            8
+            10,
+            11,
+            10.5,
+            16
           ],
           "rotation": 270,
-          "texture": "#2"
+          "texture": "#6"
+        },
+        "west": {
+          "uv": [
+            10,
+            11,
+            10.5,
+            16
+          ],
+          "rotation": 0,
+          "texture": "#6"
+        },
+        "north": {
+          "uv": [
+            1,
+            11,
+            6,
+            16
+          ],
+          "texture": "#6"
+        },
+        "south": {
+          "uv": [
+            1,
+            11,
+            6,
+            16
+          ],
+          "texture": "#6",
+          "rotation": 180
         }
-      },
-      "name": "outer_native_pointer"
+      }
     },
     {
+      "name": "ValveCenter",
       "from": [
-        4.5,
-        1.9800000000000004,
-        7.5
+        3,
+        3.0,
+        14.0
       ],
       "to": [
-        11.5,
-        1.9800000000000004,
-        8.5
+        13,
+        13.0,
+        15.0
       ],
-      "rotation": {
-        "origin": [
-          8,
-          8,
-          8
-        ],
-        "axis": "y",
-        "angle": 0
-      },
       "faces": {
         "down": {
           "uv": [
-            2,
-            7.5,
-            5.5,
-            8
+            10,
+            11,
+            10.5,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#6"
+        },
+        "east": {
+          "uv": [
+            10,
+            11,
+            10.5,
+            16
+          ],
+          "rotation": 180,
+          "texture": "#6"
+        },
+        "up": {
+          "uv": [
+            10,
+            11,
+            10.5,
+            16
           ],
           "rotation": 270,
-          "texture": "#2"
+          "texture": "#6"
+        },
+        "west": {
+          "uv": [
+            10,
+            11,
+            10.5,
+            16
+          ],
+          "rotation": 0,
+          "texture": "#6"
+        },
+        "north": {
+          "uv": [
+            1,
+            11,
+            6,
+            16
+          ],
+          "texture": "#6"
+        },
+        "south": {
+          "uv": [
+            1,
+            11,
+            6,
+            16
+          ],
+          "texture": "#6",
+          "rotation": 180
         }
-      },
-      "name": "outer_native_pointer"
+      }
     }
   ]
 }

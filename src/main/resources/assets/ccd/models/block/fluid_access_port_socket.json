@@ -1,72 +1,23 @@
 {
-  "parent": "minecraft:block/block",
-  "ambientocclusion": false,
-  "textures": {
-    "body": "create:block/copper_underside",
-    "socket": "ccd:block/fluid_access/connected_port",
-    "band": "ccd:block/fluid_access/copper_band",
-    "particle": "#body"
-  },
-  "elements": [
-    {
-      "name": "raised_socket_south",
-      "from": [
-        2.95,
-        2.95,
-        15.9
-      ],
-      "to": [
-        13.05,
-        13.05,
-        17.95
-      ],
-      "faces": {
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "east": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            3,
-            11,
-            13
-          ]
-        },
-        "west": {
-          "texture": "#socket",
-          "uv": [
-            5,
-            3,
-            3,
-            13
-          ]
-        },
-        "up": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            3,
-            3,
-            5
-          ]
-        },
-        "down": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            11,
-            3,
-            13
-          ]
-        }
-      }
-    }
-  ]
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"socket": "ccd:block/fluid_access/connected_port"
+	},
+	"elements": [
+		{
+			"name": "raised_socket_south",
+			"from": [2.95, 2.95, 15.9],
+			"to": [13.05, 13.05, 17.95],
+			"faces": {
+				"east": {"uv": [13, 3, 11, 13], "texture": "#socket"},
+				"south": {"uv": [3, 3, 13, 13], "texture": "#socket"},
+				"west": {"uv": [5, 3, 3, 13], "texture": "#socket"},
+				"up": {"uv": [13, 5, 3, 3], "texture": "#socket"},
+				"down": {"uv": [13, 13, 3, 11], "texture": "#socket"}
+			}
+		}
+	]
 }

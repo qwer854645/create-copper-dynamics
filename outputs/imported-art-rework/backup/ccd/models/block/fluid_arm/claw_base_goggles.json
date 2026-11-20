@@ -1,0 +1,1304 @@
+{
+  "parent": "create:block/mechanical_arm/claw_base_goggles",
+  "textures": {
+    "5": "ccd:block/fluid_arm/mechanical_arm",
+    "copper": "create:block/copper_underside",
+    "metal": "create:block/industrial_iron_block",
+    "core": "ccd:block/fluid_arm/core",
+    "glass": "ccd:block/fluid_arm/glass"
+  },
+  "elements": [
+    {
+      "name": "Joint 4",
+      "from": [
+        -2.5,
+        -3,
+        -3
+      ],
+      "to": [
+        2.5,
+        3,
+        3
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "x",
+        "origin": [
+          8,
+          9,
+          4
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            3,
+            7,
+            5.5
+          ],
+          "rotation": 90,
+          "texture": "#5"
+        },
+        "east": {
+          "uv": [
+            4,
+            0,
+            7,
+            3
+          ],
+          "texture": "#5"
+        },
+        "south": {
+          "uv": [
+            7,
+            3,
+            4,
+            5.5
+          ],
+          "rotation": 90,
+          "texture": "#5"
+        },
+        "west": {
+          "uv": [
+            4,
+            0,
+            7,
+            3
+          ],
+          "texture": "#5"
+        },
+        "up": {
+          "uv": [
+            7,
+            3,
+            4,
+            5.5
+          ],
+          "rotation": 90,
+          "texture": "#5"
+        },
+        "down": {
+          "uv": [
+            4,
+            3,
+            7,
+            5.5
+          ],
+          "rotation": 90,
+          "texture": "#5"
+        }
+      }
+    },
+    {
+      "name": "Connector",
+      "from": [
+        -2,
+        -2,
+        -4
+      ],
+      "to": [
+        2,
+        2,
+        -2.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            6,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            6,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            3.5,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            3.5,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            6,
+            3.5
+          ]
+        },
+        "down": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            6,
+            3.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "Rear copper collar",
+      "from": [
+        -3,
+        -3,
+        -5
+      ],
+      "to": [
+        3,
+        3,
+        -4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "name": "Front copper collar",
+      "from": [
+        -3,
+        -3,
+        -12
+      ],
+      "to": [
+        3,
+        3,
+        -11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "name": "Recessed empty barrel",
+      "from": [
+        -2,
+        -2,
+        -10.9
+      ],
+      "to": [
+        2,
+        2,
+        -5.1
+      ],
+      "faces": {
+        "north": {
+          "texture": "#core",
+          "uv": [
+            2,
+            2,
+            6,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#core",
+          "uv": [
+            2,
+            2,
+            6,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#core",
+          "uv": [
+            2,
+            2,
+            7.800000000000001,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#core",
+          "uv": [
+            2,
+            2,
+            7.800000000000001,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#core",
+          "uv": [
+            2,
+            2,
+            6,
+            7.800000000000001
+          ]
+        },
+        "down": {
+          "texture": "#core",
+          "uv": [
+            2,
+            2,
+            6,
+            7.800000000000001
+          ]
+        }
+      }
+    },
+    {
+      "name": "Needle shoulder",
+      "from": [
+        -1.5,
+        -1.5,
+        -13
+      ],
+      "to": [
+        1.5,
+        1.5,
+        -12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            5,
+            5
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            5,
+            5
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            5
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            5
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            5,
+            3
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            5,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "name": "Needle",
+      "from": [
+        -0.5,
+        -0.5,
+        -15
+      ],
+      "to": [
+        0.5,
+        0.5,
+        -13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "south": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "east": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            4,
+            3
+          ]
+        },
+        "west": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            4,
+            3
+          ]
+        },
+        "up": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            3,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#metal",
+          "uv": [
+            2,
+            2,
+            3,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "name": "Copper window rail",
+      "from": [
+        -3,
+        -3,
+        -11
+      ],
+      "to": [
+        -2,
+        -2,
+        -5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "name": "Copper window rail",
+      "from": [
+        -3,
+        2,
+        -11
+      ],
+      "to": [
+        -2,
+        3,
+        -5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "name": "Copper window rail",
+      "from": [
+        2,
+        -3,
+        -11
+      ],
+      "to": [
+        3,
+        -2,
+        -5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "name": "Copper window rail",
+      "from": [
+        2,
+        2,
+        -11
+      ],
+      "to": [
+        3,
+        3,
+        -5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            3
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            8,
+            3
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            2,
+            3,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        -2.8,
+        -2,
+        -10
+      ],
+      "to": [
+        -2.8,
+        -1,
+        -8
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        -2.8,
+        -1,
+        -8
+      ],
+      "to": [
+        -2.8,
+        0,
+        -7
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        -2.8,
+        1,
+        -6
+      ],
+      "to": [
+        -2.8,
+        2,
+        -5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        2.8,
+        -2,
+        -10
+      ],
+      "to": [
+        2.8,
+        -1,
+        -8
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        2.8,
+        -1,
+        -8
+      ],
+      "to": [
+        2.8,
+        0,
+        -7
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        2.8,
+        1,
+        -6
+      ],
+      "to": [
+        2.8,
+        2,
+        -5
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        -2,
+        -2.8,
+        -10
+      ],
+      "to": [
+        -1,
+        -2.8,
+        -8
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        -1,
+        -2.8,
+        -8
+      ],
+      "to": [
+        0,
+        -2.8,
+        -7
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        1,
+        -2.8,
+        -6
+      ],
+      "to": [
+        2,
+        -2.8,
+        -5
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        -2,
+        2.8,
+        -10
+      ],
+      "to": [
+        -1,
+        2.8,
+        -8
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        -1,
+        2.8,
+        -8
+      ],
+      "to": [
+        0,
+        2.8,
+        -7
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "name": "Observation window highlight",
+      "from": [
+        1,
+        2.8,
+        -6
+      ],
+      "to": [
+        2,
+        2.8,
+        -5
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            0,
+            0,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        -4,
+        0.5,
+        -4.25
+      ],
+      "to": [
+        4,
+        4.5,
+        3.75
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "rotation": {
+        "angle": 22.5,
+        "axis": "x",
+        "origin": [
+          0,
+          3,
+          1
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            2,
+            16,
+            6
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            0,
+            2,
+            8,
+            6
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            8,
+            10,
+            16,
+            14
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            8,
+            2,
+            0,
+            6
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "from": [
+        -4,
+        0.5,
+        3.75
+      ],
+      "to": [
+        4,
+        4.5,
+        -4.25
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "rotation": {
+        "angle": 22.5,
+        "axis": "x",
+        "origin": [
+          0,
+          3,
+          1
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            10,
+            16,
+            14
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            8,
+            2,
+            0,
+            6
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            8,
+            2,
+            16,
+            6
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            0,
+            2,
+            8,
+            6
+          ],
+          "texture": "#1"
+        }
+      }
+    }
+  ]
+}

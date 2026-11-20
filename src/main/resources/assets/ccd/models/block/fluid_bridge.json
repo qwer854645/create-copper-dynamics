@@ -1,201 +1,49 @@
 {
-  "parent": "minecraft:block/block",
-  "ambientocclusion": false,
-  "textures": {
-    "body": "create:block/copper_underside",
-    "socket": "ccd:block/fluid_access/connected_bridge",
-    "band": "ccd:block/fluid_access/bridge_band",
-    "particle": "#body"
-  },
-  "elements": [
-    {
-      "name": "casing",
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
-      "faces": {
-        "north": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#band",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#band",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "raised_socket_south",
-      "from": [
-        2.95,
-        2.95,
-        15.9
-      ],
-      "to": [
-        13.05,
-        13.05,
-        17.95
-      ],
-      "faces": {
-        "south": {
-          "texture": "#socket",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "east": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            3,
-            11,
-            13
-          ]
-        },
-        "west": {
-          "texture": "#socket",
-          "uv": [
-            5,
-            3,
-            3,
-            13
-          ]
-        },
-        "up": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            3,
-            3,
-            5
-          ]
-        },
-        "down": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            11,
-            3,
-            13
-          ]
-        }
-      }
-    },
-    {
-      "name": "raised_socket_north",
-      "from": [
-        2.95,
-        2.95,
-        -1.95
-      ],
-      "to": [
-        13.05,
-        13.05,
-        0.1
-      ],
-      "faces": {
-        "north": {
-          "texture": "#socket",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "east": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            3,
-            11,
-            13
-          ]
-        },
-        "west": {
-          "texture": "#socket",
-          "uv": [
-            5,
-            3,
-            3,
-            13
-          ]
-        },
-        "up": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            3,
-            3,
-            5
-          ]
-        },
-        "down": {
-          "texture": "#socket",
-          "uv": [
-            13,
-            11,
-            3,
-            13
-          ]
-        }
-      }
-    }
-  ]
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"ambientocclusion": false,
+	"textures": {
+		"socket": "ccd:block/fluid_access/connected_bridge",
+		"band": "ccd:block/fluid_access/bridge_band"
+	},
+	"elements": [
+		{
+			"name": "casing",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#socket"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#band"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#socket"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#band"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#band"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#band"}
+			}
+		},
+		{
+			"name": "raised_socket_south",
+			"from": [2.95, 2.95, 15.9],
+			"to": [13.05, 13.05, 17.95],
+			"faces": {
+				"east": {"uv": [13, 3, 11, 13], "texture": "#socket"},
+				"south": {"uv": [3, 3, 13, 13], "texture": "#socket"},
+				"west": {"uv": [5, 3, 3, 13], "texture": "#socket"},
+				"up": {"uv": [13, 5, 3, 3], "texture": "#socket"},
+				"down": {"uv": [13, 13, 3, 11], "texture": "#socket"}
+			}
+		},
+		{
+			"name": "raised_socket_north",
+			"from": [2.95, 2.95, -1.95],
+			"to": [13.05, 13.05, 0.1],
+			"faces": {
+				"north": {"uv": [3, 3, 13, 13], "texture": "#socket"},
+				"east": {"uv": [11, 3, 13, 13], "texture": "#socket"},
+				"west": {"uv": [3, 3, 5, 13], "texture": "#socket"},
+				"up": {"uv": [13, 3, 3, 5], "texture": "#socket"},
+				"down": {"uv": [13, 11, 3, 13], "texture": "#socket"}
+			}
+		}
+	]
 }

@@ -1,0 +1,79 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "body": "create:block/copper_underside",
+    "particle": "create:block/copper_underside"
+  },
+  "elements": [
+    {
+      "name": "housing",
+      "from": [
+        3,
+        3,
+        3
+      ],
+      "to": [
+        13,
+        13,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#body",
+          "uv": [
+            13,
+            3,
+            3,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "east": {
+          "texture": "#body",
+          "uv": [
+            13,
+            3,
+            3,
+            13
+          ]
+        },
+        "west": {
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "up": {
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "down": {
+          "texture": "#body",
+          "uv": [
+            3,
+            13,
+            13,
+            3
+          ]
+        }
+      }
+    }
+  ]
+}

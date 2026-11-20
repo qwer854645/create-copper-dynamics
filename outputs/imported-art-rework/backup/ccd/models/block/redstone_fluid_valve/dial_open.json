@@ -1,0 +1,106 @@
+{
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "dial": "create:block/valve_open",
+    "glass": "create:block/fluid_valve"
+  },
+  "elements": [
+    {
+      "name": "outer_dial_front",
+      "from": [
+        2,
+        14.01,
+        2
+      ],
+      "to": [
+        14,
+        14.01,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#dial",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "outer_dial_back",
+      "from": [
+        2,
+        1.99,
+        2
+      ],
+      "to": [
+        14,
+        1.99,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#dial",
+          "uv": [
+            2,
+            14,
+            14,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "outer_glass_up",
+      "from": [
+        2,
+        14.12,
+        2
+      ],
+      "to": [
+        14,
+        14.12,
+        14
+      ],
+      "faces": {
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
+    },
+    {
+      "name": "outer_glass_down",
+      "from": [
+        2,
+        1.88,
+        2
+      ],
+      "to": [
+        14,
+        1.88,
+        14
+      ],
+      "faces": {
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
+    }
+  ]
+}
