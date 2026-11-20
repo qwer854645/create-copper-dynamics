@@ -1,13 +1,14 @@
 {
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
+    "particle": "create:block/copper_underside",
     "body": "create:block/copper_underside",
-    "base": "create:block/copper_underside",
     "handle": "ccd:block/faucet/handle",
     "pipe": "create:block/pipes",
-    "nozzle": "create:block/spout_nozzle",
-    "particle": "create:block/copper_underside"
+    "nozzle": "create:block/spout_nozzle"
   },
   "elements": [
     {
@@ -34,43 +35,57 @@
       "faces": {
         "east": {
           "uv": [
+            4,
+            0,
             8,
-            8,
-            9,
-            9
+            2
           ],
-          "texture": "#base"
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            11.5,
+            11.5,
+            15.5,
+            15.5
+          ],
+          "texture": "#pipe"
         },
         "west": {
           "uv": [
+            4,
+            2,
             8,
-            8,
-            9,
-            9
+            0
           ],
-          "texture": "#base"
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "up": {
           "uv": [
+            4,
+            2,
             8,
-            8,
-            9,
-            9
+            0
           ],
-          "texture": "#base"
+          "rotation": 180,
+          "texture": "#pipe"
         },
         "down": {
           "uv": [
+            4,
+            0,
             8,
-            8,
-            9,
-            9
+            2
           ],
-          "texture": "#base"
+          "rotation": 180,
+          "texture": "#pipe"
         }
       }
     },
     {
+      "name": "native_rim_north_0",
       "from": [
         3,
         3,
@@ -103,12 +118,12 @@
         },
         "east": {
           "uv": [
-            8,
-            8,
-            9,
-            9
+            10.5,
+            11,
+            9.5,
+            16
           ],
-          "texture": "#base"
+          "texture": "#pipe"
         },
         "south": {
           "uv": [
@@ -121,182 +136,186 @@
         },
         "west": {
           "uv": [
-            8,
-            8,
-            9,
-            9
+            9.5,
+            16,
+            10.5,
+            11
           ],
-          "texture": "#base"
+          "texture": "#pipe"
         },
         "up": {
           "uv": [
-            8,
-            8,
-            9,
-            9
+            10.5,
+            11,
+            9.5,
+            16
           ],
-          "texture": "#base"
+          "rotation": 270,
+          "texture": "#pipe"
         },
         "down": {
           "uv": [
-            8,
-            8,
-            9,
-            9
+            9.5,
+            16,
+            10.5,
+            11
           ],
-          "texture": "#base"
+          "rotation": 270,
+          "texture": "#pipe"
         }
-      },
-      "name": "native_rim_north_0"
+      }
+    },
+    {
+      "name": "copper_neck",
+      "from": [
+        5,
+        5,
+        3
+      ],
+      "to": [
+        11,
+        11,
+        5
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            13,
+            8,
+            12,
+            11
+          ],
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            13,
+            8,
+            16,
+            11
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            12,
+            8,
+            13,
+            11
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            12,
+            8,
+            13,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            13,
+            11,
+            12,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        }
+      }
     },
     {
       "name": "copper_neck",
       "from": [
         6,
-        7,
-        3
-      ],
-      "to": [
-        10,
-        11,
-        10
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            10,
-            5,
-            6,
-            9
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            6,
-            5,
-            10,
-            9
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            10,
-            5,
-            3,
-            9
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            3,
-            5,
-            10,
-            9
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            6,
-            3,
-            10,
-            10
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            6,
-            10,
-            10,
-            3
-          ]
-        }
-      }
-    },
-    {
-      "name": "copper_elbow",
-      "from": [
         6,
-        6,
-        6
-      ],
-      "to": [
-        10,
-        8,
-        10
-      ],
-      "faces": {
-        "north": {
-          "texture": "#body",
-          "uv": [
-            10,
-            8,
-            6,
-            10
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            6,
-            8,
-            10,
-            10
-          ]
-        },
-        "east": {
-          "texture": "#body",
-          "uv": [
-            10,
-            8,
-            6,
-            10
-          ]
-        },
-        "west": {
-          "texture": "#body",
-          "uv": [
-            6,
-            8,
-            10,
-            10
-          ]
-        },
-        "up": {
-          "texture": "#body",
-          "uv": [
-            6,
-            6,
-            10,
-            10
-          ]
-        },
-        "down": {
-          "texture": "#body",
-          "uv": [
-            6,
-            10,
-            10,
-            6
-          ]
-        }
-      }
-    },
-    {
-      "from": [
-        5,
-        4,
         5
       ],
       "to": [
+        10,
+        10,
+        11
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          1
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            5,
+            6,
+            9
+          ],
+          "texture": "#body"
+        },
+        "east": {
+          "uv": [
+            10,
+            5,
+            4,
+            9
+          ],
+          "texture": "#body"
+        },
+        "south": {
+          "uv": [
+            6,
+            5,
+            10,
+            9
+          ],
+          "texture": "#body"
+        },
+        "west": {
+          "uv": [
+            4,
+            5,
+            10,
+            9
+          ],
+          "texture": "#body"
+        },
+        "up": {
+          "uv": [
+            6,
+            4,
+            10,
+            10
+          ],
+          "texture": "#body"
+        },
+        "down": {
+          "uv": [
+            6,
+            10,
+            10,
+            4
+          ],
+          "texture": "#body"
+        }
+      }
+    },
+    {
+      "name": "native_spout_middle_0",
+      "from": [
+        5,
+        4,
+        6
+      ],
+      "to": [
         11,
         6,
-        11
+        12
       ],
       "rotation": {
         "angle": 0,
@@ -304,7 +323,7 @@
         "origin": [
           16.5,
           11.5,
-          16.5
+          17.5
         ]
       },
       "faces": {
@@ -344,7 +363,7 @@
           ],
           "texture": "#nozzle"
         },
-        "down": {
+        "up": {
           "uv": [
             5,
             5,
@@ -353,28 +372,28 @@
           ],
           "texture": "#nozzle"
         },
-        "up": {
-          "texture": "#nozzle",
+        "down": {
           "uv": [
             5,
             5,
             11,
             11
-          ]
+          ],
+          "texture": "#nozzle"
         }
-      },
-      "name": "native_spout_middle_0"
+      }
     },
     {
+      "name": "native_spout_bottom_0",
       "from": [
         6,
         1,
-        6
+        7
       ],
       "to": [
         10,
         4,
-        10
+        11
       ],
       "rotation": {
         "angle": 0,
@@ -382,7 +401,7 @@
         "origin": [
           16.5,
           11.5,
-          16.5
+          17.5
         ]
       },
       "faces": {
@@ -431,75 +450,83 @@
           ],
           "texture": "#nozzle"
         }
-      },
-      "name": "native_spout_bottom_0"
+      }
     },
     {
       "name": "valve_stem",
       "from": [
         7,
-        11,
-        7
+        10,
+        8
       ],
       "to": [
         9,
-        12,
-        9
+        11,
+        10
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          1
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#body",
           "uv": [
             9,
             4,
             7,
             5
-          ]
-        },
-        "south": {
-          "texture": "#body",
-          "uv": [
-            7,
-            4,
-            9,
-            5
-          ]
+          ],
+          "texture": "#body"
         },
         "east": {
-          "texture": "#body",
           "uv": [
             9,
             4,
             7,
             5
-          ]
+          ],
+          "texture": "#body"
+        },
+        "south": {
+          "uv": [
+            7,
+            4,
+            9,
+            5
+          ],
+          "texture": "#body"
         },
         "west": {
-          "texture": "#body",
           "uv": [
             7,
             4,
             9,
             5
-          ]
+          ],
+          "texture": "#body"
         },
         "up": {
-          "texture": "#body",
           "uv": [
             7,
             7,
             9,
             9
-          ]
+          ],
+          "texture": "#body"
         },
         "down": {
-          "texture": "#body",
           "uv": [
             7,
             9,
             9,
             7
-          ]
+          ],
+          "texture": "#body"
         }
       }
     },
@@ -507,68 +534,77 @@
       "name": "handle_closed",
       "from": [
         7,
-        12,
-        4
+        11,
+        5
       ],
       "to": [
         9,
-        14,
-        12
+        13,
+        13
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          1
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#handle",
           "uv": [
             9,
             2,
             7,
             4
-          ]
-        },
-        "south": {
-          "texture": "#handle",
-          "uv": [
-            7,
-            2,
-            9,
-            4
-          ]
+          ],
+          "texture": "#handle"
         },
         "east": {
-          "texture": "#handle",
           "uv": [
             12,
             2,
             4,
             4
-          ]
+          ],
+          "texture": "#handle"
+        },
+        "south": {
+          "uv": [
+            7,
+            2,
+            9,
+            4
+          ],
+          "texture": "#handle"
         },
         "west": {
-          "texture": "#handle",
           "uv": [
             4,
             2,
             12,
             4
-          ]
+          ],
+          "texture": "#handle"
         },
         "up": {
-          "texture": "#handle",
           "uv": [
             7,
             4,
             9,
             12
-          ]
+          ],
+          "texture": "#handle"
         },
         "down": {
-          "texture": "#handle",
           "uv": [
             7,
             12,
             9,
             4
-          ]
+          ],
+          "texture": "#handle"
         }
       }
     }
