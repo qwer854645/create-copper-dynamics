@@ -39,26 +39,8 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform.Sided() {
             @Override protected Vec3 getSouthLocation() { return new Vec3(.5, .5, 1); }
-            @Override public Vec3 getLocalOffset(net.minecraft.world.level.LevelAccessor level,BlockPos pos,BlockState state) {
-                // Housing spans local z=8..16. The reserved UV rectangle is
-                // x=4..12, y=2..6: center z=12, with four pixels of depth.
-                // Use the actual face normal for every side, including vertical faces.
+            @Override public Vec3 getLocalOffset(net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockState state) {
                 return filterCenter(state, getSide());
-            }
-            @Override public boolean testHit(net.minecraft.world.level.LevelAccessor level, BlockPos pos,
-                BlockState state, Vec3 hit) {
-                // Resolve the surface from the actual hit, not Sided's mutable rendering side.
-                // The small outlet half must never activate the filter, even at its seam.
-                Vec3 rear = Vec3.atLowerCornerOf(state.getValue(FluidTransmitterBlock.FACING).getOpposite().getNormal());
-                Vec3 centered = hit.subtract(.5, .5, .5);
-                if (centered.dot(rear) < 0) return false;
-                for (Direction side : Direction.values()) {
-                    if (!isSideActive(state, side)) continue;
-                    Vec3 normal = Vec3.atLowerCornerOf(side.getNormal());
-                    if (Math.abs(centered.dot(normal) - .5) > 1.0 / 16) continue;
-                    if (hit.distanceTo(filterCenter(state, side)) < getScale() / 2) return true;
-                }
-                return false;
             }
             @Override protected boolean isSideActive(BlockState state, Direction side) {
                 return side.getAxis() != state.getValue(FluidTransmitterBlock.FACING).getAxis();
@@ -66,10 +48,19 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
         }).forFluids());
     }
     public static Vec3 filterCenter(BlockState state, Direction side) {
-        return new Vec3(.5, .5, .5)
-            .add(Vec3.atLowerCornerOf(side.getNormal()).scale(8.5 / 16))
-            .add(Vec3.atLowerCornerOf(state.getValue(FluidTransmitterBlock.FACING)
-                .getOpposite().getNormal()).scale(4.0 / 16));
+        // Build in the model's NORTH-facing coordinates, then apply the exact
+        // blockstate rotation. Keep native Sided hit testing and original scale.
+        var facing = state.getValue(FluidTransmitterBlock.FACING);
+        Vec3 normal = Vec3.atLowerCornerOf(side.getNormal());
+        Vec3 rear = switch (facing) {
+            case NORTH -> new Vec3(0, 0, 1);
+            case SOUTH -> new Vec3(0, 0, -1);
+            case EAST -> new Vec3(-1, 0, 0);
+            case WEST -> new Vec3(1, 0, 0);
+            case UP -> new Vec3(0, -1, 0);
+            case DOWN -> new Vec3(0, 1, 0);
+        };
+        return new Vec3(.5, .5, .5).add(normal.scale(8.5 / 16)).add(rear.scale(4.0 / 16));
     }
     private Direction front() { return getBlockState().getValue(FluidTransmitterBlock.FACING); }
     private boolean paused() { return getBlockState().getValue(FluidTransmitterBlock.POWERED); }

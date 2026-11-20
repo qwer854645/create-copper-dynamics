@@ -27,8 +27,12 @@ public final class SmartCollectionGrateBlock extends CopperCollectionGrateBlock 
     public static final MapCodec<CauldronBlock> CODEC = simpleCodec(SmartCollectionGrateBlock::new);
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    // The filter is decorative and stays inside the shared coarse body outline.
-    private static final VoxelShaper SHAPES = VoxelShaper.forHorizontal(SHAPE, Direction.SOUTH);
+    // Six coarse boxes follow the imported bowl and four raised walls.
+    private static final VoxelShape BODY = Shapes.or(
+        box(3, 0, 3, 13, 3, 13), box(2, 3, 2, 14, 8, 14),
+        box(0, 8, 0, 16, 16, 3), box(0, 8, 13, 16, 16, 16),
+        box(0, 8, 3, 3, 16, 13), box(13, 8, 3, 16, 16, 13)).optimize();
+    private static final VoxelShaper SHAPES = VoxelShaper.forHorizontal(BODY, Direction.SOUTH);
     public SmartCollectionGrateBlock(Properties properties) {
         super(properties);
         registerDefaultState(defaultBlockState().setValue(POWERED, false).setValue(FACING, Direction.SOUTH));

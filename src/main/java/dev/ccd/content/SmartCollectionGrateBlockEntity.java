@@ -26,7 +26,7 @@ public final class SmartCollectionGrateBlockEntity extends CopperCollectionGrate
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform.Sided() {
-            @Override protected Vec3 getSouthLocation() { return new Vec3(.5, 5.5 / 16d, 14.5625 / 16); }
+            @Override protected Vec3 getSouthLocation() { return new Vec3(.5, 12 / 16d, 16.5 / 16); }
             @Override public float getScale() { return .25f; }
             @Override protected boolean isSideActive(BlockState state, Direction side) {
                 return side.getAxis().isHorizontal();
