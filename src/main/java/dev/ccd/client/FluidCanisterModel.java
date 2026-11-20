@@ -33,11 +33,11 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 /** Resolve the same baked fluid-window geometry for items and native cached/instanced packages. */
 public final class FluidCanisterModel extends BakedModelWrapper<BakedModel> {
     private static final ResourceLocation ITEM = ResourceLocation.fromNamespaceAndPath("ccd", "fluid_package");
-    private record Appearance(ResourceLocation sprite, int tint, int level) {}
+    private record Appearance(ResourceLocation item,ResourceLocation sprite, int tint, int level) {}
     private record Variant(ResourceLocation key, PartialModel partial, BakedModel model) {}
     private static final Map<Appearance, ResourceLocation> KEYS = new HashMap<>();
     private static final Map<Appearance, Variant> VARIANTS = new HashMap<>();
-    private static BakedModel shell;
+    private static final Map<ResourceLocation,BakedModel> SHELLS=new HashMap<>();
     private final List<BakedQuad> quads;
     private final ItemOverrides overrides;
 
@@ -59,16 +59,23 @@ public final class FluidCanisterModel extends BakedModelWrapper<BakedModel> {
         TextureAtlasSprite sprite = appearance.sprite() == null ? null
             : Minecraft.getInstance().getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)
                 .apply(appearance.sprite());
-        float height = (2 + 7 * appearance.level() / 20f) / 16f;
+        float bottom=Float.POSITIVE_INFINITY,top=Float.NEGATIVE_INFINITY;
+        for(var quad:original.getQuads(null,null,RandomSource.create(0))) if(quad.getTintIndex()==0)
+            for(int v=0;v<4;v++) {
+                float y=(float)BakedQuadHelper.getXYZ(quad.getVertices(),v).y;
+                bottom=Math.min(bottom,y);top=Math.max(top,y);
+            }
+        float height=bottom+(top-bottom)*appearance.level()/20f;
         for (BakedQuad quad : original.getQuads(null, null, RandomSource.create(0))) {
-            if (quad.getTintIndex() != 0 || sprite == null) {
+            if (quad.getTintIndex() != 0) {
                 quads.add(quad);
                 continue;
             }
+            if(sprite==null) continue;
             int[] vertices = quad.getVertices().clone();
             float minY = Float.POSITIVE_INFINITY;
             for (int v = 0; v < 4; v++) minY = Math.min(minY, (float) BakedQuadHelper.getXYZ(vertices, v).y);
-            if (minY >= height) continue; // The recessed dark backing remains visible above the liquid.
+            if (minY > height && quad.getDirection()!=Direction.UP) continue;
             int tint = appearance.tint();
             int abgr = 0xff000000 | ((tint & 255) << 16) | (tint & 0xff00) | ((tint >>> 16) & 255);
             for (int v = 0; v < 4; v++) {
@@ -85,31 +92,32 @@ public final class FluidCanisterModel extends BakedModelWrapper<BakedModel> {
     }
 
     /** Install the item wrapper during baking; atlas-dependent variants wait until upload completes. */
-    public static BakedModel install(BakedModel original) {
-        shell = original;
+    public static BakedModel install(ResourceLocation item,BakedModel original) {
+        SHELLS.put(item,original);
         VARIANTS.clear();
         return new FluidCanisterModel(original);
     }
 
     public static void rebuildTransportVariants() {
-        if (shell == null) return;
+        if (SHELLS.isEmpty()) return;
         for (var entry : KEYS.entrySet()) create(entry.getKey(), entry.getValue());
     }
 
     public static ResourceLocation transportKey(ItemStack stack, net.minecraft.world.item.Item nativeItem) {
         if (stack.is(CopperDynamics.COMPOSITE_PACKAGE.get())) return BrassBoxModel.transportKey(stack);
-        return stack.is(CopperDynamics.FLUID_PACKAGE.get()) && shell != null
+        return FluidPackageItem.isFluidPackage(stack) && SHELLS.containsKey(BuiltInRegistries.ITEM.getKey(stack.getItem()))
             ? variant(stack).key() : BuiltInRegistries.ITEM.getKey(nativeItem);
     }
 
     private static Variant variant(ItemStack stack) {
         var fluid = FluidPackageItem.contents(stack);
+        var item=BuiltInRegistries.ITEM.getKey(stack.getItem());
         Appearance appearance;
-        if (fluid.isEmpty()) appearance = new Appearance(null, -1, 0);
+        if (fluid.isEmpty()) appearance = new Appearance(item,null, -1, 0);
         else {
             var extension = IClientFluidTypeExtensions.of(fluid.getFluid());
             int level = Math.min(20, Math.max(1, (int) Math.ceil(fluid.getAmount() * 20d / FluidPackageItem.CAPACITY)));
-            appearance = new Appearance(extension.getStillTexture(fluid), extension.getTintColor(fluid), level);
+            appearance = new Appearance(item,extension.getStillTexture(fluid), extension.getTintColor(fluid), level);
         }
         var existing = VARIANTS.get(appearance);
         if (existing != null) return existing;
@@ -118,12 +126,12 @@ public final class FluidCanisterModel extends BakedModelWrapper<BakedModel> {
     }
 
     private static Variant create(Appearance appearance, ResourceLocation key) {
-        var model = new FluidCanisterModel(shell, appearance);
+        var model = new FluidCanisterModel(SHELLS.get(appearance.item()), appearance);
         // Standalone partials deliberately stay out of Flywheel's resource-file registration map.
         var partial = CanisterPartialModelAccessor.ccd$create(key);
         ((CanisterPartialModelAccessor) (Object) partial).ccd$setModel(model);
         AllPartialModels.PACKAGES.put(key, partial);
-        AllPartialModels.PACKAGE_RIGGING.put(key, AllPartialModels.PACKAGE_RIGGING.get(ITEM));
+        AllPartialModels.PACKAGE_RIGGING.put(key, AllPartialModels.PACKAGE_RIGGING.get(appearance.item()));
         var variant = new Variant(key, partial, model);
         VARIANTS.put(appearance, variant);
         return variant;

@@ -119,7 +119,13 @@ public final class CCDClient {
         var canister = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_package"), "inventory");
         var canisterModel = event.getModels().get(canister);
-        // Metal package shells use native static geometry, without the old canister window wrapper.
+        if(canisterModel!=null) event.getModels().put(canister,FluidCanisterModel.install(canister.id(),canisterModel));
+        for(var variant:dev.ccd.content.MetalPackages.VARIANTS) if(variant.material().equals("copper")) {
+            var location=new net.minecraft.client.resources.model.ModelResourceLocation(
+                ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID,variant.id()),"inventory");
+            var model=event.getModels().get(location);
+            if(model!=null) event.getModels().put(location,FluidCanisterModel.install(location.id(),model));
+        }
         var brassBox = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "composite_package"), "inventory");
         var brassBoxModel = event.getModels().get(brassBox);
