@@ -6,12 +6,13 @@ def save(p,d):p.write_text(json.dumps(d,indent=2)+'\n',encoding='utf-8')
 def plate(name,lo,hi,uv,texture):
     return {'name':name,'from':lo,'to':hi,'faces':{'up':{'texture':texture,'uv':uv}}}
 for powered in (False,True):
-    needle=([7.6,13.07,4.5],[8.4,13.07,8.5]) if powered else ([4.5,13.07,7.6],[8.5,13.07,8.4])
+    needle=([4.5,13.07,7.6],[8.5,13.07,8.4]) if powered else ([7.6,13.07,4.5],[8.4,13.07,8.5])
     model={'parent':'minecraft:block/block','ambientocclusion':False,'render_type':'minecraft:cutout_mipped',
            'textures':{'dial':'create:block/valve_open','needle':'create:block/industrial_iron_block','glass':'create:block/fluid_valve'},
            'elements':[plate('dial',[3,13.02,3],[13,13.02,13],[2,2,14,14],'#dial'),
                        plate('pointer',*needle,[0,0,4,1],'#needle'),
                        plate('glass',[3,13.10,3],[13,13.10,13],[1,1,7,7],'#glass')]}
+    model['elements'][0]['faces']['up']['rotation']=90
     save(ROOT/f'models/block/three_way_valve/dial_{"powered" if powered else "unpowered"}.json',model)
 path=ROOT/'blockstates/three_way_valve.json';states=json.loads(path.read_text())
 states['multipart']=[p for p in states['multipart'] if '/dial_' not in p['apply']['model']]
