@@ -7,8 +7,8 @@
   "textures": {
     "2": "create:block/fluid_valve",
     "3": "create:block/valve_open",
-    "4": "ccd:block/block_horizontal/lamp_on",
-    "particle": "ccd:block/block_horizontal/lamp_on"
+    "4": "ccd:block/block_horizontal/lamp_off",
+    "particle": "ccd:block/block_horizontal/lamp_off"
   },
   "elements": [
     {

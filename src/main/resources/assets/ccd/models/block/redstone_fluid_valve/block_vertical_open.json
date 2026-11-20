@@ -6,9 +6,9 @@
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "2": "create:block/fluid_valve",
-    "3": "ccd:block/block_horizontal/lamp_on",
+    "3": "ccd:block/block_horizontal/lamp_off",
     "4": "create:block/valve_open",
-    "particle": "ccd:block/block_horizontal/lamp_on"
+    "particle": "ccd:block/block_horizontal/lamp_off"
   },
   "elements": [
     {

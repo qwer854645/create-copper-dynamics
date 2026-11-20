@@ -31,7 +31,7 @@ public final class RedstoneFluidValveBlockEntity extends FluidValveBlockEntity {
     }
     private void drivePointer() {
         boolean powered = getBlockState().getValue(RedstoneFluidValveBlock.POWERED);
-        ((FluidValvePointerAccessor) (Object) this).ccd$getPointer().chase(powered ? 1 : 0, 1, Chaser.LINEAR);
+        ((FluidValvePointerAccessor) (Object) this).ccd$getPointer().chase(powered ? 0 : 1, 1, Chaser.LINEAR);
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         CCDTooltip.heading(tooltip, "ccd.gui.goggles.valve");

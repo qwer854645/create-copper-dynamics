@@ -198,7 +198,7 @@
   "block.ccd.fluid_transmitter.tooltip.summary": "_Transfers fluids_ between containers without rotational power.",
   "block.ccd.redstone_fluid_valve.tooltip.summary": "Controls fluid pipe connections using a _Redstone Signal_.",
   "block.ccd.redstone_fluid_valve.tooltip.condition1": "When Powered by Redstone",
-  "block.ccd.redstone_fluid_valve.tooltip.behaviour1": "_Opens_ the passage; closes without a signal. A pump is still required to move fluid.",
+  "block.ccd.redstone_fluid_valve.tooltip.behaviour1": "_Closes_ the passage; opens without a signal. A pump is still required to move fluid.",
   "block.ccd.three_way_valve.tooltip.summary": "Switches between two fluid connections using a _Redstone Signal_.",
   "block.ccd.faucet.tooltip.summary": "_Pours fluids_ from a container into the space below, without rotational power.",
   "block.ccd.smart_faucet.tooltip.summary": "_Pours selected fluids_ into containers or uses them for _Filling Items_ below.",

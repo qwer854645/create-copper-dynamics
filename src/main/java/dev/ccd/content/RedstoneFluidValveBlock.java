@@ -22,7 +22,7 @@ public final class RedstoneFluidValveBlock extends FluidValveBlock {
 
     public RedstoneFluidValveBlock(Properties properties) {
         super(properties);
-        registerDefaultState(defaultBlockState().setValue(POWERED, false));
+        registerDefaultState(defaultBlockState().setValue(POWERED, false).setValue(ENABLED, true));
         for(var state:getStateDefinition().getPossibleStates()) {
             var nativeShape=super.getShape(state,net.minecraft.world.level.EmptyBlockGetter.INSTANCE,BlockPos.ZERO,
                 net.minecraft.world.phys.shapes.CollisionContext.empty());
@@ -44,7 +44,7 @@ public final class RedstoneFluidValveBlock extends FluidValveBlock {
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
         boolean powered = context.getLevel().hasNeighborSignal(context.getClickedPos());
-        return super.getStateForPlacement(context).setValue(POWERED, powered).setValue(ENABLED, powered);
+        return super.getStateForPlacement(context).setValue(POWERED, powered).setValue(ENABLED, !powered);
     }
     @Override public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
         return false;

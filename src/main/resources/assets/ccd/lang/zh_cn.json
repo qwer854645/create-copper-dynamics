@@ -198,7 +198,7 @@
   "block.ccd.fluid_transmitter.tooltip.summary": "在容器之间_输送流体_，无需旋转动力。",
   "block.ccd.redstone_fluid_valve.tooltip.summary": "使用_红石信号_控制流体管道的通断。",
   "block.ccd.redstone_fluid_valve.tooltip.condition1": "接收红石信号时",
-  "block.ccd.redstone_fluid_valve.tooltip.behaviour1": "_开启_通路；信号消失时关闭。管路仍需泵提供输送压力。",
+  "block.ccd.redstone_fluid_valve.tooltip.behaviour1": "_关闭_通路；信号消失时开启。管路仍需泵提供输送压力。",
   "block.ccd.three_way_valve.tooltip.summary": "使用_红石信号_在两条流体通路之间切换。",
   "block.ccd.faucet.tooltip.summary": "将容器中的流体_倒入下方_，无需旋转动力。",
   "block.ccd.smart_faucet.tooltip.summary": "将选定的流体_倒入下方_，也可用于_物品注液_。",
