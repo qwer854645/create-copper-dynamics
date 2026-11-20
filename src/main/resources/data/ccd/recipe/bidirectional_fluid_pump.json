@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    {
+      "item": "create:mechanical_pump"
+    },
+    {
+      "item": "create:shaft"
+    },
+    {
+      "item": "create:copper_casing"
+    }
+  ],
+  "result": {
+    "id": "ccd:bidirectional_fluid_pump",
+    "count": 1
+  }
+}

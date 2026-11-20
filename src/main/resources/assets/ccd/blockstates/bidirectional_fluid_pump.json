@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "ccd:block/bidirectional_fluid_pump"
+    },
+    "facing=down": {
+      "model": "ccd:block/bidirectional_fluid_pump",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "ccd:block/bidirectional_fluid_pump",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "ccd:block/bidirectional_fluid_pump",
+      "x": 270
+    },
+    "facing=east": {
+      "model": "ccd:block/bidirectional_fluid_pump",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "ccd:block/bidirectional_fluid_pump",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

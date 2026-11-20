@@ -23,6 +23,7 @@
     "ccd:horizontal_smart_fluid_tank",
     "ccd:fluid_repackager",
     "ccd:redstone_fluid_pump",
-    "ccd:turning_booster_pump"
+    "ccd:turning_booster_pump",
+    "ccd:bidirectional_fluid_pump"
   ]
 }

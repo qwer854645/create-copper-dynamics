@@ -380,5 +380,7 @@
   "block.ccd.redstone_fluid_pump": "Redstone Fluid Pump",
   "block.ccd.redstone_fluid_pump.tooltip.summary": "Pumps fluids using rotational power. A _Redstone Signal_ reverses the flow.",
   "block.ccd.turning_booster_pump": "Turning Booster Pump",
-  "block.ccd.turning_booster_pump.tooltip.summary": "Turns fluid flow through a _Right Angle_, retaining the Booster Pump’s performance."
+  "block.ccd.turning_booster_pump.tooltip.summary": "Turns fluid flow through a _Right Angle_, retaining the Booster Pump’s performance.",
+  "block.ccd.bidirectional_fluid_pump": "Bidirectional Fluid Pump",
+  "block.ccd.bidirectional_fluid_pump.tooltip.summary": "Pumps fluids using rotational power. The _Direction of Rotation_ determines the flow direction."
 }

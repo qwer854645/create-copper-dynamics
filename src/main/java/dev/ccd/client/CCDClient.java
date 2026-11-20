@@ -66,6 +66,7 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.THREE_WAY_VALVE_BE.get(), ThreeWayValveRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_GAUGE_BE.get(), FactoryPanelRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.BOOSTER_PUMP_BE.get(), BoosterPumpRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.BIDIRECTIONAL_FLUID_PUMP_BE.get(), BidirectionalFluidPumpRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.TURNING_BOOSTER_PUMP_BE.get(), BoosterPumpRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.REDSTONE_FLUID_PUMP_BE.get(), RedstoneFluidPumpRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_TRANSMITTER_BE.get(), SmartBlockEntityRenderer::new);
