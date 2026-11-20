@@ -39,11 +39,15 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform.Sided() {
             @Override protected Vec3 getSouthLocation() { return new Vec3(.5, .5, 1); }
+            @Override public float getScale() { return .25f; }
             @Override public Vec3 getLocalOffset(net.minecraft.world.level.LevelAccessor level,BlockPos pos,BlockState state) {
-                // The reserved filter area is centered on the large rear half,
-                // not at the center of the whole block.
-                return super.getLocalOffset(level,pos,state).add(Vec3.atLowerCornerOf(
-                    state.getValue(FluidTransmitterBlock.FACING).getOpposite().getNormal()).scale(.25));
+                // Housing spans local z=8..16. The reserved UV rectangle is
+                // x=4..12, y=2..6: center z=12, with four pixels of depth.
+                // Use the actual face normal for every side, including vertical faces.
+                return new Vec3(.5, .5, .5)
+                    .add(Vec3.atLowerCornerOf(getSide().getNormal()).scale(8.5 / 16))
+                    .add(Vec3.atLowerCornerOf(state.getValue(FluidTransmitterBlock.FACING)
+                        .getOpposite().getNormal()).scale(4.0 / 16));
             }
             @Override protected boolean isSideActive(BlockState state, Direction side) {
                 return side.getAxis() != state.getValue(FluidTransmitterBlock.FACING).getAxis();
