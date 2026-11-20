@@ -1,0 +1,6 @@
+{
+  "parent": "ccd:block/fluid_transmitter",
+  "textures": {
+    "side": "ccd:block/fluid_transmitter/side_powered"
+  }
+}
