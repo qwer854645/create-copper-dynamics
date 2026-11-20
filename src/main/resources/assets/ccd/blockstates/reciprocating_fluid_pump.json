@@ -1,55 +1,25 @@
 {
-  "multipart": [
-    {
-      "when": {
-        "facing": "north"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body"
-      }
+  "variants": {
+    "facing=north": {
+      "model": "ccd:block/piston_fluid_pump/body"
     },
-    {
-      "when": {
-        "facing": "east"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body",
-        "y": 90
-      }
+    "facing=east": {
+      "model": "ccd:block/piston_fluid_pump/body",
+      "y": 90
     },
-    {
-      "when": {
-        "facing": "south"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body",
-        "y": 180
-      }
+    "facing=south": {
+      "model": "ccd:block/piston_fluid_pump/body",
+      "y": 180
     },
-    {
-      "when": {
-        "facing": "west"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body",
-        "y": 270
-      }
+    "facing=west": {
+      "model": "ccd:block/piston_fluid_pump/body",
+      "y": 270
     },
-    {
-      "when": {
-        "facing": "up"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body"
-      }
+    "facing=up": {
+      "model": "ccd:block/piston_fluid_pump/body"
     },
-    {
-      "when": {
-        "facing": "down"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body"
-      }
+    "facing=down": {
+      "model": "ccd:block/piston_fluid_pump/body"
     }
-  ]
+  }
 }

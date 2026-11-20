@@ -9,6 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
     public float previousStroke,stroke;
     private double phase;
+    private double previousPhase;
+    public double visualPhase(float partialTicks) { return previousPhase+(phase-previousPhase)*partialTicks; }
     public ReciprocatingFluidPumpBlockEntity(BlockPos pos,BlockState state) { this(CopperDynamics.RECIPROCATING_PUMP_BE.get(),pos,state); }
     protected ReciprocatingFluidPumpBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
     public float pumpingSpeed() { return getSpeed(); }
@@ -24,8 +26,9 @@ public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
         super.tick();
         if(level!=null&&(level.isClientSide()||isVirtual())) {
             previousStroke=stroke;
+            previousPhase=phase;
             if(pumpingSpeed()!=0&&!isOverStressed()&&targetFlow()>0&&targetRange()>0) {
-                phase=(phase+strokePhaseStep())%(Math.PI*2);
+                phase+=strokePhaseStep();
                 stroke=(float)((1-Math.cos(phase))*.5);
             } else stroke+=(0-stroke)*.25f;
         }
