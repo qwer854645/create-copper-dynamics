@@ -30,6 +30,8 @@
     "defaultRequire": 1
   },
   "client": [
+    "FluidArmCutoutMixin",
+    "FluidRepackagerCutoutMixin",
     "MobileTickerAmountMixin",
     "CourierJeiTransferMixin",
     "PhantomJeiTransferMixin",

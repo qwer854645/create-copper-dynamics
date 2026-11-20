@@ -19,7 +19,18 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
     }
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-        behaviours.add(filtering = new FilteringBehaviour(this, new HatchFilterSlot()).forFluids());
+        behaviours.add(filtering = new FilteringBehaviour(this, new HatchFilterSlot() {
+            @Override public net.minecraft.world.phys.Vec3 getLocalOffset(net.minecraft.world.level.LevelAccessor level,
+                BlockPos pos,BlockState state) {
+                // Imported bezel moved in its local tilted plane; rotate the same
+                // displacement with the hatch's native horizontal orientation.
+                var delta=net.createmod.catnip.math.VecHelper.rotate(
+                    new net.minecraft.world.phys.Vec3(-.14/16,-2.30/16,.90/16),
+                    net.createmod.catnip.math.AngleHelper.horizontalAngle(state.getValue(FluidHatchBlock.FACING)),
+                    net.minecraft.core.Direction.Axis.Y);
+                return super.getLocalOffset(level,pos,state).add(delta);
+            }
+        }).forFluids());
     }
     @Override public void clearContent() { filtering.setFilter(ItemStack.EMPTY); }
     @Override protected boolean acceptsFluid(FluidStack fluid) {

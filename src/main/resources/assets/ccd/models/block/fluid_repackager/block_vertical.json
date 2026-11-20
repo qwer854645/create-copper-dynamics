@@ -1,0 +1,5 @@
+{
+  "parent": "create:block/repackager/block_vertical",
+  "render_type": "minecraft:cutout_mipped",
+  "ambientocclusion": false
+}
