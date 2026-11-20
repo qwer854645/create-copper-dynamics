@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
 public final class PistonPumpRenderer extends SafeBlockEntityRenderer<ReciprocatingFluidPumpBlockEntity> {
-    private static final PartialModel PISTON=part("piston"),CRANK=part("crank"),LINK=part("link");
+    private static final PartialModel PISTON=part("piston");
     private static PartialModel part(String name){return PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/piston_fluid_pump/"+name));}
     public static void registerModels(){}
     public PistonPumpRenderer(BlockEntityRendererProvider.Context context){}
@@ -28,12 +28,8 @@ public final class PistonPumpRenderer extends SafeBlockEntityRenderer<Reciprocat
         pose.pushPose();pose.translate(.5,.5,.5);
         float yaw=switch(facing){case EAST->-90;case SOUTH->180;case WEST->90;default->0;};
         pose.mulPose(Axis.YP.rotationDegrees(yaw));pose.translate(-.5,-.5,-.5);
-        double angle=be.visualPhase(pt),radius=2;
-        double pinY=8+radius*Math.sin(angle),pinZ=13-radius*Math.cos(angle);
-        double slider=pinZ-Math.sqrt(16-Math.pow(pinY-8,2));
-        pose.pushPose();pose.translate(0,0,(slider-7)/16);draw(PISTON,be,pose,buffers,light);pose.popPose();
-        pose.pushPose();pose.translate(8/16d,8/16d,13/16d);pose.mulPose(Axis.XP.rotation((float)angle));pose.translate(-8/16d,-8/16d,-13/16d);draw(CRANK,be,pose,buffers,light);pose.popPose();
-        pose.pushPose();pose.translate(14.35/16,8/16d,slider/16);pose.mulPose(Axis.XP.rotation((float)-Math.asin((pinY-8)/4)));pose.translate(-14.35/16,-8/16d,-7/16d);draw(LINK,be,pose,buffers,light);pose.popPose();
+        double offset=Math.sin(be.visualPhase(pt))*.6/16;
+        pose.pushPose();pose.translate(0,0,offset);draw(PISTON,be,pose,buffers,light);pose.popPose();
         pose.popPose();
         var axis=((ReciprocatingFluidPumpBlock)state.getBlock()).getRotationAxis(state);
         for(var side:Direction.values())if(side.getAxis()==axis)KineticBlockEntityRenderer.standardKineticRotationTransform(CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF,state,side),be,light).renderInto(pose,buffers.getBuffer(RenderType.solid()));
