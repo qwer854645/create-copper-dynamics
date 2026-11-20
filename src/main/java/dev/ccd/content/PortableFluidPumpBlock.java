@@ -10,6 +10,10 @@ import net.minecraft.world.InteractionResult;
 
 public final class PortableFluidPumpBlock extends ReciprocatingFluidPumpBlock {
     public PortableFluidPumpBlock(Properties properties) { super(properties); }
+    @Override public BlockState getRotatedBlockState(BlockState state,net.minecraft.core.Direction clickedFace) {
+        // Bellows stays upright: rotate the horizontal fluid/shaft axes together.
+        return state.setValue(FACING,state.getValue(FACING).getClockWise());
+    }
     @Override public net.minecraft.world.level.block.entity.BlockEntityType<? extends com.simibubi.create.content.fluids.pump.PumpBlockEntity> getBlockEntityType() {
         return CopperDynamics.PORTABLE_PUMP_BE.get();
     }

@@ -25,7 +25,10 @@ public class PortablePumpTests {
                 h.assertTrue(pump.calculateAddedStressCapacity()>pump.calculateStressApplied(),"No spare capacity for external devices");
                 var state=pump.getBlockState();
                 var flipped=CopperDynamics.PORTABLE_PUMP.get().getRotatedBlockState(state,Direction.UP);
-                h.assertTrue(flipped.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING)==state.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING).getOpposite(),"Wrench did not reverse flow");
+                h.assertTrue(flipped.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING)==state.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING).getClockWise(),"Wrench did not rotate body");
+                h.assertTrue(!pump.isPullingOnSide(true),"Positive speed must push at front");
+                pump.turn(true);
+                h.assertTrue(pump.getGeneratedSpeed()==-32&&pump.isPullingOnSide(true),"Sneaking must reverse shaft and flow");
                 h.runAfterDelay(12,()->{
                     h.assertTrue(shaft.getSpeed()==0,"Manual source did not stop");h.succeed();
                 });

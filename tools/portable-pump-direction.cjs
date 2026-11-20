@@ -6,8 +6,7 @@ const root=path.resolve(__dirname,'../src/main/resources/assets/ccd');
 const body=model('ccd:block/reciprocating_fluid_pump/body');
 body.textures.native_pump='create:block/pump';
 const old=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../outputs/booster-pump-revision/backup/models/block/booster_pump.json'),'utf8'));
-const arrows=old.elements.filter(e=>e.name?.startsWith('native_pump_mark_')&&/(east|west)$/.test(e.name))
- .map(e=>turn(e,[[1,0,0],[0,0,-1],[0,1,0]]));
+const arrows=[]; // Portable pump follows shaft direction; no fixed flow arrows.
 // Fit the arrows to the sides of the low base rather than over the bellows.
 for(const e of arrows)for(const p of [e.from,e.to])p[1]-=2;
 body.elements=[...body.elements,...arrows];

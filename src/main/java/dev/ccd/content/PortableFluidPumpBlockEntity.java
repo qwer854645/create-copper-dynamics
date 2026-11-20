@@ -15,6 +15,15 @@ public final class PortableFluidPumpBlockEntity extends ReciprocatingFluidPumpBl
     @Override public int targetFlow() { return CCDConfig.portableFlow(); }
     @Override public int targetRange() { return CCDConfig.PORTABLE_RANGE.get(); }
     @Override public float pumpingSpeed() { return getSpeed(); }
+    @Override public boolean isPullingOnSide(boolean front) {
+        return super.isPullingOnSide(front)^(pumpingSpeed()<0);
+    }
+    @Override public void onSpeedChanged(float previousSpeed) {
+        super.onSpeedChanged(previousSpeed);
+        // Native pump skips reversals when the absolute RPM is unchanged.
+        if(level!=null&&!level.isClientSide()&&previousSpeed!=getSpeed()
+            &&Math.abs(previousSpeed)==Math.abs(getSpeed()))updatePressureChange();
+    }
     @Override protected double strokePhaseStep() {
         // The old 256 RPM cadence is the new low-speed baseline. Compress the
         // upper range to keep complete strokes readable rather than aliasing.
