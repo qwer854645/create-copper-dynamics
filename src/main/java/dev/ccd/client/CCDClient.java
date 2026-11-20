@@ -40,6 +40,7 @@ public final class CCDClient {
         FluidArmModels.registerModels();
         SmartFluidTankModels.registerModels();
         RedstoneFluidValveRenderer.registerModels();
+        ThreeWayValveRenderer.registerModels();
         registerPackageModel("fluid_package");
         registerPackageModel("fluid_arm_cargo");
         registerPackageModel("composite_package");
@@ -60,7 +61,8 @@ public final class CCDClient {
 
     @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_PACKAGER_BE.get(), FluidPackagerRenderer::new);
-        event.registerBlockEntityRenderer(CopperDynamics.FLUID_REPACKAGER_BE.get(), com.simibubi.create.content.logistics.packager.PackagerRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.FLUID_REPACKAGER_BE.get(), FluidPackagerRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.THREE_WAY_VALVE_BE.get(), ThreeWayValveRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_GAUGE_BE.get(), FactoryPanelRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.BOOSTER_PUMP_BE.get(), BoosterPumpRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_TRANSMITTER_BE.get(), SmartBlockEntityRenderer::new);

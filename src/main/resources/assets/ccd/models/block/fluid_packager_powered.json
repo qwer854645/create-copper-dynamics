@@ -1,0 +1,6 @@
+{
+  "parent": "ccd:block/fluid_packager",
+  "textures": {
+    "2": "ccd:block/fluid_packager/packager_horizontal_powered"
+  }
+}

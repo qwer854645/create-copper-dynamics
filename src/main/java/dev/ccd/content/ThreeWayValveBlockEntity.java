@@ -17,6 +17,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 /** Native pipe flow metadata only: no owned liquid, tank capability or independent transfer tick. */
 public final class ThreeWayValveBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
+    public final net.createmod.catnip.animation.LerpedFloat dial=net.createmod.catnip.animation.LerpedFloat.linear().startWithValue(0);
     public ThreeWayValveBlockEntity(BlockPos pos, BlockState state) {
         super(CopperDynamics.THREE_WAY_VALVE_BE.get(), pos, state);
     }
@@ -33,9 +34,18 @@ public final class ThreeWayValveBlockEntity extends SmartBlockEntity implements 
     }
     @Override public void initialize() {
         super.initialize();
+        dial.startWithValue(getBlockState().getValue(ThreeWayValveBlock.POWERED)?1:0);
         if (level != null && !level.isClientSide()) {
             ThreeWayValveBlock.updateSignal(level, worldPosition);
             level.scheduleTick(worldPosition, getBlockState().getBlock(), 1);
+        }
+    }
+    @Override public void tick() {
+        super.tick();
+        if(level!=null && (level.isClientSide() || isVirtual())) {
+            dial.chase(getBlockState().getValue(ThreeWayValveBlock.POWERED)?1:0,.25,
+                net.createmod.catnip.animation.LerpedFloat.Chaser.EXP);
+            dial.tickChaser();
         }
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
