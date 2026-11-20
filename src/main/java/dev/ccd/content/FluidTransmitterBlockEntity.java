@@ -43,15 +43,33 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
                 // Housing spans local z=8..16. The reserved UV rectangle is
                 // x=4..12, y=2..6: center z=12, with four pixels of depth.
                 // Use the actual face normal for every side, including vertical faces.
-                return new Vec3(.5, .5, .5)
-                    .add(Vec3.atLowerCornerOf(getSide().getNormal()).scale(8.5 / 16))
-                    .add(Vec3.atLowerCornerOf(state.getValue(FluidTransmitterBlock.FACING)
-                        .getOpposite().getNormal()).scale(4.0 / 16));
+                return filterCenter(state, getSide());
+            }
+            @Override public boolean testHit(net.minecraft.world.level.LevelAccessor level, BlockPos pos,
+                BlockState state, Vec3 hit) {
+                // Resolve the surface from the actual hit, not Sided's mutable rendering side.
+                // The small outlet half must never activate the filter, even at its seam.
+                Vec3 rear = Vec3.atLowerCornerOf(state.getValue(FluidTransmitterBlock.FACING).getOpposite().getNormal());
+                Vec3 centered = hit.subtract(.5, .5, .5);
+                if (centered.dot(rear) < 0) return false;
+                for (Direction side : Direction.values()) {
+                    if (!isSideActive(state, side)) continue;
+                    Vec3 normal = Vec3.atLowerCornerOf(side.getNormal());
+                    if (Math.abs(centered.dot(normal) - .5) > 1.0 / 16) continue;
+                    if (hit.distanceTo(filterCenter(state, side)) < getScale() / 2) return true;
+                }
+                return false;
             }
             @Override protected boolean isSideActive(BlockState state, Direction side) {
                 return side.getAxis() != state.getValue(FluidTransmitterBlock.FACING).getAxis();
             }
         }).forFluids());
+    }
+    public static Vec3 filterCenter(BlockState state, Direction side) {
+        return new Vec3(.5, .5, .5)
+            .add(Vec3.atLowerCornerOf(side.getNormal()).scale(8.5 / 16))
+            .add(Vec3.atLowerCornerOf(state.getValue(FluidTransmitterBlock.FACING)
+                .getOpposite().getNormal()).scale(4.0 / 16));
     }
     private Direction front() { return getBlockState().getValue(FluidTransmitterBlock.FACING); }
     private boolean paused() { return getBlockState().getValue(FluidTransmitterBlock.POWERED); }
