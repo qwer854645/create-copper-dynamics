@@ -21,6 +21,7 @@ abstract class BoosterPumpPressureMixin {
     @Redirect(method = "distributePressureTo", at = @At(value = "INVOKE", target = "Ljava/lang/Math;abs(F)F"))
     private float ccd$boosterPressure(float rpm) {
         float original = Math.abs(rpm);
+        if ((Object)this instanceof dev.ccd.content.ReciprocatingFluidPumpBlockEntity pump) return pump.flowPressure();
         return (Object) this instanceof BoosterPumpBlockEntity
             ? original * CCDConfig.PUMP_PRESSURE_MULTIPLIER.get().floatValue() : original;
     }

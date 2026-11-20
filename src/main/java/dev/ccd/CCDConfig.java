@@ -12,6 +12,7 @@ public final class CCDConfig {
     public static final ModConfigSpec.IntValue SMART_TANK_MAX_FLUIDS;
     public static final ModConfigSpec.IntValue WATER_SUPPLY_RATE;
     public static final ModConfigSpec.IntValue ATOMIZER_NORMAL_COST, ATOMIZER_POTION_COST;
+    public static final ModConfigSpec.IntValue RECIPROCATING_MIN_FLOW, RECIPROCATING_MAX_FLOW;
 
     static {
         var builder = new ModConfigSpec.Builder();
@@ -54,6 +55,13 @@ public final class CCDConfig {
             .translation("ccd.configuration.atomizer.potionConsumption")
             .worldRestart().defineInRange("potionConsumption", 25, 1, 4000);
         builder.pop();
+        builder.push("reciprocatingPump");
+        RECIPROCATING_MIN_FLOW = builder.comment("Target flow in mB/t at redstone strength 0. Requires rotational power.")
+            .worldRestart().defineInRange("minimumFlow", 0, 0, 1000000);
+        RECIPROCATING_MAX_FLOW = builder.comment("Target flow in mB/t at strength 15; intermediate strengths interpolate linearly.",
+            "Native pipe branches and endpoint capacity may reduce actual flow. Endpoints are sorted if minimum exceeds maximum.")
+            .worldRestart().defineInRange("maximumFlow", 128, 0, 1000000);
+        builder.pop();
         SPEC = builder.build();
     }
 
@@ -62,4 +70,11 @@ public final class CCDConfig {
     }
 
     private CCDConfig() {}
+    public static int reciprocatingFlow(int signal) {
+        return interpolateFlow(RECIPROCATING_MIN_FLOW.get(), RECIPROCATING_MAX_FLOW.get(), signal);
+    }
+    public static int interpolateFlow(int first, int second, int signal) {
+        int low=Math.min(first,second),high=Math.max(first,second);
+        return (int)(low+Math.round((high-(long)low)*Math.clamp(signal,0,15)/15.0));
+    }
 }

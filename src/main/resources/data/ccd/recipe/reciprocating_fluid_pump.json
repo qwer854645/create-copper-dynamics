@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "create:mechanical_pump"
+    },
+    {
+      "item": "create:copper_casing"
+    },
+    {
+      "item": "create:belt_connector"
+    },
+    {
+      "item": "create:electron_tube"
+    }
+  ],
+  "result": {
+    "id": "ccd:reciprocating_fluid_pump",
+    "count": 1
+  }
+}
