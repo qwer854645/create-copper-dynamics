@@ -27,7 +27,8 @@
             2,
             14
           ],
-          "texture": "#shaft_face"
+          "texture": "#shaft_face",
+          "rotation": 0
         },
         "south": {
           "uv": [
@@ -36,7 +37,8 @@
             14,
             14
           ],
-          "texture": "#shaft_face"
+          "texture": "#shaft_face",
+          "rotation": 0
         },
         "east": {
           "uv": [
@@ -45,7 +47,8 @@
             2,
             14
           ],
-          "texture": "#body"
+          "texture": "#body",
+          "rotation": 0
         },
         "west": {
           "uv": [
@@ -54,7 +57,8 @@
             14,
             14
           ],
-          "texture": "#body"
+          "texture": "#body",
+          "rotation": 0
         },
         "up": {
           "uv": [
@@ -63,7 +67,8 @@
             14,
             14
           ],
-          "texture": "#body"
+          "texture": "#body",
+          "rotation": 0
         },
         "down": {
           "uv": [
@@ -72,7 +77,8 @@
             14,
             2
           ],
-          "texture": "#body"
+          "texture": "#body",
+          "rotation": 0
         }
       }
     },
@@ -105,7 +111,8 @@
             8,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         },
         "east": {
           "uv": [
@@ -114,7 +121,8 @@
             8,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         },
         "south": {
           "uv": [
@@ -123,7 +131,8 @@
             4,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         },
         "west": {
           "uv": [
@@ -132,7 +141,8 @@
             4,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         }
       }
     },
@@ -241,7 +251,8 @@
             8,
             8
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         },
         "east": {
           "uv": [
@@ -250,7 +261,8 @@
             8,
             8
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         },
         "south": {
           "uv": [
@@ -259,7 +271,8 @@
             4,
             8
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         },
         "west": {
           "uv": [
@@ -268,7 +281,8 @@
             4,
             8
           ],
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 0
         }
       }
     },
@@ -353,12 +367,12 @@
       "from": [
         2,
         2,
-        1.99
+        1.9900000000000002
       ],
       "to": [
         14,
         4,
-        1.99
+        1.9900000000000002
       ],
       "faces": {
         "north": {
@@ -426,12 +440,12 @@
     {
       "name": "native_pump_mark_inlet_west",
       "from": [
-        1.99,
+        1.9900000000000002,
         2,
         2
       ],
       "to": [
-        1.99,
+        1.9900000000000002,
         4,
         14
       ],
@@ -453,12 +467,12 @@
       "from": [
         2,
         12,
-        1.99
+        1.9900000000000002
       ],
       "to": [
         14,
         14,
-        1.99
+        1.9900000000000002
       ],
       "faces": {
         "north": {
@@ -526,12 +540,12 @@
     {
       "name": "native_pump_mark_outlet_west",
       "from": [
-        1.99,
+        1.9900000000000002,
         12,
         2
       ],
       "to": [
-        1.99,
+        1.9900000000000002,
         14,
         14
       ],

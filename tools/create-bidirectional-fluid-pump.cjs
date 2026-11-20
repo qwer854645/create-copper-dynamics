@@ -46,4 +46,5 @@ async function main(){
  const text=Buffer.from('<svg width="1000" height="580" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="500" y="35" font-size="26">双向动力泵 · 直通管口 / 双轴接口</text><text x="500" y="560" font-size="18">旋转方向决定流向 · 去除一对传动轴及轴孔</text></g></svg>');
  await sharp({create:{width:1000,height:580,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:text,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  console.log('Generated bidirectional pump resources and preview; existing textures unchanged.');
+ require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'consolidate-direction-models.cjs'),process.argv[2]],{stdio:'inherit'});
 }main().catch(e=>{console.error(e);process.exitCode=1;});

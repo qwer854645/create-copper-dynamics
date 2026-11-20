@@ -24,3 +24,4 @@ for(const [facing,front]of Object.entries(vectors)){
  }
 }
 save('blockstates/three_way_valve.json',states);
+require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'consolidate-direction-models.cjs'),process.argv[2]],{stdio:'inherit'});

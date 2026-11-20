@@ -82,6 +82,7 @@ async function main(){
  const text=Buffer.from('<svg width="1500" height="585" xmlns="http://www.w3.org/2000/svg"><g font-family="Microsoft YaHei,sans-serif" text-anchor="middle" fill="#303535"><text x="750" y="35" font-size="26">转向增压泵 · 直角双管口 / 同平面双传动轴</text><text x="250" y="565" font-size="18">两个流体口</text><text x="750" y="565" font-size="18">封闭侧面</text><text x="1250" y="565" font-size="18">两个传动轴接口</text></g></svg>');
  await sharp({create:{width:1500,height:585,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:text,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  console.log('Generated 24 orientations and preview; existing textures unchanged.');
+ require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'consolidate-direction-models.cjs'),process.argv[2]],{stdio:'inherit'});
 }
 module.exports={turn,cross,vectors};
 if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1;});
