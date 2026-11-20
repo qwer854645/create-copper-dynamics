@@ -15,6 +15,13 @@ public final class PortableFluidPumpBlockEntity extends ReciprocatingFluidPumpBl
     @Override public int targetFlow() { return CCDConfig.portableFlow(); }
     @Override public int targetRange() { return CCDConfig.PORTABLE_RANGE.get(); }
     @Override public float pumpingSpeed() { return getSpeed(); }
+    @Override protected double strokePhaseStep() {
+        // The old 256 RPM cadence is the new low-speed baseline. Compress the
+        // upper range to keep complete strokes readable rather than aliasing.
+        double cyclesPerSecond=Math.min(3,Math.max(256/(120*Math.PI),
+            256/(120*Math.PI)*Math.sqrt(Math.abs(pumpingSpeed())/4.0)));
+        return cyclesPerSecond*Math.PI*2/20;
+    }
     @Override public float getGeneratedSpeed() { return manualTicks>0?(backwards?-32:32):0; }
     public void updateHandRotation() {
         if(level==null||level.isClientSide())return;

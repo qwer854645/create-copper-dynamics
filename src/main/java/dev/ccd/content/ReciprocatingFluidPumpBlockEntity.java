@@ -12,6 +12,7 @@ public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
     public ReciprocatingFluidPumpBlockEntity(BlockPos pos,BlockState state) { this(CopperDynamics.RECIPROCATING_PUMP_BE.get(),pos,state); }
     protected ReciprocatingFluidPumpBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
     public float pumpingSpeed() { return getSpeed(); }
+    protected double strokePhaseStep() { return Math.abs(pumpingSpeed())/1200.0; }
     public int targetFlow() { return CCDConfig.reciprocatingFlow(getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL)); }
     public int targetRange() { return CCDConfig.reciprocatingRange(getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL)); }
     public float flowPressure() { return pumpingSpeed()==0||isOverStressed()||targetRange()==0?0:targetFlow()*2f; }
@@ -24,7 +25,7 @@ public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
         if(level!=null&&(level.isClientSide()||isVirtual())) {
             previousStroke=stroke;
             if(pumpingSpeed()!=0&&!isOverStressed()&&targetFlow()>0&&targetRange()>0) {
-                phase=(phase+Math.abs(pumpingSpeed())/1200.0)%(Math.PI*2);
+                phase=(phase+strokePhaseStep())%(Math.PI*2);
                 stroke=(float)((1-Math.cos(phase))*.5);
             } else stroke+=(0-stroke)*.25f;
         }
