@@ -11,7 +11,8 @@ public final class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
     private double phase;
     public ReciprocatingFluidPumpBlockEntity(BlockPos pos,BlockState state) { super(CopperDynamics.RECIPROCATING_PUMP_BE.get(),pos,state); }
     public int targetFlow() { return CCDConfig.reciprocatingFlow(getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL)); }
-    public float flowPressure() { return getSpeed()==0||isOverStressed()?0:targetFlow()*2f; }
+    public int targetRange() { return CCDConfig.reciprocatingRange(getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL)); }
+    public float flowPressure() { return getSpeed()==0||isOverStressed()||targetRange()==0?0:targetFlow()*2f; }
     @Override protected void distributePressureTo(net.minecraft.core.Direction side) {
         if(flowPressure()>0)super.distributePressureTo(side);
     }
@@ -20,7 +21,7 @@ public final class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
         super.tick();
         if(level!=null&&(level.isClientSide()||isVirtual())) {
             previousStroke=stroke;
-            if(getSpeed()!=0&&!isOverStressed()&&targetFlow()>0) {
+            if(getSpeed()!=0&&!isOverStressed()&&targetFlow()>0&&targetRange()>0) {
                 phase=(phase+Math.abs(getSpeed())/1200.0)%(Math.PI*2);
                 stroke=(float)((1-Math.cos(phase))*.5);
             } else stroke+=(0-stroke)*.25f;
@@ -31,6 +32,8 @@ public final class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
         tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.flow",getSpeed()==0||isOverStressed()?0:targetFlow())
             .withStyle(net.minecraft.ChatFormatting.AQUA));
         tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.signal",getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL))
+            .withStyle(net.minecraft.ChatFormatting.GRAY));
+        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.range",targetRange())
             .withStyle(net.minecraft.ChatFormatting.GRAY));
         return true;
     }

@@ -38,7 +38,8 @@ async function main(){
   data['block.ccd.reciprocating_fluid_pump']=locale==='zh_cn'?'复进流体泵':'Reciprocating Fluid Pump';
   data['ccd.reciprocating.flow']=locale==='zh_cn'?'目标流速：%s mB/t':'Target flow: %s mB/t';
   data['ccd.reciprocating.signal']=locale==='zh_cn'?'红石强度：%s / 15':'Redstone strength: %s / 15';
-  data['block.ccd.reciprocating_fluid_pump.tooltip.summary']=locale==='zh_cn'?'使用旋转动力泵送流体，_红石信号强度_按比例设定流量。':'Pumps fluids using rotational power. _Redstone Signal Strength_ proportionally sets the flow rate.';
+  data['ccd.reciprocating.range']=locale==='zh_cn'?'单侧输送距离：%s 格':'Pumping range per side: %s blocks';
+  data['block.ccd.reciprocating_fluid_pump.tooltip.summary']=locale==='zh_cn'?'使用旋转动力泵送流体，_红石信号强度_按比例设定流量与距离。':'Pumps fluids using rotational power. _Redstone Signal Strength_ proportionally sets flow rate and range.';
   save(rel,data);
  }
  const output='outputs/reciprocating-fluid-pump';fs.mkdirSync(output,{recursive:true});

@@ -12,6 +12,7 @@ abstract class BoosterPumpDiscoveryMixin {
     @Redirect(method = "propagateChangedPipe", at = @At(value = "INVOKE",
         target = "Lcom/simibubi/create/content/fluids/FluidPropagator;getPumpRange()I"))
     private static int ccd$extendedPumpDiscovery() {
-        return CCDConfig.boosterRange(FluidPropagator.getPumpRange());
+        return Math.max(CCDConfig.boosterRange(FluidPropagator.getPumpRange()),
+            Math.max(CCDConfig.RECIPROCATING_MIN_RANGE.get(), CCDConfig.RECIPROCATING_MAX_RANGE.get()));
     }
 }

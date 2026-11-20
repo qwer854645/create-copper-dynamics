@@ -15,6 +15,7 @@ abstract class BoosterPumpPressureMixin {
         target = "Lcom/simibubi/create/content/fluids/FluidPropagator;getPumpRange()I"))
     private int ccd$boosterRange() {
         int original = FluidPropagator.getPumpRange();
+        if ((Object)this instanceof dev.ccd.content.ReciprocatingFluidPumpBlockEntity pump) return pump.targetRange();
         return (Object) this instanceof BoosterPumpBlockEntity ? CCDConfig.boosterRange(original) : original;
     }
 

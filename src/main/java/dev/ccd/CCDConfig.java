@@ -13,6 +13,7 @@ public final class CCDConfig {
     public static final ModConfigSpec.IntValue WATER_SUPPLY_RATE;
     public static final ModConfigSpec.IntValue ATOMIZER_NORMAL_COST, ATOMIZER_POTION_COST;
     public static final ModConfigSpec.IntValue RECIPROCATING_MIN_FLOW, RECIPROCATING_MAX_FLOW;
+    public static final ModConfigSpec.IntValue RECIPROCATING_MIN_RANGE, RECIPROCATING_MAX_RANGE;
 
     static {
         var builder = new ModConfigSpec.Builder();
@@ -61,6 +62,10 @@ public final class CCDConfig {
         RECIPROCATING_MAX_FLOW = builder.comment("Target flow in mB/t at strength 15; intermediate strengths interpolate linearly.",
             "Native pipe branches and endpoint capacity may reduce actual flow. Endpoints are sorted if minimum exceeds maximum.")
             .worldRestart().defineInRange("maximumFlow", 128, 0, 1000000);
+        RECIPROCATING_MIN_RANGE = builder.comment("Pipe search distance on each side at redstone strength 0, in blocks.")
+            .worldRestart().defineInRange("minimumRange", 0, 0, 256);
+        RECIPROCATING_MAX_RANGE = builder.comment("Pipe search distance on each side at strength 15. Intermediate strengths interpolate linearly.")
+            .worldRestart().defineInRange("maximumRange", 32, 0, 256);
         builder.pop();
         SPEC = builder.build();
     }
@@ -72,6 +77,9 @@ public final class CCDConfig {
     private CCDConfig() {}
     public static int reciprocatingFlow(int signal) {
         return interpolateFlow(RECIPROCATING_MIN_FLOW.get(), RECIPROCATING_MAX_FLOW.get(), signal);
+    }
+    public static int reciprocatingRange(int signal) {
+        return interpolateFlow(RECIPROCATING_MIN_RANGE.get(), RECIPROCATING_MAX_RANGE.get(), signal);
     }
     public static int interpolateFlow(int first, int second, int signal) {
         int low=Math.min(first,second),high=Math.max(first,second);
