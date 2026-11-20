@@ -1,0 +1,7 @@
+{
+  "parent": "ccd:block/redstone_fluid_valve/block_vertical_open",
+  "textures": {
+    "3": "ccd:block/block_horizontal/lamp_off",
+    "particle": "ccd:block/block_horizontal/lamp_off"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
+  "textures": {
+    "4": "ccd:block/block_horizontal/lamp_off"
+  }
+}

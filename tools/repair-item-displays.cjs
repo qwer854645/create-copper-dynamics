@@ -23,8 +23,8 @@ async function main(){
  // A single static pointer pair matches the runtime unpowered/open position.
  const pointer=model('create:block/fluid_valve/pointer');
  for(const[k,v]of Object.entries(pointer.textures||{}))valve.textures['pointer_'+k]=v;
- for(const source of pointer.elements){const e=structuredClone(source);
-  for(const coord of ['from','to'])e[coord][1]=8+(e[coord][1]-8)*(5.02/5.5);
+ for(const source of pointer.elements){const e=turn(source,[[0,0,1],[0,1,0],[-1,0,0]]);
+  for(const coord of ['from','to'])e[coord][1]=8+(e[coord][1]-8)*(6.02/5.5);
   for(const f of Object.values(e.faces))if(f.texture.startsWith('#'))f.texture='#pointer_'+f.texture.slice(1);
   valve.elements.push(e);
  }

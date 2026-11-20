@@ -1,195 +1,387 @@
 {
   "variants": {
-    "axis_along_first=false,enabled=false,facing=down,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
+    "axis_along_first=false,enabled=false,facing=down,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
       "x": 270,
       "y": 90
     },
-    "axis_along_first=false,enabled=false,facing=down,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
+    "axis_along_first=false,enabled=false,facing=down,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
       "x": 270,
       "y": 90
     },
-    "axis_along_first=false,enabled=false,facing=east,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "y": 270
-    },
-    "axis_along_first=false,enabled=false,facing=east,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "y": 270
-    },
-    "axis_along_first=false,enabled=false,facing=north,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed",
-      "y": 180
-    },
-    "axis_along_first=false,enabled=false,facing=north,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed",
-      "y": 180
-    },
-    "axis_along_first=false,enabled=false,facing=south,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed"
-    },
-    "axis_along_first=false,enabled=false,facing=south,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed"
-    },
-    "axis_along_first=false,enabled=false,facing=up,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "x": 90,
-      "y": 90
-    },
-    "axis_along_first=false,enabled=false,facing=up,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "x": 90,
-      "y": 90
-    },
-    "axis_along_first=false,enabled=false,facing=west,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "y": 90
-    },
-    "axis_along_first=false,enabled=false,facing=west,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "y": 90
-    },
-    "axis_along_first=false,enabled=true,facing=down,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=down,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
       "x": 270,
       "y": 90
     },
-    "axis_along_first=false,enabled=true,facing=down,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=down,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
       "x": 270,
       "y": 90
     },
-    "axis_along_first=false,enabled=true,facing=east,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=east,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
       "y": 270
     },
-    "axis_along_first=false,enabled=true,facing=east,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=east,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
       "y": 270
     },
-    "axis_along_first=false,enabled=true,facing=north,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open",
+    "axis_along_first=false,enabled=false,facing=east,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
+      "y": 270
+    },
+    "axis_along_first=false,enabled=false,facing=east,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
+      "y": 270
+    },
+    "axis_along_first=false,enabled=false,facing=north,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered",
       "y": 180
     },
-    "axis_along_first=false,enabled=true,facing=north,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open",
+    "axis_along_first=false,enabled=false,facing=north,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered",
       "y": 180
     },
-    "axis_along_first=false,enabled=true,facing=south,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open"
+    "axis_along_first=false,enabled=false,facing=north,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered",
+      "y": 180
     },
-    "axis_along_first=false,enabled=true,facing=south,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open"
+    "axis_along_first=false,enabled=false,facing=north,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered",
+      "y": 180
     },
-    "axis_along_first=false,enabled=true,facing=up,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=south,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered"
+    },
+    "axis_along_first=false,enabled=false,facing=south,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered"
+    },
+    "axis_along_first=false,enabled=false,facing=south,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered"
+    },
+    "axis_along_first=false,enabled=false,facing=south,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered"
+    },
+    "axis_along_first=false,enabled=false,facing=up,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
       "x": 90,
       "y": 90
     },
-    "axis_along_first=false,enabled=true,facing=up,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=up,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
       "x": 90,
       "y": 90
     },
-    "axis_along_first=false,enabled=true,facing=west,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=up,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
+      "x": 90,
       "y": 90
     },
-    "axis_along_first=false,enabled=true,facing=west,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=false,facing=up,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
+      "x": 90,
       "y": 90
     },
-    "axis_along_first=true,enabled=false,facing=down,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "x": 270
+    "axis_along_first=false,enabled=false,facing=west,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
+      "y": 90
     },
-    "axis_along_first=true,enabled=false,facing=down,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "x": 270
+    "axis_along_first=false,enabled=false,facing=west,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
+      "y": 90
     },
-    "axis_along_first=true,enabled=false,facing=east,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed",
+    "axis_along_first=false,enabled=false,facing=west,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
+      "y": 90
+    },
+    "axis_along_first=false,enabled=false,facing=west,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=down,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 270,
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=down,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 270,
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=down,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 270,
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=down,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 270,
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=east,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
       "y": 270
     },
-    "axis_along_first=true,enabled=false,facing=east,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed",
+    "axis_along_first=false,enabled=true,facing=east,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
       "y": 270
     },
-    "axis_along_first=true,enabled=false,facing=north,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
+    "axis_along_first=false,enabled=true,facing=east,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "y": 270
+    },
+    "axis_along_first=false,enabled=true,facing=east,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "y": 270
+    },
+    "axis_along_first=false,enabled=true,facing=north,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered",
       "y": 180
     },
-    "axis_along_first=true,enabled=false,facing=north,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
+    "axis_along_first=false,enabled=true,facing=north,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered",
       "y": 180
     },
-    "axis_along_first=true,enabled=false,facing=south,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed"
+    "axis_along_first=false,enabled=true,facing=north,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered",
+      "y": 180
     },
-    "axis_along_first=true,enabled=false,facing=south,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed"
+    "axis_along_first=false,enabled=true,facing=north,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered",
+      "y": 180
     },
-    "axis_along_first=true,enabled=false,facing=up,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "x": 90
+    "axis_along_first=false,enabled=true,facing=south,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered"
     },
-    "axis_along_first=true,enabled=false,facing=up,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed",
-      "x": 90
+    "axis_along_first=false,enabled=true,facing=south,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered"
     },
-    "axis_along_first=true,enabled=false,facing=west,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed",
+    "axis_along_first=false,enabled=true,facing=south,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered"
+    },
+    "axis_along_first=false,enabled=true,facing=south,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered"
+    },
+    "axis_along_first=false,enabled=true,facing=up,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 90,
       "y": 90
     },
-    "axis_along_first=true,enabled=false,facing=west,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed",
+    "axis_along_first=false,enabled=true,facing=up,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 90,
       "y": 90
     },
-    "axis_along_first=true,enabled=true,facing=down,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=false,enabled=true,facing=up,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 90,
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=up,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 90,
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=west,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=west,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=west,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "y": 90
+    },
+    "axis_along_first=false,enabled=true,facing=west,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "y": 90
+    },
+    "axis_along_first=true,enabled=false,facing=down,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
       "x": 270
     },
-    "axis_along_first=true,enabled=true,facing=down,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=true,enabled=false,facing=down,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
       "x": 270
     },
-    "axis_along_first=true,enabled=true,facing=east,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open",
+    "axis_along_first=true,enabled=false,facing=down,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
+      "x": 270
+    },
+    "axis_along_first=true,enabled=false,facing=down,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
+      "x": 270
+    },
+    "axis_along_first=true,enabled=false,facing=east,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered",
       "y": 270
     },
-    "axis_along_first=true,enabled=true,facing=east,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open",
+    "axis_along_first=true,enabled=false,facing=east,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered",
       "y": 270
     },
-    "axis_along_first=true,enabled=true,facing=north,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=true,enabled=false,facing=east,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered",
+      "y": 270
+    },
+    "axis_along_first=true,enabled=false,facing=east,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered",
+      "y": 270
+    },
+    "axis_along_first=true,enabled=false,facing=north,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
       "y": 180
     },
-    "axis_along_first=true,enabled=true,facing=north,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=true,enabled=false,facing=north,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
       "y": 180
     },
-    "axis_along_first=true,enabled=true,facing=south,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open"
+    "axis_along_first=true,enabled=false,facing=north,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
+      "y": 180
     },
-    "axis_along_first=true,enabled=true,facing=south,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open"
+    "axis_along_first=true,enabled=false,facing=north,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
+      "y": 180
     },
-    "axis_along_first=true,enabled=true,facing=up,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=true,enabled=false,facing=south,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered"
+    },
+    "axis_along_first=true,enabled=false,facing=south,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered"
+    },
+    "axis_along_first=true,enabled=false,facing=south,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered"
+    },
+    "axis_along_first=true,enabled=false,facing=south,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered"
+    },
+    "axis_along_first=true,enabled=false,facing=up,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
       "x": 90
     },
-    "axis_along_first=true,enabled=true,facing=up,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open",
+    "axis_along_first=true,enabled=false,facing=up,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
       "x": 90
     },
-    "axis_along_first=true,enabled=true,facing=west,waterlogged=false": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open",
+    "axis_along_first=true,enabled=false,facing=up,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_unpowered",
+      "x": 90
+    },
+    "axis_along_first=true,enabled=false,facing=up,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_closed_powered",
+      "x": 90
+    },
+    "axis_along_first=true,enabled=false,facing=west,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered",
       "y": 90
     },
-    "axis_along_first=true,enabled=true,facing=west,waterlogged=true": {
-      "model": "ccd:block/redstone_fluid_valve/block_vertical_open",
+    "axis_along_first=true,enabled=false,facing=west,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered",
+      "y": 90
+    },
+    "axis_along_first=true,enabled=false,facing=west,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_unpowered",
+      "y": 90
+    },
+    "axis_along_first=true,enabled=false,facing=west,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_closed_powered",
+      "y": 90
+    },
+    "axis_along_first=true,enabled=true,facing=down,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 270
+    },
+    "axis_along_first=true,enabled=true,facing=down,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 270
+    },
+    "axis_along_first=true,enabled=true,facing=down,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 270
+    },
+    "axis_along_first=true,enabled=true,facing=down,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 270
+    },
+    "axis_along_first=true,enabled=true,facing=east,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered",
+      "y": 270
+    },
+    "axis_along_first=true,enabled=true,facing=east,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered",
+      "y": 270
+    },
+    "axis_along_first=true,enabled=true,facing=east,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered",
+      "y": 270
+    },
+    "axis_along_first=true,enabled=true,facing=east,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered",
+      "y": 270
+    },
+    "axis_along_first=true,enabled=true,facing=north,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "y": 180
+    },
+    "axis_along_first=true,enabled=true,facing=north,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "y": 180
+    },
+    "axis_along_first=true,enabled=true,facing=north,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "y": 180
+    },
+    "axis_along_first=true,enabled=true,facing=north,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "y": 180
+    },
+    "axis_along_first=true,enabled=true,facing=south,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered"
+    },
+    "axis_along_first=true,enabled=true,facing=south,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered"
+    },
+    "axis_along_first=true,enabled=true,facing=south,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered"
+    },
+    "axis_along_first=true,enabled=true,facing=south,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered"
+    },
+    "axis_along_first=true,enabled=true,facing=up,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 90
+    },
+    "axis_along_first=true,enabled=true,facing=up,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 90
+    },
+    "axis_along_first=true,enabled=true,facing=up,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_unpowered",
+      "x": 90
+    },
+    "axis_along_first=true,enabled=true,facing=up,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_horizontal_open_powered",
+      "x": 90
+    },
+    "axis_along_first=true,enabled=true,facing=west,waterlogged=false,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered",
+      "y": 90
+    },
+    "axis_along_first=true,enabled=true,facing=west,waterlogged=false,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered",
+      "y": 90
+    },
+    "axis_along_first=true,enabled=true,facing=west,waterlogged=true,powered=false": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_unpowered",
+      "y": 90
+    },
+    "axis_along_first=true,enabled=true,facing=west,waterlogged=true,powered=true": {
+      "model": "ccd:block/redstone_fluid_valve/block_vertical_open_powered",
       "y": 90
     }
   }

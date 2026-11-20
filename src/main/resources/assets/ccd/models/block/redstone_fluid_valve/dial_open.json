@@ -1,46 +1,126 @@
 {
-	"format_version": "26.3",
-	"credit": "Made with Blockbench",
-	"ambientocclusion": false,
-	"render_type": "minecraft:cutout_mipped",
-	"textures": {
-		"dial": "create:block/valve_open",
-		"glass": "create:block/fluid_valve"
-	},
-	"elements": [
-		{
-			"name": "outer_dial_front",
-			"from": [2, 13.01, 2],
-			"to": [14, 13.01, 14],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, -1, 0]},
-			"faces": {
-				"up": {"uv": [2, 2, 14, 14], "texture": "#dial"}
-			}
-		},
-		{
-			"name": "outer_dial_back",
-			"from": [2, 2.99, 2],
-			"to": [14, 2.99, 14],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
-			"faces": {
-				"down": {"uv": [2, 14, 14, 2], "texture": "#dial"}
-			}
-		},
-		{
-			"name": "glass_up",
-			"from": [2, 14.12, 2],
-			"to": [14, 14.12, 14],
-			"faces": {
-				"up": {"uv": [1, 1, 7, 7], "texture": "#glass"}
-			}
-		},
-		{
-			"name": "glass_down",
-			"from": [2, 1.88, 2],
-			"to": [14, 1.88, 14],
-			"faces": {
-				"down": {"uv": [1, 1, 7, 7], "texture": "#glass"}
-			}
-		}
-	]
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
+  "ambientocclusion": false,
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "dial": "create:block/valve_open",
+    "glass": "create:block/fluid_valve"
+  },
+  "elements": [
+    {
+      "name": "outer_dial_front",
+      "from": [
+        2,
+        14.01,
+        2
+      ],
+      "to": [
+        14,
+        14.01,
+        14
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          0
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#dial"
+        }
+      }
+    },
+    {
+      "name": "outer_dial_back",
+      "from": [
+        2,
+        1.99,
+        2
+      ],
+      "to": [
+        14,
+        1.99,
+        14
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          1,
+          0
+        ]
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            2,
+            14,
+            14,
+            2
+          ],
+          "texture": "#dial"
+        }
+      }
+    },
+    {
+      "name": "glass_up",
+      "from": [
+        2,
+        14.12,
+        2
+      ],
+      "to": [
+        14,
+        14.12,
+        14
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ],
+          "texture": "#glass"
+        }
+      }
+    },
+    {
+      "name": "glass_down",
+      "from": [
+        2,
+        1.88,
+        2
+      ],
+      "to": [
+        14,
+        1.88,
+        14
+      ],
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ],
+          "texture": "#glass"
+        }
+      }
+    }
+  ]
 }
