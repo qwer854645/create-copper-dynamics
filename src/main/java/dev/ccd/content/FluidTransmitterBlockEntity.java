@@ -48,18 +48,11 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
         }).forFluids());
     }
     public static Vec3 filterCenter(BlockState state, Direction side) {
-        // Build in the model's NORTH-facing coordinates, then apply the exact
-        // blockstate rotation. Keep native Sided hit testing and original scale.
+        // Blockstate rotations align the small outlet with FACING in all six directions.
+        // Native Sided handles rendering orientation and hit testing.
         var facing = state.getValue(FluidTransmitterBlock.FACING);
         Vec3 normal = Vec3.atLowerCornerOf(side.getNormal());
-        Vec3 rear = switch (facing) {
-            case NORTH -> new Vec3(0, 0, 1);
-            case SOUTH -> new Vec3(0, 0, -1);
-            case EAST -> new Vec3(-1, 0, 0);
-            case WEST -> new Vec3(1, 0, 0);
-            case UP -> new Vec3(0, -1, 0);
-            case DOWN -> new Vec3(0, 1, 0);
-        };
+        Vec3 rear = Vec3.atLowerCornerOf(facing.getOpposite().getNormal());
         return new Vec3(.5, .5, .5).add(normal.scale(8.5 / 16)).add(rear.scale(4.0 / 16));
     }
     private Direction front() { return getBlockState().getValue(FluidTransmitterBlock.FACING); }

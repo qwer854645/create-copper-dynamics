@@ -32,19 +32,19 @@
     },
     "facing=up,powered=false": {
       "model": "ccd:block/fluid_transmitter",
-      "x": 90
+      "x": 270
     },
     "facing=up,powered=true": {
       "model": "ccd:block/fluid_transmitter_powered",
-      "x": 90
+      "x": 270
     },
     "facing=down,powered=false": {
       "model": "ccd:block/fluid_transmitter",
-      "x": 270
+      "x": 90
     },
     "facing=down,powered=true": {
       "model": "ccd:block/fluid_transmitter_powered",
-      "x": 270
+      "x": 90
     }
   }
 }
