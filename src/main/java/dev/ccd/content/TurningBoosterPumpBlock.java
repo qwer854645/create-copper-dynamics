@@ -51,7 +51,8 @@ public final class TurningBoosterPumpBlock extends PumpBlock implements com.simi
         throw new IllegalArgumentException("Turning pump ports must be perpendicular");
     }
     @Override public BlockState getRotatedBlockState(BlockState state, Direction clickedFace) {
-        return open(state, clickedFace) ? state.cycle(REVERSED) : state.cycle(ROLL);
+        return oriented(state, state.getValue(FACING).getClockWise(clickedFace.getAxis()),
+            branch(state).getClockWise(clickedFace.getAxis()));
     }
     @Override public BlockState rotate(BlockState state, Rotation rotation) {
         return oriented(state, rotation.rotate(state.getValue(FACING)), rotation.rotate(branch(state)));

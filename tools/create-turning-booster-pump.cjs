@@ -59,7 +59,7 @@ async function main(){
    }
    // Direction.getClockWise rotates about the positive coordinate axis.
    const axis=front.findIndex(v=>v!==0),[x,y,z0]=branch;
-   branch=axis===0?[x,-z0,y]:axis===1?[z0,y,-x]:[-y,x,z0];
+   branch=axis===0?[x,z0,-y]:axis===1?[-z0,y,x]:[y,-x,z0];
   }
  }
  save('assets/ccd/blockstates/turning_booster_pump.json',{variants});
@@ -83,4 +83,5 @@ async function main(){
  await sharp({create:{width:1500,height:585,channels:4,background:'#e5e8e2'}}).composite([...panels,{input:text,left:0,top:0}]).png().toFile(path.join(output,'preview.png'));
  console.log('Generated 24 orientations and preview; existing textures unchanged.');
 }
-main().catch(e=>{console.error(e);process.exitCode=1;});
+module.exports={turn,cross,vectors};
+if(require.main===module)main().catch(e=>{console.error(e);process.exitCode=1;});

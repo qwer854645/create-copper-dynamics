@@ -20,7 +20,7 @@
         14
       ],
       "faces": {
-        "west": {
+        "east": {
           "uv": [
             14,
             2,
@@ -30,7 +30,7 @@
           "texture": "#body",
           "rotation": 180
         },
-        "east": {
+        "west": {
           "uv": [
             2,
             2,
@@ -40,7 +40,7 @@
           "texture": "#shaft_face",
           "rotation": 180
         },
-        "south": {
+        "north": {
           "uv": [
             14,
             2,
@@ -50,7 +50,7 @@
           "texture": "#body",
           "rotation": 180
         },
-        "north": {
+        "south": {
           "uv": [
             2,
             2,
@@ -68,7 +68,7 @@
             14
           ],
           "texture": "#body",
-          "rotation": 270
+          "rotation": 90
         },
         "up": {
           "uv": [
@@ -78,7 +78,7 @@
             2
           ],
           "texture": "#shaft_face",
-          "rotation": 90
+          "rotation": 270
         }
       }
     },
@@ -104,37 +104,37 @@
         ]
       },
       "faces": {
-        "west": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "texture": "#pipe",
-          "rotation": 180
-        },
-        "south": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "texture": "#pipe",
-          "rotation": 180
-        },
         "east": {
           "uv": [
-            8,
-            0,
             4,
+            0,
+            8,
             2
           ],
           "texture": "#pipe",
           "rotation": 180
         },
         "north": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "texture": "#pipe",
+          "rotation": 180
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            4,
+            2
+          ],
+          "texture": "#pipe",
+          "rotation": 180
+        },
+        "south": {
           "uv": [
             8,
             0,
@@ -158,26 +158,6 @@
         13
       ],
       "faces": {
-        "west": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
-        "south": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
         "east": {
           "uv": [
             9.5,
@@ -198,6 +178,26 @@
           "rotation": 270,
           "texture": "#pipe"
         },
+        "west": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
+        },
         "down": {
           "uv": [
             11,
@@ -205,7 +205,7 @@
             16,
             16
           ],
-          "rotation": 0,
+          "rotation": 180,
           "texture": "#pipe"
         },
         "up": {
@@ -215,7 +215,7 @@
             16,
             16
           ],
-          "rotation": 0,
+          "rotation": 180,
           "texture": "#pipe"
         }
       },
@@ -224,12 +224,12 @@
     {
       "name": "native_rim_connector_north",
       "from": [
-        0,
+        12,
         4,
         4
       ],
       "to": [
-        4,
+        16,
         12,
         12
       ],
@@ -243,7 +243,7 @@
         ]
       },
       "faces": {
-        "south": {
+        "north": {
           "uv": [
             4,
             0,
@@ -253,7 +253,7 @@
           "rotation": 270,
           "texture": "#pipe"
         },
-        "north": {
+        "south": {
           "uv": [
             4,
             2,
@@ -270,7 +270,7 @@
             8,
             0
           ],
-          "rotation": 90,
+          "rotation": 270,
           "texture": "#pipe"
         },
         "up": {
@@ -280,19 +280,19 @@
             8,
             2
           ],
-          "rotation": 270,
+          "rotation": 90,
           "texture": "#pipe"
         }
       }
     },
     {
       "from": [
-        0,
+        14,
         3,
         3
       ],
       "to": [
-        2,
+        16,
         13,
         13
       ],
@@ -306,26 +306,6 @@
         ]
       },
       "faces": {
-        "west": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe",
-          "rotation": 180
-        },
-        "south": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe",
-          "rotation": 180
-        },
         "east": {
           "uv": [
             11,
@@ -337,6 +317,26 @@
           "rotation": 180
         },
         "north": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "texture": "#pipe",
+          "rotation": 180
+        },
+        "west": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe",
+          "rotation": 180
+        },
+        "south": {
           "uv": [
             9.5,
             16,
@@ -353,7 +353,7 @@
             9.5,
             16
           ],
-          "rotation": 180,
+          "rotation": 0,
           "texture": "#pipe"
         },
         "up": {
@@ -363,7 +363,7 @@
             10.5,
             11
           ],
-          "rotation": 0,
+          "rotation": 180,
           "texture": "#pipe"
         }
       },
@@ -372,17 +372,17 @@
     {
       "name": "native_pump_mark_inlet_east",
       "from": [
+        12,
         2,
-        2,
-        14.01
+        1.9900000000000002
       ],
       "to": [
-        4,
         14,
-        14.01
+        14,
+        1.9900000000000002
       ],
       "faces": {
-        "south": {
+        "north": {
           "uv": [
             8,
             0,
@@ -397,17 +397,17 @@
     {
       "name": "native_pump_mark_inlet_west",
       "from": [
+        12,
         2,
-        2,
-        1.9900000000000002
+        14.01
       ],
       "to": [
-        4,
         14,
-        1.9900000000000002
+        14,
+        14.01
       ],
       "faces": {
-        "north": {
+        "south": {
           "uv": [
             8,
             0,
@@ -424,15 +424,15 @@
       "from": [
         2,
         2,
-        14.01
+        1.9900000000000002
       ],
       "to": [
         14,
         4,
-        14.01
+        1.9900000000000002
       ],
       "faces": {
-        "south": {
+        "north": {
           "uv": [
             8,
             0,
@@ -449,15 +449,15 @@
       "from": [
         2,
         2,
-        1.9900000000000002
+        14.01
       ],
       "to": [
         14,
         4,
-        1.9900000000000002
+        14.01
       ],
       "faces": {
-        "north": {
+        "south": {
           "uv": [
             8,
             0,

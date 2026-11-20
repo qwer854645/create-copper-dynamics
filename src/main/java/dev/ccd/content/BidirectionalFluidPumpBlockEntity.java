@@ -24,4 +24,11 @@ public final class BidirectionalFluidPumpBlockEntity extends PumpBlockEntity {
         super.initialize();
         if (level != null && (!level.isClientSide() || isVirtual())) updatePressureChange();
     }
+    @Override public void tick() {
+        super.tick();
+        if (level == null || level.isClientSide() || getSpeed() == 0 || isOverStressed()) return;
+        boolean reversed = getSpeed() < 0;
+        if (getBlockState().getValue(BidirectionalFluidPumpBlock.REVERSED) != reversed)
+            level.setBlockAndUpdate(worldPosition, getBlockState().setValue(BidirectionalFluidPumpBlock.REVERSED, reversed));
+    }
 }
