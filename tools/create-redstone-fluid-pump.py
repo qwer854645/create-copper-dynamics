@@ -22,6 +22,11 @@ elements.append({'name':'solid_dial_backing','from':[2,13.9,2],'to':[14,14,14],
  'faces':{side:{'texture':'#housing','uv':[2,2,14,14]} for side in ('north','south','east','west','up','down')}})
 elements.append({'name':'dial','from':[2,14.01,2],'to':[14,14.01,14],
  'faces':{'up':{'texture':'#dial','uv':[2,2,14,14]}}})
+# Cover only the unused east/west marks with clean native dial background pixels.
+# Keep the north/south stops, center hub, rim and existing textures intact.
+for x in (3,10):
+ elements.append({'name':f'unused_stop_background_{x}','from':[x,14.02,7],'to':[x+3,14.02,9],
+  'faces':{'up':{'texture':'#dial','uv':[3,5,6,7]}}})
 elements.append({'name':'dial_glass','from':[2,14.14,2],'to':[14,14.14,14],
  'faces':{'up':{'texture':'#valve','uv':[1,1,7,7]}}})
 pointer={'name':'flow_pointer','from':[7.5,14.08,4.5],'to':[8.5,14.08,8],

@@ -14,7 +14,10 @@ public final class RedstoneFluidPumpBlockEntity extends PumpBlockEntity {
     @Override public void tick() {
         super.tick();
         if(level!=null && (level.isClientSide() || isVirtual())) {
-            pointer.chase(getBlockState().getValue(RedstoneFluidPumpBlock.POWERED)?1:0,.25,net.createmod.catnip.animation.LerpedFloat.Chaser.EXP);pointer.tickChaser();
+            // One half-turn in eight client ticks; renderer samples with partial ticks.
+            // Chase from the current position so a second signal change reverses smoothly.
+            pointer.chase(getBlockState().getValue(RedstoneFluidPumpBlock.POWERED)?1:0,.125,net.createmod.catnip.animation.LerpedFloat.Chaser.LINEAR);
+            pointer.tickChaser();
         }
     }
 }
