@@ -4,29 +4,6 @@
       "apply": {
         "model": "ccd:block/smart_collection_grate"
       }
-    },
-    {
-      "apply": {
-        "model": "ccd:block/smart_collection_grate_filter"
-      }
-    },
-    {
-      "apply": {
-        "model": "ccd:block/smart_collection_grate_filter",
-        "y": 90
-      }
-    },
-    {
-      "apply": {
-        "model": "ccd:block/smart_collection_grate_filter",
-        "y": 180
-      }
-    },
-    {
-      "apply": {
-        "model": "ccd:block/smart_collection_grate_filter",
-        "y": 270
-      }
     }
   ]
 }

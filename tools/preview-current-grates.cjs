@@ -4,7 +4,7 @@ const {mesh,render}=require('./preview-fluid-packager.cjs');
 async function main(){
  const out=path.resolve(__dirname,'../outputs/current-grates');fs.mkdirSync(out,{recursive:true});
  const copper=await mesh('ccd:block/copper_collection_grate');
- const smart=[...await mesh('ccd:block/smart_collection_grate'),...await mesh('ccd:block/smart_collection_grate_filter')];
+ const smart=await mesh('ccd:block/smart_collection_grate');
  const panels=[];
  for(const [i,faces]of [copper,smart].entries()){
   const image=await render(faces,500,500,[26,24,38],{center:[8,8,8],scale:20});
