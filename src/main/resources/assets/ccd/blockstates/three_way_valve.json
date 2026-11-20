@@ -15,8 +15,7 @@
     },
     {
       "when": {
-        "facing": "north",
-        "powered": "false"
+        "facing": "north"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/selected_north"
@@ -25,17 +24,7 @@
     {
       "when": {
         "facing": "north",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/closed_north"
-      }
-    },
-    {
-      "when": {
-        "facing": "north",
-        "roll": "0",
-        "powered": "false"
+        "roll": "0"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_up"
@@ -44,18 +33,7 @@
     {
       "when": {
         "facing": "north",
-        "roll": "0",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_up"
-      }
-    },
-    {
-      "when": {
-        "facing": "north",
-        "roll": "1",
-        "powered": "false"
+        "roll": "1"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_east"
@@ -64,18 +42,7 @@
     {
       "when": {
         "facing": "north",
-        "roll": "1",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_east"
-      }
-    },
-    {
-      "when": {
-        "facing": "north",
-        "roll": "2",
-        "powered": "false"
+        "roll": "2"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_down"
@@ -84,31 +51,10 @@
     {
       "when": {
         "facing": "north",
-        "roll": "2",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_down"
-      }
-    },
-    {
-      "when": {
-        "facing": "north",
-        "roll": "3",
-        "powered": "false"
+        "roll": "3"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_west"
-      }
-    },
-    {
-      "when": {
-        "facing": "north",
-        "roll": "3",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_west"
       }
     },
     {
@@ -121,8 +67,7 @@
     },
     {
       "when": {
-        "facing": "south",
-        "powered": "false"
+        "facing": "south"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/selected_south"
@@ -131,17 +76,7 @@
     {
       "when": {
         "facing": "south",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/closed_south"
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "roll": "0",
-        "powered": "false"
+        "roll": "0"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_up"
@@ -150,18 +85,7 @@
     {
       "when": {
         "facing": "south",
-        "roll": "0",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_up"
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "roll": "1",
-        "powered": "false"
+        "roll": "1"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_east"
@@ -170,18 +94,7 @@
     {
       "when": {
         "facing": "south",
-        "roll": "1",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_east"
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "roll": "2",
-        "powered": "false"
+        "roll": "2"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_down"
@@ -190,31 +103,10 @@
     {
       "when": {
         "facing": "south",
-        "roll": "2",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_down"
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "roll": "3",
-        "powered": "false"
+        "roll": "3"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_west"
-      }
-    },
-    {
-      "when": {
-        "facing": "south",
-        "roll": "3",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_west"
       }
     },
     {
@@ -227,8 +119,7 @@
     },
     {
       "when": {
-        "facing": "west",
-        "powered": "false"
+        "facing": "west"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/selected_west"
@@ -237,17 +128,7 @@
     {
       "when": {
         "facing": "west",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/closed_west"
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "roll": "0",
-        "powered": "false"
+        "roll": "0"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_up"
@@ -256,18 +137,7 @@
     {
       "when": {
         "facing": "west",
-        "roll": "0",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_up"
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "roll": "1",
-        "powered": "false"
+        "roll": "1"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_north"
@@ -276,18 +146,7 @@
     {
       "when": {
         "facing": "west",
-        "roll": "1",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_north"
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "roll": "2",
-        "powered": "false"
+        "roll": "2"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_down"
@@ -296,31 +155,10 @@
     {
       "when": {
         "facing": "west",
-        "roll": "2",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_down"
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "roll": "3",
-        "powered": "false"
+        "roll": "3"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_south"
-      }
-    },
-    {
-      "when": {
-        "facing": "west",
-        "roll": "3",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_south"
       }
     },
     {
@@ -333,8 +171,7 @@
     },
     {
       "when": {
-        "facing": "east",
-        "powered": "false"
+        "facing": "east"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/selected_east"
@@ -343,17 +180,7 @@
     {
       "when": {
         "facing": "east",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/closed_east"
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "roll": "0",
-        "powered": "false"
+        "roll": "0"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_up"
@@ -362,18 +189,7 @@
     {
       "when": {
         "facing": "east",
-        "roll": "0",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_up"
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "roll": "1",
-        "powered": "false"
+        "roll": "1"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_north"
@@ -382,18 +198,7 @@
     {
       "when": {
         "facing": "east",
-        "roll": "1",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_north"
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "roll": "2",
-        "powered": "false"
+        "roll": "2"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_down"
@@ -402,31 +207,10 @@
     {
       "when": {
         "facing": "east",
-        "roll": "2",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_down"
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "roll": "3",
-        "powered": "false"
+        "roll": "3"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_south"
-      }
-    },
-    {
-      "when": {
-        "facing": "east",
-        "roll": "3",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_south"
       }
     },
     {
@@ -439,8 +223,7 @@
     },
     {
       "when": {
-        "facing": "down",
-        "powered": "false"
+        "facing": "down"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/selected_down"
@@ -449,17 +232,7 @@
     {
       "when": {
         "facing": "down",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/closed_down"
-      }
-    },
-    {
-      "when": {
-        "facing": "down",
-        "roll": "0",
-        "powered": "false"
+        "roll": "0"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_north"
@@ -468,18 +241,7 @@
     {
       "when": {
         "facing": "down",
-        "roll": "0",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_north"
-      }
-    },
-    {
-      "when": {
-        "facing": "down",
-        "roll": "1",
-        "powered": "false"
+        "roll": "1"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_east"
@@ -488,18 +250,7 @@
     {
       "when": {
         "facing": "down",
-        "roll": "1",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_east"
-      }
-    },
-    {
-      "when": {
-        "facing": "down",
-        "roll": "2",
-        "powered": "false"
+        "roll": "2"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_south"
@@ -508,31 +259,10 @@
     {
       "when": {
         "facing": "down",
-        "roll": "2",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_south"
-      }
-    },
-    {
-      "when": {
-        "facing": "down",
-        "roll": "3",
-        "powered": "false"
+        "roll": "3"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_west"
-      }
-    },
-    {
-      "when": {
-        "facing": "down",
-        "roll": "3",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_west"
       }
     },
     {
@@ -545,8 +275,7 @@
     },
     {
       "when": {
-        "facing": "up",
-        "powered": "false"
+        "facing": "up"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/selected_up"
@@ -555,17 +284,7 @@
     {
       "when": {
         "facing": "up",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/closed_up"
-      }
-    },
-    {
-      "when": {
-        "facing": "up",
-        "roll": "0",
-        "powered": "false"
+        "roll": "0"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_north"
@@ -574,18 +293,7 @@
     {
       "when": {
         "facing": "up",
-        "roll": "0",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_north"
-      }
-    },
-    {
-      "when": {
-        "facing": "up",
-        "roll": "1",
-        "powered": "false"
+        "roll": "1"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_east"
@@ -594,18 +302,7 @@
     {
       "when": {
         "facing": "up",
-        "roll": "1",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_east"
-      }
-    },
-    {
-      "when": {
-        "facing": "up",
-        "roll": "2",
-        "powered": "false"
+        "roll": "2"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_south"
@@ -614,31 +311,10 @@
     {
       "when": {
         "facing": "up",
-        "roll": "2",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_south"
-      }
-    },
-    {
-      "when": {
-        "facing": "up",
-        "roll": "3",
-        "powered": "false"
+        "roll": "3"
       },
       "apply": {
         "model": "ccd:block/three_way_valve/closed_west"
-      }
-    },
-    {
-      "when": {
-        "facing": "up",
-        "roll": "3",
-        "powered": "true"
-      },
-      "apply": {
-        "model": "ccd:block/three_way_valve/selected_west"
       }
     },
     {

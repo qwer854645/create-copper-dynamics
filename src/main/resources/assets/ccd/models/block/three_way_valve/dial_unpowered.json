@@ -4,7 +4,7 @@
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "dial": "create:block/valve_open",
-    "needle": "create:block/industrial_iron_block",
+    "needle": "create:block/fluid_valve",
     "glass": "create:block/fluid_valve"
   },
   "elements": [
@@ -36,24 +36,25 @@
     {
       "name": "pointer",
       "from": [
-        7.6,
+        7.5,
         13.07,
         4.5
       ],
       "to": [
-        8.4,
+        8.5,
         13.07,
-        8.5
+        11.5
       ],
       "faces": {
         "up": {
           "texture": "#needle",
           "uv": [
-            0,
-            0,
-            4,
-            1
-          ]
+            2,
+            7.5,
+            5.5,
+            8
+          ],
+          "rotation": 270
         }
       }
     },

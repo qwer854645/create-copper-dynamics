@@ -8,7 +8,7 @@
     "selected": "ccd:block/three_way_valve/pipe_selected",
     "closed": "ccd:block/three_way_valve/pipe_closed",
     "dial": "create:block/valve_open",
-    "needle": "create:block/industrial_iron_block",
+    "needle": "create:block/fluid_valve",
     "glass": "create:block/fluid_valve"
   },
   "elements": [
@@ -548,11 +548,12 @@
         "east": {
           "texture": "#needle",
           "uv": [
-            0,
-            0,
-            4,
-            1
-          ]
+            2,
+            7.5,
+            5.5,
+            8
+          ],
+          "rotation": 270
         }
       }
     },
@@ -621,11 +622,12 @@
         "west": {
           "texture": "#needle",
           "uv": [
-            0,
-            0,
-            4,
-            1
-          ]
+            2,
+            7.5,
+            5.5,
+            8
+          ],
+          "rotation": 270
         }
       }
     },
