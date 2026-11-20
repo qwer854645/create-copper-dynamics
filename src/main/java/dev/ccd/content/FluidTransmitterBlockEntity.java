@@ -39,7 +39,6 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(filtering = new FilteringBehaviour(this, new ValueBoxTransform.Sided() {
             @Override protected Vec3 getSouthLocation() { return new Vec3(.5, .5, 1); }
-            @Override public float getScale() { return .25f; }
             @Override public Vec3 getLocalOffset(net.minecraft.world.level.LevelAccessor level,BlockPos pos,BlockState state) {
                 // Housing spans local z=8..16. The reserved UV rectangle is
                 // x=4..12, y=2..6: center z=12, with four pixels of depth.
