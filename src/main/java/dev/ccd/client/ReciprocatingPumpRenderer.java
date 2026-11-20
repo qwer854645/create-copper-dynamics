@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public final class ReciprocatingPumpRenderer extends SafeBlockEntityRenderer<ReciprocatingFluidPumpBlockEntity> {
     private static final PartialModel BELLOWS=part("bellows"),PLATE=part("plate");
-    private static PartialModel part(String name) { return PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/reciprocating_fluid_pump/"+name)); }
+    private static PartialModel part(String name) { return PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/portable_fluid_pump/"+name)); }
     public static void registerModels() {}
     public ReciprocatingPumpRenderer(BlockEntityRendererProvider.Context context) {}
     @Override protected void renderSafe(ReciprocatingFluidPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {

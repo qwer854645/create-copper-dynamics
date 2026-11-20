@@ -1,0 +1,439 @@
+{
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "ccd:block/portable_fluid_pump/base",
+    "copper": "ccd:block/portable_fluid_pump/base",
+    "shaft": "ccd:block/booster_pump/shaft_face",
+    "pipe": "create:block/pipes"
+  },
+  "elements": [
+    {
+      "name": "copper_base",
+      "from": [
+        2,
+        2,
+        2
+      ],
+      "to": [
+        14,
+        11,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            1,
+            13,
+            10
+          ],
+          "texture": "#copper"
+        },
+        "east": {
+          "uv": [
+            2,
+            5,
+            14,
+            14
+          ],
+          "texture": "#shaft"
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            13,
+            10
+          ],
+          "texture": "#copper"
+        },
+        "west": {
+          "uv": [
+            2,
+            5,
+            14,
+            14
+          ],
+          "texture": "#shaft"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            13,
+            13
+          ],
+          "texture": "#copper"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            13,
+            13
+          ],
+          "texture": "#copper"
+        }
+      }
+    },
+    {
+      "name": "foot",
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        2,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            14,
+            2
+          ],
+          "texture": "#copper"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            14,
+            2
+          ],
+          "texture": "#copper"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14,
+            2
+          ],
+          "texture": "#copper"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            14,
+            2
+          ],
+          "texture": "#copper"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        }
+      }
+    },
+    {
+      "name": "native_rim_connector_north",
+      "from": [
+        4,
+        4,
+        0
+      ],
+      "to": [
+        12,
+        12,
+        4
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          8,
+          0
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "native_rim_north",
+      "from": [
+        3,
+        3,
+        0
+      ],
+      "to": [
+        13,
+        13,
+        2
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          28,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "native_rim_connector_south",
+      "from": [
+        4,
+        4,
+        12
+      ],
+      "to": [
+        12,
+        12,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          8,
+          0
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            4,
+            6,
+            8,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            4,
+            8,
+            8,
+            6
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            4,
+            8,
+            8,
+            6
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            4,
+            6,
+            8,
+            8
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "native_rim_south",
+      "from": [
+        3,
+        3,
+        14
+      ],
+      "to": [
+        13,
+        13,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          28,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 270,
+          "texture": "#pipe"
+        }
+      }
+    }
+  ]
+}

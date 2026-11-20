@@ -5,6 +5,7 @@
   "ambientocclusion": false,
   "render_type": "minecraft:cutout_mipped",
   "textures": {
+    "4": "create:block/valve_closed",
     "valve": "create:block/fluid_valve",
     "pipe": "create:block/pipes",
     "dial": "ccd:block/redstone_fluid_pump/dial",

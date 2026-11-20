@@ -1,15 +1,15 @@
 {
   "format_version": "26.3",
   "credit": "Made with Blockbench",
-  "parent": "ccd:block/bidirectional_fluid_pump",
+  "parent": "create:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "6": "ccd:item/bidirectional_fluid_pump/gauge",
-    "particle": "create:block/copper_underside",
-    "body": "create:block/copper_underside",
-    "shaft_face": "ccd:block/booster_pump/shaft_face",
+    "4": "ccd:block/bidirectional_fluid_pump/body",
+    "6": "ccd:block/bidirectional_fluid_pump/gauge",
+    "7": "ccd:block/bidirectional_fluid_pump/shaft",
     "pipe": "create:block/pipes",
     "native_pump": "create:block/pump",
+    "particle": "ccd:block/bidirectional_fluid_pump/body",
     "shaft_side": "create:block/axis",
     "shaft_end": "create:block/axis_top"
   },
@@ -29,12 +29,12 @@
       "faces": {
         "north": {
           "uv": [
-            14,
-            4,
             2,
+            4,
+            14,
             12
           ],
-          "texture": "#shaft_face"
+          "texture": "#7"
         },
         "east": {
           "uv": [
@@ -43,7 +43,7 @@
             2,
             12
           ],
-          "texture": "#body"
+          "texture": "#4"
         },
         "south": {
           "uv": [
@@ -52,16 +52,16 @@
             14,
             12
           ],
-          "texture": "#shaft_face"
+          "texture": "#7"
         },
         "west": {
           "uv": [
-            2,
-            4,
             14,
+            4,
+            2,
             12
           ],
-          "texture": "#body"
+          "texture": "#4"
         }
       }
     },
@@ -77,15 +77,6 @@
         16,
         12
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          16,
-          0,
-          -16
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
@@ -213,15 +204,6 @@
         4,
         12
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          16,
-          0,
-          -16
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
@@ -352,9 +334,9 @@
       "faces": {
         "north": {
           "uv": [
-            7.5,
+            1,
             0,
-            6.5,
+            0,
             6
           ],
           "rotation": 270,
@@ -362,9 +344,9 @@
         },
         "east": {
           "uv": [
-            7.5,
+            1,
             0,
-            6.5,
+            0,
             6
           ],
           "rotation": 270,
@@ -372,9 +354,9 @@
         },
         "south": {
           "uv": [
-            7.5,
+            1,
             0,
-            6.5,
+            0,
             6
           ],
           "rotation": 270,
@@ -382,9 +364,9 @@
         },
         "west": {
           "uv": [
-            7.5,
+            1,
             0,
-            6.5,
+            0,
             6
           ],
           "rotation": 270,
@@ -413,21 +395,12 @@
         4,
         14
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          -10,
-          0
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
-            7.5,
             0,
-            6.5,
+            0,
+            1,
             6
           ],
           "rotation": 270,
@@ -435,9 +408,9 @@
         },
         "east": {
           "uv": [
-            7.5,
             0,
-            6.5,
+            0,
+            1,
             6
           ],
           "rotation": 270,
@@ -445,9 +418,9 @@
         },
         "south": {
           "uv": [
-            7.5,
             0,
-            6.5,
+            0,
+            1,
             6
           ],
           "rotation": 270,
@@ -455,9 +428,9 @@
         },
         "west": {
           "uv": [
-            7.5,
             0,
-            6.5,
+            0,
+            1,
             6
           ],
           "rotation": 270,
@@ -486,15 +459,6 @@
         13,
         2
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          2,
-          0,
-          -10
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
@@ -539,6 +503,7 @@
             1,
             10
           ],
+          "rotation": 90,
           "texture": "#6"
         },
         "down": {
@@ -548,6 +513,7 @@
             10,
             0
           ],
+          "rotation": 90,
           "texture": "#6"
         }
       }
@@ -564,15 +530,6 @@
         13,
         15
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          2,
-          0,
-          3
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
@@ -617,6 +574,7 @@
             1,
             10
           ],
+          "rotation": 90,
           "texture": "#6"
         },
         "down": {

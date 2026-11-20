@@ -1,11 +1,13 @@
 {
   "parent": "create:block/block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "copper": "create:block/copper_casing",
-    "rubber": "create:block/belt",
-    "brass": "create:block/brass_block",
+    "particle": "ccd:block/portable_fluid_pump/base",
+    "copper": "ccd:block/portable_fluid_pump/base",
     "shaft": "ccd:block/booster_pump/shaft_face",
     "pipe": "create:block/pipes",
+    "rubber": "ccd:block/portable_fluid_pump/belt",
+    "5": "create:block/whistle",
     "shaft_side": "create:block/axis",
     "shaft_end": "create:block/axis_top"
   },
@@ -19,63 +21,63 @@
       ],
       "to": [
         14,
-        10,
+        11,
         14
       ],
       "faces": {
         "north": {
-          "texture": "#copper",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1,
+            1,
+            13,
+            10
+          ],
+          "texture": "#copper"
         },
         "east": {
-          "texture": "#shaft",
           "uv": [
             2,
-            6,
+            5,
             14,
             14
-          ]
+          ],
+          "texture": "#shaft"
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            13,
+            10
+          ],
+          "texture": "#copper"
         },
         "west": {
-          "texture": "#shaft",
           "uv": [
             2,
-            6,
+            5,
             14,
             14
-          ]
+          ],
+          "texture": "#shaft"
         },
         "up": {
-          "texture": "#copper",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1,
+            1,
+            13,
+            13
+          ],
+          "texture": "#copper"
         },
         "down": {
-          "texture": "#copper",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1,
+            1,
+            13,
+            13
+          ],
+          "texture": "#copper"
         }
       }
     },
@@ -93,58 +95,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#copper",
           "uv": [
             0,
             0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#copper",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            14,
+            2
+          ],
+          "texture": "#copper"
         },
         "east": {
-          "texture": "#copper",
           "uv": [
             0,
             0,
-            16,
-            16
-          ]
+            14,
+            2
+          ],
+          "texture": "#copper"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            14,
+            2
+          ],
+          "texture": "#copper"
         },
         "west": {
-          "texture": "#copper",
           "uv": [
             0,
             0,
-            16,
-            16
-          ]
+            14,
+            2
+          ],
+          "texture": "#copper"
         },
         "up": {
-          "texture": "#copper",
           "uv": [
             0,
             0,
-            16,
-            16
-          ]
+            14,
+            14
+          ],
+          "texture": "#copper"
         },
         "down": {
-          "texture": "#copper",
           "uv": [
             0,
             0,
-            16,
-            16
-          ]
+            14,
+            14
+          ],
+          "texture": "#copper"
         }
       }
     },
@@ -213,6 +215,7 @@
       }
     },
     {
+      "name": "native_rim_north",
       "from": [
         3,
         3,
@@ -289,8 +292,7 @@
           "rotation": 270,
           "texture": "#pipe"
         }
-      },
-      "name": "native_rim_north"
+      }
     },
     {
       "name": "native_rim_connector_south",
@@ -357,6 +359,7 @@
       }
     },
     {
+      "name": "native_rim_south",
       "from": [
         3,
         3,
@@ -433,351 +436,405 @@
           "rotation": 270,
           "texture": "#pipe"
         }
-      },
-      "name": "native_rim_south"
+      }
     },
     {
       "name": "dark_bellows_core",
       "from": [
-        3,
+        3.25,
         10,
-        3
+        3.25
       ],
       "to": [
-        13,
+        12.75,
         14,
-        13
+        12.75
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0.25,
+          0,
+          0.25
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#rubber",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            11,
+            1,
+            1,
+            5
+          ],
+          "texture": "#rubber"
         },
         "east": {
-          "texture": "#rubber",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "bellows_fold_0",
-      "from": [
-        2,
-        10,
-        2
-      ],
-      "to": [
-        14,
-        10.5,
-        14
-      ],
-      "faces": {
-        "north": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            7,
+            11,
+            11,
+            1
+          ],
+          "rotation": 270,
+          "texture": "#rubber"
         },
         "south": {
-          "texture": "#rubber",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1,
+            11,
+            11,
+            7
+          ],
+          "texture": "#rubber"
         },
         "west": {
-          "texture": "#rubber",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1,
+            1,
+            5,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
         },
         "up": {
-          "texture": "#rubber",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1,
+            1,
+            11,
+            11
+          ],
+          "texture": "#rubber"
         },
         "down": {
-          "texture": "#rubber",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "bellows_fold_1",
-      "from": [
-        2,
-        11,
-        2
-      ],
-      "to": [
-        14,
-        11.5,
-        14
-      ],
-      "faces": {
-        "north": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        }
-      }
-    },
-    {
-      "name": "bellows_fold_2",
-      "from": [
-        2,
-        12,
-        2
-      ],
-      "to": [
-        14,
-        12.5,
-        14
-      ],
-      "faces": {
-        "north": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "east": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "west": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "up": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "down": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1,
+            1,
+            11,
+            11
+          ],
+          "texture": "#rubber"
         }
       }
     },
     {
       "name": "bellows_fold_3",
       "from": [
-        2,
+        2.25,
         13,
-        2
+        2.25
       ],
       "to": [
-        14,
+        13.75,
         13.5,
-        14
+        13.75
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0.25,
+          0,
+          0.25
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#rubber",
           "uv": [
+            12,
             0,
             0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#rubber",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            1
+          ],
+          "texture": "#rubber"
         },
         "east": {
-          "texture": "#rubber",
+          "uv": [
+            11,
+            0,
+            12,
+            12
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
+        },
+        "south": {
           "uv": [
             0,
-            0,
-            16,
-            16
-          ]
+            11,
+            12,
+            12
+          ],
+          "texture": "#rubber"
         },
         "west": {
-          "texture": "#rubber",
           "uv": [
             0,
-            0,
-            16,
-            16
-          ]
+            12,
+            1,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
         },
         "up": {
-          "texture": "#rubber",
           "uv": [
             0,
             0,
-            16,
-            16
-          ]
+            12,
+            12
+          ],
+          "texture": "#rubber"
         },
         "down": {
-          "texture": "#rubber",
           "uv": [
             0,
             0,
-            16,
-            16
-          ]
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        }
+      }
+    },
+    {
+      "name": "bellows_fold_2",
+      "from": [
+        2.25,
+        12,
+        2.25
+      ],
+      "to": [
+        13.75,
+        12.5,
+        13.75
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0.25,
+          -1,
+          0.25
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            0,
+            0,
+            1
+          ],
+          "texture": "#rubber"
+        },
+        "east": {
+          "uv": [
+            11,
+            0,
+            12,
+            12
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
+        },
+        "south": {
+          "uv": [
+            0,
+            11,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        },
+        "west": {
+          "uv": [
+            0,
+            12,
+            1,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        }
+      }
+    },
+    {
+      "name": "bellows_fold_1",
+      "from": [
+        2.25,
+        11,
+        2.25
+      ],
+      "to": [
+        13.75,
+        11.5,
+        13.75
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0.25,
+          -2,
+          0.25
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            0,
+            0,
+            1
+          ],
+          "texture": "#rubber"
+        },
+        "east": {
+          "uv": [
+            11,
+            0,
+            12,
+            12
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
+        },
+        "south": {
+          "uv": [
+            0,
+            11,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        },
+        "west": {
+          "uv": [
+            0,
+            12,
+            1,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        }
+      }
+    },
+    {
+      "name": "bellows_fold_0",
+      "from": [
+        2.25,
+        10,
+        2.25
+      ],
+      "to": [
+        13.75,
+        10.5,
+        13.75
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0.25,
+          -3,
+          0.25
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            0,
+            0,
+            1
+          ],
+          "texture": "#rubber"
+        },
+        "east": {
+          "uv": [
+            11,
+            0,
+            12,
+            12
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
+        },
+        "south": {
+          "uv": [
+            0,
+            11,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        },
+        "west": {
+          "uv": [
+            0,
+            12,
+            1,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#rubber"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#rubber"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            12,
+            12
+          ],
+          "texture": "#rubber"
         }
       }
     },
@@ -795,58 +852,58 @@
       ],
       "faces": {
         "north": {
-          "texture": "#brass",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
-        },
-        "south": {
-          "texture": "#brass",
-          "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            0.5,
+            12.5,
+            0.75,
+            15.5
+          ],
+          "texture": "#5"
         },
         "east": {
-          "texture": "#brass",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            0.5,
+            12.5,
+            3.5,
+            12.75
+          ],
+          "texture": "#5"
+        },
+        "south": {
+          "uv": [
+            0.5,
+            12.5,
+            0.75,
+            15.5
+          ],
+          "texture": "#5"
         },
         "west": {
-          "texture": "#brass",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            0.5,
+            12.5,
+            3.5,
+            12.75
+          ],
+          "texture": "#5"
         },
         "up": {
-          "texture": "#brass",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
         },
         "down": {
-          "texture": "#brass",
           "uv": [
-            0,
-            0,
-            16,
-            16
-          ]
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
         }
       }
     },
