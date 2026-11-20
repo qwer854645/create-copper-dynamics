@@ -1,55 +1,25 @@
 {
-  "multipart": [
-    {
-      "when": {
-        "facing": "north"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body"
-      }
+  "variants": {
+    "facing=north": {
+      "model": "ccd:block/portable_fluid_pump"
     },
-    {
-      "when": {
-        "facing": "east"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body",
-        "y": 90
-      }
+    "facing=east": {
+      "model": "ccd:block/portable_fluid_pump",
+      "y": 90
     },
-    {
-      "when": {
-        "facing": "south"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body",
-        "y": 180
-      }
+    "facing=south": {
+      "model": "ccd:block/portable_fluid_pump",
+      "y": 180
     },
-    {
-      "when": {
-        "facing": "west"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body",
-        "y": 270
-      }
+    "facing=west": {
+      "model": "ccd:block/portable_fluid_pump",
+      "y": 270
     },
-    {
-      "when": {
-        "facing": "up"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body"
-      }
+    "facing=up": {
+      "model": "ccd:block/portable_fluid_pump"
     },
-    {
-      "when": {
-        "facing": "down"
-      },
-      "apply": {
-        "model": "ccd:block/reciprocating_fluid_pump/body"
-      }
+    "facing=down": {
+      "model": "ccd:block/portable_fluid_pump"
     }
-  ]
+  }
 }

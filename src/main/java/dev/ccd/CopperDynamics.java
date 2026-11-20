@@ -435,6 +435,8 @@ public final class CopperDynamics {
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(CCDFluids::setup);
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(PORTABLE_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
+        event.enqueueWork(() -> BlockStressValues.CAPACITIES.register(PORTABLE_PUMP.get(),
+            ()->BlockStressValues.getCapacity(AllBlocks.HAND_CRANK.get())+BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(BOOSTER_PUMP.get(),
             () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get()) * CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(TURNING_BOOSTER_PUMP.get(),
