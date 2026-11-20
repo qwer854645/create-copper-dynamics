@@ -7,7 +7,7 @@
   "textures": {
     "valve": "create:block/fluid_valve",
     "pipe": "create:block/pipes",
-    "dial": "create:block/valve_open",
+    "dial": "ccd:block/redstone_fluid_pump/dial",
     "particle": "create:block/copper_underside",
     "housing": "create:block/copper_underside"
   },
