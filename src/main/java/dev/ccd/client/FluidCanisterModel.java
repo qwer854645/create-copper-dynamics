@@ -104,7 +104,7 @@ public final class FluidCanisterModel extends BakedModelWrapper<BakedModel> {
     }
 
     public static ResourceLocation transportKey(ItemStack stack, net.minecraft.world.item.Item nativeItem) {
-        if (stack.is(CopperDynamics.COMPOSITE_PACKAGE.get())) return BrassBoxModel.transportKey(stack);
+        if (dev.ccd.content.CompositePackageItem.isComposite(stack)) return BrassBoxModel.transportKey(stack);
         return FluidPackageItem.isFluidPackage(stack) && SHELLS.containsKey(BuiltInRegistries.ITEM.getKey(stack.getItem()))
             ? variant(stack).key() : BuiltInRegistries.ITEM.getKey(nativeItem);
     }

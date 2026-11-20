@@ -38,11 +38,11 @@ public final class BrassBoxModel extends BakedModelWrapper<BakedModel> {
         }
         @Override public int hashCode() { return ItemStack.hashItemAndComponents(stack); }
     }
-    private record Appearance(List<FluidView> fluids, List<ItemView> items) {}
+    private record Appearance(ResourceLocation item,List<FluidView> fluids, List<ItemView> items) {}
     private record Variant(ResourceLocation key, BakedModel model) {}
     private static final Map<Appearance, ResourceLocation> KEYS = new HashMap<>();
     private static final Map<Appearance, Variant> VARIANTS = new HashMap<>();
-    private static BakedModel shell;
+    private static final Map<ResourceLocation,BakedModel> SHELLS=new HashMap<>();
     private final List<BakedQuad> quads;
     private final ItemOverrides overrides;
 
@@ -60,9 +60,17 @@ public final class BrassBoxModel extends BakedModelWrapper<BakedModel> {
         overrides = ItemOverrides.EMPTY;
         quads = new ArrayList<>();
         var minecraft = Minecraft.getInstance();
+        double minX=1,maxX=0,minZ=1,maxZ=0,minY=1,maxY=0;
+        for(var quad:original.getQuads(null,null,RandomSource.create(0))) for(int v=0;v<4;v++) {
+            var p=BakedQuadHelper.getXYZ(quad.getVertices(),v);
+            minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);
+            minZ=Math.min(minZ,p.z);maxZ=Math.max(maxZ,p.z);
+            minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y);
+        }
         for (var quad : original.getQuads(null, null, RandomSource.create(0))) {
             int index = quad.getTintIndex();
             if (index < 0) { quads.add(quad); continue; }
+            if(appearance.fluids().isEmpty()) continue;
             var sprite = minecraft.getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)
                 .apply(ResourceLocation.fromNamespaceAndPath("ccd", "item/fluid_canister/fluid"));
             int tint = -1;
@@ -94,9 +102,9 @@ public final class BrassBoxModel extends BakedModelWrapper<BakedModel> {
                 for (int v = 0; v < 4; v++) {
                     var p = BakedQuadHelper.getXYZ(vertices, v);
                     // Place a miniature of the actual baked item behind the side glass.
-                    double x = side == 0 ? 3.015 / 16 + p.z * .0005 : 12.985 / 16 - p.z * .0005;
-                    double z = (5 + (side == 0 ? 1 - p.x : p.x) * 6) / 16;
-                    BakedQuadHelper.setXYZ(vertices, v, new Vec3(x, (2 + p.y * 6) / 16, z));
+                    double x = side == 0 ? minX+.006+p.z*.0005 : maxX-.006-p.z*.0005;
+                    double z = minZ+(maxZ-minZ)*(.25+(side==0?1-p.x:p.x)*.5);
+                    BakedQuadHelper.setXYZ(vertices, v, new Vec3(x,minY+(maxY-minY)*(.15+p.y*.5),z));
                     if (quad.isTinted()) color(vertices, v, minecraft.getItemColors().getColor(stack, quad.getTintIndex()));
                 }
                 var d = quad.getDirection();
@@ -117,18 +125,19 @@ public final class BrassBoxModel extends BakedModelWrapper<BakedModel> {
             0xff000000 | ((tint & 255) << 16) | (tint & 0xff00) | ((tint >>> 16) & 255);
     }
 
-    public static BakedModel install(BakedModel original) {
-        shell = original;
+    public static BakedModel install(ResourceLocation item,BakedModel original) {
+        SHELLS.put(item,original);
         VARIANTS.clear();
         return new BrassBoxModel(original);
     }
 
     public static void rebuildTransportVariants() {
-        if (shell != null) for (var entry : KEYS.entrySet()) create(entry.getKey(), entry.getValue());
+        if (!SHELLS.isEmpty()) for (var entry : KEYS.entrySet()) create(entry.getKey(), entry.getValue());
     }
 
     public static ResourceLocation transportKey(ItemStack stack) {
-        return shell == null ? ITEM : variant(stack).key();
+        var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+        return !SHELLS.containsKey(item) ? item : variant(stack).key();
     }
 
     private static Variant variant(ItemStack stack) {
@@ -151,7 +160,7 @@ public final class BrassBoxModel extends BakedModelWrapper<BakedModel> {
         var random = new java.util.Random(31L * fluids.hashCode() + items.hashCode());
         java.util.Collections.shuffle(fluids, random);
         java.util.Collections.shuffle(items, random);
-        var appearance = new Appearance(List.copyOf(fluids.subList(0, Math.min(2, fluids.size()))),
+        var appearance = new Appearance(net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem()),List.copyOf(fluids.subList(0, Math.min(2, fluids.size()))),
             List.copyOf(items.subList(0, Math.min(2, items.size()))));
         var existing = VARIANTS.get(appearance);
         if (existing != null) return existing;
@@ -160,11 +169,11 @@ public final class BrassBoxModel extends BakedModelWrapper<BakedModel> {
     }
 
     private static Variant create(Appearance appearance, ResourceLocation key) {
-        var model = new BrassBoxModel(shell, appearance);
+        var model = new BrassBoxModel(SHELLS.get(appearance.item()), appearance);
         var partial = CanisterPartialModelAccessor.ccd$create(key);
         ((CanisterPartialModelAccessor) (Object) partial).ccd$setModel(model);
         AllPartialModels.PACKAGES.put(key, partial);
-        AllPartialModels.PACKAGE_RIGGING.put(key, AllPartialModels.PACKAGE_RIGGING.get(ITEM));
+        AllPartialModels.PACKAGE_RIGGING.put(key, AllPartialModels.PACKAGE_RIGGING.get(appearance.item()));
         var variant = new Variant(key, model);
         VARIANTS.put(appearance, variant);
         return variant;

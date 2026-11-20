@@ -3,7 +3,9 @@
   "parent": "create:item/package_transforms",
   "textures": {
     "0": "ccd:item/native_package_brass",
-    "particle": "ccd:item/native_package_brass"
+    "particle": "ccd:item/native_package_brass",
+    "inner": "create:block/brass_block",
+    "liquid": "minecraft:block/water_still"
   },
   "elements": [
     {
@@ -85,6 +87,225 @@
           "texture": "#0"
         }
       }
+    },
+    {
+      "name": "inner_lining",
+      "from": [
+        12.96,
+        7.96,
+        12.96
+      ],
+      "to": [
+        3.04,
+        0.04,
+        3.04
+      ],
+      "faces": {
+        "north": {
+          "texture": "#inner",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#inner",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#inner",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#inner",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#inner",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#inner",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "fluid_sample_0",
+      "from": [
+        3.15,
+        0.15,
+        3.15
+      ],
+      "to": [
+        12.85,
+        4.0,
+        12.85
+      ],
+      "faces": {
+        "north": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 0
+        },
+        "south": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 0
+        },
+        "down": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 0
+        }
+      }
+    },
+    {
+      "name": "fluid_sample_1",
+      "from": [
+        3.15,
+        4.0,
+        3.15
+      ],
+      "to": [
+        12.85,
+        7.8500000000000005,
+        12.85
+      ],
+      "faces": {
+        "north": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 1
+        },
+        "south": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 1
+        },
+        "east": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 1
+        },
+        "west": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 1
+        },
+        "up": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 1
+        },
+        "down": {
+          "texture": "#liquid",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "tintindex": 1
+        }
+      }
     }
   ],
   "groups": [
@@ -100,5 +321,6 @@
         0
       ]
     }
-  ]
+  ],
+  "render_type": "minecraft:cutout_mipped"
 }

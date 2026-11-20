@@ -129,6 +129,13 @@ public final class CCDClient {
         var brassBox = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "composite_package"), "inventory");
         var brassBoxModel = event.getModels().get(brassBox);
+        if(brassBoxModel!=null) event.getModels().put(brassBox,BrassBoxModel.install(brassBox.id(),brassBoxModel));
+        for(var variant:dev.ccd.content.MetalPackages.VARIANTS) if(variant.material().equals("brass")) {
+            var location=new net.minecraft.client.resources.model.ModelResourceLocation(
+                ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID,variant.id()),"inventory");
+            var model=event.getModels().get(location);
+            if(model!=null) event.getModels().put(location,BrassBoxModel.install(location.id(),model));
+        }
         var cargo = new net.minecraft.client.resources.model.ModelResourceLocation(
             ResourceLocation.fromNamespaceAndPath(CopperDynamics.ID, "fluid_arm_cargo"), "inventory");
         var cargoModel = event.getModels().get(cargo);
