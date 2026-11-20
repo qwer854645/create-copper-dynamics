@@ -1,0 +1,7 @@
+{
+  "parent": "ccd:block/fluid_access_port_casing",
+  "textures": {
+    "socket": "ccd:block/fluid_access/connected_port_powered",
+    "band": "ccd:block/fluid_access/copper_band_powered"
+  }
+}

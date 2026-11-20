@@ -1,0 +1,7 @@
+{
+  "parent": "ccd:block/fluid_bridge",
+  "textures": {
+    "socket": "ccd:block/fluid_access/connected_bridge_powered",
+    "band": "ccd:block/fluid_access/bridge_band_powered"
+  }
+}

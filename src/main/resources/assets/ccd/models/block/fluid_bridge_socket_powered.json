@@ -1,0 +1,6 @@
+{
+  "parent": "ccd:block/fluid_bridge_socket",
+  "textures": {
+    "socket": "ccd:block/fluid_access/connected_bridge_powered"
+  }
+}

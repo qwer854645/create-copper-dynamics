@@ -1,0 +1,6 @@
+{
+  "parent": "ccd:block/fluid_access_port_socket",
+  "textures": {
+    "socket": "ccd:block/fluid_access/connected_port_powered"
+  }
+}
