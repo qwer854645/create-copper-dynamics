@@ -12,6 +12,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(PumpBlockEntity.class)
 abstract class BoosterPumpPressureMixin {
     @Redirect(method = "distributePressureTo", at = @At(value = "INVOKE",
+        target = "Lcom/simibubi/create/content/fluids/pump/PumpBlockEntity;getSpeed()F"))
+    private float ccd$manualPumpSpeed(PumpBlockEntity pump) {
+        return pump instanceof dev.ccd.content.ReciprocatingFluidPumpBlockEntity reciprocating
+            ? reciprocating.pumpingSpeed() : pump.getSpeed();
+    }
+    @Redirect(method = "distributePressureTo", at = @At(value = "INVOKE",
         target = "Lcom/simibubi/create/content/fluids/FluidPropagator;getPumpRange()I"))
     private int ccd$boosterRange() {
         int original = FluidPropagator.getPumpRange();

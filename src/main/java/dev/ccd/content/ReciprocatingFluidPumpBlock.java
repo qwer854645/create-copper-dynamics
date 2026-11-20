@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 /** Upright bellows pump: straight horizontal fluid ports and transverse shaft pair. */
-public final class ReciprocatingFluidPumpBlock extends PumpBlock {
+public class ReciprocatingFluidPumpBlock extends PumpBlock {
     public static final IntegerProperty SIGNAL=BlockStateProperties.POWER;
     public ReciprocatingFluidPumpBlock(Properties properties) {
         super(properties);registerDefaultState(defaultBlockState().setValue(FACING,Direction.NORTH).setValue(SIGNAL,0));

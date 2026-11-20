@@ -1,0 +1,55 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/reciprocating_fluid_pump/body"
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/reciprocating_fluid_pump/body",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/reciprocating_fluid_pump/body",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/reciprocating_fluid_pump/body",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "ccd:block/reciprocating_fluid_pump/body"
+      }
+    },
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "ccd:block/reciprocating_fluid_pump/body"
+      }
+    }
+  ]
+}

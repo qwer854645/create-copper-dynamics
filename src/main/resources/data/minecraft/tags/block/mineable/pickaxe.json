@@ -25,6 +25,7 @@
     "ccd:redstone_fluid_pump",
     "ccd:turning_booster_pump",
     "ccd:bidirectional_fluid_pump",
-    "ccd:reciprocating_fluid_pump"
+    "ccd:reciprocating_fluid_pump",
+    "ccd:portable_fluid_pump"
   ]
 }

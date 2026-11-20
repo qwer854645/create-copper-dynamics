@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "create:mechanical_pump"
+    },
+    {
+      "item": "create:hand_crank"
+    },
+    {
+      "item": "create:belt_connector"
+    }
+  ],
+  "result": {
+    "id": "ccd:portable_fluid_pump",
+    "count": 1
+  }
+}
