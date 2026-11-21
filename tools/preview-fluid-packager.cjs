@@ -34,6 +34,7 @@ function asset(id, kind) {
   return path.join(base,kind,name + (kind==='models' ? '.json' : '.png'));
 }
 function model(id) {
+  if (['builtin/generated','minecraft:builtin/generated','builtin/entity','minecraft:builtin/entity'].includes(id)) return {textures:{},elements:[]};
   if (id === 'block/block' || id === 'minecraft:block/block') return {textures:{},elements:[]};
   const own = JSON.parse(fs.readFileSync(asset(id,'models'),'utf8'));
   const parent = own.parent ? model(own.parent) : {textures:{},elements:[]};

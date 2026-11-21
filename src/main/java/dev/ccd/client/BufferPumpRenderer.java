@@ -31,8 +31,8 @@ public final class BufferPumpRenderer extends SafeBlockEntityRenderer<BufferPump
             default->{}
         }
         pose.translate(-.5,-.5,-.5);
-        pose.pushPose();pose.translate(.5,10/16d,.5);
-        pose.mulPose(com.mojang.math.Axis.XP.rotation(angle));pose.translate(-.5,-10/16d,-.5);
+        pose.pushPose();pose.translate(.5,.5,.5);
+        pose.mulPose(com.mojang.math.Axis.XP.rotation(angle));pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(COG,state).light(light).renderInto(pose,buffers.getBuffer(RenderType.solid()));pose.popPose();
         if(!be.buffer.isEmpty())net.createmod.catnip.platform.NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(be.buffer.getFluid(),
             3/16f,1/16f,3/16f,13/16f,(1+3.5f*be.buffer.getFluidAmount()/4000)/16,13/16f,buffers,pose,light,false,true);

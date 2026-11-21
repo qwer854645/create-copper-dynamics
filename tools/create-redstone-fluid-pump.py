@@ -42,7 +42,7 @@ save('assets/ccd/models/item/redstone_fluid_pump.json',{**copy.deepcopy(model),'
  'textures':{**textures,'shaft_side':booster_item['textures']['shaft_side'],'shaft_end':booster_item['textures']['shaft_end']},
  'elements':copy.deepcopy(elements)+[pointer]+shafts})
 variants={}
-for facing,rotation in {'north':{},'south':{'y':180},'east':{'y':90},'west':{'y':270},'up':{'x':90},'down':{'x':270}}.items():
+for facing,rotation in {'north':{},'south':{'y':180},'east':{'y':90},'west':{'y':270},'up':{'x':270},'down':{'x':90}}.items():
  variants['facing='+facing]={'model':'ccd:block/redstone_fluid_pump/block',**rotation}
 save('assets/ccd/blockstates/redstone_fluid_pump.json',{'variants':variants})
 save('data/ccd/recipe/redstone_fluid_pump.json',{'type':'minecraft:crafting_shapeless','category':'redstone','ingredients':[

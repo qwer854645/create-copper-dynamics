@@ -19,7 +19,7 @@ async function main(){
  for(const original of cog.elements){
   const e=turn({...original,rotation:undefined},[[0,0,-1],[0,1,0],[1,0,0]]);
   e.name='native_pump_cog';
-  for(const p of [e.from,e.to])for(let i=0;i<3;i++)p[i]=8+(p[i]-8)*.55+(i===1?2:0);
+  for(const p of [e.from,e.to])for(let i=0;i<3;i++)p[i]=8+(p[i]-8)*.55;
   for(const f of Object.values(e.faces)){f.texture='#pump';delete f.cullface;}cogElements.push(e);
  }
  for(const side of ['up'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){

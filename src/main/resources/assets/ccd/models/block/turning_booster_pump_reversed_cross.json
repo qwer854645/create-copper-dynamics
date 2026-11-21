@@ -25,15 +25,15 @@
         14
       ],
       "faces": {
-        "east": {
+        "up": {
           "uv": [
-            2,
-            14,
-            14,
-            4
+            16,
+            6,
+            6,
+            16
           ],
-          "rotation": 270,
-          "texture": "#shaft_face"
+          "texture": "#body",
+          "rotation": 270
         },
         "south": {
           "uv": [
@@ -42,18 +42,8 @@
             14,
             14
           ],
-          "rotation": 270,
-          "texture": "#shaft_face"
-        },
-        "up": {
-          "uv": [
-            16,
-            6,
-            6,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#body"
+          "texture": "#shaft_face",
+          "rotation": 270
         },
         "down": {
           "uv": [
@@ -62,8 +52,18 @@
             16,
             16
           ],
-          "rotation": 270,
-          "texture": "#body"
+          "texture": "#body",
+          "rotation": 270
+        },
+        "east": {
+          "uv": [
+            2,
+            14,
+            14,
+            4
+          ],
+          "texture": "#shaft_face",
+          "rotation": 270
         }
       }
     },
@@ -96,18 +96,8 @@
             8,
             2
           ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "south": {
-          "uv": [
-            8,
-            0,
-            4,
-            2
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 90
         },
         "up": {
           "uv": [
@@ -116,8 +106,18 @@
             8,
             2
           ],
-          "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 270
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            4,
+            2
+          ],
+          "texture": "#pipe",
+          "rotation": 270
         },
         "down": {
           "uv": [
@@ -126,8 +126,8 @@
             4,
             2
           ],
-          "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 270
         }
       }
     },
@@ -154,14 +154,14 @@
           "rotation": 180,
           "texture": "#pipe"
         },
-        "east": {
+        "up": {
           "uv": [
-            11,
-            11,
+            9.5,
             16,
-            16
+            10.5,
+            11
           ],
-          "rotation": 180,
+          "rotation": 0,
           "texture": "#pipe"
         },
         "south": {
@@ -171,24 +171,7 @@
             10.5,
             11
           ],
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
+          "rotation": 0,
           "texture": "#pipe"
         },
         "down": {
@@ -198,6 +181,27 @@
             10.5,
             11
           ],
+          "rotation": 0,
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 0,
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 180,
           "texture": "#pipe"
         }
       }
@@ -224,14 +228,24 @@
         ]
       },
       "faces": {
-        "east": {
+        "up": {
           "uv": [
             4,
             0,
             8,
             2
           ],
-          "rotation": 90,
+          "rotation": 0,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 0,
           "texture": "#pipe"
         },
         "west": {
@@ -244,22 +258,14 @@
           "rotation": 90,
           "texture": "#pipe"
         },
-        "up": {
+        "east": {
           "uv": [
             4,
             0,
             8,
             2
           ],
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            4,
-            2,
-            8,
-            0
-          ],
+          "rotation": 90,
           "texture": "#pipe"
         }
       }
@@ -293,18 +299,18 @@
             16,
             16
           ],
-          "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 90
         },
-        "east": {
+        "up": {
           "uv": [
-            9.5,
-            16,
             10.5,
-            11
+            11,
+            9.5,
+            16
           ],
-          "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 270
         },
         "south": {
           "uv": [
@@ -313,8 +319,18 @@
             16,
             16
           ],
-          "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "rotation": 270
+        },
+        "down": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#pipe",
+          "rotation": 270
         },
         "west": {
           "uv": [
@@ -326,25 +342,135 @@
           "rotation": 180,
           "texture": "#pipe"
         },
-        "up": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
-        "down": {
+        "east": {
           "uv": [
             9.5,
             16,
             10.5,
             11
           ],
-          "rotation": 270,
+          "rotation": 180,
           "texture": "#pipe"
+        }
+      }
+    },
+    {
+      "name": "native_pump_mark_inlet_east",
+      "from": [
+        4,
+        2.01,
+        2
+      ],
+      "to": [
+        14,
+        14.01,
+        4
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            1,
+            6,
+            6
+          ],
+          "texture": "#native_pump",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            7.5,
+            1,
+            6.5,
+            6
+          ],
+          "texture": "#native_pump",
+          "rotation": 270
+        },
+        "down": {
+          "uv": [
+            6.5,
+            1,
+            7.5,
+            6
+          ],
+          "texture": "#native_pump",
+          "rotation": 270
+        },
+        "east": {
+          "uv": [
+            2,
+            4,
+            14,
+            2
+          ],
+          "texture": "#shaft_face",
+          "rotation": 270
+        }
+      }
+    },
+    {
+      "name": "native_pump_mark_outlet_east",
+      "from": [
+        2,
+        2.01,
+        2
+      ],
+      "to": [
+        4,
+        14.01,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            6,
+            1
+          ],
+          "texture": "#native_pump",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            7.5,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 0,
+          "texture": "#native_pump"
+        },
+        "south": {
+          "uv": [
+            2,
+            2,
+            14,
+            4
+          ],
+          "texture": "#shaft_face",
+          "rotation": 270
+        },
+        "down": {
+          "uv": [
+            7.5,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 0,
+          "texture": "#native_pump"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            6,
+            6
+          ],
+          "texture": "#native_pump",
+          "rotation": 270
         }
       }
     },
@@ -364,8 +490,8 @@
         "angle": 0,
         "axis": "y",
         "origin": [
+          -13,
           0,
-          -12,
           0
         ]
       },
@@ -373,42 +499,12 @@
         "north": {
           "uv": [
             1,
-            9,
-            2,
-            1
-          ],
-          "rotation": 270,
-          "texture": "#4"
-        },
-        "east": {
-          "uv": [
-            1,
-            9,
-            2,
-            1
-          ],
-          "rotation": 270,
-          "texture": "#4"
-        },
-        "south": {
-          "uv": [
-            1,
             1,
             2,
             9
           ],
-          "rotation": 270,
-          "texture": "#4"
-        },
-        "west": {
-          "uv": [
-            1,
-            9,
-            2,
-            1
-          ],
-          "rotation": 270,
-          "texture": "#4"
+          "texture": "#4",
+          "rotation": 90
         },
         "up": {
           "uv": [
@@ -417,8 +513,18 @@
             9,
             9
           ],
-          "rotation": 270,
-          "texture": "#4"
+          "texture": "#4",
+          "rotation": 270
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
         },
         "down": {
           "uv": [
@@ -427,8 +533,28 @@
             9,
             9
           ],
-          "rotation": 270,
-          "texture": "#4"
+          "texture": "#4",
+          "rotation": 270
+        },
+        "west": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        },
+        "east": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
         }
       }
     },
@@ -444,35 +570,26 @@
         15,
         12
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          1,
-          0
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
             1,
-            9,
+            1,
             2,
-            1
+            9
           ],
-          "rotation": 270,
-          "texture": "#4"
+          "texture": "#4",
+          "rotation": 90
         },
-        "east": {
+        "up": {
           "uv": [
             1,
+            1,
             9,
-            2,
-            1
+            9
           ],
-          "rotation": 270,
-          "texture": "#4"
+          "texture": "#4",
+          "rotation": 270
         },
         "south": {
           "uv": [
@@ -481,28 +598,8 @@
             2,
             9
           ],
-          "rotation": 270,
-          "texture": "#4"
-        },
-        "west": {
-          "uv": [
-            1,
-            9,
-            2,
-            1
-          ],
-          "rotation": 270,
-          "texture": "#4"
-        },
-        "up": {
-          "uv": [
-            1,
-            1,
-            9,
-            9
-          ],
-          "rotation": 270,
-          "texture": "#4"
+          "texture": "#4",
+          "rotation": 270
         },
         "down": {
           "uv": [
@@ -511,125 +608,28 @@
             9,
             9
           ],
-          "rotation": 270,
-          "texture": "#4"
-        }
-      }
-    },
-    {
-      "name": "native_pump_mark_inlet_west",
-      "from": [
-        2,
-        1.99,
-        2
-      ],
-      "to": [
-        14,
-        13.99,
-        4
-      ],
-      "faces": {
-        "north": {
+          "texture": "#4",
+          "rotation": 270
+        },
+        "west": {
           "uv": [
-            0,
-            0,
-            6,
-            6
+            1,
+            1,
+            2,
+            9
           ],
-          "texture": "#native_pump"
+          "texture": "#4",
+          "rotation": 270
         },
         "east": {
           "uv": [
-            4,
-            14,
-            2,
-            2
-          ],
-          "texture": "#shaft_face"
-        },
-        "west": {
-          "uv": [
-            6,
-            0,
-            0,
-            1
-          ],
-          "rotation": 270,
-          "texture": "#native_pump"
-        },
-        "up": {
-          "uv": [
-            7.5,
-            0,
-            6.5,
-            6
-          ],
-          "rotation": 270,
-          "texture": "#native_pump"
-        },
-        "down": {
-          "uv": [
-            6.5,
-            0,
-            7.5,
-            6
-          ],
-          "rotation": 270,
-          "texture": "#native_pump"
-        }
-      }
-    },
-    {
-      "name": "native_pump_mark_outlet_west",
-      "from": [
-        2,
-        1.99,
-        4
-      ],
-      "to": [
-        4,
-        13.99,
-        14
-      ],
-      "faces": {
-        "south": {
-          "uv": [
-            14,
-            4,
-            2,
-            2
-          ],
-          "rotation": 90,
-          "texture": "#shaft_face"
-        },
-        "west": {
-          "uv": [
             1,
-            0,
-            6,
-            6
+            1,
+            2,
+            9
           ],
-          "texture": "#native_pump"
-        },
-        "up": {
-          "uv": [
-            6.5,
-            0,
-            7.5,
-            5
-          ],
-          "rotation": 180,
-          "texture": "#native_pump"
-        },
-        "down": {
-          "uv": [
-            6.5,
-            5,
-            7.5,
-            0
-          ],
-          "rotation": 180,
-          "texture": "#native_pump"
+          "texture": "#4",
+          "rotation": 270
         }
       }
     }
