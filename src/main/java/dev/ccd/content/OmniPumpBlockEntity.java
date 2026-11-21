@@ -104,8 +104,14 @@ public final class OmniPumpBlockEntity extends KineticBlockEntity implements com
     @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));}
     @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
-        tooltip.add(net.minecraft.network.chat.Component.translatable("block.ccd.omni_pump"));
-        for(var side:Direction.values())tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.omni_pump.face",net.minecraft.network.chat.Component.translatable("ccd.direction."+side.getName()),net.minecraft.network.chat.Component.translatable("ccd.omni_pump.mode."+OmniPumpBlock.mode(getBlockState(),side))));
+        super.addToGoggleTooltip(tooltip,sneaking);
+        dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.connections");
+        boolean configured=false;
+        for(var side:Direction.values())if(OmniPumpBlock.mode(getBlockState(),side)!=OmniPumpBlock.CLOSED){
+            configured=true;
+            dev.ccd.CCDTooltip.line(tooltip,"ccd.omni_pump.face",net.minecraft.network.chat.Component.translatable("ccd.direction."+side.getName()),net.minecraft.network.chat.Component.translatable("ccd.omni_pump.mode."+OmniPumpBlock.mode(getBlockState(),side)).withStyle(net.minecraft.ChatFormatting.AQUA));
+        }
+        if(!configured)dev.ccd.CCDTooltip.line(tooltip,"ccd.goggles.no_connections");
         return true;
     }
 }

@@ -58,5 +58,5 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     }
     @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));openEnds.write(tag,registries);}
     @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));openEnds.read(tag,registries);}
-    @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){super.addToGoggleTooltip(tooltip,sneaking);if(!buffer.isEmpty())tooltip.add(buffer.getFluid().getHoverName());tooltip.add(net.minecraft.network.chat.Component.literal(buffer.getFluidAmount()+" / "+CAPACITY+" mB"));return true;}
+    @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){super.addToGoggleTooltip(tooltip,sneaking);dev.ccd.CCDTooltip.fluidContents(tooltip,buffer.isEmpty()?java.util.List.of():java.util.List.of(buffer.getFluid()),CAPACITY);return true;}
 }

@@ -37,12 +37,10 @@ public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
     }
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking) {
         super.addToGoggleTooltip(tooltip,sneaking);
-        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.flow",flowPressure()==0?0:targetFlow())
-            .withStyle(net.minecraft.ChatFormatting.AQUA));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.signal",getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL))
-            .withStyle(net.minecraft.ChatFormatting.GRAY));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.range",targetRange())
-            .withStyle(net.minecraft.ChatFormatting.GRAY));
+        dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.pumping");
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.reciprocating.flow",dev.ccd.CCDTooltip.number(targetFlow()));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.reciprocating.signal",dev.ccd.CCDTooltip.number(getBlockState().getValue(ReciprocatingFluidPumpBlock.SIGNAL)));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.reciprocating.range",dev.ccd.CCDTooltip.number(targetRange()));
         return true;
     }
 }

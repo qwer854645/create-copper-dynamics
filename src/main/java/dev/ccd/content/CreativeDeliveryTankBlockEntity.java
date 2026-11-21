@@ -21,9 +21,17 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
         behaviours.add(worldOutput=new com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour(
             net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode"),this,
-            new CreativeDeliverySlotTransform()).between(0,1).withFormatter(value->net.minecraft.network.chat.Component.translatable(
+            new CreativeDeliverySlotTransform()){
+                @Override public com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard createBoard(net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){
+                    return new com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard(
+                        net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode"),1,1,
+                        java.util.List.of(net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode")),
+                        new com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter(setting->modeName(setting.value())));
+                }
+            }.between(0,1).withFormatter(value->net.minecraft.network.chat.Component.translatable(
                 value==0?"ccd.creative_delivery.containers_only":"ccd.creative_delivery.allow_world").getString()));
     }
+    private static net.minecraft.network.chat.MutableComponent modeName(int value){return net.minecraft.network.chat.Component.translatable(value==0?"ccd.creative_delivery.containers_only":"ccd.creative_delivery.allow_world");}
     public void select(FluidStack fluid){selected=fluid.isEmpty()?FluidStack.EMPTY:fluid.copyWithAmount(1000);notifyUpdate();if(level!=null)level.invalidateCapabilities(worldPosition);}
     public final IFluidHandler handler=new IFluidHandler(){
         public int getTanks(){return 1;}
@@ -61,7 +69,12 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
     @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("SelectedFluid",selected.saveOptional(registries));openEnds.write(tag,registries);}
     @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);selected=FluidStack.parseOptional(registries,tag.getCompound("SelectedFluid"));openEnds.read(tag,registries);}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
-        tooltip.add(selected.isEmpty()?net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.empty"):selected.getHoverName());
-        if(!selected.isEmpty())tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.active"));return true;
+        dev.ccd.CCDTooltip.heading(tooltip,"create.gui.goggles.fluid_container");
+        if(selected.isEmpty())dev.ccd.CCDTooltip.line(tooltip,"ccd.creative_delivery.empty");
+        else{
+            com.simibubi.create.foundation.utility.CreateLang.fluidName(selected).style(net.minecraft.ChatFormatting.GRAY).forGoggles(tooltip,1);
+            dev.ccd.CCDTooltip.line(tooltip,net.minecraft.ChatFormatting.GOLD,"ccd.creative_delivery.active");
+        }
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.goggles.output_mode",modeName(worldOutput.getValue()));return true;
     }
 }

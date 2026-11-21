@@ -73,8 +73,9 @@ public final class PortableFluidPumpBlockEntity extends ReciprocatingFluidPumpBl
         if(packet) { manualTicks=tag.getInt("ManualTicks");backwards=tag.getBoolean("ManualBackwards"); }
     }
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking) {
-        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.flow",flowPressure()>0?targetFlow():0));
-        tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.reciprocating.range",targetRange()));
+        dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.pumping");
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.reciprocating.flow",dev.ccd.CCDTooltip.number(targetFlow()));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.reciprocating.range",dev.ccd.CCDTooltip.number(targetRange()));
         return true;
     }
 }
