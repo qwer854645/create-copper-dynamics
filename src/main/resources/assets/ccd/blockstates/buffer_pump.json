@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ccd:block/buffer_pump"
+    },
+    "facing=east": {
+      "model": "ccd:block/buffer_pump",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "ccd:block/buffer_pump",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ccd:block/buffer_pump",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "ccd:block/buffer_pump"
+    },
+    "facing=down": {
+      "model": "ccd:block/buffer_pump"
+    }
+  }
+}
