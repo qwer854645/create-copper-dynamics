@@ -433,7 +433,7 @@ public final class CopperDynamics {
                 output.accept(CREATIVE_DELIVERY_TANK_ITEM.get());
                 output.accept(FLUID_ACCESS_PORT_ITEM.get());
                 output.accept(FLUID_BRIDGE_ITEM.get());
-                output.accept(COPPER_WATER_SUPPLY_ITEM.get());
+                output.accept(SMART_FLUID_TANK_ITEM.get());
                 output.accept(HORIZONTAL_SMART_TANK_ITEM.get());
                 output.accept(FAUCET_ITEM.get());
                 output.accept(SMART_FAUCET_ITEM.get());
@@ -443,7 +443,7 @@ public final class CopperDynamics {
                 output.accept(SMART_COLLECTION_GRATE_ITEM.get());
                 output.accept(FLUID_ATOMIZER_ITEM.get());
                 output.accept(COPPER_WATER_BASIN_ITEM.get());
-                output.accept(SMART_FLUID_TANK_ITEM.get());
+                output.accept(COPPER_WATER_SUPPLY_ITEM.get());
                 output.accept(FLUID_ARM_ITEM.get());
                 output.accept(FLUID_PACKAGER_ITEM.get());
                 output.accept(FLUID_REPACKAGER_ITEM.get());
