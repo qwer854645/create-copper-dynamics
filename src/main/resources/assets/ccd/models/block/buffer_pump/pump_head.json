@@ -1,6 +1,20 @@
 {
   "parent": "create:block/mechanical_pump/block",
+  "textures": {"copper": "create:block/copper_underside"},
   "elements": [
+    {
+      "name": "copper_middle_housing",
+      "from": [2, 5, 2],
+      "to": [14, 13, 14],
+      "faces": {
+        "north": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "east": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "south": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "west": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "up": {"uv": [2, 2, 14, 14], "texture": "#copper"},
+        "down": {"uv": [2, 2, 14, 14], "texture": "#copper"}
+      }
+    },
     {
       "from": [
         2,

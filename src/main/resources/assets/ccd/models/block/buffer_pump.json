@@ -1,5 +1,6 @@
 {
   "textures": {
+    "copper": "create:block/copper_underside",
     "0": "create:block/fluid_tank_top",
     "1": "create:block/fluid_tank",
     "4": "create:block/fluid_tank_inner",
@@ -9,6 +10,19 @@
     "pipe": "create:block/pipes"
   },
   "elements": [
+    {
+      "name": "copper_middle_housing",
+      "from": [2, 5, 2],
+      "to": [14, 13, 14],
+      "faces": {
+        "north": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "east": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "south": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "west": {"uv": [2, 3, 14, 11], "texture": "#copper"},
+        "up": {"uv": [2, 2, 14, 14], "texture": "#copper"},
+        "down": {"uv": [2, 2, 14, 14], "texture": "#copper"}
+      }
+    },
     {
       "name": "compressed_tank",
       "from": [

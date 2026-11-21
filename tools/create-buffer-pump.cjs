@@ -8,14 +8,19 @@ async function main(){
  const tank=model('create:block/fluid_tank/block_single_window'),base=structuredClone(tank);
  base.parent='create:block/block';base.render_type='minecraft:cutout_mipped';
  base.elements=base.elements.map(e=>{const v=structuredClone(e);v.name='compressed_tank';v.from[1]*=5/16;v.to[1]*=5/16;if(v.rotation)v.rotation.origin[1]*=5/16;for(const f of Object.values(v.faces))delete f.cullface;return v;});
- Object.assign(base.textures,{pump:'create:block/pump',pipe:'create:block/pipes'});
+  Object.assign(base.textures,{pump:'create:block/pump',pipe:'create:block/pipes',copper:'create:block/copper_underside'});
  const native=model('create:block/mechanical_pump/block');
  const tankElements=structuredClone(base.elements),headElements=[];
- for(const original of native.elements.filter(e=>e.from[1]>=8)){
+  for(const original of native.elements.filter(e=>e.from[1]>=8)){
   const e=structuredClone(original);e.name='native_upper_pump_end';
   for(const f of Object.values(e.faces))f.texture='#pump';base.elements.push(e);
   const inherited=structuredClone(original);headElements.push(inherited);
- }
+  }
+  // Close the gap between the tank lid and upper pump end with a solid copper body.
+  const housing={name:'copper_middle_housing',from:[2,5,2],to:[14,13,14],faces:{}};
+  for(const side of ['north','east','south','west'])housing.faces[side]={uv:[2,3,14,11],texture:'#copper'};
+  for(const side of ['up','down'])housing.faces[side]={uv:[2,2,14,14],texture:'#copper'};
+  base.elements.unshift(housing);headElements.unshift(structuredClone(housing));
  // Native pump cog rotated from Z to Y, compressed into the upper two thirds.
  const cog=model('create:block/mechanical_pump/cog'),cogElements=[];
  for(const original of cog.elements){
@@ -31,7 +36,7 @@ async function main(){
  }
  save('assets/ccd/models/block/buffer_pump.json',base);
  save('assets/ccd/models/block/buffer_pump/tank.json',{...base,elements:tankElements});
- save('assets/ccd/models/block/buffer_pump/pump_head.json',{parent:'create:block/mechanical_pump/block',elements:headElements});
+  save('assets/ccd/models/block/buffer_pump/pump_head.json',{parent:'create:block/mechanical_pump/block',textures:{copper:'create:block/copper_underside'},elements:headElements});
  const mouthElements=base.elements.filter(e=>e.name?.startsWith('native_pump_rim'));
  save('assets/ccd/models/block/buffer_pump/mouth.json',{parent:'minecraft:block/block',textures:{pipe:'create:block/pipes'},elements:mouthElements});
  save('assets/ccd/models/block/buffer_pump/cog.json',{parent:'minecraft:block/block',textures:{pump:'create:block/pump'},elements:cogElements});
