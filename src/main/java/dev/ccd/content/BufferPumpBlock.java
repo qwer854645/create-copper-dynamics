@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 public final class BufferPumpBlock extends PumpBlock {
     public BufferPumpBlock(Properties properties){super(properties);}
     @Override public net.minecraft.world.level.block.entity.BlockEntityType<? extends PumpBlockEntity> getBlockEntityType(){return CopperDynamics.BUFFER_PUMP_BE.get();}
-    @Override public Direction.Axis getRotationAxis(BlockState state){return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X;}
-    @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side){return side.getAxis()==getRotationAxis(state);}
-    @Override public boolean isSmallCog(){return false;}
+    @Override public Direction.Axis getRotationAxis(BlockState state){return state.getValue(FACING).getAxis();}
+    @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side){return false;}
+    @Override public boolean isSmallCog(){return true;}
     @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context){return super.getStateForPlacement(context);}
     @Override public BlockState getRotatedBlockState(BlockState state,Direction side){
         Direction facing=state.getValue(FACING);

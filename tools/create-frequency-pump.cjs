@@ -8,9 +8,7 @@ const textures={copper:'create:block/copper_underside',shaft:'ccd:block/booster_
 function box(name,from,to){return{name,from,to,faces:Object.fromEntries(['north','south','east','west','up','down'].map(s=>[s,{texture:['east','west'].includes(s)?'#shaft':'#copper',uv:[2,2,14,14]}]))};}
 async function main(){
  // Central vertical slot exposes the native wheel at the top and bottom of the copper shell.
- const body=[box('front_copper_housing',[2,2,2],[14,14,6]),box('rear_copper_housing',[2,2,10],[14,14,14])];
- body.push({name:'left_bearing',from:[2,5,6],to:[5,11,10],faces:{west:{texture:'#shaft',uv:[6,5,10,11]},north:{texture:'#copper',uv:[2,5,5,11]},south:{texture:'#copper',uv:[2,5,5,11]}}});
- body.push({name:'right_bearing',from:[11,5,6],to:[14,11,10],faces:{east:{texture:'#shaft',uv:[6,5,10,11]},north:{texture:'#copper',uv:[11,5,14,11]},south:{texture:'#copper',uv:[11,5,14,11]}}});
+ const body=[box('left_copper_housing',[2,2,2],[6.25,14,14]),box('right_copper_housing',[9.75,2,2],[14,14,14])];
  for(const side of ['north','south'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){const e=structuredClone(original);e.name='native_'+part+'_'+side;for(const f of Object.values(e.faces)){f.texture='#pipe';delete f.cullface;}body.push(e);}
  const basis=[[0,0,-1],[0,1,0],[1,0,0]],gear=model('create:block/mechanical_pump/cog').elements.map(original=>{
   const e=turn({...original,rotation:undefined},basis);

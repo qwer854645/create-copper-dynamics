@@ -17,10 +17,10 @@ async function main(){
  // Native pump cog rotated from Z to Y, compressed into the upper two thirds.
  const cog=model('create:block/mechanical_pump/cog'),cogElements=[];
  for(const original of cog.elements){
-  const e=turn({...original,rotation:undefined},[[0,0,-1],[0,1,0],[1,0,0]]);
+  const e=turn({...original,rotation:undefined},[[1,0,0],[0,0,-1],[0,1,0]]);
   e.name='native_pump_cog';
-  for(const p of [e.from,e.to])for(let i=0;i<3;i++)p[i]=8+(p[i]-8)*.55;
-  if(original.rotation?.angle)e.rotation={angle:original.rotation.angle,axis:'x',origin:[8,8,8]};
+  for(const p of [e.from,e.to])for(let i=0;i<3;i++)p[i]=8+(p[i]-8)*(i===1?.65:.8)+(i===1?2:0);
+  if(original.rotation?.angle)e.rotation={angle:original.rotation.angle,axis:'y',origin:[8,10,8]};
   for(const f of Object.values(e.faces)){f.texture='#pump';delete f.cullface;}cogElements.push(e);
  }
  for(const side of ['up'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){
@@ -31,7 +31,7 @@ async function main(){
  save('assets/ccd/models/block/buffer_pump/cog.json',{parent:'minecraft:block/block',textures:{pump:'create:block/pump'},elements:cogElements});
  const shaft=model('create:block/shaft_half'),shafts=[];
  for(const basis of [[[0,0,-1],[0,1,0],[1,0,0]],[[0,0,1],[0,1,0],[-1,0,0]]])for(const source of shaft.elements){const e=turn(source,basis);for(const f of Object.values(e.faces))f.texture=f.texture==='#0'?'#shaft_side':'#shaft_end';shafts.push(e);}
- save('assets/ccd/models/item/buffer_pump.json',{...base,textures:{...base.textures,shaft_side:shaft.textures['0'],shaft_end:shaft.textures['1']},elements:[...base.elements,...cogElements,...shafts]});
+ save('assets/ccd/models/item/buffer_pump.json',{...base,elements:[...base.elements,...cogElements]});
  const variants={};for(const[facing,rotation]of Object.entries({up:{},down:{x:180},north:{x:90},south:{x:270},east:{x:90,y:90},west:{x:90,y:270}}))variants['facing='+facing]={model:'ccd:block/buffer_pump',...rotation};
  save('assets/ccd/blockstates/buffer_pump.json',{variants});
  save('data/ccd/recipe/buffer_pump.json',{type:'minecraft:crafting_shapeless',ingredients:[{item:'create:mechanical_pump'},{item:'create:fluid_tank'}],result:{id:'ccd:buffer_pump',count:1}});
