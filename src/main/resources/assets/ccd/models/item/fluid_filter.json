@@ -1,3 +1,4 @@
 {
-  "parent": "create:item/filter"
+  "parent": "create:item/filter",
+  "textures": {"layer0": "ccd:item/fluid_filter"}
 }

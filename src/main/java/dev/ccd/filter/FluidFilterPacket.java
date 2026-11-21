@@ -46,7 +46,8 @@ public record FluidFilterPacket(int menu, int operation, int slot, FluidStack sa
             else if (packet.operation == 3) data.putBoolean(menu.attributes ? "all" : "components", !data.getBoolean(menu.attributes ? "all" : "components"));
             else if (packet.operation == 4 && menu.attributes && packet.slot >= 0 && packet.slot < entries.size()) {
                 var entry = entries.getCompound(packet.slot); entry.putBoolean("invert", !entry.getBoolean("invert"));
-            } else return;
+            } else if(packet.operation==5)entries.clear();
+            else return;
             data.put("entries", entries);
             menu.filter.set(CopperDynamics.FLUID_FILTER_DATA.get(), CustomData.of(data));
             player.getInventory().setChanged();
