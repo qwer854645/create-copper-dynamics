@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import com.simibubi.create.content.fluids.pump.PumpBlock;
 
 /** FACING and branch are fixed physical ports; reversal never moves either port. */
-public final class TurningBoosterPumpBlock extends PumpBlock implements com.simibubi.create.api.contraption.transformable.TransformableBlock {
+public class TurningBoosterPumpBlock extends PumpBlock implements com.simibubi.create.api.contraption.transformable.TransformableBlock {
     public static final IntegerProperty ROLL = IntegerProperty.create("roll", 0, 3);
     public static final BooleanProperty REVERSED = BooleanProperty.create("reversed");
     public TurningBoosterPumpBlock(Properties properties) {
@@ -38,6 +38,8 @@ public final class TurningBoosterPumpBlock extends PumpBlock implements com.simi
         return side == state.getValue(FACING) || side == branch(state);
     }
     public static float shaftModifier(BlockState state, Direction side) {
+        if(state.getBlock() instanceof VerticalTurningBoosterPumpBlock block)
+            return side.getAxis()==block.getRotationAxis(state)?1:0;
         if (side == state.getValue(FACING).getOpposite()) return 1;
         if (side == branch(state).getOpposite()) return -1;
         return 0;

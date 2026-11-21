@@ -69,6 +69,20 @@ for(const name of ['turning_booster_pump','bidirectional_fluid_pump']){
  console.log(name+': 48 direction/reversal states aligned');
 }
 console.log(`${models} resolved models; ${placements} blockstate placements validated.`);
+{
+ const states=read('blockstates/vertical_turning_booster_pump.json').variants;
+ for(const[key,spec]of Object.entries(states)){
+  const state=Object.fromEntries(key.split(',').map(v=>v.split('='))),front=vectors[state.facing],axis=front.findIndex(n=>n);
+  let branch=axis===1?vectors.north:vectors.up;
+  for(let i=0;i<+state.roll;i++)branch=clock(branch,axis);
+  let ports=[vectors.up,vectors.north],shaft=vectors.east;
+  if(spec.model.endsWith('_cross')){const b=[[0,1,0],[-1,0,0],[0,0,1]];ports=ports.map(v=>vec(v,b));shaft=vec(shaft,b);}
+  const b=basis(spec),normal=vec(shaft,b);
+  if(!equal(vec(ports[0],b),front)||!equal(vec(ports[1],b),branch)||normal.reduce((s,n,i)=>s+n*front[i],0)!==0||normal.reduce((s,n,i)=>s+n*branch[i],0)!==0)
+   throw Error('Vertical turning shaft/port mismatch '+key);
+ }
+ console.log('Vertical turning pump: 48 states keep shaft normal to both ports.');
+}
 for(const name of ['booster_pump','turning_booster_pump','bidirectional_fluid_pump','redstone_fluid_pump','buffer_pump']){
  const body=model(name==='redstone_fluid_pump'?'ccd:block/redstone_fluid_pump/block':'ccd:block/'+name);
  const item=model('ccd:item/'+name);

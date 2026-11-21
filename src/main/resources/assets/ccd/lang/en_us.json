@@ -415,5 +415,7 @@
   "block.ccd.buffer_pump": "Buffer Pump",
   "ccd.creative_delivery.mode": "World Output Mode",
   "ccd.creative_delivery.containers_only": "Containers Only",
-  "ccd.creative_delivery.allow_world": "Allow World Output"
+  "ccd.creative_delivery.allow_world": "Allow World Output",
+  "block.ccd.vertical_turning_booster_pump": "Perpendicular Turning Booster Pump",
+  "block.ccd.vertical_turning_booster_pump.tooltip.summary": "The shaft is _perpendicular to the fluid port plane_, retaining Turning Booster Pump performance."
 }

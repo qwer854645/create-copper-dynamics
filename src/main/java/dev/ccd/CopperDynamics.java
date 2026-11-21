@@ -218,7 +218,12 @@ public final class CopperDynamics {
         ITEMS.register("turning_booster_pump", () -> new BlockItem(TURNING_BOOSTER_PUMP.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<dev.ccd.content.TurningBoosterPumpBlockEntity>> TURNING_BOOSTER_PUMP_BE =
         BLOCK_ENTITIES.register("turning_booster_pump", () -> BlockEntityType.Builder.of(
-            dev.ccd.content.TurningBoosterPumpBlockEntity::new, TURNING_BOOSTER_PUMP.get()).build(null));
+            dev.ccd.content.TurningBoosterPumpBlockEntity::new, TURNING_BOOSTER_PUMP.get(), CopperDynamics.VERTICAL_TURNING_BOOSTER_PUMP.get()).build(null));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.VerticalTurningBoosterPumpBlock> VERTICAL_TURNING_BOOSTER_PUMP =
+        BLOCKS.register("vertical_turning_booster_pump", () -> new dev.ccd.content.VerticalTurningBoosterPumpBlock(BlockBehaviour.Properties.of()
+            .mapColor(MapColor.COLOR_ORANGE).strength(3).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<Item, BlockItem> VERTICAL_TURNING_BOOSTER_PUMP_ITEM =
+        ITEMS.register("vertical_turning_booster_pump", () -> new BlockItem(VERTICAL_TURNING_BOOSTER_PUMP.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<BoosterPumpBlockEntity>> BOOSTER_PUMP_BE =
         BLOCK_ENTITIES.register("booster_pump", () -> BlockEntityType.Builder.of(
             BoosterPumpBlockEntity::new, BOOSTER_PUMP.get()).build(null));
@@ -408,6 +413,7 @@ public final class CopperDynamics {
                 output.accept(RECIPROCATING_PUMP_ITEM.get());
                 output.accept(BIDIRECTIONAL_FLUID_PUMP_ITEM.get());
                 output.accept(TURNING_BOOSTER_PUMP_ITEM.get());
+                output.accept(VERTICAL_TURNING_BOOSTER_PUMP_ITEM.get());
                 output.accept(REDSTONE_FLUID_PUMP_ITEM.get());
                 output.accept(FLUID_TRANSMITTER_ITEM.get());
                 output.accept(FLUID_ACCESS_PORT_ITEM.get());
@@ -451,6 +457,8 @@ public final class CopperDynamics {
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(BOOSTER_PUMP.get(),
             () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get()) * CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(TURNING_BOOSTER_PUMP.get(),
+            () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get()) * CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
+        event.enqueueWork(() -> BlockStressValues.IMPACTS.register(VERTICAL_TURNING_BOOSTER_PUMP.get(),
             () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get()) * CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(REDSTONE_FLUID_PUMP.get(),
             () -> BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));

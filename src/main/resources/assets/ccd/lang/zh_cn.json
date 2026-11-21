@@ -415,5 +415,7 @@
   "block.ccd.buffer_pump": "缓存泵",
   "ccd.creative_delivery.mode": "世界排液模式",
   "ccd.creative_delivery.containers_only": "仅向容器输送",
-  "ccd.creative_delivery.allow_world": "允许向世界排液"
+  "ccd.creative_delivery.allow_world": "允许向世界排液",
+  "block.ccd.vertical_turning_booster_pump": "垂直转向增压泵",
+  "block.ccd.vertical_turning_booster_pump.tooltip.summary": "传动轴_垂直于双管口平面_，输送能力与转向增压泵相同。"
 }

@@ -21,7 +21,7 @@ public class PumpPlacementTests {
         var player=net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
         player.setYRot(37);player.setXRot(20);
         var origin=new BlockPos(2,2,2);
-        var items=java.util.List.of(CopperDynamics.BOOSTER_PUMP_ITEM.get(),CopperDynamics.TURNING_BOOSTER_PUMP_ITEM.get(),
+        var items=java.util.List.of(CopperDynamics.BOOSTER_PUMP_ITEM.get(),CopperDynamics.TURNING_BOOSTER_PUMP_ITEM.get(),CopperDynamics.VERTICAL_TURNING_BOOSTER_PUMP_ITEM.get(),
             CopperDynamics.BIDIRECTIONAL_FLUID_PUMP_ITEM.get(),CopperDynamics.REDSTONE_FLUID_PUMP_ITEM.get(),
             CopperDynamics.PORTABLE_PUMP_ITEM.get(),CopperDynamics.RECIPROCATING_PUMP_ITEM.get(),CopperDynamics.BUFFER_PUMP_ITEM.get());
         for(var face:Direction.values()){
