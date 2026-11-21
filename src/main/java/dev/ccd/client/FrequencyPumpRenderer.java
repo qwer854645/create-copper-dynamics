@@ -5,8 +5,8 @@ import com.mojang.math.Axis;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
-import dev.ccd.content.ReciprocatingFluidPumpBlock;
-import dev.ccd.content.ReciprocatingFluidPumpBlockEntity;
+import dev.ccd.content.VariableFlowPumpBlock;
+import dev.ccd.content.VariableFlowPumpBlockEntity;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,13 +15,13 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
-public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<ReciprocatingFluidPumpBlockEntity> {
+public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<VariableFlowPumpBlockEntity> {
     public static void registerModels(){}
     public FrequencyPumpRenderer(BlockEntityRendererProvider.Context context){}
-    @Override protected void renderSafe(ReciprocatingFluidPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
-        var state=be.getBlockState();var front=state.getValue(ReciprocatingFluidPumpBlock.FACING);
+    @Override protected void renderSafe(VariableFlowPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
+        var state=be.getBlockState();var front=state.getValue(VariableFlowPumpBlock.FACING);
         float time=net.createmod.catnip.animation.AnimationTickHolder.getRenderTime(be.getLevel());
-        var axis=((ReciprocatingFluidPumpBlock)state.getBlock()).getRotationAxis(state);
+        var axis=((VariableFlowPumpBlock)state.getBlock()).getRotationAxis(state);
         float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),axis);
         float angle=(float)Math.toRadians((time*be.getSpeed()*.3f+offset)%360);
         pose.pushPose();pose.translate(.5,.5,.5);
@@ -32,7 +32,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Recipro
         pose.mulPose(Axis.YP.rotationDegrees(90));pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(AllPartialModels.MECHANICAL_PUMP_COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
         // The dial measures signal, not shaft speed, and remains live while the pump is stopped.
-        float progress=state.getValue(ReciprocatingFluidPumpBlock.SIGNAL)/15f;
+        float progress=state.getValue(VariableFlowPumpBlock.SIGNAL)/15f;
         for(int side:new int[]{1,-1}){
             pose.pushPose();pose.translate(.5,.5,.5);
             pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));

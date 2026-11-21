@@ -34,14 +34,14 @@ async function main(){
    e.name=source===head?'signal_gauge_head':'signal_gauge_needle';list.push(e);
   }
   const wrap=elements=>({parent:'create:block/block',render_type:'minecraft:cutout_mipped',textures,elements});
- save('assets/ccd/models/block/frequency_pump/body.json',wrap(body));save('assets/ccd/models/block/frequency_pump/cog.json',wrap(gear));
+ save('assets/ccd/models/block/variable_flow_pump/body.json',wrap(body));save('assets/ccd/models/block/variable_flow_pump/cog.json',wrap(gear));
  const shaft=model('create:block/shaft_half'),halves=[];
  for(const b of [basis,[[0,0,1],[0,1,0],[-1,0,0]]])for(const original of shaft.elements){const e=turn(original,b);for(const f of Object.values(e.faces))f.texture=f.texture==='#0'?'#shaft_side':'#shaft_end';halves.push(e);}
-  save('assets/ccd/models/item/reciprocating_fluid_pump.json',wrap([...body,...gear,...needles]));
- const variants={};for(const[facing,y]of Object.entries({north:0,east:90,south:180,west:270,up:0,down:0}))variants['facing='+facing]={model:'ccd:block/frequency_pump/body',...(y?{y}:{})};
- save('assets/ccd/blockstates/reciprocating_fluid_pump.json',{variants});
- for(const locale of ['zh_cn','en_us']){const rel=`assets/ccd/lang/${locale}.json`,d=JSON.parse(fs.readFileSync(path.join(root,rel),'utf8'));d['block.ccd.reciprocating_fluid_pump']=locale==='zh_cn'?'调频动力泵':'Variable Flow Mechanical Pump';save(rel,d);}
- fs.mkdirSync('outputs/frequency-pump',{recursive:true});const full=await mesh('ccd:item/reciprocating_fluid_pump'),panels=[];
+  save('assets/ccd/models/item/variable_flow_pump.json',wrap([...body,...gear,...needles]));
+ const variants={};for(const[facing,y]of Object.entries({north:0,east:90,south:180,west:270,up:0,down:0}))variants['facing='+facing]={model:'ccd:block/variable_flow_pump/body',...(y?{y}:{})};
+ save('assets/ccd/blockstates/variable_flow_pump.json',{variants});
+ for(const locale of ['zh_cn','en_us']){const rel=`assets/ccd/lang/${locale}.json`,d=JSON.parse(fs.readFileSync(path.join(root,rel),'utf8'));d['block.ccd.variable_flow_pump']=locale==='zh_cn'?'调频动力泵':'Variable Flow Mechanical Pump';save(rel,d);}
+ fs.mkdirSync('outputs/frequency-pump',{recursive:true});const full=await mesh('ccd:item/variable_flow_pump'),panels=[];
  for(const[i,view]of [[0,[28,28,-34]],[1,[-28,22,34]]])panels.push({input:await render(full,550,520,view,{center:[8,8,8],scale:25}),left:i*550,top:0});
  await sharp({create:{width:1100,height:520,channels:4,background:'#e5e8e2'}}).composite(panels).png().toFile('outputs/frequency-pump/preview.png');
 }main().catch(e=>{console.error(e);process.exitCode=1;});

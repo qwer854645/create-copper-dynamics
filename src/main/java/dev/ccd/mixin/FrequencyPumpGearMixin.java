@@ -2,7 +2,7 @@ package dev.ccd.mixin;
 
 import com.simibubi.create.content.kinetics.RotationPropagator;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import dev.ccd.content.ReciprocatingFluidPumpBlock;
+import dev.ccd.content.VariableFlowPumpBlock;
 import net.minecraft.core.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +15,7 @@ abstract class FrequencyPumpGearMixin {
     private static void ccd$blockPipeFaceGears(KineticBlockEntity from,KineticBlockEntity to,CallbackInfoReturnable<Float> cir){
         for(var pump:new KineticBlockEntity[]{from,to}){
             var state=pump.getBlockState();
-            if(!(state.getBlock() instanceof ReciprocatingFluidPumpBlock block)||!block.isSmallCog())continue;
+            if(!(state.getBlock() instanceof VariableFlowPumpBlock block)||!block.isSmallCog())continue;
             var other=pump==from?to:from;
             var diff=other.getBlockPos().subtract(pump.getBlockPos());
             // Only top/bottom adjacent gears reach the exposed wheel; pipe mouths cannot mesh.

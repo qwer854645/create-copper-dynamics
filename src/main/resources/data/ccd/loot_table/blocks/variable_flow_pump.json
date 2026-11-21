@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ccd:reciprocating_fluid_pump"
+          "name": "ccd:variable_flow_pump"
         }
       ],
       "conditions": [

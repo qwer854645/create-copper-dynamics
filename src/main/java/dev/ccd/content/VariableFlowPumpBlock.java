@@ -16,9 +16,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 /** Copper flow-control pump with straight horizontal ports and a transverse gear shaft. */
-public class ReciprocatingFluidPumpBlock extends PumpBlock {
+public class VariableFlowPumpBlock extends PumpBlock {
     public static final IntegerProperty SIGNAL=BlockStateProperties.POWER;
-    public ReciprocatingFluidPumpBlock(Properties properties) {
+    public VariableFlowPumpBlock(Properties properties) {
         super(properties);registerDefaultState(defaultBlockState().setValue(FACING,Direction.NORTH).setValue(SIGNAL,0));
     }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) {
@@ -38,14 +38,14 @@ public class ReciprocatingFluidPumpBlock extends PumpBlock {
         // This model remains upright; a wrench rotates the horizontal pipe and gear axes together.
         return state.setValue(FACING,state.getValue(FACING).getClockWise());
     }
-    @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.RECIPROCATING_PUMP_BE.get(); }
+    @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(); }
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block block,BlockPos from,boolean moving) {
         super.neighborChanged(state,level,pos,block,from,moving);
         if(level.isClientSide())return;
         int signal=redstoneSignal(level,pos);
         if(signal!=state.getValue(SIGNAL)) {
             level.setBlockAndUpdate(pos,state.setValue(SIGNAL,signal));
-            if(level.getBlockEntity(pos) instanceof ReciprocatingFluidPumpBlockEntity pump)pump.updatePressureChange();
+            if(level.getBlockEntity(pos) instanceof VariableFlowPumpBlockEntity pump)pump.updatePressureChange();
         }
     }
     protected int redstoneSignal(Level level,BlockPos pos){return level.getBestNeighborSignal(pos);}

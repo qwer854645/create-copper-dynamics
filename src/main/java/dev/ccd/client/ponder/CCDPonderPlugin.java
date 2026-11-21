@@ -20,7 +20,7 @@ public final class CCDPonderPlugin implements PonderPlugin {
         scene(helper,"collection",CCDPonderScenes::collection,"copper_collection_grate","smart_collection_grate","copper_water_basin","copper_water_supply");
         scene(helper,"transfer",CCDPonderScenes::transfer,"fluid_transmitter");
         scene(helper,"pumping",CCDPonderScenes::pumping,"booster_pump");
-        scene(helper,"pumping",CCDPonderScenes::pumpVariants,"turning_booster_pump","vertical_turning_booster_pump","redstone_fluid_pump","bidirectional_fluid_pump","reciprocating_fluid_pump","portable_fluid_pump");
+        scene(helper,"pumping",CCDPonderScenes::pumpVariants,"turning_booster_pump","vertical_turning_booster_pump","redstone_fluid_pump","bidirectional_fluid_pump","variable_flow_pump","portable_fluid_pump");
         scene(helper,"tanks",CCDPonderScenes::buffering,"buffer_pump","creative_delivery_fluid_tank");
         scene(helper,"pumping",CCDPonderScenes::omniPumping,"omni_pump");
         scene(helper,"pumping",CCDPonderScenes::metering,"flow_meter");

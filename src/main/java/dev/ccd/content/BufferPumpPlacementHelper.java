@@ -21,7 +21,7 @@ public final class BufferPumpPlacementHelper implements IPlacementHelper {
         if(hit.getDirection().getAxis()==axis)return PlacementOffset.fail();
         for(var side:IPlacementHelper.orderedByDistanceExceptAxis(pos,hit.getLocation(),axis)){
             // The frequency pump exposes its gear only above and below.
-            if(state.getBlock() instanceof ReciprocatingFluidPumpBlock && side.getAxis()!=Direction.Axis.Y)continue;
+            if(state.getBlock() instanceof VariableFlowPumpBlock && side.getAxis()!=Direction.Axis.Y)continue;
             var target=pos.relative(side);
             if(!level.getBlockState(target).canBeReplaced())continue;
             var facing=state.getBlock() instanceof BufferPumpBlock?state.getValue(BufferPumpBlock.FACING):Direction.fromAxisAndDirection(axis,Direction.AxisDirection.POSITIVE);

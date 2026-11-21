@@ -1,6 +1,6 @@
 package dev.ccd.mixin;
 
-import dev.ccd.content.ReciprocatingFluidPumpBlock;
+import dev.ccd.content.VariableFlowPumpBlock;
 import net.createmod.catnip.placement.PlacementOffset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract class FrequencyPumpPlacementHelperMixin {
     @Inject(method="getOffset",at=@At("HEAD"),cancellable=true)
     private void ccd$exposedWheelOnly(Player player,Level level,BlockState state,BlockPos pos,BlockHitResult hit,CallbackInfoReturnable<PlacementOffset> cir){
-        boolean frequency=state.getBlock() instanceof ReciprocatingFluidPumpBlock block&&block.isSmallCog();
+        boolean frequency=state.getBlock() instanceof VariableFlowPumpBlock block&&block.isSmallCog();
         boolean buffer=state.getBlock() instanceof dev.ccd.content.BufferPumpBlock;
         if(!frequency&&!buffer)return;
         var kinetic=(com.simibubi.create.content.kinetics.base.KineticBlock)state.getBlock();

@@ -12,7 +12,7 @@ function canonical(e,m){
 }
 for(const [item,parts]of Object.entries({
  buffer_pump:['buffer_pump/tank','buffer_pump/pump_head','buffer_pump/mouth','buffer_pump/cog'],
- reciprocating_fluid_pump:['frequency_pump/body','frequency_pump/cog'],
+ variable_flow_pump:['variable_flow_pump/body','variable_flow_pump/cog'],
  vertical_turning_booster_pump:['vertical_turning_booster_pump'],
  flow_meter:['flow_meter/body','flow_meter/head'],
  creative_delivery_fluid_tank:['creative_delivery_fluid_tank'],

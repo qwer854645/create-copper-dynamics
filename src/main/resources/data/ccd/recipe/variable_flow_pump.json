@@ -15,7 +15,7 @@
     }
   ],
   "result": {
-    "id": "ccd:reciprocating_fluid_pump",
+    "id": "ccd:variable_flow_pump",
     "count": 1
   }
 }

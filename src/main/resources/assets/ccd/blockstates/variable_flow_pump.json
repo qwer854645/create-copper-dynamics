@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "ccd:block/variable_flow_pump/body"
+    },
+    "facing=east": {
+      "model": "ccd:block/variable_flow_pump/body",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "ccd:block/variable_flow_pump/body",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ccd:block/variable_flow_pump/body",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "ccd:block/variable_flow_pump/body"
+    },
+    "facing=down": {
+      "model": "ccd:block/variable_flow_pump/body"
+    }
+  }
+}

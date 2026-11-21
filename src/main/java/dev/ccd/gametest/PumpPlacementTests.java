@@ -23,12 +23,12 @@ public class PumpPlacementTests {
         var origin=new BlockPos(2,2,2);
         var items=java.util.List.of(CopperDynamics.BOOSTER_PUMP_ITEM.get(),CopperDynamics.TURNING_BOOSTER_PUMP_ITEM.get(),CopperDynamics.VERTICAL_TURNING_BOOSTER_PUMP_ITEM.get(),
             CopperDynamics.BIDIRECTIONAL_FLUID_PUMP_ITEM.get(),CopperDynamics.REDSTONE_FLUID_PUMP_ITEM.get(),
-            CopperDynamics.PORTABLE_PUMP_ITEM.get(),CopperDynamics.RECIPROCATING_PUMP_ITEM.get(),CopperDynamics.BUFFER_PUMP_ITEM.get());
+            CopperDynamics.PORTABLE_PUMP_ITEM.get(),CopperDynamics.VARIABLE_FLOW_PUMP_ITEM.get(),CopperDynamics.BUFFER_PUMP_ITEM.get());
         for(var face:Direction.values()){
             h.setBlock(origin,CopperDynamics.BUFFER_PUMP.get().defaultBlockState().setValue(BufferPumpBlock.FACING,face));
             var absolute=h.absolutePos(origin);
             for(BlockItem item:items){
-                if(item.getBlock() instanceof ReciprocatingFluidPumpBlock&&face.getAxis().isVertical())continue;
+                if(item.getBlock() instanceof VariableFlowPumpBlock&&face.getAxis().isVertical())continue;
                 var stack=new ItemStack(item);player.setItemInHand(InteractionHand.MAIN_HAND,stack);
                 var hit=new BlockHitResult(Vec3.atCenterOf(absolute).add(Vec3.atLowerCornerOf(face.getNormal()).scale(.5)),face,absolute,false);
                 var context=new BlockPlaceContext(player,InteractionHand.MAIN_HAND,stack,hit);

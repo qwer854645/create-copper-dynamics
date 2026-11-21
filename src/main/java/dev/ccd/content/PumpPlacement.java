@@ -12,7 +12,7 @@ public final class PumpPlacement {
     public static boolean isCcdPump(BlockState state) {
         return state.getBlock() instanceof BoosterPumpBlock || state.getBlock() instanceof TurningBoosterPumpBlock
             || state.getBlock() instanceof BidirectionalFluidPumpBlock || state.getBlock() instanceof RedstoneFluidPumpBlock
-            || state.getBlock() instanceof ReciprocatingFluidPumpBlock || state.getBlock() instanceof BufferPumpBlock;
+            || state.getBlock() instanceof VariableFlowPumpBlock || state.getBlock() instanceof BufferPumpBlock;
     }
     public static boolean mouth(BlockState state,Direction side) {
         if(state.getBlock() instanceof ThreeWayValveBlock)
@@ -47,7 +47,7 @@ public final class PumpPlacement {
     public static BlockState align(BlockPlaceContext context,BlockState fallback) {
         if(fallback==null||!isCcdPump(fallback))return fallback;
         Direction attached=context.getClickedFace().getOpposite();
-        boolean horizontal=fallback.getBlock() instanceof ReciprocatingFluidPumpBlock;
+        boolean horizontal=fallback.getBlock() instanceof VariableFlowPumpBlock;
         Direction preferred=null;
         if((!horizontal||attached.getAxis().isHorizontal())&&connects(context,attached))preferred=attached;
         if(preferred==null)for(var side:context.getPlayer()==null?Direction.values():Direction.orderedByNearest(context.getPlayer())) {

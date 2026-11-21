@@ -16,7 +16,7 @@ abstract class BoosterPumpConnectionMixin extends FluidTransportBehaviour {
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Ljava/lang/Math;abs(F)F"))
     private float ccd$boosterPortPressure(float rpm) {
         float original = Math.abs(rpm);
-        if (blockEntity instanceof dev.ccd.content.ReciprocatingFluidPumpBlockEntity pump) return pump.flowPressure();
+        if (blockEntity instanceof dev.ccd.content.VariableFlowPumpBlockEntity pump) return pump.flowPressure();
         return blockEntity instanceof BoosterPumpBlockEntity
             ? original * CCDConfig.PUMP_PRESSURE_MULTIPLIER.get().floatValue() : original;
     }

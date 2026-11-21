@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.HolderLookup;
 
 /** Pump with a short-lived hand-crank source on its existing shaft network. */
-public final class PortableFluidPumpBlockEntity extends ReciprocatingFluidPumpBlockEntity {
+public final class PortableFluidPumpBlockEntity extends VariableFlowPumpBlockEntity {
     private int manualTicks;
     private boolean backwards;
     public PortableFluidPumpBlockEntity(BlockPos pos,BlockState state) { super(CopperDynamics.PORTABLE_PUMP_BE.get(),pos,state); }
@@ -74,8 +74,8 @@ public final class PortableFluidPumpBlockEntity extends ReciprocatingFluidPumpBl
     }
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking) {
         dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.pumping");
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.reciprocating.flow",dev.ccd.CCDTooltip.number(targetFlow()));
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.reciprocating.range",dev.ccd.CCDTooltip.number(targetRange()));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.flow",dev.ccd.CCDTooltip.number(targetFlow()));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.range",dev.ccd.CCDTooltip.number(targetRange()));
         return true;
     }
 }

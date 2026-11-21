@@ -246,7 +246,7 @@ public final class CCDPonderScenes {
         text(s,util,B,"A Redstone Signal reverses the Redstone Pump's fluid flow");
         s.world().setBlock(B,CopperDynamics.BIDIRECTIONAL_FLUID_PUMP.get().defaultBlockState(),true);
         text(s,util,B,"Bidirectional Pumps reverse fluid flow when their rotation reverses");
-        s.world().setBlock(B,CopperDynamics.RECIPROCATING_PUMP.get().defaultBlockState(),true);
+        s.world().setBlock(B,CopperDynamics.VARIABLE_FLOW_PUMP.get().defaultBlockState(),true);
         text(s,util,B,"Variable Flow Pumps use Redstone strength to adjust flow and range; Cogwheels connect above or below");
         s.world().setBlock(B,CopperDynamics.PORTABLE_PUMP.get().defaultBlockState(),true);
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick();

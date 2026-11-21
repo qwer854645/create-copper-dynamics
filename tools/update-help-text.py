@@ -28,7 +28,7 @@ rows={
 ('condition1','选择筛选方式时','When choosing a matching mode'),('behaviour1','可要求满足_任一_或_全部_属性，也可拒绝匹配的流体。','Allows fluids matching _Any_ or _All_ attributes, or denies matching fluids.')],
 'block.ccd.redstone_fluid_pump':[
 ('condition1','接收红石信号时','When powered by Redstone'),('behaviour1','_反转_流体输送方向，传动轴继续转动。','_Reverses_ fluid flow while the shafts continue rotating.')],
-'block.ccd.reciprocating_fluid_pump':[
+'block.ccd.variable_flow_pump':[
 ('control1','将齿轮接入顶部或底部','When meshing a Cogwheel above or below'),('action1','为泵提供_旋转力_，两个管口不接受齿轮传动。','Supplies _Rotational Power_. The pipe mouths cannot mesh with Cogwheels.'),
 ('condition1','改变红石信号强度时','When Redstone strength changes'),('behaviour1','调整目标_流量_与_输送距离_。','Adjusts the target _Flow Rate_ and _Range_.')],
 'block.ccd.turning_booster_pump':[
@@ -83,7 +83,7 @@ summaries={
 'three_way_valve':('用_红石信号_切换公共管口所连接的支路。','Uses a _Redstone Signal_ to switch the branch connected to its common port.'),
 'redstone_fluid_pump':('使用旋转力输送流体，用_红石信号_反转流向。','Uses Rotational Power to move fluid and a _Redstone Signal_ to reverse flow.'),
 'bidirectional_fluid_pump':('流体方向随_旋转方向_改变的动力泵。','A Mechanical Pump whose flow follows its _Direction of Rotation_.'),
-'reciprocating_fluid_pump':('使用旋转力输送流体，以_红石信号强度_调整流量和距离。','Uses Rotational Power to move fluid, with _Redstone strength_ adjusting flow and range.')
+'variable_flow_pump':('使用旋转力输送流体，以_红石信号强度_调整流量和距离。','Uses Rotational Power to move fluid, with _Redstone strength_ adjusting flow and range.')
 }
 source=Path(__file__).resolve().parents[1]/'src/main/java/dev/ccd/client/ponder/CCDPonderScenes.java'
 scene_source=source.read_text(encoding='utf-8')
@@ -107,7 +107,7 @@ concise={
 'block.ccd.bidirectional_fluid_pump':[
 ('summary','使用_旋转力_输送流体。','Uses _Rotational Power_ to move fluid.'),
 ('condition1','反转旋转方向时','When rotation is reversed'),('behaviour1','_反转_流向。','_Reverses_ the direction of flow.')],
-'block.ccd.reciprocating_fluid_pump':[
+'block.ccd.variable_flow_pump':[
 ('summary','使用_旋转力_输送流体，流量和距离由_红石信号强度_控制。','Uses _Rotational Power_ to move fluid. _Redstone strength_ controls flow rate and range.'),
 ('control1','在顶部或底部连接齿轮时','When meshing a Cogwheel above or below'),('action1','为泵提供_旋转力_。','Supplies _Rotational Power_.'),
 ('condition1','接收红石信号时','When receiving a Redstone Signal'),('behaviour1','侧面指针显示_信号强度_。','The side needles indicate _signal strength_.')],

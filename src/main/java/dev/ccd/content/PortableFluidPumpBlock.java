@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.InteractionResult;
 
-public final class PortableFluidPumpBlock extends ReciprocatingFluidPumpBlock {
+public final class PortableFluidPumpBlock extends VariableFlowPumpBlock {
     public PortableFluidPumpBlock(Properties properties) { super(properties); }
     @Override public boolean isSmallCog(){return false;}
     @Override public boolean hasShaftTowards(net.minecraft.world.level.LevelReader level,BlockPos pos,BlockState state,net.minecraft.core.Direction side){
