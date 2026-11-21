@@ -18,7 +18,13 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
     public static final int RANGE=256, RATE=1000000, VISIT_LIMIT=4096;
     public CreativeDeliveryTankBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.CREATIVE_DELIVERY_TANK_BE.get(),pos,state);}
     public com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour worldOutput;
+    private com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour fluidSelection;
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
+        behaviours.add(fluidSelection=new com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour(this,new CreativeDeliverySlotTransform()){
+            @Override public void onShortInteract(net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,Direction side,net.minecraft.world.phys.BlockHitResult hit){if(player.isCreative())super.onShortInteract(player,hand,side,hit);}
+        }
+            .forFluids().withPredicate(stack->stack.isEmpty()||!FluidStockItem.sample(stack).isEmpty())
+            .withCallback(stack->{if(level!=null&&!level.isClientSide())select(FluidStockItem.sample(stack));}));
         behaviours.add(worldOutput=new com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour(
             net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode"),this,
             new com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform.Sided(){
