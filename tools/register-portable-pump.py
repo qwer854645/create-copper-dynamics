@@ -15,5 +15,5 @@ for rel in ('data/create/tags/block/wrench_pickup.json','data/minecraft/tags/blo
 for locale in ('zh_cn','en_us'):
  rel=f'assets/ccd/lang/{locale}.json';data=json.loads((root/rel).read_text(encoding='utf-8'))
  data['block.ccd.portable_fluid_pump']='便携式流体泵' if locale=='zh_cn' else 'Portable Fluid Pump'
- data['block.ccd.portable_fluid_pump.tooltip.summary']='用于_短距离快速转移_流体，可接入旋转动力或_空手右键_手动驱动。潜行右键反向。' if locale=='zh_cn' else 'Transfers fluids _quickly over short distances_. Supply rotation or _R-Click with an empty hand_ to pump manually. Sneak to reverse manual pumping.'
+ data['block.ccd.portable_fluid_pump.tooltip.summary']='用于_短距离快速转移_流体，可接入旋转动力或像_手摇曲柄_一样右键驱动。潜行右键反向。' if locale=='zh_cn' else 'Transfers fluids _quickly over short distances_. Supply rotation or _R-Click like a Hand Crank_ to pump manually. Sneak to reverse.'
  save(rel,data)

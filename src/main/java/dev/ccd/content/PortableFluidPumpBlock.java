@@ -18,12 +18,19 @@ public final class PortableFluidPumpBlock extends ReciprocatingFluidPumpBlock {
         return CopperDynamics.PORTABLE_PUMP_BE.get();
     }
     @Override protected InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,Player player,BlockHitResult hit) {
-        if(player.isSpectator()||!player.mayBuild()||!player.getMainHandItem().isEmpty())return InteractionResult.PASS;
+        return operate(level,pos,player,player.getMainHandItem())?InteractionResult.sidedSuccess(level.isClientSide()):InteractionResult.PASS;
+    }
+    private boolean operate(Level level,BlockPos pos,Player player,net.minecraft.world.item.ItemStack held) {
+        if(player.isSpectator()||!player.mayBuild())return false;
         if(!level.isClientSide()&&level.getBlockEntity(pos) instanceof PortableFluidPumpBlockEntity pump) {
             pump.turn(player.isShiftKeyDown());
-            player.causeFoodExhaustion(32*com.simibubi.create.infrastructure.config.AllConfigs.server().kinetics.crankHungerMultiplier.getF());
+            // Match the crank's Extendo Grip exemption and configured hunger cost.
+            if(!held.is(com.simibubi.create.AllItems.EXTENDO_GRIP.get()))
+                player.causeFoodExhaustion(32*com.simibubi.create.infrastructure.config.AllConfigs.server().kinetics.crankHungerMultiplier.getF());
+            if(player.getFoodData().getFoodLevel()==0)
+                com.simibubi.create.foundation.advancement.AllAdvancements.HAND_CRANK.awardTo(player);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide());
+        return true;
     }
     @Override protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,net.minecraft.world.InteractionHand hand,BlockHitResult hit) {
         if(stack.is(net.neoforged.neoforge.common.Tags.Items.TOOLS_WRENCH)) {
@@ -31,6 +38,7 @@ public final class PortableFluidPumpBlock extends ReciprocatingFluidPumpBlock {
             var result=player.isShiftKeyDown()?onSneakWrenched(state,context):onWrenched(state,context);
             return result.consumesAction()?net.minecraft.world.ItemInteractionResult.SUCCESS:net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        return super.useItemOn(stack,state,level,pos,player,hand,hit);
+        return operate(level,pos,player,stack)?net.minecraft.world.ItemInteractionResult.SUCCESS
+            :net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 }
