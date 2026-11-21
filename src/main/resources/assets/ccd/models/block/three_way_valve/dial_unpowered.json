@@ -5,9 +5,79 @@
   "textures": {
     "dial": "create:block/valve_open",
     "needle": "create:block/fluid_valve",
-    "glass": "create:block/fluid_valve"
+    "glass": "create:block/fluid_valve",
+    "backing": "create:block/copper_underside"
   },
   "elements": [
+    {
+      "name": "solid_dial_backing",
+      "from": [
+        3,
+        12.8,
+        3
+      ],
+      "to": [
+        13,
+        13.01,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#backing",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#backing",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "east": {
+          "texture": "#backing",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "west": {
+          "texture": "#backing",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "up": {
+          "texture": "#backing",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "down": {
+          "texture": "#backing",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        }
+      }
+    },
     {
       "name": "dial",
       "from": [

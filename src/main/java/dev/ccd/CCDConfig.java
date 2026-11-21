@@ -69,7 +69,7 @@ public final class CCDConfig {
             .worldRestart().defineInRange("maximumRange", 32, 0, 256);
         builder.pop();
         builder.push("portablePump");
-        PORTABLE_FLOW=builder.comment("Target flow in mB/t with manual or rotational power. Rounded to the nearest 100 mB/t, minimum 100.").worldRestart().defineInRange("flow",300,100,1000000);
+        PORTABLE_FLOW=builder.comment("Target flow in mB/t with manual or rotational power. Rounded to the nearest 100 mB/t, minimum 100.").worldRestart().defineInRange("flow",1000,100,1000000);
         PORTABLE_RANGE=builder.comment("Pipe range per side in blocks.").worldRestart().defineInRange("range",4,1,256);
         builder.pop();
         SPEC = builder.build();
