@@ -3,12 +3,15 @@ const {model,mesh,render}=require('./preview-fluid-packager.cjs');
 const root=path.resolve(__dirname,'../src/main/resources');
 function save(rel,data){const p=path.join(root,rel);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,JSON.stringify(data,null,2)+'\n');}
 async function main(){
- const body=model('create:block/portable_fluid_interface/block');
- body.parent='create:block/block';body.textures['0']='create:block/creative_fluid_tank';body.textures['2']='create:block/creative_fluid_tank';body.textures.particle='create:block/creative_fluid_tank';
- for(const e of body.elements)for(const f of Object.values(e.faces))f.uv=[0,0,16,16];
+ const body=structuredClone(model('create:block/creative_single_window'));
+ body.parent='create:block/block';
  const top=model('create:block/portable_fluid_interface/block_top');
  for(const[k,v]of Object.entries(top.textures))body.textures['mouth_'+k]=v;
- for(const original of top.elements){const e=structuredClone(original);for(const f of Object.values(e.faces)){if(f.texture.startsWith('#'))f.texture='#mouth_'+f.texture.slice(1);delete f.cullface;}body.elements.push(e);}
+ for(const original of top.elements){const e=structuredClone(original);
+  // Native interface head translated onto the top face of the native tank.
+  e.from[1]+=3;e.to[1]+=3;
+  if(e.rotation)e.rotation.origin[1]+=3;
+  for(const f of Object.values(e.faces)){if(f.texture.startsWith('#'))f.texture='#mouth_'+f.texture.slice(1);delete f.cullface;}body.elements.push(e);}
  save('assets/ccd/models/block/creative_delivery_fluid_tank.json',body);
  save('assets/ccd/models/item/creative_delivery_fluid_tank.json',{parent:'ccd:block/creative_delivery_fluid_tank'});
  const variants={};for(const[facing,rotation]of Object.entries({up:{},down:{x:180},north:{x:90},south:{x:270},east:{x:90,y:90},west:{x:90,y:270}}))variants['facing='+facing]={model:'ccd:block/creative_delivery_fluid_tank',...rotation};
