@@ -99,6 +99,11 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_ATOMIZER_BE.get(), AtomizerRenderer::new);
     }
     @SubscribeEvent public static void fluidExtensions(RegisterClientExtensionsEvent event) {
+        event.registerFluidType(new IClientFluidTypeExtensions(){
+            @Override public ResourceLocation getStillTexture(){return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_still");}
+            @Override public ResourceLocation getFlowingTexture(){return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_flow");}
+            @Override public int getTintColor(){return 0xff82c66a;}
+        },CCDFluids.SLIME_TYPE.get());
         for(var medium:dev.ccd.compat.ProcessingMedia.ALL) event.registerFluidType(new IClientFluidTypeExtensions() {
             @Override public ResourceLocation getStillTexture() { return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_still"); }
             @Override public ResourceLocation getFlowingTexture() { return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_flow"); }

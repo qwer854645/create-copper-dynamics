@@ -15,6 +15,7 @@ public final class CCDPonderPlugin implements PonderPlugin {
         scene(helper,"tanks",CCDPonderScenes::tanks,"smart_fluid_tank","horizontal_smart_fluid_tank");
         scene(helper,"faucets",CCDPonderScenes::faucets,"faucet","smart_faucet");
         scene(helper,"atomizing",CCDPonderScenes::atomizing,"fluid_atomizer");
+        scene(helper,"atomizing",CCDPonderScenes::gluing,"slime_bucket");
         scene(helper,"valves",CCDPonderScenes::valves,"three_way_valve");
         scene(helper,"collection",CCDPonderScenes::collection,"copper_collection_grate","smart_collection_grate","copper_water_basin","copper_water_supply");
         scene(helper,"transfer",CCDPonderScenes::transfer,"fluid_transmitter");

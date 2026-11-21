@@ -31,6 +31,10 @@ public final class CCDFluids {
     private CCDFluids() {}
     private static final DeferredRegister<FluidType> TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, CopperDynamics.ID);
     private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, CopperDynamics.ID);
+    public static final DeferredHolder<FluidType,FluidType> SLIME_TYPE=TYPES.register("slime",()->new FluidType(FluidType.Properties.create().descriptionId("fluid_type.ccd.slime").density(1500).viscosity(4000)));
+    public static final DeferredHolder<Fluid,BaseFlowingFluid.Source> SLIME=FLUIDS.register("slime",()->new BaseFlowingFluid.Source(slimeProperties()));
+    public static final DeferredHolder<Fluid,BaseFlowingFluid.Flowing> FLOWING_SLIME=FLUIDS.register("flowing_slime",()->new BaseFlowingFluid.Flowing(slimeProperties()));
+    private static BaseFlowingFluid.Properties slimeProperties(){return new BaseFlowingFluid.Properties(SLIME_TYPE,SLIME,FLOWING_SLIME).block(CopperDynamics.SLIME_BLOCK).bucket(CopperDynamics.SLIME_BUCKET).tickRate(15);}
     public static final DeferredHolder<FluidType, FluidType> QUICKSAND_TYPE = TYPES.register("quicksand", () -> new FluidType(
         FluidType.Properties.create().descriptionId("fluid_type.ccd.quicksand").density(1800).viscosity(3000)
             .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)));

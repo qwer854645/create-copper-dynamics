@@ -21,6 +21,14 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 
 /** Short, deterministic storyboards. State changes are staged, not dependent on live simulation. */
 public final class CCDPonderScenes {
+    public static void gluing(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"bulk_gluing","Bulk Gluing with Slime Fluid");
+        show(s,util,B,CopperDynamics.SLIME_BLOCK.get().defaultBlockState());
+        text(s,util,B,"Air currents passing through Slime Fluid apply Bulk Gluing to items");
+        s.world().setBlock(B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState(),true);
+        text(s,util,B,"Fluid Atomizers can use Slime Fluid to provide the same processing effect");
+        text(s,util,B,"Recipes with one item and one Slimeball are read automatically, such as Pistons becoming Sticky Pistons");s.markAsFinished();
+    }
     private static final BlockPos A=new BlockPos(1,1,2),B=new BlockPos(2,1,2),C=new BlockPos(3,1,2);
     private static CreateSceneBuilder begin(SceneBuilder builder,String id,String title) {
         var scene=new CreateSceneBuilder(builder);

@@ -1,0 +1,5 @@
+{
+  "type": "create:mixing",
+  "ingredients": [{"item":"minecraft:slime_ball"}],
+  "results": [{"id":"ccd:slime","amount":250}]
+}
