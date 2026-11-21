@@ -36,7 +36,7 @@ public final class CCDJeiPlugin implements IModPlugin {
     @Override public ResourceLocation getPluginUid() { return ResourceLocation.fromNamespaceAndPath("ccd","visibility"); }
     @Override public void onRuntimeAvailable(IJeiRuntime runtime) {
         var items=new ArrayList<ItemStack>(); var fluids=new ArrayList<FluidStack>();
-        for(var medium:ProcessingMedia.ALL) if(!medium.available()) {
+        for(var medium:ProcessingMedia.ALL) if(!medium.visible()) {
             items.add(new ItemStack(medium.bucket.get()));
             fluids.add(new FluidStack(medium.source.get(),1000));
             fluids.add(new FluidStack(medium.flowing.get(),1000));

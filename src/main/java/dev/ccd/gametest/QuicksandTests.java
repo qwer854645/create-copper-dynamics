@@ -20,7 +20,7 @@ public final class QuicksandTests {
     @GameTest(template="empty")
     public static void browserVisibilityMatchesOptionalMedia(GameTestHelper h) {
         for(var medium:dev.ccd.compat.ProcessingMedia.ALL) {
-            boolean hidden=!medium.available();
+            boolean hidden=!medium.visible();
             h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.bucket.get())==hidden,"Bucket key visibility wrong");
             h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.source.get())==hidden,"Source visibility wrong");
             h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.flowing.get())==hidden,"Flowing visibility wrong");

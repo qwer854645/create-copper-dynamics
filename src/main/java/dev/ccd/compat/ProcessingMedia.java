@@ -44,6 +44,8 @@ public final class ProcessingMedia {
         }
         private BaseFlowingFluid.Properties properties() { return new BaseFlowingFluid.Properties(type,source,flowing).block(block).bucket(bucket).tickRate(10); }
         public boolean available() { return id.equals("seething_reagent") || net.neoforged.fml.ModList.get().isLoaded(requiredMod(id)); }
+        // Temporary preview, independent of whether the optional processing recipe is available.
+        public boolean visible() { return true; }
     }
     public static String requiredMod(String id) {
         return switch(id) {
