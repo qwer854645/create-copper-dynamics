@@ -13,6 +13,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 /** Infinite creative source with bounded pipe traversal; no owned finite cargo. */
 public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     private FluidStack selected=FluidStack.EMPTY;
+    public FluidStack displayFluid(){return selected.copy();}
     private final dev.ccd.logistics.PumpOpenEnds openEnds=new dev.ccd.logistics.PumpOpenEnds();
     public static final int RANGE=256, RATE=1000000, VISIT_LIMIT=4096;
     public CreativeDeliveryTankBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.CREATIVE_DELIVERY_TANK_BE.get(),pos,state);}

@@ -36,6 +36,11 @@ public final class BufferPumpBlock extends PumpBlock {
                 return net.minecraft.world.ItemInteractionResult.SUCCESS;
             }
         }
+        if(FluidHatchBlock.isFluidContainer(level,stack)&&level.getBlockEntity(pos) instanceof BufferPumpBlockEntity pump){
+            if(com.simibubi.create.foundation.fluid.FluidHelper.tryEmptyItemIntoBE(level,player,hand,stack,pump))
+                return net.minecraft.world.ItemInteractionResult.SUCCESS;
+            return net.minecraft.world.ItemInteractionResult.FAIL;
+        }
         return super.useItemOn(stack,state,level,pos,player,hand,hit);
     }
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){return net.minecraft.world.phys.shapes.Shapes.block();}

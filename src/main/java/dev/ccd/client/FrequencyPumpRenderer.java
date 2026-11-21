@@ -25,7 +25,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Recipro
         pose.pushPose();pose.translate(.5,.5,.5);
         pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
         pose.mulPose(Axis.XP.rotation(angle));
-        pose.scale(.3f,.85f,.85f);
+        pose.scale(.3f,1,1);
         pose.mulPose(Axis.YP.rotationDegrees(90));pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(AllPartialModels.MECHANICAL_PUMP_COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
     }

@@ -12,7 +12,7 @@ async function main(){
  for(const side of ['north','south'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){const e=structuredClone(original);e.name='native_'+part+'_'+side;for(const f of Object.values(e.faces)){f.texture='#pipe';delete f.cullface;}body.push(e);}
  const basis=[[0,0,-1],[0,1,0],[1,0,0]],gear=model('create:block/mechanical_pump/cog').elements.map(original=>{
   const e=turn({...original,rotation:undefined},basis);
-  for(const p of [e.from,e.to])for(let i=0;i<3;i++)p[i]=8+(p[i]-8)*(i===0?.3:.85);
+  for(const p of [e.from,e.to])for(let i=0;i<3;i++)p[i]=8+(p[i]-8)*(i===0?.3:1);
   if(original.rotation?.angle)e.rotation={angle:original.rotation.angle,axis:'x',origin:[8,8,8]};
   for(const f of Object.values(e.faces))f.texture='#gear';return e;
  });

@@ -413,7 +413,7 @@
   "ccd.creative_delivery.empty": "未选择流体",
   "ccd.creative_delivery.active": "无限供应 · 自动向开口输送",
   "block.ccd.buffer_pump": "缓存泵",
-  "ccd.creative_delivery.mode": "??????",
-  "ccd.creative_delivery.containers_only": "??????",
-  "ccd.creative_delivery.allow_world": "???????"
+  "ccd.creative_delivery.mode": "世界排液模式",
+  "ccd.creative_delivery.containers_only": "仅向容器输送",
+  "ccd.creative_delivery.allow_world": "允许向世界排液"
 }

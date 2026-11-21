@@ -411,7 +411,7 @@
   "block.ccd.portable_fluid_pump.tooltip.summary": "Transfers fluids _quickly over short distances_. Supply rotation or _R-Click like a Hand Crank_ to pump manually. Sneak to reverse.",
   "block.ccd.creative_delivery_fluid_tank": "Creative Delivery Fluid Tank",
   "ccd.creative_delivery.empty": "No fluid selected",
-  "ccd.creative_delivery.active": "Infinite supply · automatic outward delivery",
+  "ccd.creative_delivery.active": "Infinite supply - automatic outward delivery",
   "block.ccd.buffer_pump": "Buffer Pump",
   "ccd.creative_delivery.mode": "World Output Mode",
   "ccd.creative_delivery.containers_only": "Containers Only",
