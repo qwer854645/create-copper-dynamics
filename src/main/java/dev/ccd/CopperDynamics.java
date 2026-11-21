@@ -231,6 +231,11 @@ public final class CopperDynamics {
     public static final DeferredHolder<net.minecraft.world.level.block.Block, FluidTransmitterBlock> FLUID_TRANSMITTER =
         BLOCKS.register("fluid_transmitter", () -> new FluidTransmitterBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.COLOR_ORANGE).strength(2.0F).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.FlowMeterBlock> FLOW_METER =
+        BLOCKS.register("flow_meter",()->new dev.ccd.content.FlowMeterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(2).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<Item,BlockItem> FLOW_METER_ITEM = ITEMS.register("flow_meter",()->new BlockItem(FLOW_METER.get(),new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.FlowMeterBlockEntity>> FLOW_METER_BE =
+        BLOCK_ENTITIES.register("flow_meter",()->BlockEntityType.Builder.of(dev.ccd.content.FlowMeterBlockEntity::new,FLOW_METER.get()).build(null));
     public static final DeferredHolder<Item, BlockItem> FLUID_TRANSMITTER_ITEM =
         ITEMS.register("fluid_transmitter", () -> new BlockItem(FLUID_TRANSMITTER.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidTransmitterBlockEntity>> FLUID_TRANSMITTER_BE =
@@ -413,6 +418,7 @@ public final class CopperDynamics {
                 output.accept(RECIPROCATING_PUMP_ITEM.get());
                 output.accept(BIDIRECTIONAL_FLUID_PUMP_ITEM.get());
                 output.accept(TURNING_BOOSTER_PUMP_ITEM.get());
+                output.accept(FLOW_METER_ITEM.get());
                 output.accept(VERTICAL_TURNING_BOOSTER_PUMP_ITEM.get());
                 output.accept(REDSTONE_FLUID_PUMP_ITEM.get());
                 output.accept(FLUID_TRANSMITTER_ITEM.get());

@@ -29,6 +29,7 @@
     "ccd:portable_fluid_pump",
     "ccd:creative_delivery_fluid_tank",
     "ccd:buffer_pump",
-    "ccd:vertical_turning_booster_pump"
+    "ccd:vertical_turning_booster_pump",
+    "ccd:flow_meter"
   ]
 }

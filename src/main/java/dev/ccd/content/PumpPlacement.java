@@ -28,6 +28,7 @@ public final class PumpPlacement {
         var pos=context.getClickedPos().relative(side);var world=context.getLevel();
         if(!world.hasChunkAt(pos))return false;
         var state=world.getBlockState(pos);
+        if(state.getBlock() instanceof FlowMeterBlock)return FluidPipeBlock.isOpenAt(state,side.getOpposite());
         if(state.getBlock() instanceof PumpBlock || state.getBlock() instanceof CreativeDeliveryTankBlock
             || state.getBlock() instanceof ThreeWayValveBlock || state.getBlock() instanceof FluidTransmitterBlock)
             return mouth(state,side.getOpposite());

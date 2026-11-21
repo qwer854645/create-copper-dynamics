@@ -42,7 +42,8 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
         super.tick();if(level==null||level.isClientSide()||selected.isEmpty())return;
         var front=getBlockState().getValue(CreativeDeliveryTankBlock.FACING);
         var queue=new java.util.ArrayDeque<Step>();var visited=new java.util.HashSet<BlockPos>();
-        queue.add(new Step(worldPosition.relative(front),front.getOpposite(),1));visited.add(worldPosition);
+        var parents=new java.util.HashMap<BlockPos,BlockPos>();
+        queue.add(new Step(worldPosition.relative(front),front.getOpposite(),1));visited.add(worldPosition);parents.put(worldPosition.relative(front),worldPosition);
         int remaining=RATE;
         while(!queue.isEmpty()&&remaining>0&&visited.size()<VISIT_LIMIT){
             var step=queue.removeFirst();if(step.distance>RANGE||!level.hasChunkAt(step.pos)||!visited.add(step.pos))continue;
@@ -51,12 +52,12 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
                 if(!pipe.canHaveFlowToward(state,step.entry)||!pipe.canPullFluidFrom(selected,state,step.entry))continue;
                 // Other pumps retain control of their own pressure and route.
                 if(level.getBlockEntity(step.pos) instanceof com.simibubi.create.content.fluids.pump.PumpBlockEntity)continue;
-                for(var side:Direction.values())if(side!=step.entry&&pipe.canHaveFlowToward(state,side))queue.add(new Step(step.pos.relative(side),side.getOpposite(),step.distance+1));
+                for(var side:Direction.values())if(side!=step.entry&&pipe.canHaveFlowToward(state,side)&&!parents.containsKey(step.pos.relative(side))){parents.put(step.pos.relative(side),step.pos);queue.add(new Step(step.pos.relative(side),side.getOpposite(),step.distance+1));}
             }else{
                 if(level.getBlockEntity(step.pos) instanceof CreativeDeliveryTankBlockEntity)continue;
                 var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,step.pos,step.entry);
                 if(target==null&&worldOutput.getValue()==1)target=openEnds.handler(this,step.pos,step.entry);
-                if(target!=null)remaining-=Math.clamp(target.fill(selected.copyWithAmount(remaining),IFluidHandler.FluidAction.EXECUTE),0,remaining);
+                if(target!=null){int filled=Math.clamp(target.fill(selected.copyWithAmount(remaining),IFluidHandler.FluidAction.EXECUTE),0,remaining);FlowMeterBlockEntity.recordPath(level,step.pos,parents,filled);remaining-=filled;}
             }
         }
     }

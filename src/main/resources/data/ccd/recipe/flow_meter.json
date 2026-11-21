@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "create:stressometer"
+    },
+    {
+      "item": "create:fluid_pipe"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    }
+  ],
+  "result": {
+    "id": "ccd:flow_meter",
+    "count": 1
+  }
+}

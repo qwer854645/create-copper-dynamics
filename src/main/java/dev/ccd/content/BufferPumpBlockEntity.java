@@ -32,8 +32,9 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         if(buffer.isEmpty())return;
         int remaining=Math.max(1,(int)(Math.abs(getSpeed())/2));
         var queue=new java.util.ArrayDeque<Step>();var visited=new java.util.HashSet<BlockPos>();
+        var parents=new java.util.HashMap<BlockPos,BlockPos>();
         Direction output=getBlockState().getValue(BufferPumpBlock.FACING);
-        queue.add(new Step(worldPosition.relative(output),output.getOpposite(),1));visited.add(worldPosition);
+        queue.add(new Step(worldPosition.relative(output),output.getOpposite(),1));visited.add(worldPosition);parents.put(worldPosition.relative(output),worldPosition);
         int range=pumpingRange();
         while(!queue.isEmpty()&&remaining>0&&!buffer.isEmpty()&&visited.size()<4096){
             var step=queue.removeFirst();
@@ -44,7 +45,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
                 if(!pipe.canHaveFlowToward(state,step.entry)||!pipe.canPullFluidFrom(buffer.getFluid(),state,step.entry))continue;
                 if(level.getBlockEntity(step.pos) instanceof PumpBlockEntity)continue;
                 for(var side:Direction.values())if(side!=step.entry&&pipe.canHaveFlowToward(state,side))
-                    queue.add(new Step(step.pos.relative(side),side.getOpposite(),step.distance+1));
+                    if(!parents.containsKey(step.pos.relative(side))){parents.put(step.pos.relative(side),step.pos);queue.add(new Step(step.pos.relative(side),side.getOpposite(),step.distance+1));}
                 continue;
             }
             var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,step.pos,step.entry);
@@ -52,7 +53,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
             if(target==null||target==buffer)continue;
             var offer=buffer.drain(remaining,IFluidHandler.FluidAction.SIMULATE);
             int accepted=target.fill(offer,IFluidHandler.FluidAction.SIMULATE);
-            if(accepted>0){var drained=buffer.drain(Math.min(accepted,offer.getAmount()),IFluidHandler.FluidAction.EXECUTE);int filled=Math.clamp(target.fill(drained,IFluidHandler.FluidAction.EXECUTE),0,drained.getAmount());remaining-=filled;if(filled<drained.getAmount())buffer.fill(drained.copyWithAmount(drained.getAmount()-filled),IFluidHandler.FluidAction.EXECUTE);}
+            if(accepted>0){var drained=buffer.drain(Math.min(accepted,offer.getAmount()),IFluidHandler.FluidAction.EXECUTE);int filled=Math.clamp(target.fill(drained,IFluidHandler.FluidAction.EXECUTE),0,drained.getAmount());FlowMeterBlockEntity.recordPath(level,step.pos,parents,filled);remaining-=filled;if(filled<drained.getAmount())buffer.fill(drained.copyWithAmount(drained.getAmount()-filled),IFluidHandler.FluidAction.EXECUTE);}
         }
     }
     @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));openEnds.write(tag,registries);}

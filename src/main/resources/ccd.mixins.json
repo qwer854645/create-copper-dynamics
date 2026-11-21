@@ -4,6 +4,8 @@
   "package": "dev.ccd.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "FlowMeterNetworkMixin",
+    "PipeConnectionFlowAccessor",
     "ImprovePackageSafetyMixin",
     "CourierPlaneMixin",
     "CourierStockMixin",

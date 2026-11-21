@@ -417,5 +417,8 @@
   "ccd.creative_delivery.containers_only": "Containers Only",
   "ccd.creative_delivery.allow_world": "Allow World Output",
   "block.ccd.vertical_turning_booster_pump": "Perpendicular Turning Booster Pump",
-  "block.ccd.vertical_turning_booster_pump.tooltip.summary": "The shaft is _perpendicular to the fluid port plane_, retaining Turning Booster Pump performance."
+  "block.ccd.vertical_turning_booster_pump.tooltip.summary": "The shaft is _perpendicular to the fluid port plane_, retaining Turning Booster Pump performance.",
+  "block.ccd.flow_meter": "Flow Meter",
+  "ccd.flow_meter.rate": "Current flow: %s mB/t",
+  "block.ccd.flow_meter.tooltip.summary": "Install in a pipe and read current flow with _Engineer’s Goggles_."
 }
