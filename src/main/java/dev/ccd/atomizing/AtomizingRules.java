@@ -64,6 +64,7 @@ public final class AtomizingRules {
         return type == null ? null : new Selection("ccd:native", null, type, CCDConfig.ATOMIZER_NORMAL_COST.get(), 20, false);
     }
     public static FanProcessingType parseType(String id) {
-        return id.isEmpty() || net.minecraft.resources.ResourceLocation.tryParse(id) == null ? null : FanProcessingType.parse(id);
+        var key=net.minecraft.resources.ResourceLocation.tryParse(id);
+        return key==null?null:com.simibubi.create.api.registry.CreateBuiltInRegistries.FAN_PROCESSING_TYPE.get(key);
     }
 }

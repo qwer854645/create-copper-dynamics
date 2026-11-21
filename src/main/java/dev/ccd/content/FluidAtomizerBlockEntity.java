@@ -87,7 +87,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     }
     private void prepareMist() {
         if (getSpeed() == 0 || getBlockState().getValue(FluidAtomizerBlock.POWERED)) { stopMist(); return; }
-        if (active != null && active.recipe() != null && Math.abs(getSpeed()) < active.recipe().minimumRpm()) { stopMist(); return; }
+        if (activeRevision == AtomizingRules.revision() && active != null && active.recipe() != null && Math.abs(getSpeed()) < active.recipe().minimumRpm()) { stopMist(); return; }
         FluidStack available = tank.getPrimaryHandler().getFluid();
         if (mistActive && !available.isEmpty() && !FluidStack.isSameFluidSameComponents(available, activeFluid)) stopMist();
         if (mistActive && activeRevision == AtomizingRules.revision() && level.getGameTime() < paidUntil) return;

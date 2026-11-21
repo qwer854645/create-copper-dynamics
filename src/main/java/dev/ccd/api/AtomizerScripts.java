@@ -55,8 +55,8 @@ public final class AtomizerScripts {
     private static final Map<String, Function<ItemContext, ItemResult>> ITEMS = new ConcurrentHashMap<>();
     private static final Map<String, Function<EntityContext, EntityResult>> ENTITIES = new ConcurrentHashMap<>();
     private static final Set<String> REPORTED = ConcurrentHashMap.newKeySet();
-    public static void itemHandler(String id, Function<ItemContext, ItemResult> handler) { ITEMS.put(ResourceLocation.parse(id).toString(), handler); }
-    public static void entityHandler(String id, Function<EntityContext, EntityResult> handler) { ENTITIES.put(ResourceLocation.parse(id).toString(), handler); }
+    public static void itemHandler(String id, Function<ItemContext, ItemResult> handler) { ITEMS.put(ResourceLocation.parse(id).toString(), handler); AtomizingRules.invalidate(); }
+    public static void entityHandler(String id, Function<EntityContext, EntityResult> handler) { ENTITIES.put(ResourceLocation.parse(id).toString(), handler); AtomizingRules.invalidate(); }
     public static ItemResult output(ItemStack stack) { return new ItemResult(List.of(stack)); }
     public static ItemResult outputs(ItemStack... stacks) { return new ItemResult(List.of(stacks)); }
     public static EntityResult damage(float amount) { return new EntityResult(List.of(), amount); }
