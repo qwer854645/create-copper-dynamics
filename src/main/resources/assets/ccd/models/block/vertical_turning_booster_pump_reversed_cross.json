@@ -23,40 +23,40 @@
       "faces": {
         "up": {
           "uv": [
-            16,
-            6,
-            6,
-            16
-          ],
-          "texture": "#body",
-          "rotation": 270
-        },
-        "south": {
-          "uv": [
             2,
             4,
             14,
             14
+          ],
+          "texture": "#shaft_face",
+          "rotation": 270
+        },
+        "south": {
+          "uv": [
+            16,
+            6,
+            6,
+            16
           ],
           "texture": "#body",
           "rotation": 270
         },
         "down": {
           "uv": [
-            6,
-            6,
-            16,
-            16
-          ],
-          "texture": "#body",
-          "rotation": 270
-        },
-        "east": {
-          "uv": [
             2,
             14,
             14,
             4
+          ],
+          "texture": "#shaft_face",
+          "rotation": 270
+        },
+        "east": {
+          "uv": [
+            6,
+            6,
+            16,
+            16
           ],
           "texture": "#body",
           "rotation": 270
@@ -92,17 +92,17 @@
             8,
             2
           ],
-          "texture": "#shaft_face",
+          "texture": "#pipe",
           "rotation": 90
         },
         "up": {
+          "texture": "#shaft_face",
           "uv": [
             4,
-            0,
-            8,
-            2
+            4,
+            12,
+            12
           ],
-          "texture": "#shaft_face",
           "rotation": 270
         },
         "south": {
@@ -112,7 +112,7 @@
             4,
             2
           ],
-          "texture": "#shaft_face",
+          "texture": "#pipe",
           "rotation": 270
         },
         "down": {
@@ -122,7 +122,7 @@
             4,
             2
           ],
-          "texture": "#shaft_face",
+          "texture": "#pipe",
           "rotation": 270
         }
       }
@@ -148,7 +148,7 @@
             11
           ],
           "rotation": 180,
-          "texture": "#shaft_face"
+          "texture": "#pipe"
         },
         "up": {
           "uv": [
@@ -158,7 +158,7 @@
             11
           ],
           "rotation": 0,
-          "texture": "#shaft_face"
+          "texture": "#pipe"
         },
         "south": {
           "uv": [
@@ -168,17 +168,17 @@
             11
           ],
           "rotation": 0,
-          "texture": "#shaft_face"
+          "texture": "#pipe"
         },
         "down": {
+          "texture": "#shaft_face",
           "uv": [
-            9.5,
-            16,
-            10.5,
-            11
+            4,
+            4,
+            12,
+            12
           ],
-          "rotation": 0,
-          "texture": "#shaft_face"
+          "rotation": 270
         },
         "west": {
           "uv": [
@@ -188,7 +188,7 @@
             16
           ],
           "rotation": 0,
-          "texture": "#shaft_face"
+          "texture": "#pipe"
         },
         "east": {
           "uv": [
@@ -198,7 +198,7 @@
             16
           ],
           "rotation": 180,
-          "texture": "#shaft_face"
+          "texture": "#pipe"
         }
       }
     },

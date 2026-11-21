@@ -23,37 +23,37 @@
       "faces": {
         "east": {
           "uv": [
-            16,
-            6,
-            6,
-            16
-          ],
-          "texture": "#body"
-        },
-        "south": {
-          "uv": [
             2,
             4,
             14,
             14
           ],
-          "texture": "#body"
+          "texture": "#shaft_face"
         },
-        "west": {
+        "south": {
           "uv": [
-            6,
-            6,
             16,
+            6,
+            6,
             16
           ],
           "texture": "#body"
         },
-        "down": {
+        "west": {
           "uv": [
             2,
             14,
             14,
             4
+          ],
+          "texture": "#shaft_face"
+        },
+        "down": {
+          "uv": [
+            6,
+            6,
+            16,
+            16
           ],
           "texture": "#body"
         }
@@ -79,16 +79,16 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "east": {
+          "texture": "#shaft_face",
           "uv": [
-            1,
-            1,
-            9,
-            9
-          ],
-          "texture": "#shaft_face"
+            4,
+            4,
+            12,
+            12
+          ]
         },
         "south": {
           "uv": [
@@ -97,7 +97,7 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "west": {
           "uv": [
@@ -106,7 +106,7 @@
             9,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "up": {
           "uv": [
@@ -115,7 +115,7 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "down": {
           "uv": [
@@ -124,7 +124,7 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         }
       }
     },
@@ -157,7 +157,7 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "east": {
           "uv": [
@@ -166,7 +166,7 @@
             9,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "south": {
           "uv": [
@@ -175,16 +175,16 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "west": {
+          "texture": "#shaft_face",
           "uv": [
-            1,
-            1,
-            9,
-            9
-          ],
-          "texture": "#shaft_face"
+            4,
+            4,
+            12,
+            12
+          ]
         },
         "up": {
           "uv": [
@@ -193,7 +193,7 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         },
         "down": {
           "uv": [
@@ -202,7 +202,7 @@
             2,
             9
           ],
-          "texture": "#shaft_face"
+          "texture": "#4"
         }
       }
     },

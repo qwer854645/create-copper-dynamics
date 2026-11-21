@@ -11,8 +11,15 @@ for(const suffix of ['','_reversed','_cross','_reversed_cross']){
  // The cross variant is generated from the same edited base below.
  if(suffix.includes('cross'))continue;
  const source=structuredClone(model(sourceId));
- for(const e of source.elements)for(const f of Object.values(e.faces))if(f.texture==='#shaft_face')f.texture='#body';
- for(const e of source.elements.slice(1,3))for(const f of Object.values(e.faces))f.texture='#shaft_face';
+  // Swap complete housing faces, not just texture names: the UV is part of the artwork.
+  const housing=source.elements[0];
+  for(const [a,b]of [['east','south'],['west','down']])
+   [housing.faces[a],housing.faces[b]]=[housing.faces[b],housing.faces[a]];
+  // Preserve the side plate rims; map only their outer face to the centered shaft hole.
+  for(const [index,side]of [[1,'east'],[2,'west']])
+   source.elements[index].faces[side]={texture:'#shaft_face',uv:[4,4,12,12]};
+  for(const e of source.elements.slice(3))for(const f of Object.values(e.faces))
+   if(f.texture==='#shaft_face')f.texture='#body';
  save(`assets/ccd/models/block/${id}${suffix}.json`,source);
  const basis=[[0,1,0],[-1,0,0],[0,0,1]];
  save(`assets/ccd/models/block/${id}${suffix}_cross.json`,{...source,elements:source.elements.map(e=>turn(e,basis))});
