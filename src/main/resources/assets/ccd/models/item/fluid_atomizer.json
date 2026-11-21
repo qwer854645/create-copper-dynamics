@@ -2,13 +2,6 @@
   "parent": "create:block/block",
   "render_type": "minecraft:cutout_mipped",
   "ambientocclusion": false,
-  "display": {
-    "gui": {
-      "rotation": [30, 225, 0],
-      "translation": [0, 0, 0],
-      "scale": [0.625, 0.625, 0.625]
-    }
-  },
   "textures": {
     "part0_3": "create:block/funnel/copper_funnel_frame",
     "part0_4": "ccd:block/fluid_atomizer/side",
@@ -610,7 +603,7 @@
       "to": [
         15,
         15,
-        12
+        4
       ],
       "neoforge_data": {
         "calculate_normals": true
@@ -630,6 +623,15 @@
             1,
             1,
             15,
+            15
+          ],
+          "texture": "#part1_fan_blades"
+        },
+        "south": {
+          "uv": [
+            15,
+            1,
+            1,
             15
           ],
           "texture": "#part1_fan_blades"
@@ -709,5 +711,24 @@
         }
       }
     }
-  ]
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
+  }
 }

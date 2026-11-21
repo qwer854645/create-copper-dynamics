@@ -88,7 +88,7 @@
       "to": [
         15,
         15,
-        12
+        4
       ],
       "neoforge_data": {
         "calculate_normals": true
@@ -110,6 +110,10 @@
             15,
             15
           ],
+          "texture": "#fan_blades"
+        },
+        "south": {
+          "uv": [15, 1, 1, 15],
           "texture": "#fan_blades"
         }
       }
