@@ -5,12 +5,14 @@
   "ambientocclusion": false,
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "4": "ccd:block/redstone_fluid_pump/dial",
+    "6": "create:block/valve_closed",
     "valve": "create:block/fluid_valve",
     "pipe": "create:block/pipes",
-    "dial": "ccd:block/redstone_fluid_pump/dial",
+    "dial": "create:block/valve_open",
     "particle": "create:block/copper_underside",
-    "housing": "create:block/copper_underside"
+    "housing": "create:block/copper_underside",
+    "shaft_side": "create:block/axis",
+    "shaft_end": "create:block/axis_top"
   },
   "elements": [
     {
@@ -380,6 +382,15 @@
         13.01,
         14
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          1,
+          0
+        ]
+      },
       "faces": {
         "north": {
           "uv": [
@@ -446,7 +457,7 @@
         "axis": "y",
         "origin": [
           0,
-          -1,
+          -2,
           0
         ]
       },
@@ -454,9 +465,9 @@
         "up": {
           "uv": [
             3,
-            7,
+            5,
             6,
-            5
+            7
           ],
           "texture": "#dial"
         }
@@ -479,7 +490,7 @@
         "axis": "y",
         "origin": [
           0,
-          -1,
+          -2,
           0
         ]
       },
@@ -524,7 +535,7 @@
             9,
             6
           ],
-          "texture": "#4"
+          "texture": "#6"
         }
       }
     }

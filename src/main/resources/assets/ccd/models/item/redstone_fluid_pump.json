@@ -1,712 +1,157 @@
 {
-  "parent": "create:block/block",
-  "render_type": "minecraft:cutout_mipped",
-  "ambientocclusion": false,
-  "textures": {
-    "particle": "create:block/copper_underside",
-    "surface_1": "create:block/fluid_valve",
-    "surface_2": "create:block/pipes",
-    "surface_3": "ccd:block/redstone_fluid_pump/dial",
-    "surface_4": "create:block/axis",
-    "surface_5": "create:block/axis_top"
-  },
-  "elements": [
-    {
-      "name": "valve_housing",
-      "from": [
-        2,
-        2,
-        2
-      ],
-      "to": [
-        14,
-        14,
-        14
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            1,
-            1,
-            7,
-            7
-          ],
-          "texture": "#surface_1"
-        },
-        "east": {
-          "uv": [
-            9,
-            1,
-            15,
-            7
-          ],
-          "texture": "#surface_1"
-        },
-        "south": {
-          "uv": [
-            1,
-            1,
-            7,
-            7
-          ],
-          "texture": "#surface_1"
-        },
-        "west": {
-          "uv": [
-            9,
-            1,
-            15,
-            7
-          ],
-          "texture": "#surface_1"
-        },
-        "up": {
-          "uv": [
-            1,
-            1,
-            7,
-            7
-          ],
-          "texture": "#surface_1"
-        },
-        "down": {
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ],
-          "texture": "#particle"
-        }
-      }
-    },
-    {
-      "name": "rim_north",
-      "from": [
-        4,
-        4,
-        0
-      ],
-      "to": [
-        12,
-        12,
-        4
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          8,
-          0
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "rotation": 90,
-          "texture": "#surface_2"
-        },
-        "west": {
-          "uv": [
-            4,
-            2,
-            8,
-            0
-          ],
-          "rotation": 90,
-          "texture": "#surface_2"
-        },
-        "up": {
-          "uv": [
-            4,
-            2,
-            8,
-            0
-          ],
-          "rotation": 180,
-          "texture": "#surface_2"
-        },
-        "down": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "rotation": 180,
-          "texture": "#surface_2"
-        }
-      }
-    },
-    {
-      "from": [
-        3,
-        3,
-        0
-      ],
-      "to": [
-        13,
-        13,
-        2
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#surface_2"
-        },
-        "east": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#surface_2"
-        },
-        "south": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#surface_2"
-        },
-        "west": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "texture": "#surface_2"
-        },
-        "up": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#surface_2"
-        },
-        "down": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#surface_2"
-        }
-      }
-    },
-    {
-      "name": "rim_south",
-      "from": [
-        4,
-        4,
-        12
-      ],
-      "to": [
-        12,
-        12,
-        16
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          8,
-          0
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#surface_2"
-        },
-        "west": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 90,
-          "texture": "#surface_2"
-        },
-        "up": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 180,
-          "texture": "#surface_2"
-        },
-        "down": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#surface_2"
-        }
-      }
-    },
-    {
-      "from": [
-        3,
-        3,
-        14
-      ],
-      "to": [
-        13,
-        13,
-        16
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#surface_2"
-        },
-        "east": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "texture": "#surface_2"
-        },
-        "south": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#surface_2"
-        },
-        "west": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#surface_2"
-        },
-        "up": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#surface_2"
-        },
-        "down": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#surface_2"
-        }
-      }
-    },
-    {
-      "name": "dial",
-      "from": [
-        2,
-        14.01,
-        2
-      ],
-      "to": [
-        14,
-        13.01,
-        14
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            2,
-            2,
-            14,
-            3
-          ],
-          "texture": "#surface_3"
-        },
-        "east": {
-          "uv": [
-            2,
-            13,
-            14,
-            14
-          ],
-          "texture": "#surface_3"
-        },
-        "south": {
-          "uv": [
-            2,
-            13,
-            14,
-            14
-          ],
-          "texture": "#surface_3"
-        },
-        "west": {
-          "uv": [
-            2,
-            2,
-            14,
-            3
-          ],
-          "texture": "#surface_3"
-        },
-        "up": {
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ],
-          "rotation": 90,
-          "texture": "#surface_3"
-        }
-      }
-    },
-    {
-      "name": "unused_stop_background_3",
-      "from": [
-        3,
-        13.02,
-        7
-      ],
-      "to": [
-        6,
-        13.02,
-        9
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          -1,
-          0
-        ]
-      },
-      "faces": {
-        "up": {
-          "uv": [
-            3,
-            7,
-            6,
-            5
-          ],
-          "texture": "#surface_3"
-        }
-      }
-    },
-    {
-      "name": "unused_stop_background_10",
-      "from": [
-        10,
-        13.02,
-        7
-      ],
-      "to": [
-        13,
-        13.02,
-        9
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          -1,
-          0
-        ]
-      },
-      "faces": {
-        "up": {
-          "uv": [
-            6,
-            5,
-            3,
-            7
-          ],
-          "texture": "#surface_3"
-        }
-      }
-    },
-    {
-      "name": "red_side",
-      "from": [
-        7,
-        13.02,
-        10
-      ],
-      "to": [
-        9,
-        13.02,
-        13
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          -3,
-          -2,
-          3
-        ]
-      },
-      "faces": {
-        "up": {
-          "uv": [
-            7,
-            3,
-            9,
-            6
-          ],
-          "texture": "#surface_3"
-        }
-      }
-    },
-    {
-      "name": "flow_pointer",
-      "from": [
-        7.5,
-        13.68,
-        4.5
-      ],
-      "to": [
-        8.5,
-        13.68,
-        8.5
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          -0.4,
-          0
-        ]
-      },
-      "faces": {
-        "up": {
-          "uv": [
-            4,
-            7.5,
-            2,
-            8
-          ],
-          "rotation": 270,
-          "texture": "#surface_1"
-        }
-      }
-    },
-    {
-      "name": "inventory_shaft_90",
-      "from": [
-        8,
-        6,
-        6
-      ],
-      "to": [
-        16,
-        10,
-        10
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 270,
-          "texture": "#surface_4"
-        },
-        "east": {
-          "uv": [
-            6,
-            6,
-            10,
-            10
-          ],
-          "texture": "#surface_5"
-        },
-        "south": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#surface_4"
-        },
-        "west": {
-          "uv": [
-            6,
-            6,
-            10,
-            10
-          ],
-          "rotation": 180,
-          "texture": "#surface_5"
-        },
-        "up": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#surface_4"
-        },
-        "down": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#surface_4"
-        }
-      }
-    },
-    {
-      "name": "inventory_shaft_270",
-      "from": [
-        0,
-        6,
-        6
-      ],
-      "to": [
-        8,
-        10,
-        10
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#surface_4"
-        },
-        "east": {
-          "uv": [
-            6,
-            6,
-            10,
-            10
-          ],
-          "rotation": 180,
-          "texture": "#surface_5"
-        },
-        "south": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 270,
-          "texture": "#surface_4"
-        },
-        "west": {
-          "uv": [
-            6,
-            6,
-            10,
-            10
-          ],
-          "texture": "#surface_5"
-        },
-        "up": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 270,
-          "texture": "#surface_4"
-        },
-        "down": {
-          "uv": [
-            6,
-            0,
-            10,
-            8
-          ],
-          "rotation": 270,
-          "texture": "#surface_4"
-        }
-      }
-    }
-  ]
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "create:block/block",
+	"ambientocclusion": false,
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"6": "create:block/valve_closed",
+		"valve": "create:block/fluid_valve",
+		"pipe": "create:block/pipes",
+		"dial": "create:block/valve_open",
+		"particle": "create:block/copper_underside",
+		"housing": "create:block/copper_underside",
+		"shaft_side": "create:block/axis",
+		"shaft_end": "create:block/axis_top"
+	},
+	"elements": [
+		{
+			"name": "valve_housing",
+			"from": [2, 2, 2],
+			"to": [14, 14, 14],
+			"faces": {
+				"north": {"uv": [1, 1, 7, 7], "texture": "#valve"},
+				"east": {"uv": [9, 1, 15, 7], "texture": "#valve"},
+				"south": {"uv": [1, 1, 7, 7], "texture": "#valve"},
+				"west": {"uv": [9, 1, 15, 7], "texture": "#valve"},
+				"up": {"uv": [1, 1, 7, 7], "texture": "#valve"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#housing"}
+			}
+		},
+		{
+			"name": "rim_north",
+			"from": [4, 4, 0],
+			"to": [12, 12, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 8, 0]},
+			"faces": {
+				"east": {"uv": [4, 0, 8, 2], "rotation": 90, "texture": "#pipe"},
+				"west": {"uv": [4, 2, 8, 0], "rotation": 90, "texture": "#pipe"},
+				"up": {"uv": [4, 2, 8, 0], "rotation": 180, "texture": "#pipe"},
+				"down": {"uv": [4, 0, 8, 2], "rotation": 180, "texture": "#pipe"}
+			}
+		},
+		{
+			"from": [3, 3, 0],
+			"to": [13, 13, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 28, 8]},
+			"faces": {
+				"north": {"uv": [11, 11, 16, 16], "texture": "#pipe"},
+				"east": {"uv": [10.5, 11, 9.5, 16], "texture": "#pipe"},
+				"south": {"uv": [11, 11, 16, 16], "texture": "#pipe"},
+				"west": {"uv": [9.5, 16, 10.5, 11], "texture": "#pipe"},
+				"up": {"uv": [10.5, 11, 9.5, 16], "rotation": 270, "texture": "#pipe"},
+				"down": {"uv": [9.5, 16, 10.5, 11], "rotation": 270, "texture": "#pipe"}
+			}
+		},
+		{
+			"name": "rim_south",
+			"from": [4, 4, 12],
+			"to": [12, 12, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 8, 0]},
+			"faces": {
+				"east": {"uv": [4, 6, 8, 8], "rotation": 90, "texture": "#pipe"},
+				"west": {"uv": [4, 8, 8, 6], "rotation": 90, "texture": "#pipe"},
+				"up": {"uv": [4, 8, 8, 6], "rotation": 180, "texture": "#pipe"},
+				"down": {"uv": [4, 6, 8, 8], "rotation": 180, "texture": "#pipe"}
+			}
+		},
+		{
+			"from": [3, 3, 14],
+			"to": [13, 13, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 28, 8]},
+			"faces": {
+				"north": {"uv": [11, 11, 16, 16], "texture": "#pipe"},
+				"east": {"uv": [9.5, 16, 10.5, 11], "texture": "#pipe"},
+				"south": {"uv": [11, 11, 16, 16], "texture": "#pipe"},
+				"west": {"uv": [10.5, 11, 9.5, 16], "texture": "#pipe"},
+				"up": {"uv": [9.5, 16, 10.5, 11], "rotation": 270, "texture": "#pipe"},
+				"down": {"uv": [10.5, 11, 9.5, 16], "rotation": 270, "texture": "#pipe"}
+			}
+		},
+		{
+			"name": "dial",
+			"from": [2, 14.01, 2],
+			"to": [14, 13.01, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 1, 0]},
+			"faces": {
+				"north": {"uv": [2, 2, 14, 3], "texture": "#dial"},
+				"east": {"uv": [2, 13, 14, 14], "texture": "#dial"},
+				"south": {"uv": [2, 13, 14, 14], "texture": "#dial"},
+				"west": {"uv": [2, 2, 14, 3], "texture": "#dial"},
+				"up": {"uv": [2, 2, 14, 14], "rotation": 90, "texture": "#dial"}
+			}
+		},
+		{
+			"name": "unused_stop_background_3",
+			"from": [3, 13.02, 7],
+			"to": [6, 13.02, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -2, 0]},
+			"faces": {
+				"up": {"uv": [3, 5, 6, 7], "texture": "#dial"}
+			}
+		},
+		{
+			"name": "unused_stop_background_10",
+			"from": [10, 13.02, 7],
+			"to": [13, 13.02, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -2, 0]},
+			"faces": {
+				"up": {"uv": [6, 5, 3, 7], "texture": "#dial"}
+			}
+		},
+		{
+			"name": "red_side",
+			"from": [7, 13.02, 10],
+			"to": [9, 13.02, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [-3, -2, 3]},
+			"faces": {
+				"up": {"uv": [7, 3, 9, 6], "texture": "#6"}
+			}
+		},
+		{
+			"name": "flow_pointer",
+			"from": [7.5, 13.68, 4.5],
+			"to": [8.5, 13.68, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -0.4, 0]},
+			"faces": {
+				"up": {"uv": [4, 7.5, 2, 8], "rotation": 270, "texture": "#valve"}
+			}
+		},
+		{
+			"name": "inventory_shaft_90",
+			"from": [8, 6, 6],
+			"to": [16, 10, 10],
+			"faces": {
+				"north": {"uv": [6, 0, 10, 8], "rotation": 270, "texture": "#shaft_side"},
+				"east": {"uv": [6, 6, 10, 10], "texture": "#shaft_end"},
+				"south": {"uv": [6, 0, 10, 8], "rotation": 90, "texture": "#shaft_side"},
+				"west": {"uv": [6, 6, 10, 10], "rotation": 180, "texture": "#shaft_end"},
+				"up": {"uv": [6, 0, 10, 8], "rotation": 90, "texture": "#shaft_side"},
+				"down": {"uv": [6, 0, 10, 8], "rotation": 90, "texture": "#shaft_side"}
+			}
+		},
+		{
+			"name": "inventory_shaft_270",
+			"from": [0, 6, 6],
+			"to": [8, 10, 10],
+			"faces": {
+				"north": {"uv": [6, 0, 10, 8], "rotation": 90, "texture": "#shaft_side"},
+				"east": {"uv": [6, 6, 10, 10], "rotation": 180, "texture": "#shaft_end"},
+				"south": {"uv": [6, 0, 10, 8], "rotation": 270, "texture": "#shaft_side"},
+				"west": {"uv": [6, 6, 10, 10], "texture": "#shaft_end"},
+				"up": {"uv": [6, 0, 10, 8], "rotation": 270, "texture": "#shaft_side"},
+				"down": {"uv": [6, 0, 10, 8], "rotation": 270, "texture": "#shaft_side"}
+			}
+		}
+	]
 }

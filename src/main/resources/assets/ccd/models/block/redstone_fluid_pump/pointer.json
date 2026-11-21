@@ -3,8 +3,14 @@
   "credit": "Made with Blockbench",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
+    "6": "create:block/valve_closed",
     "valve": "create:block/fluid_valve",
-    "particle": "create:block/copper_underside"
+    "pipe": "create:block/pipes",
+    "dial": "create:block/valve_open",
+    "particle": "create:block/copper_underside",
+    "housing": "create:block/copper_underside",
+    "shaft_side": "create:block/axis",
+    "shaft_end": "create:block/axis_top"
   },
   "elements": [
     {

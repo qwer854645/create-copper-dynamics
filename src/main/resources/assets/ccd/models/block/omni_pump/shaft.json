@@ -1,83 +1,24 @@
 {
-  "parent": "create:block/block",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "copper": "create:block/copper_underside",
-    "pipe": "create:block/pipes",
-    "shaft": "ccd:block/booster_pump/shaft_face",
-    "input": "ccd:block/three_way_valve/common",
-    "output": "ccd:block/three_way_valve/selected",
-    "particle": "create:block/copper_underside"
-  },
-  "elements": [
-    {
-      "name": "shaft_socket",
-      "from": [
-        3,
-        3,
-        0.5
-      ],
-      "to": [
-        13,
-        13,
-        2
-      ],
-      "faces": {
-        "north": {
-          "texture": "#shaft",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "south": {
-          "texture": "#copper",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "east": {
-          "texture": "#copper",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "west": {
-          "texture": "#copper",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "up": {
-          "texture": "#copper",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        },
-        "down": {
-          "texture": "#copper",
-          "uv": [
-            3,
-            3,
-            13,
-            13
-          ]
-        }
-      }
-    }
-  ]
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"parent": "create:block/block",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"5": "ccd:block/omni_pump",
+		"particle": "create:block/copper_underside"
+	},
+	"elements": [
+		{
+			"name": "shaft_socket",
+			"from": [3, 3, 0.5],
+			"to": [13, 13, 2.5],
+			"faces": {
+				"north": {"uv": [1.33333, 1.33333, 14.66667, 14.66667], "texture": "#5"},
+				"east": {"uv": [0, 1.33333, 2.66667, 14.66667], "texture": "#5"},
+				"west": {"uv": [2.66667, 1.33333, 0, 14.66667], "texture": "#5"},
+				"up": {"uv": [2.66667, 1.33333, 0, 14.66667], "rotation": 90, "texture": "#5"},
+				"down": {"uv": [0, 1.33333, 2.66667, 14.66667], "rotation": 90, "texture": "#5"}
+			}
+		}
+	]
 }

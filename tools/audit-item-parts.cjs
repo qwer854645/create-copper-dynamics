@@ -32,6 +32,6 @@ for(const suffix of ['','_reversed']){
  const mouths=m=>m.elements.filter(e=>e.name?.startsWith('native_rim')).map(e=>canonical(e,m)).sort();
  if(JSON.stringify(mouths(source))!==JSON.stringify(mouths(vertical)))throw Error('Vertical turning pump changed fluid mouths '+suffix);
  const plates=vertical.elements.filter(e=>e.name==='copper_housing');
- if(plates.length!==5)throw Error('Expected housing and four side plates '+suffix);
- console.log('vertical_turning_booster_pump'+suffix+': two mouths preserved; four side plates present');
+ if(plates.length!==3)throw Error('Expected housing and two blank-face plates '+suffix);
+ console.log('vertical_turning_booster_pump'+suffix+': two mouths preserved; two blank-face plates present');
 }
