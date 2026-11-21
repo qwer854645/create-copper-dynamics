@@ -408,5 +408,8 @@
   "ccd.reciprocating.signal": "Redstone strength: %s / 15",
   "ccd.reciprocating.range": "Pumping range per side: %s blocks",
   "block.ccd.portable_fluid_pump": "Portable Fluid Pump",
-  "block.ccd.portable_fluid_pump.tooltip.summary": "Transfers fluids _quickly over short distances_. Supply rotation or _R-Click with an empty hand_ to pump manually. Sneak to reverse manual pumping."
+  "block.ccd.portable_fluid_pump.tooltip.summary": "Transfers fluids _quickly over short distances_. Supply rotation or _R-Click with an empty hand_ to pump manually. Sneak to reverse manual pumping.",
+  "block.ccd.creative_delivery_fluid_tank": "Creative Delivery Fluid Tank",
+  "ccd.creative_delivery.empty": "No fluid selected",
+  "ccd.creative_delivery.active": "Infinite supply · automatic outward delivery"
 }

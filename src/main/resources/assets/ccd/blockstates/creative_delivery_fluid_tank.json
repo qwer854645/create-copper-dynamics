@@ -1,0 +1,29 @@
+{
+  "variants": {
+    "facing=up": {
+      "model": "ccd:block/creative_delivery_fluid_tank"
+    },
+    "facing=down": {
+      "model": "ccd:block/creative_delivery_fluid_tank",
+      "x": 180
+    },
+    "facing=north": {
+      "model": "ccd:block/creative_delivery_fluid_tank",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "ccd:block/creative_delivery_fluid_tank",
+      "x": 270
+    },
+    "facing=east": {
+      "model": "ccd:block/creative_delivery_fluid_tank",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west": {
+      "model": "ccd:block/creative_delivery_fluid_tank",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

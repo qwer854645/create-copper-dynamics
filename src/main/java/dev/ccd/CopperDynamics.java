@@ -183,6 +183,11 @@ public final class CopperDynamics {
         BLOCK_ENTITIES.register("redstone_fluid_pump",()->BlockEntityType.Builder.of(dev.ccd.content.RedstoneFluidPumpBlockEntity::new,REDSTONE_FLUID_PUMP.get()).build(null));
     public static final DeferredHolder<Item, BlockItem> BOOSTER_PUMP_ITEM =
         ITEMS.register("booster_pump", () -> new BlockItem(BOOSTER_PUMP.get(), new Item.Properties()));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block,dev.ccd.content.CreativeDeliveryTankBlock> CREATIVE_DELIVERY_TANK =
+        BLOCKS.register("creative_delivery_fluid_tank",()->new dev.ccd.content.CreativeDeliveryTankBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
+    public static final DeferredHolder<Item,BlockItem> CREATIVE_DELIVERY_TANK_ITEM=ITEMS.register("creative_delivery_fluid_tank",()->new BlockItem(CREATIVE_DELIVERY_TANK.get(),new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.CreativeDeliveryTankBlockEntity>> CREATIVE_DELIVERY_TANK_BE=
+        BLOCK_ENTITIES.register("creative_delivery_fluid_tank",()->BlockEntityType.Builder.of(dev.ccd.content.CreativeDeliveryTankBlockEntity::new,CREATIVE_DELIVERY_TANK.get()).build(null));
     public static final DeferredHolder<net.minecraft.world.level.block.Block,dev.ccd.content.PortableFluidPumpBlock> PORTABLE_PUMP =
         BLOCKS.register("portable_fluid_pump",()->new dev.ccd.content.PortableFluidPumpBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(3).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredHolder<Item,BlockItem> PORTABLE_PUMP_ITEM = ITEMS.register("portable_fluid_pump",()->new BlockItem(PORTABLE_PUMP.get(),new Item.Properties()));
@@ -398,6 +403,7 @@ public final class CopperDynamics {
                 output.accept(FLUID_REPACKAGER_ITEM.get());
                 output.accept(FLUID_GAUGE_ITEM.get());
                 output.accept(BOOSTER_PUMP_ITEM.get());
+                output.accept(CREATIVE_DELIVERY_TANK_ITEM.get());
                 output.accept(PORTABLE_PUMP_ITEM.get());
                 output.accept(RECIPROCATING_PUMP_ITEM.get());
                 output.accept(BIDIRECTIONAL_FLUID_PUMP_ITEM.get());
@@ -459,6 +465,7 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,CREATIVE_DELIVERY_TANK_BE.get(),(be,side)->side==null||side==be.getBlockState().getValue(dev.ccd.content.CreativeDeliveryTankBlock.FACING)?be.handler:null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HORIZONTAL_SMART_TANK_BE.get(), (be,side)->be.inventory);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ACCESS_PORT_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_BRIDGE_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);

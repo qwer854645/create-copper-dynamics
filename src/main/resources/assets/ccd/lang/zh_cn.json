@@ -408,5 +408,8 @@
   "ccd.reciprocating.signal": "红石强度：%s / 15",
   "ccd.reciprocating.range": "单侧输送距离：%s 格",
   "block.ccd.portable_fluid_pump": "便携式流体泵",
-  "block.ccd.portable_fluid_pump.tooltip.summary": "用于_短距离快速转移_流体，可接入旋转动力或_空手右键_手动驱动。潜行右键反向。"
+  "block.ccd.portable_fluid_pump.tooltip.summary": "用于_短距离快速转移_流体，可接入旋转动力或_空手右键_手动驱动。潜行右键反向。",
+  "block.ccd.creative_delivery_fluid_tank": "输送式创造流体储罐",
+  "ccd.creative_delivery.empty": "未选择流体",
+  "ccd.creative_delivery.active": "无限供应 · 自动向开口输送"
 }
