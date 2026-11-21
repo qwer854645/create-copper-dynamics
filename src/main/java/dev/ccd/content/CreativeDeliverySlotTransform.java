@@ -24,7 +24,8 @@ public final class CreativeDeliverySlotTransform extends ValueBoxTransform.Sided
         orientation(state).conjugate().transform(n);
         return Direction.getNearest(n.x,n.y,n.z);
     }
-    @Override protected Vec3 getSouthLocation(){return new Vec3(.5,13.5/16,15.05/16+.005);}
+    // The upper band is a full-width solid lid, not the recessed glass at 15.05/16.
+    @Override protected Vec3 getSouthLocation(){return new Vec3(.5,14/16d,1.01);}
     @Override public float getScale(){return .25f;}
     @Override protected boolean isSideActive(BlockState state,Direction side){return side.getAxis()!=state.getValue(CreativeDeliveryTankBlock.FACING).getAxis();}
     @Override public Vec3 getLocalOffset(LevelAccessor level,BlockPos pos,BlockState state){
