@@ -7,6 +7,7 @@ async function main(){
  body.parent='create:block/block';
  const top=model('create:block/portable_fluid_interface/block_top');
  for(const[k,v]of Object.entries(top.textures))body.textures['mouth_'+k]=v;
+ body.textures.mouth_0='ccd:block/creative_delivery_fluid_tank/interface';
  for(const original of top.elements){const e=structuredClone(original);
   // Native interface head translated onto the top face of the native tank.
   e.from[1]+=3;e.to[1]+=3;

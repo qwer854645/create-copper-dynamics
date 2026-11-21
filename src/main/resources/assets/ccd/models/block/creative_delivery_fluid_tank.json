@@ -6,7 +6,7 @@
     "4": "create:block/creative_casing",
     "5": "create:block/creative_fluid_tank_window_single",
     "particle": "create:block/creative_fluid_tank",
-    "mouth_0": "create:block/portable_fluid_interface",
+    "mouth_0": "ccd:block/creative_delivery_fluid_tank/interface",
     "mouth_particle": "create:block/copper_casing"
   },
   "elements": [
