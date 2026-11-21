@@ -18,7 +18,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     @Override public void updatePressureChange(){} // No transparent bypass around the finite buffer.
     @Override public void tick(){
         super.tick();if(level==null||level.isClientSide()||getSpeed()==0||isOverStressed())return;
-        Direction output=getBlockState().getValue(BufferPumpBlock.FACING);if(getSpeed()<0)output=output.getOpposite();
+        Direction output=Direction.UP;
         int rate=Math.max(1,(int)(Math.abs(getSpeed())/2));
         var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,worldPosition.relative(output),output.getOpposite());
         if(target!=null&&!buffer.isEmpty()){

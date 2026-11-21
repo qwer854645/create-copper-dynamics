@@ -14,7 +14,7 @@ public final class BufferPumpBlock extends PumpBlock {
     @Override public Direction.Axis getRotationAxis(BlockState state){return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X;}
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side){return side.getAxis()==getRotationAxis(state);}
     @Override public boolean isSmallCog(){return false;}
-    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context){return defaultBlockState().setValue(FACING,context.getHorizontalDirection().getOpposite()).setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER));}
-    @Override public BlockState getRotatedBlockState(BlockState state,Direction side){return state.setValue(FACING,state.getValue(FACING).getClockWise());}
+    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context){return defaultBlockState().setValue(FACING,Direction.UP).setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER));}
+    @Override public BlockState getRotatedBlockState(BlockState state,Direction side){return state.setValue(FACING,Direction.UP);}
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){return net.minecraft.world.phys.shapes.Shapes.block();}
 }

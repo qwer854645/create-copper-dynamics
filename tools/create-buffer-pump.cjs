@@ -8,10 +8,20 @@ async function main(){
  const tank=model('create:block/fluid_tank/block_single_window'),base=structuredClone(tank);
  base.parent='create:block/block';base.render_type='minecraft:cutout_mipped';
  base.elements=base.elements.map(e=>{const v=structuredClone(e);v.name='compressed_tank';v.from[1]*=5/16;v.to[1]*=5/16;if(v.rotation)v.rotation.origin[1]*=5/16;for(const f of Object.values(v.faces))delete f.cullface;return v;});
- Object.assign(base.textures,{housing:'create:block/copper_underside',shaft:'ccd:block/booster_pump/shaft_face',pipe:'create:block/pipes'});
- const faces=Object.fromEntries(['north','south','east','west','up','down'].map(side=>[side,{texture:['east','west'].includes(side)?'#shaft':'#housing',uv:[2,2,14,11]}]));
- base.elements.push({name:'upper_half_pump',from:[2,5,2],to:[14,14,14],faces});
- for(const side of ['north','south'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){
+ Object.assign(base.textures,{pump:'create:block/pump',pipe:'create:block/pipes'});
+ const native=model('create:block/mechanical_pump/block');
+ for(const original of native.elements.filter(e=>e.from[1]>=8)){
+  const e=structuredClone(original);e.name='native_upper_pump_end';
+  for(const f of Object.values(e.faces))f.texture='#pump';base.elements.push(e);
+ }
+ // Native pump cog rotated from Z to Y, compressed into the upper two thirds.
+ const cog=model('create:block/mechanical_pump/cog');
+ for(const original of cog.elements){
+  const e=turn({...original,rotation:undefined},[[1,0,0],[0,0,-1],[0,1,0]]);
+  e.name='native_pump_cog';e.from[1]=5+(e.from[1]/16)*8;e.to[1]=5+(e.to[1]/16)*8;
+  for(const f of Object.values(e.faces)){f.texture='#pump';delete f.cullface;}base.elements.push(e);
+ }
+ for(const side of ['up'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){
   const e=structuredClone(original);e.name='native_pump_'+part+'_'+side;
   for(const f of Object.values(e.faces)){f.texture='#pipe';delete f.cullface;}base.elements.push(e);
  }
@@ -19,7 +29,7 @@ async function main(){
  const shaft=model('create:block/shaft_half'),shafts=[];
  for(const basis of [[[0,0,-1],[0,1,0],[1,0,0]],[[0,0,1],[0,1,0],[-1,0,0]]])for(const source of shaft.elements){const e=turn(source,basis);for(const f of Object.values(e.faces))f.texture=f.texture==='#0'?'#shaft_side':'#shaft_end';shafts.push(e);}
  save('assets/ccd/models/item/buffer_pump.json',{...base,textures:{...base.textures,shaft_side:shaft.textures['0'],shaft_end:shaft.textures['1']},elements:[...base.elements,...shafts]});
- const variants={};for(const[facing,y]of Object.entries({north:0,east:90,south:180,west:270,up:0,down:0}))variants['facing='+facing]={model:'ccd:block/buffer_pump',...(y?{y}:{})};
+ const variants={};for(const facing of ['north','east','south','west','up','down'])variants['facing='+facing]={model:'ccd:block/buffer_pump'};
  save('assets/ccd/blockstates/buffer_pump.json',{variants});
  save('data/ccd/recipe/buffer_pump.json',{type:'minecraft:crafting_shapeless',ingredients:[{item:'create:mechanical_pump'},{item:'create:fluid_tank'}],result:{id:'ccd:buffer_pump',count:1}});
  save('data/ccd/loot_table/blocks/buffer_pump.json',{type:'minecraft:block',pools:[{rolls:1,entries:[{type:'minecraft:item',name:'ccd:buffer_pump'}],conditions:[{condition:'minecraft:survives_explosion'}]}]});

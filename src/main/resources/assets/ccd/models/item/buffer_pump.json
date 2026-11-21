@@ -5,8 +5,7 @@
     "4": "create:block/fluid_tank_inner",
     "5": "create:block/fluid_tank_window_single",
     "particle": "create:block/fluid_tank",
-    "housing": "create:block/copper_underside",
-    "shaft": "ccd:block/booster_pump/shaft_face",
+    "pump": "create:block/pump",
     "pipe": "create:block/pipes",
     "shaft_side": "create:block/axis",
     "shaft_end": "create:block/axis_top"
@@ -664,278 +663,688 @@
       }
     },
     {
-      "name": "upper_half_pump",
       "from": [
         2,
-        5,
+        13,
         2
       ],
       "to": [
         14,
-        14,
+        16,
         14
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "z",
+        "origin": [
+          8,
+          14.5,
+          8
+        ]
+      },
       "faces": {
         "north": {
-          "texture": "#housing",
           "uv": [
-            2,
-            2,
-            14,
-            11
-          ]
-        },
-        "south": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            11
-          ]
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#pump"
         },
         "east": {
-          "texture": "#shaft",
           "uv": [
-            2,
-            2,
-            14,
-            11
-          ]
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#pump"
         },
         "west": {
-          "texture": "#shaft",
           "uv": [
-            2,
-            2,
-            14,
-            11
-          ]
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#pump"
         },
         "up": {
-          "texture": "#housing",
           "uv": [
-            2,
-            2,
-            14,
-            11
-          ]
+            0,
+            0,
+            6,
+            6
+          ],
+          "rotation": 180,
+          "texture": "#pump"
         },
         "down": {
-          "texture": "#housing",
           "uv": [
-            2,
-            2,
-            14,
-            11
-          ]
+            0,
+            0,
+            6,
+            6
+          ],
+          "texture": "#pump"
         }
-      }
+      },
+      "name": "native_upper_pump_end"
     },
     {
-      "name": "native_pump_rim_connector_north",
       "from": [
-        4,
-        4,
-        0
+        6.5,
+        6.5,
+        -1
       ],
       "to": [
-        12,
+        9.5,
+        11.5,
+        17
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "east": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "up": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        },
+        "west": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "north": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "from": [
+        -1,
+        6.5,
+        6.5
+      ],
+      "to": [
+        17,
+        11.5,
+        9.5
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "east": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#pump",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "texture": "#pump",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#pump",
+          "rotation": 270
+        },
+        "north": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "texture": "#pump",
+          "rotation": 0
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "from": [
+        6.5,
+        6.5,
+        -1
+      ],
+      "to": [
+        9.5,
+        11.5,
+        17
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "east": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "up": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        },
+        "west": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "north": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "from": [
+        -1,
+        6.5,
+        6.5
+      ],
+      "to": [
+        17,
+        11.5,
+        9.5
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "east": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#pump",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "texture": "#pump",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#pump",
+          "rotation": 270
+        },
+        "north": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 0,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "texture": "#pump",
+          "rotation": 0
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "from": [
+        5.5,
+        6.525,
+        0.9000000000000004
+      ],
+      "to": [
+        10.5,
+        11.475,
+        15.1
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#pump",
+          "rotation": 180
+        },
+        "up": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#pump",
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "from": [
+        0.9000000000000004,
+        6.525,
+        5.5
+      ],
+      "to": [
+        15.1,
+        11.475,
+        10.5
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "east": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#pump",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "west": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#pump",
+          "rotation": 270
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "from": [
+        0.9000000000000004,
+        6.525,
+        5.5
+      ],
+      "to": [
+        15.1,
+        11.475,
+        10.5
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "east": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#pump",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "west": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#pump",
+          "rotation": 270
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "from": [
+        5.5,
+        6.525,
+        0.9000000000000004
+      ],
+      "to": [
+        10.5,
+        11.475,
+        15.1
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "down": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#pump",
+          "rotation": 180
+        },
+        "up": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#pump",
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        }
+      },
+      "name": "native_pump_cog"
+    },
+    {
+      "name": "native_pump_rim_connector_up",
+      "from": [
+        4,
         12,
         4
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          8,
-          0
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            4,
-            2,
-            8,
-            0
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            4,
-            2,
-            8,
-            0
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        }
-      }
-    },
-    {
-      "from": [
-        3,
-        3,
-        0
-      ],
       "to": [
-        13,
-        13,
-        2
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "east": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "south": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        }
-      },
-      "name": "native_pump_rim_north"
-    },
-    {
-      "name": "native_pump_rim_connector_south",
-      "from": [
-        4,
-        4,
+        12,
+        16,
         12
       ],
-      "to": [
-        12,
-        12,
-        16
-      ],
       "rotation": {
         "angle": 0,
         "axis": "y",
         "origin": [
+          16,
           0,
-          8,
-          0
+          -16
         ]
       },
       "faces": {
+        "north": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "texture": "#pipe"
+        },
         "east": {
           "uv": [
             4,
-            6,
+            0,
             8,
-            8
+            2
           ],
-          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            4,
+            2
+          ],
           "texture": "#pipe"
         },
         "west": {
           "uv": [
+            8,
+            0,
             4,
-            8,
-            8,
-            6
+            2
           ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 180,
           "texture": "#pipe"
         }
       }
@@ -943,31 +1352,23 @@
     {
       "from": [
         3,
-        3,
-        14
+        14,
+        3
       ],
       "to": [
         13,
-        13,
-        16
+        16,
+        13
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
-            11,
-            11,
+            9.5,
             16,
-            16
+            10.5,
+            11
           ],
+          "rotation": 90,
           "texture": "#pipe"
         },
         "east": {
@@ -977,48 +1378,51 @@
             10.5,
             11
           ],
+          "rotation": 90,
           "texture": "#pipe"
         },
         "south": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
           "uv": [
             9.5,
             16,
             10.5,
             11
           ],
-          "rotation": 270,
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 90,
           "texture": "#pipe"
         },
         "down": {
           "uv": [
-            10.5,
             11,
-            9.5,
+            11,
+            16,
             16
           ],
           "rotation": 270,
           "texture": "#pipe"
         }
       },
-      "name": "native_pump_rim_south"
+      "name": "native_pump_rim_up"
     },
     {
       "name": "Axis",
