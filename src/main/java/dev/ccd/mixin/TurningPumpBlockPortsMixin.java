@@ -14,5 +14,6 @@ abstract class TurningPumpBlockPortsMixin {
     @Inject(method = "isOpenAt", at = @At("HEAD"), cancellable = true)
     private static void ccd$turningPorts(BlockState state, Direction side, CallbackInfoReturnable<Boolean> cir) {
         if (state.getBlock() instanceof TurningBoosterPumpBlock) cir.setReturnValue(TurningBoosterPumpBlock.open(state, side));
+        else if(state.getBlock() instanceof dev.ccd.content.BufferPumpBlock)cir.setReturnValue(dev.ccd.content.PumpPlacement.mouth(state,side));
     }
 }

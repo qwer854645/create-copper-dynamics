@@ -25,9 +25,9 @@ public class ReciprocatingFluidPumpBlock extends PumpBlock {
         super.createBlockStateDefinition(builder);builder.add(SIGNAL);
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING,context.getHorizontalDirection().getOpposite())
+        return PumpPlacement.align(context,defaultBlockState().setValue(FACING,context.getHorizontalDirection().getOpposite())
             .setValue(SIGNAL,context.getLevel().getBestNeighborSignal(context.getClickedPos()))
-            .setValue(BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER));
+            .setValue(BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER)));
     }
     @Override public Direction.Axis getRotationAxis(BlockState state) {
         return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X;

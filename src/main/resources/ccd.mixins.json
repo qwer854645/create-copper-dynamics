@@ -20,6 +20,7 @@
     "BoosterPumpShaftMixin",
     "TurningPumpPortsMixin",
     "TurningPumpBlockPortsMixin",
+    "PumpPlacementMixin",
     "SmartFluidTankPlacementMixin",
     "FluidHatchHandheldMixin",
     "FluidValvePointerAccessor",
