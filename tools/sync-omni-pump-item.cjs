@@ -18,5 +18,5 @@ append('ccd:block/omni_pump/input');
 append('ccd:block/omni_pump/output',[[0,0,1],[0,1,0],[-1,0,0]]);
 append('ccd:block/omni_pump/shaft',[[1,0,0],[0,0,1],[0,-1,0]]);
 append('create:block/shaft_half',[[1,0,0],[0,0,-1],[0,1,0]]);
-const result={parent:'create:block/block',render_type:'minecraft:cutout_mipped',textures,elements};
+const result={parent:'create:block/block',render_type:'minecraft:cutout_mipped',display:{gui:{rotation:[30,225,0],translation:[0,0,0],scale:[.625,.625,.625]}},textures,elements};
 fs.writeFileSync(path.resolve(__dirname,'../src/main/resources/assets/ccd/models/item/omni_pump.json'),JSON.stringify(result,null,2)+'\n');

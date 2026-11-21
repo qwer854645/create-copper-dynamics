@@ -1,6 +1,25 @@
 {
   "parent": "create:block/block",
   "render_type": "minecraft:cutout_mipped",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    }
+  },
   "textures": {
     "particle": "create:block/copper_underside",
     "part0_5": "create:block/whistle",
