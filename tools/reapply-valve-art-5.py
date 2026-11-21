@@ -29,3 +29,4 @@ with ZipFile(Path.home()/'Downloads/aaa (5).zip') as archive:
      data['textures'][key]='ccd:block/redstone_fluid_pump/dial'
   path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 print('Reapplied seven model resources with signed dial bounds and original UVs; green pump indicators retained.')
+print('Run tools/sync-valve-item-models.cjs after importing to keep inventory parts aligned with runtime rendering.')

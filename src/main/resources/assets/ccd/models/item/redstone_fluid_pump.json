@@ -1,18 +1,9 @@
 {
-  "format_version": "26.3",
-  "credit": "Made with Blockbench",
   "parent": "create:block/block",
-  "ambientocclusion": false,
   "render_type": "minecraft:cutout_mipped",
+  "ambientocclusion": false,
   "textures": {
-    "6": "ccd:block/redstone_fluid_pump/dial",
-    "valve": "create:block/fluid_valve",
-    "pipe": "create:block/pipes",
-    "dial": "ccd:block/redstone_fluid_pump/dial",
-    "particle": "create:block/copper_underside",
-    "housing": "create:block/copper_underside",
-    "shaft_side": "create:block/axis",
-    "shaft_end": "create:block/axis_top"
+    "particle": "create:block/copper_underside"
   },
   "elements": [
     {
@@ -35,7 +26,7 @@
             7,
             7
           ],
-          "texture": "#valve"
+          "texture": "create:block/fluid_valve"
         },
         "east": {
           "uv": [
@@ -44,7 +35,7 @@
             15,
             7
           ],
-          "texture": "#valve"
+          "texture": "create:block/fluid_valve"
         },
         "south": {
           "uv": [
@@ -53,7 +44,7 @@
             7,
             7
           ],
-          "texture": "#valve"
+          "texture": "create:block/fluid_valve"
         },
         "west": {
           "uv": [
@@ -62,7 +53,7 @@
             15,
             7
           ],
-          "texture": "#valve"
+          "texture": "create:block/fluid_valve"
         },
         "up": {
           "uv": [
@@ -71,7 +62,7 @@
             7,
             7
           ],
-          "texture": "#valve"
+          "texture": "create:block/fluid_valve"
         },
         "down": {
           "uv": [
@@ -80,7 +71,7 @@
             14,
             14
           ],
-          "texture": "#housing"
+          "texture": "create:block/copper_underside"
         }
       }
     },
@@ -114,7 +105,7 @@
             2
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "west": {
           "uv": [
@@ -124,7 +115,7 @@
             0
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "up": {
           "uv": [
@@ -134,7 +125,7 @@
             0
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "down": {
           "uv": [
@@ -144,7 +135,7 @@
             2
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         }
       }
     },
@@ -176,7 +167,7 @@
             16,
             16
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "east": {
           "uv": [
@@ -185,7 +176,7 @@
             9.5,
             16
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "south": {
           "uv": [
@@ -194,7 +185,7 @@
             16,
             16
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "west": {
           "uv": [
@@ -203,7 +194,7 @@
             10.5,
             11
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "up": {
           "uv": [
@@ -213,7 +204,7 @@
             16
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "down": {
           "uv": [
@@ -223,7 +214,7 @@
             11
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         }
       }
     },
@@ -257,7 +248,7 @@
             8
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "west": {
           "uv": [
@@ -267,7 +258,7 @@
             6
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "up": {
           "uv": [
@@ -277,7 +268,7 @@
             6
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "down": {
           "uv": [
@@ -287,7 +278,7 @@
             8
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         }
       }
     },
@@ -319,7 +310,7 @@
             16,
             16
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "east": {
           "uv": [
@@ -328,7 +319,7 @@
             10.5,
             11
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "south": {
           "uv": [
@@ -337,7 +328,7 @@
             16,
             16
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "west": {
           "uv": [
@@ -346,7 +337,7 @@
             9.5,
             16
           ],
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "up": {
           "uv": [
@@ -356,7 +347,7 @@
             11
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         },
         "down": {
           "uv": [
@@ -366,7 +357,7 @@
             16
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "create:block/pipes"
         }
       }
     },
@@ -382,15 +373,6 @@
         13.01,
         14
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          1,
-          0
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
@@ -399,7 +381,7 @@
             14,
             3
           ],
-          "texture": "#dial"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         },
         "east": {
           "uv": [
@@ -408,7 +390,7 @@
             14,
             14
           ],
-          "texture": "#dial"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         },
         "south": {
           "uv": [
@@ -417,7 +399,7 @@
             14,
             14
           ],
-          "texture": "#dial"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         },
         "west": {
           "uv": [
@@ -426,7 +408,7 @@
             14,
             3
           ],
-          "texture": "#dial"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         },
         "up": {
           "uv": [
@@ -436,7 +418,7 @@
             14
           ],
           "rotation": 90,
-          "texture": "#dial"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         }
       }
     },
@@ -457,7 +439,7 @@
         "axis": "y",
         "origin": [
           0,
-          -2,
+          -1,
           0
         ]
       },
@@ -465,11 +447,11 @@
         "up": {
           "uv": [
             3,
-            5,
+            7,
             6,
-            7
+            5
           ],
-          "texture": "#dial"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         }
       }
     },
@@ -490,7 +472,7 @@
         "axis": "y",
         "origin": [
           0,
-          -2,
+          -1,
           0
         ]
       },
@@ -502,7 +484,7 @@
             3,
             7
           ],
-          "texture": "#dial"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         }
       }
     },
@@ -535,7 +517,7 @@
             9,
             6
           ],
-          "texture": "#6"
+          "texture": "ccd:block/redstone_fluid_pump/dial"
         }
       }
     },
@@ -569,7 +551,7 @@
             8
           ],
           "rotation": 270,
-          "texture": "#valve"
+          "texture": "create:block/fluid_valve"
         }
       }
     },
@@ -594,7 +576,7 @@
             8
           ],
           "rotation": 270,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         },
         "east": {
           "uv": [
@@ -603,7 +585,7 @@
             10,
             10
           ],
-          "texture": "#shaft_end"
+          "texture": "create:block/axis_top"
         },
         "south": {
           "uv": [
@@ -613,7 +595,7 @@
             8
           ],
           "rotation": 90,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         },
         "west": {
           "uv": [
@@ -623,7 +605,7 @@
             10
           ],
           "rotation": 180,
-          "texture": "#shaft_end"
+          "texture": "create:block/axis_top"
         },
         "up": {
           "uv": [
@@ -633,7 +615,7 @@
             8
           ],
           "rotation": 90,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         },
         "down": {
           "uv": [
@@ -643,7 +625,7 @@
             8
           ],
           "rotation": 90,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         }
       }
     },
@@ -668,7 +650,7 @@
             8
           ],
           "rotation": 90,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         },
         "east": {
           "uv": [
@@ -678,7 +660,7 @@
             10
           ],
           "rotation": 180,
-          "texture": "#shaft_end"
+          "texture": "create:block/axis_top"
         },
         "south": {
           "uv": [
@@ -688,7 +670,7 @@
             8
           ],
           "rotation": 270,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         },
         "west": {
           "uv": [
@@ -697,7 +679,7 @@
             10,
             10
           ],
-          "texture": "#shaft_end"
+          "texture": "create:block/axis_top"
         },
         "up": {
           "uv": [
@@ -707,7 +689,7 @@
             8
           ],
           "rotation": 270,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         },
         "down": {
           "uv": [
@@ -717,7 +699,7 @@
             8
           ],
           "rotation": 270,
-          "texture": "#shaft_side"
+          "texture": "create:block/axis"
         }
       }
     }
