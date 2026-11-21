@@ -9,8 +9,7 @@ const cube=(name,from,to,texture,uv)=>({name,from,to,faces:Object.fromEntries(fa
 const body=wrap([cube('copper_housing',[2,2,2],[14,14,14],'#copper',[2,2,14,14])]);
 save('assets/ccd/models/block/omni_pump/body.json',body);
 for(const [mode,source]of [['input','common_north'],['output','selected_north']]){
- const part=model('ccd:block/three_way_valve/'+source);
- save('assets/ccd/models/block/omni_pump/'+mode+'.json',part);
+ save('assets/ccd/models/block/omni_pump/'+mode+'.json',{parent:'ccd:block/three_way_valve/'+source});
 }
 const socket=cube('shaft_socket',[3,3,.5],[13,13,2],'#copper',[3,3,13,13]);socket.faces.north={texture:'#shaft',uv:[3,3,13,13]};
 save('assets/ccd/models/block/omni_pump/shaft.json',wrap([socket]));

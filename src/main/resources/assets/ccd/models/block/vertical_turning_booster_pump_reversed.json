@@ -91,13 +91,13 @@
           "texture": "#pipe"
         },
         "east": {
-          "texture": "#shaft_face",
           "uv": [
             4,
-            4,
-            12,
-            12
-          ]
+            0,
+            8,
+            2
+          ],
+          "texture": "#pipe"
         },
         "south": {
           "uv": [
@@ -163,13 +163,14 @@
           "texture": "#pipe"
         },
         "west": {
-          "texture": "#shaft_face",
           "uv": [
-            4,
-            4,
-            12,
-            12
-          ]
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#pipe"
         },
         "up": {
           "uv": [
@@ -500,13 +501,13 @@
           "texture": "#4"
         },
         "west": {
+          "texture": "#shaft_face",
           "uv": [
-            1,
-            1,
-            9,
-            9
-          ],
-          "texture": "#4"
+            4,
+            4,
+            12,
+            12
+          ]
         },
         "up": {
           "uv": [
@@ -551,13 +552,13 @@
           "texture": "#4"
         },
         "east": {
+          "texture": "#shaft_face",
           "uv": [
-            1,
-            1,
-            9,
-            9
-          ],
-          "texture": "#4"
+            4,
+            4,
+            12,
+            12
+          ]
         },
         "south": {
           "uv": [
@@ -598,141 +599,161 @@
       }
     },
     {
-      "name": "native_rim_connector_up",
+      "name": "copper_housing",
       "from": [
         4,
+        4,
+        14
+      ],
+      "to": [
         12,
+        12,
+        15
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 90
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        }
+      }
+    },
+    {
+      "name": "copper_housing",
+      "from": [
+        4,
+        1,
         4
       ],
       "to": [
         12,
-        16,
+        2,
         12
       ],
       "rotation": {
         "angle": 0,
         "axis": "y",
         "origin": [
-          16,
+          -13,
           0,
-          -16
+          0
         ]
       },
       "faces": {
-        "east": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "texture": "#pipe",
-          "rotation": 0
-        },
-        "south": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "texture": "#pipe",
-          "rotation": 0
-        },
-        "west": {
-          "uv": [
-            8,
-            0,
-            4,
-            2
-          ],
-          "texture": "#pipe",
-          "rotation": 0
-        },
         "north": {
           "uv": [
-            8,
-            0,
-            4,
-            2
+            1,
+            1,
+            2,
+            9
           ],
-          "texture": "#pipe",
-          "rotation": 0
-        }
-      }
-    },
-    {
-      "name": "native_rim_up",
-      "from": [
-        0,
-        3,
-        3
-      ],
-      "to": [
-        2,
-        13,
-        13
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#4",
+          "rotation": 90
         },
         "up": {
           "uv": [
-            9.5,
-            16,
-            10.5,
-            11
+            1,
+            1,
+            9,
+            9
           ],
-          "rotation": 0,
-          "texture": "#pipe"
+          "texture": "#4",
+          "rotation": 270
         },
         "south": {
           "uv": [
-            9.5,
-            16,
-            10.5,
-            11
+            1,
+            1,
+            2,
+            9
           ],
-          "rotation": 0,
-          "texture": "#pipe"
+          "texture": "#4",
+          "rotation": 270
         },
         "down": {
           "uv": [
-            9.5,
-            16,
-            10.5,
-            11
+            1,
+            1,
+            9,
+            9
           ],
-          "rotation": 0,
-          "texture": "#pipe"
+          "texture": "#4",
+          "rotation": 270
         },
         "west": {
           "uv": [
-            11,
-            11,
-            16,
-            16
+            1,
+            1,
+            2,
+            9
           ],
-          "rotation": 0,
-          "texture": "#pipe"
+          "texture": "#4",
+          "rotation": 270
         },
         "east": {
           "uv": [
-            11,
-            11,
-            16,
-            16
+            1,
+            1,
+            2,
+            9
           ],
-          "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#4",
+          "rotation": 270
         }
       }
     }

@@ -16,14 +16,16 @@ for(const suffix of ['','_reversed','_cross','_reversed_cross']){
   for(const [a,b]of [['east','south'],['west','down']])
    [housing.faces[a],housing.faces[b]]=[housing.faces[b],housing.faces[a]];
   // Preserve the side plate rims; map only their outer face to the centered shaft hole.
-  for(const [index,side]of [[1,'east'],[2,'west']])
-   source.elements[index].faces[side]={texture:'#shaft_face',uv:[4,4,12,12]};
-  for(const e of source.elements.slice(3))for(const f of Object.values(e.faces))
+  const plates=source.elements.filter(e=>e.name==='copper_housing'&&e.to[0]-e.from[0]===1);
+  if(plates.length!==2)throw Error('Expected two copper side plates: '+suffix);
+  for(const e of plates){const side=e.from[0]>8?'east':'west';e.faces[side]={texture:'#shaft_face',uv:[4,4,12,12]};}
+  for(const e of source.elements.filter(e=>e.name!=='copper_housing'))for(const f of Object.values(e.faces))
    if(f.texture==='#shaft_face')f.texture='#body';
   // Move the original blank-side plates onto the two former shaft faces.
   const original=model(sourceId);
-  source.elements.push(turn(original.elements[1],[[0,0,1],[0,1,0],[-1,0,0]]));
-  source.elements.push(turn(original.elements[2],[[0,1,0],[-1,0,0],[0,0,1]]));
+  const originalPlates=original.elements.filter(e=>e.name==='copper_housing'&&e.to[0]-e.from[0]===1);
+  source.elements.push(turn(originalPlates.find(e=>e.from[0]>8),[[0,0,1],[0,1,0],[-1,0,0]]));
+  source.elements.push(turn(originalPlates.find(e=>e.from[0]<8),[[0,1,0],[-1,0,0],[0,0,1]]));
  save(`assets/ccd/models/block/${id}${suffix}.json`,source);
  const basis=[[0,1,0],[-1,0,0],[0,0,1]];
  save(`assets/ccd/models/block/${id}${suffix}_cross.json`,{...source,elements:source.elements.map(e=>turn(e,basis))});
