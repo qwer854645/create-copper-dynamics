@@ -23,7 +23,8 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         if(buffer.isEmpty())return;
         int remaining=Math.max(1,(int)(Math.abs(getSpeed())/2));
         var queue=new java.util.ArrayDeque<Step>();var visited=new java.util.HashSet<BlockPos>();
-        queue.add(new Step(worldPosition.above(),Direction.DOWN,1));visited.add(worldPosition);
+        Direction output=getBlockState().getValue(BufferPumpBlock.FACING);
+        queue.add(new Step(worldPosition.relative(output),output.getOpposite(),1));visited.add(worldPosition);
         int range=pumpingRange();
         while(!queue.isEmpty()&&remaining>0&&!buffer.isEmpty()&&visited.size()<4096){
             var step=queue.removeFirst();

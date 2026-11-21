@@ -31,7 +31,7 @@ async function main(){
  const shaft=model('create:block/shaft_half'),shafts=[];
  for(const basis of [[[0,0,-1],[0,1,0],[1,0,0]],[[0,0,1],[0,1,0],[-1,0,0]]])for(const source of shaft.elements){const e=turn(source,basis);for(const f of Object.values(e.faces))f.texture=f.texture==='#0'?'#shaft_side':'#shaft_end';shafts.push(e);}
  save('assets/ccd/models/item/buffer_pump.json',{...base,textures:{...base.textures,shaft_side:shaft.textures['0'],shaft_end:shaft.textures['1']},elements:[...base.elements,...cogElements,...shafts]});
- const variants={};for(const facing of ['north','east','south','west','up','down'])variants['facing='+facing]={model:'ccd:block/buffer_pump'};
+ const variants={};for(const[facing,rotation]of Object.entries({up:{},down:{x:180},north:{x:90},south:{x:270},east:{x:90,y:90},west:{x:90,y:270}}))variants['facing='+facing]={model:'ccd:block/buffer_pump',...rotation};
  save('assets/ccd/blockstates/buffer_pump.json',{variants});
  save('data/ccd/recipe/buffer_pump.json',{type:'minecraft:crafting_shapeless',ingredients:[{item:'create:mechanical_pump'},{item:'create:fluid_tank'}],result:{id:'ccd:buffer_pump',count:1}});
  save('data/ccd/loot_table/blocks/buffer_pump.json',{type:'minecraft:block',pools:[{rolls:1,entries:[{type:'minecraft:item',name:'ccd:buffer_pump'}],conditions:[{condition:'minecraft:survives_explosion'}]}]});
