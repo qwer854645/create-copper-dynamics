@@ -14,6 +14,11 @@ public class FluidWorldEffectsTests {
         cow.setDeltaMovement(1,.2,1);
         FluidWorldEffects.apply(cow,dev.ccd.CCDFluids.QUICKSAND_TYPE.get(),false);
         h.assertTrue(cow.getDeltaMovement().x<.4&&cow.getDeltaMovement().y==0,"Quicksand did not impede movement");
+        cow.setDeltaMovement(1,.4,1);
+        FluidWorldEffects.apply(cow,dev.ccd.CCDFluids.SLIME_TYPE.get(),false);
+        h.assertTrue(cow.getDeltaMovement().y==.2&&cow.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN),"Slime contact effect missing");
+        FluidWorldEffects.apply(cow,dev.ccd.CCDFluids.HAUNTING_TYPE.get(),false);
+        h.assertTrue(cow.hasEffect(net.minecraft.world.effect.MobEffects.WEAKNESS),"Soul fluid contact effect missing");
         for(var medium:ProcessingMedia.ALL){
             FluidWorldEffects.apply(cow,medium.type.get(),false);
             switch(medium.id){

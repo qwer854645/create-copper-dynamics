@@ -57,7 +57,18 @@ public final class FluidWorldEffects {
             if(submerged&&entity.tickCount%20==0)entity.hurt(entity.damageSources().inWall(),2);
             return;
         }
+        if(fluid==CCDFluids.SLIME_TYPE.get()){
+            var velocity=entity.getDeltaMovement();
+            entity.setDeltaMovement(velocity.x*.6,velocity.y>0?velocity.y*.5:velocity.y,velocity.z*.6);
+            if(entity.tickCount%20==0)effect(entity,MobEffects.MOVEMENT_SLOWDOWN,60,1);
+            return;
+        }
         if(entity.tickCount%20!=0)return;
+        if(fluid==CCDFluids.HAUNTING_TYPE.get()){
+            effect(entity,MobEffects.MOVEMENT_SLOWDOWN,60,0);
+            effect(entity,MobEffects.WEAKNESS,60,0);
+            return;
+        }
         for(var medium:ProcessingMedia.ALL)if(fluid==medium.type.get()){
             switch(medium.id){
                 case "enriching_reagent" -> irradiate(entity);
@@ -95,6 +106,8 @@ public final class FluidWorldEffects {
         // NeoForge updates these heights from the actual collision volume, including flowing levels.
         if(entity.getFluidTypeHeight(CCDFluids.QUICKSAND_TYPE.get())>0)
             apply(entity,CCDFluids.QUICKSAND_TYPE.get(),entity.isEyeInFluidType(CCDFluids.QUICKSAND_TYPE.get()));
+        for(var fluid:java.util.List.of(CCDFluids.SLIME_TYPE.get(),CCDFluids.HAUNTING_TYPE.get()))
+            if(entity.getFluidTypeHeight(fluid)>0)apply(entity,fluid,entity.isEyeInFluidType(fluid));
         for(var medium:ProcessingMedia.ALL)if(!medium.id.equals("seething_reagent")&&entity.getFluidTypeHeight(medium.type.get())>0)
             apply(entity,medium.type.get(),entity.isEyeInFluidType(medium.type.get()));
     }
