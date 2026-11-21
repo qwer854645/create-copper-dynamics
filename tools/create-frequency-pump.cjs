@@ -9,7 +9,14 @@ function box(name,from,to){return{name,from,to,faces:Object.fromEntries(['north'
 async function main(){
  // Central vertical slot exposes the native wheel at the top and bottom of the copper shell.
  const body=[box('left_copper_housing',[2,2,2],[6.25,14,14]),box('right_copper_housing',[9.75,2,2],[14,14,14])];
- for(const side of ['north','south'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){const e=structuredClone(original);e.name='native_'+part+'_'+side;for(const f of Object.values(e.faces)){f.texture='#pipe';delete f.cullface;}body.push(e);}
+  // Trial: extend both pipe necks by three pixels and move their end rims outward.
+  for(const side of ['north','south'])for(const part of ['rim_connector','rim'])for(const original of model(`create:block/fluid_pipe/${part}/${side}`).elements){
+   const e=structuredClone(original);e.name='native_'+part+'_'+side;
+   const offset=side==='north'?-3:3;
+   if(part==='rim'){e.from[2]+=offset;e.to[2]+=offset;}
+   else if(side==='north')e.from[2]+=offset;else e.to[2]+=offset;
+   for(const f of Object.values(e.faces)){f.texture='#pipe';delete f.cullface;}body.push(e);
+  }
  const basis=[[0,0,-1],[0,1,0],[1,0,0]],gear=model('create:block/mechanical_pump/cog').elements.map(original=>{
   const e=turn({...original,rotation:undefined},basis);
   for(const p of [e.from,e.to])for(let i=0;i<3;i++)p[i]=8+(p[i]-8)*(i===0?.3:1);
