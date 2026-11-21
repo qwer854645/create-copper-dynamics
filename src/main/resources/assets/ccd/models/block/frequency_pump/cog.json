@@ -6,7 +6,8 @@
     "shaft": "ccd:block/booster_pump/shaft_face",
     "pipe": "create:block/pipes",
     "gear": "create:block/pump",
-    "particle": "create:block/copper_underside"
+    "particle": "create:block/copper_underside",
+    "gauge": "create:block/gauge"
   },
   "elements": [
     {

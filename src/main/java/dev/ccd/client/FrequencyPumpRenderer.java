@@ -31,5 +31,19 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Recipro
         pose.scale(.3f,1,1);
         pose.mulPose(Axis.YP.rotationDegrees(90));pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(AllPartialModels.MECHANICAL_PUMP_COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
+        // The dial measures signal, not shaft speed, and remains live while the pump is stopped.
+        float progress=state.getValue(ReciprocatingFluidPumpBlock.SIGNAL)/15f;
+        for(int side:new int[]{1,-1}){
+            pose.pushPose();pose.translate(.5,.5,.5);
+            pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
+            if(side<0)pose.mulPose(Axis.YP.rotationDegrees(180));
+            pose.translate(-.5,-.5,-.5);
+            pose.translate(-1.9/16f,0,0);
+            float pivot=5.75f/16;
+            pose.translate(1,pivot,pivot);pose.mulPose(Axis.XP.rotationDegrees(-90*progress));pose.translate(-1,-pivot,-pivot);
+            CachedBuffers.partial(AllPartialModels.GAUGE_DIAL,state).light(light).overlay(overlay)
+                .renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));
+            pose.popPose();
+        }
     }
 }
