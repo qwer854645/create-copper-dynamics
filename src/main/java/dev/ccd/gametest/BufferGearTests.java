@@ -10,6 +10,35 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class BufferGearTests {
+    @GameTest(template="empty") public static void twoBuffersMeshAtMatchingAxes(GameTestHelper h){
+        var pos=new BlockPos(3,3,3);
+        for(var front:Direction.values())for(var side:Direction.values()){
+            var state=CopperDynamics.BUFFER_PUMP.get().defaultBlockState().setValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING,front);
+            h.setBlock(pos,state);h.setBlock(pos.relative(side),state);
+            var a=(com.simibubi.create.content.kinetics.base.KineticBlockEntity)h.getBlockEntity(pos);
+            var b=(com.simibubi.create.content.kinetics.base.KineticBlockEntity)h.getBlockEntity(pos.relative(side));
+            boolean expected=side.getAxis()!=front.getAxis();
+            h.assertTrue(com.simibubi.create.content.kinetics.RotationPropagator.isConnected(a,b)==expected,"Buffer pair connection wrong: "+front+" / "+side);
+            if(expected){
+                try{
+                    var modifier=com.simibubi.create.content.kinetics.RotationPropagator.class.getDeclaredMethod("getRotationSpeedModifier",com.simibubi.create.content.kinetics.base.KineticBlockEntity.class,com.simibubi.create.content.kinetics.base.KineticBlockEntity.class);
+                    modifier.setAccessible(true);
+                    h.assertTrue((float)modifier.invoke(null,a,b)==-1f,"Buffer pair must mesh at opposite 1:1 rotation");
+                }catch(ReflectiveOperationException exception){throw new RuntimeException(exception);}
+                var player=net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
+                var stack=new net.minecraft.world.item.ItemStack(CopperDynamics.BUFFER_PUMP_ITEM.get());
+                player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);
+                h.setBlock(pos.relative(side),net.minecraft.world.level.block.Blocks.AIR);
+                var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(a.getBlockPos()),side,a.getBlockPos(),false);
+                var context=new net.minecraft.world.item.context.BlockPlaceContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,stack,hit);
+                var placed=CopperDynamics.BUFFER_PUMP.get().getStateForPlacement(context);
+                h.assertTrue(placed.getValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING)==front,"Placement changed matching buffer gear axis");
+                player.getInventory().clearContent();
+            }
+            h.setBlock(pos.relative(side),net.minecraft.world.level.block.Blocks.AIR);h.setBlock(pos,net.minecraft.world.level.block.Blocks.AIR);
+        }
+        h.succeed();
+    }
     @GameTest(template="empty") public static void bufferMeshesWithNativeCogwheels(GameTestHelper h){
         var pos=new BlockPos(3,3,3);
         for(var front:Direction.values()){
