@@ -4,14 +4,13 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "particle": "create:block/pipes",
-    "body": "create:block/pipes",
+    "particle": "create:block/copper_underside",
+    "body": "create:block/copper_underside",
     "common": "ccd:block/three_way_valve/pipe_common",
     "selected": "ccd:block/three_way_valve/pipe_selected",
     "closed": "ccd:block/three_way_valve/pipe_closed",
     "dial": "ccd:block/three_way_valve/valve",
-    "needle": "ccd:block/three_way_valve/fluid_valve",
-    "pipe": "ccd:block/three_way_valve/pipe_closed"
+    "needle": "ccd:block/three_way_valve/fluid_valve"
   },
   "elements": [
     {
@@ -29,55 +28,55 @@
       "faces": {
         "north": {
           "uv": [
-            6,
-            11,
-            1,
-            16
+            13,
+            3,
+            3,
+            13
           ],
           "texture": "#body"
         },
         "east": {
           "uv": [
-            6,
-            11,
-            1,
-            16
+            13,
+            3,
+            3,
+            13
           ],
           "texture": "#body"
         },
         "south": {
           "uv": [
-            1,
-            11,
-            6,
-            16
+            3,
+            3,
+            13,
+            13
           ],
           "texture": "#body"
         },
         "west": {
           "uv": [
-            1,
-            11,
-            6,
-            16
+            3,
+            3,
+            13,
+            13
           ],
           "texture": "#body"
         },
         "up": {
           "uv": [
-            1,
-            11,
-            6,
-            16
+            3,
+            3,
+            13,
+            13
           ],
           "texture": "#body"
         },
         "down": {
           "uv": [
-            1,
-            16,
-            6,
-            11
+            3,
+            13,
+            13,
+            3
           ],
           "texture": "#body"
         }
@@ -113,7 +112,7 @@
             2
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#common"
         },
         "west": {
           "uv": [
@@ -123,7 +122,7 @@
             0
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#common"
         },
         "up": {
           "uv": [
@@ -133,7 +132,7 @@
             0
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#common"
         },
         "down": {
           "uv": [
@@ -143,11 +142,12 @@
             2
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#common"
         }
       }
     },
     {
+      "name": "native_rim_north_0",
       "from": [
         3,
         3,
@@ -175,7 +175,7 @@
             16,
             16
           ],
-          "texture": "#pipe",
+          "texture": "#common",
           "cullface": "north"
         },
         "east": {
@@ -185,7 +185,7 @@
             9.5,
             16
           ],
-          "texture": "#pipe"
+          "texture": "#common"
         },
         "south": {
           "uv": [
@@ -194,7 +194,7 @@
             16,
             16
           ],
-          "texture": "#pipe"
+          "texture": "#common"
         },
         "west": {
           "uv": [
@@ -203,7 +203,7 @@
             10.5,
             11
           ],
-          "texture": "#pipe"
+          "texture": "#common"
         },
         "up": {
           "uv": [
@@ -213,7 +213,7 @@
             16
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#common"
         },
         "down": {
           "uv": [
@@ -223,10 +223,9 @@
             11
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#common"
         }
-      },
-      "name": "native_rim_north_0"
+      }
     },
     {
       "name": "native_rim_connector_south_0",
@@ -258,7 +257,7 @@
             8
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#selected"
         },
         "west": {
           "uv": [
@@ -268,7 +267,7 @@
             6
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#selected"
         },
         "up": {
           "uv": [
@@ -278,7 +277,7 @@
             6
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#selected"
         },
         "down": {
           "uv": [
@@ -288,11 +287,12 @@
             8
           ],
           "rotation": 180,
-          "texture": "#pipe"
+          "texture": "#selected"
         }
       }
     },
     {
+      "name": "native_rim_south_0",
       "from": [
         3,
         3,
@@ -320,7 +320,7 @@
             16,
             16
           ],
-          "texture": "#pipe"
+          "texture": "#selected"
         },
         "east": {
           "uv": [
@@ -329,7 +329,7 @@
             10.5,
             11
           ],
-          "texture": "#pipe"
+          "texture": "#selected"
         },
         "south": {
           "uv": [
@@ -338,7 +338,7 @@
             16,
             16
           ],
-          "texture": "#pipe",
+          "texture": "#selected",
           "cullface": "south"
         },
         "west": {
@@ -348,7 +348,7 @@
             9.5,
             16
           ],
-          "texture": "#pipe"
+          "texture": "#selected"
         },
         "up": {
           "uv": [
@@ -358,7 +358,7 @@
             11
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#selected"
         },
         "down": {
           "uv": [
@@ -368,10 +368,9 @@
             16
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#selected"
         }
-      },
-      "name": "native_rim_south_0"
+      }
     },
     {
       "name": "native_rim_connector_up_0",
@@ -402,7 +401,7 @@
             8,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#closed"
         },
         "east": {
           "uv": [
@@ -411,7 +410,7 @@
             8,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#closed"
         },
         "south": {
           "uv": [
@@ -420,7 +419,7 @@
             4,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#closed"
         },
         "west": {
           "uv": [
@@ -429,11 +428,12 @@
             4,
             2
           ],
-          "texture": "#pipe"
+          "texture": "#closed"
         }
       }
     },
     {
+      "name": "native_rim_up_0",
       "from": [
         3,
         14,
@@ -453,7 +453,7 @@
             11
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#closed"
         },
         "east": {
           "uv": [
@@ -463,7 +463,7 @@
             11
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#closed"
         },
         "south": {
           "uv": [
@@ -473,7 +473,7 @@
             11
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#closed"
         },
         "west": {
           "uv": [
@@ -483,7 +483,7 @@
             11
           ],
           "rotation": 90,
-          "texture": "#pipe"
+          "texture": "#closed"
         },
         "up": {
           "uv": [
@@ -493,7 +493,7 @@
             16
           ],
           "rotation": 90,
-          "texture": "#pipe",
+          "texture": "#closed",
           "cullface": "up"
         },
         "down": {
@@ -504,78 +504,61 @@
             16
           ],
           "rotation": 270,
-          "texture": "#pipe"
+          "texture": "#closed"
         }
-      },
-      "name": "native_rim_up_0"
+      }
     },
     {
-      "name": "dial_item_0_dial",
+      "name": "dial_item_east_dial",
       "from": [
         13.02,
         3,
         3
       ],
       "to": [
-        14.02,
+        13.02,
         13,
         13
       ],
       "faces": {
-        "south": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 90
-        },
-        "up": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 90
-        },
-        "north": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 270
-        },
-        "down": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 90
-        },
         "east": {
           "uv": [
             2,
-            2,
             12,
-            12
+            12,
+            2
           ],
-          "rotation": 0,
           "texture": "#dial"
         }
       }
     },
     {
-      "name": "dial_item_0_glass",
+      "name": "dial_item_east_pointer",
+      "from": [
+        13.07,
+        7.5,
+        7.6
+      ],
+      "to": [
+        13.07,
+        11.5,
+        8.4
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            3.5,
+            7.5,
+            5.5,
+            8
+          ],
+          "rotation": 270,
+          "texture": "#needle"
+        }
+      }
+    },
+    {
+      "name": "dial_item_east_glass",
       "from": [
         13,
         3,
@@ -586,46 +569,24 @@
         13,
         13
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -0.1,
+          0,
+          0
+        ]
+      },
       "faces": {
-        "south": {
-          "uv": [
-            1,
-            1,
-            6,
-            1.5
-          ],
-          "texture": "#needle",
-          "rotation": 90
-        },
-        "up": {
-          "uv": [
-            1,
-            1,
-            6,
-            1.5
-          ],
-          "texture": "#needle",
-          "rotation": 90
-        },
         "north": {
           "uv": [
             1,
             1,
-            6,
-            1.5
+            1.5,
+            6
           ],
-          "texture": "#needle",
-          "rotation": 270
-        },
-        "down": {
-          "uv": [
-            1,
-            1,
-            6,
-            1.5
-          ],
-          "texture": "#needle",
-          "rotation": 90
+          "texture": "#needle"
         },
         "east": {
           "uv": [
@@ -634,89 +595,50 @@
             6,
             6
           ],
-          "texture": "#needle",
-          "rotation": 270
-        }
-      }
-    },
-    {
-      "name": "dial_item_0_pointer",
-      "from": [
-        14.07,
-        7.5,
-        4.5
-      ],
-      "to": [
-        14.07,
-        8.5,
-        11.5
-      ],
-      "faces": {
-        "east": {
+          "texture": "#needle"
+        },
+        "south": {
           "uv": [
-            2,
-            7.5,
-            5.5,
-            8
+            1,
+            1,
+            1.5,
+            6
           ],
-          "rotation": 180,
+          "texture": "#needle"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            1.5,
+            6
+          ],
+          "texture": "#needle"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            1.5,
+            6
+          ],
           "texture": "#needle"
         }
       }
     },
     {
-      "name": "dial_item_1_dial",
+      "name": "dial_item_west_dial",
       "from": [
-        1.9800000000000004,
+        2.98,
         3,
         3
       ],
       "to": [
-        2.9800000000000004,
+        2.98,
         13,
         13
       ],
       "faces": {
-        "south": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 270
-        },
-        "down": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 270
-        },
-        "north": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 90
-        },
-        "up": {
-          "uv": [
-            2,
-            2,
-            12,
-            3
-          ],
-          "texture": "#dial",
-          "rotation": 270
-        },
         "west": {
           "uv": [
             2,
@@ -730,7 +652,32 @@
       }
     },
     {
-      "name": "dial_item_1_glass",
+      "name": "dial_item_west_pointer",
+      "from": [
+        2.93,
+        7.5,
+        7.6
+      ],
+      "to": [
+        2.93,
+        11.5,
+        8.4
+      ],
+      "faces": {
+        "west": {
+          "uv": [
+            3.5,
+            7.5,
+            5.5,
+            8
+          ],
+          "rotation": 270,
+          "texture": "#needle"
+        }
+      }
+    },
+    {
+      "name": "dial_item_west_glass",
       "from": [
         2,
         3,
@@ -741,46 +688,33 @@
         13,
         13
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -0.9,
+          0,
+          0
+        ]
+      },
       "faces": {
-        "south": {
-          "uv": [
-            1,
-            1,
-            6,
-            1.5
-          ],
-          "texture": "#needle",
-          "rotation": 270
-        },
-        "down": {
-          "uv": [
-            1,
-            1,
-            6,
-            1.5
-          ],
-          "texture": "#needle",
-          "rotation": 270
-        },
         "north": {
           "uv": [
             1,
             1,
-            6,
-            1.5
+            1.5,
+            6
           ],
-          "texture": "#needle",
-          "rotation": 90
+          "texture": "#needle"
         },
-        "up": {
+        "south": {
           "uv": [
             1,
             1,
-            6,
-            1.5
+            1.5,
+            6
           ],
-          "texture": "#needle",
-          "rotation": 270
+          "texture": "#needle"
         },
         "west": {
           "uv": [
@@ -789,32 +723,24 @@
             6,
             6
           ],
-          "texture": "#needle",
-          "rotation": 90
-        }
-      }
-    },
-    {
-      "name": "dial_item_1_pointer",
-      "from": [
-        1.9299999999999997,
-        7.5,
-        4.5
-      ],
-      "to": [
-        1.9299999999999997,
-        8.5,
-        11.5
-      ],
-      "faces": {
-        "west": {
+          "texture": "#needle"
+        },
+        "up": {
           "uv": [
-            2,
-            7.5,
-            5.5,
-            8
+            1,
+            1,
+            1.5,
+            6
           ],
-          "rotation": 0,
+          "texture": "#needle"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            1.5,
+            6
+          ],
           "texture": "#needle"
         }
       }

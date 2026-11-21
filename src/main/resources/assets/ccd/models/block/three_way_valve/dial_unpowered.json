@@ -13,14 +13,23 @@
       "name": "dial",
       "from": [
         3,
-        13.02,
+        14.02,
         3
       ],
       "to": [
         13,
-        14.02,
+        13.02,
         13
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          1,
+          0
+        ]
+      },
       "faces": {
         "north": {
           "uv": [
@@ -82,6 +91,15 @@
         14,
         13
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          0.9,
+          0
+        ]
+      },
       "faces": {
         "north": {
           "uv": [

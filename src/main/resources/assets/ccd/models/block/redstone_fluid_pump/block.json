@@ -5,7 +5,7 @@
   "ambientocclusion": false,
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "4": "create:block/valve_closed",
+    "4": "ccd:block/redstone_fluid_pump/dial",
     "valve": "create:block/fluid_valve",
     "pipe": "create:block/pipes",
     "dial": "ccd:block/redstone_fluid_pump/dial",
@@ -13,75 +13,6 @@
     "housing": "create:block/copper_underside"
   },
   "elements": [
-    {
-      "name": "solid_dial_backing",
-      "from": [
-        2,
-        13,
-        2
-      ],
-      "to": [
-        14,
-        13.01,
-        14
-      ],
-      "faces": {
-        "north": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "south": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "east": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "west": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "up": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        },
-        "down": {
-          "texture": "#housing",
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ]
-        }
-      }
-    },
     {
       "name": "valve_housing",
       "from": [
@@ -163,6 +94,15 @@
         12,
         4
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          8,
+          0
+        ]
+      },
       "faces": {
         "east": {
           "uv": [
@@ -217,6 +157,15 @@
         13,
         2
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          28,
+          8
+        ]
+      },
       "faces": {
         "north": {
           "uv": [
@@ -288,6 +237,15 @@
         12,
         16
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          8,
+          0
+        ]
+      },
       "faces": {
         "east": {
           "uv": [
@@ -342,6 +300,15 @@
         13,
         16
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          28,
+          8
+        ]
+      },
       "faces": {
         "north": {
           "uv": [
@@ -405,12 +372,12 @@
       "name": "dial",
       "from": [
         2,
-        13.01,
+        14.01,
         2
       ],
       "to": [
         14,
-        13.6,
+        13.01,
         14
       ],
       "faces": {
@@ -457,7 +424,7 @@
             14,
             14
           ],
-          "rotation": 0,
+          "rotation": 90,
           "texture": "#dial"
         }
       }
@@ -466,14 +433,23 @@
       "name": "unused_stop_background_3",
       "from": [
         3,
-        13.62,
+        13.02,
         7
       ],
       "to": [
         6,
-        13.62,
+        13.02,
         9
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          0
+        ]
+      },
       "faces": {
         "up": {
           "uv": [
@@ -490,14 +466,23 @@
       "name": "unused_stop_background_10",
       "from": [
         10,
-        13.62,
+        13.02,
         7
       ],
       "to": [
         13,
-        13.62,
+        13.02,
         9
       ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          -1,
+          0
+        ]
+      },
       "faces": {
         "up": {
           "uv": [
@@ -507,6 +492,39 @@
             7
           ],
           "texture": "#dial"
+        }
+      }
+    },
+    {
+      "name": "red_side",
+      "from": [
+        7,
+        13.02,
+        10
+      ],
+      "to": [
+        9,
+        13.02,
+        13
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -3,
+          -2,
+          3
+        ]
+      },
+      "faces": {
+        "up": {
+          "uv": [
+            7,
+            3,
+            9,
+            6
+          ],
+          "texture": "#4"
         }
       }
     }

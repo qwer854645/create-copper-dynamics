@@ -1,0 +1,20 @@
+{
+	"format_version": "26.3",
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"valve": "create:block/fluid_valve",
+		"particle": "create:block/copper_underside"
+	},
+	"elements": [
+		{
+			"name": "flow_pointer",
+			"from": [7.5, 13.68, 4.5],
+			"to": [8.5, 13.68, 8.5],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -0.4, 0]},
+			"faces": {
+				"up": {"uv": [4, 7.5, 2, 8], "rotation": 270, "texture": "#valve"}
+			}
+		}
+	]
+}
