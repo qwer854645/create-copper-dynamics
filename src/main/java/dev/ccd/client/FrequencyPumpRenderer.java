@@ -16,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 
 public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<VariableFlowPumpBlockEntity> {
+    private static final PartialModel COG=PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/variable_flow_pump/cog"));
     public static void registerModels(){}
     public FrequencyPumpRenderer(BlockEntityRendererProvider.Context context){}
     @Override protected void renderSafe(VariableFlowPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
@@ -28,9 +29,8 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
         // Align local +X with the positive world rotation axis, independent of flow facing.
         if(axis==Direction.Axis.Z)pose.mulPose(Axis.YP.rotationDegrees(-90));
         pose.mulPose(Axis.XP.rotation(angle));
-        pose.scale(.3f,1,1);
-        pose.mulPose(Axis.YP.rotationDegrees(90));pose.translate(-.5,-.5,-.5);
-        CachedBuffers.partial(AllPartialModels.MECHANICAL_PUMP_COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
+        pose.translate(-.5,-.5,-.5);
+        CachedBuffers.partial(COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
         // The dial measures signal, not shaft speed, and remains live while the pump is stopped.
         float progress=state.getValue(VariableFlowPumpBlock.SIGNAL)/15f;
         for(int side:new int[]{1,-1}){

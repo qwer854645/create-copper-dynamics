@@ -1,86 +1,70 @@
 {
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
   "parent": "create:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "copper": "create:block/copper_underside",
-    "shaft": "ccd:block/booster_pump/shaft_face",
-    "pipe": "create:block/pipes",
-    "gear": "create:block/pump",
     "particle": "create:block/copper_underside",
+    "copper": "create:block/copper_underside",
+    "pipe": "create:block/pipes",
+    "gear": "ccd:block/variable_flow_pump",
     "gauge": "create:block/gauge"
   },
   "elements": [
     {
       "from": [
-        6.5,
-        -1,
-        6.5
+        4.55,
+        0.9,
+        5.5
       ],
       "to": [
-        9.5,
-        17,
-        9.5
+        11.45,
+        15.1,
+        10.5
       ],
-      "neoforge_data": {
-        "calculate_normals": true
+      "rotation": {
+        "angle": -22.5,
+        "axis": "x",
+        "origin": [
+          5.035,
+          8,
+          8
+        ]
       },
       "faces": {
-        "west": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "north": {
-          "uv": [
-            0,
-            9,
-            9,
-            14
-          ],
-          "rotation": 270,
-          "texture": "#gear"
-        },
         "east": {
           "uv": [
-            0,
+            1,
             6.5,
-            9,
+            8,
             8
           ],
-          "rotation": 90,
           "texture": "#gear"
         },
-        "south": {
+        "west": {
           "uv": [
-            0,
-            9,
-            9,
-            14
+            1,
+            6.5,
+            8,
+            8
           ],
-          "rotation": 90,
           "texture": "#gear"
         },
         "up": {
           "uv": [
             10,
-            6.5,
-            15,
-            8
+            9,
+            13.5,
+            11.5
           ],
-          "rotation": 0,
           "texture": "#gear"
         },
         "down": {
           "uv": [
             10,
-            6.5,
-            15,
-            8
+            9,
+            13.5,
+            11.5
           ],
           "rotation": 180,
           "texture": "#gear"
@@ -89,95 +73,193 @@
     },
     {
       "from": [
-        6.5,
+        4.55,
+        5.5,
+        0.9
+      ],
+      "to": [
+        11.45,
+        10.5,
+        15.1
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "x",
+        "origin": [
+          8.035,
+          8,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            9,
+            13.5,
+            11.5
+          ],
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            1,
+            6.5,
+            8,
+            8
+          ],
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            10,
+            9,
+            13.5,
+            11.5
+          ],
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            1,
+            6.5,
+            8,
+            8
+          ],
+          "texture": "#gear"
+        }
+      }
+    },
+    {
+      "from": [
+        4.55,
+        5.5,
+        0.9
+      ],
+      "to": [
+        11.45,
+        10.5,
+        15.1
+      ],
+      "rotation": {
+        "angle": -22.5,
+        "axis": "x",
+        "origin": [
+          5.035,
+          8,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            9,
+            13.5,
+            11.5
+          ],
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            1,
+            6.5,
+            8,
+            8
+          ],
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            10,
+            9,
+            13.5,
+            11.5
+          ],
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            1,
+            6.5,
+            8,
+            8
+          ],
+          "texture": "#gear"
+        }
+      }
+    },
+    {
+      "from": [
+        4.55,
+        0.9,
+        5.5
+      ],
+      "to": [
+        11.45,
+        15.1,
+        10.5
+      ],
+      "rotation": {
+        "angle": 22.5,
+        "axis": "x",
+        "origin": [
+          5.035,
+          8,
+          8
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            1,
+            6.5,
+            8,
+            8
+          ],
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            1,
+            6.5,
+            8,
+            8
+          ],
+          "texture": "#gear"
+        },
+        "up": {
+          "uv": [
+            10,
+            9,
+            13.5,
+            11.5
+          ],
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            10,
+            9,
+            13.5,
+            11.5
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
         6.5,
         -1
       ],
       "to": [
-        9.5,
+        11.5,
         9.5,
         17
       ],
-      "neoforge_data": {
-        "calculate_normals": true
-      },
-      "faces": {
-        "west": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        },
-        "north": {
-          "uv": [
-            10,
-            6.5,
-            15,
-            8
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "east": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "south": {
-          "uv": [
-            10,
-            6.5,
-            15,
-            8
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "up": {
-          "uv": [
-            0,
-            9,
-            9,
-            14
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            0,
-            9,
-            9,
-            14
-          ],
-          "texture": "#gear",
-          "rotation": 90
-        }
-      }
-    },
-    {
-      "from": [
-        6.5,
-        -1,
-        6.5
-      ],
-      "to": [
-        9.5,
-        17,
-        9.5
-      ],
-      "neoforge_data": {
-        "calculate_normals": true
-      },
       "rotation": {
         "angle": 45,
         "axis": "x",
@@ -188,24 +270,13 @@
         ]
       },
       "faces": {
-        "west": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
         "north": {
           "uv": [
-            0,
-            9,
-            9,
-            14
+            10,
+            6.5,
+            13.5,
+            8
           ],
-          "rotation": 270,
           "texture": "#gear"
         },
         "east": {
@@ -215,65 +286,179 @@
             9,
             8
           ],
-          "rotation": 90,
           "texture": "#gear"
         },
         "south": {
           "uv": [
-            0,
-            9,
-            9,
-            14
+            10,
+            6.5,
+            13.5,
+            8
           ],
-          "rotation": 90,
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 180,
           "texture": "#gear"
         },
         "up": {
           "uv": [
-            10,
-            6.5,
-            15,
-            8
+            0,
+            9,
+            9,
+            12.5
           ],
-          "rotation": 0,
+          "rotation": 90,
           "texture": "#gear"
         },
         "down": {
           "uv": [
-            10,
-            6.5,
-            15,
-            8
+            0,
+            9,
+            9,
+            12.5
           ],
-          "rotation": 180,
+          "rotation": 90,
           "texture": "#gear"
         }
       }
     },
     {
       "from": [
-        6.5,
-        6.5,
-        -1
+        4.5,
+        -1,
+        6.5
       ],
       "to": [
-        9.5,
-        9.5,
-        17
+        11.5,
+        17,
+        9.5
       ],
-      "neoforge_data": {
-        "calculate_normals": true
-      },
       "rotation": {
         "angle": 45,
         "axis": "x",
         "origin": [
-          8,
+          5,
           8,
           8
         ]
       },
       "faces": {
+        "north": {
+          "uv": [
+            0,
+            9,
+            9,
+            12.5
+          ],
+          "rotation": 270,
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            0,
+            9,
+            9,
+            12.5
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "west": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "up": {
+          "uv": [
+            10,
+            6.5,
+            13.5,
+            8
+          ],
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            10,
+            6.5,
+            13.5,
+            8
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
+        6.5,
+        -1
+      ],
+      "to": [
+        11.5,
+        9.5,
+        17
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -3,
+          0,
+          0
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            10,
+            6.5,
+            13.5,
+            8
+          ],
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            10,
+            6.5,
+            13.5,
+            8
+          ],
+          "texture": "#gear"
+        },
         "west": {
           "uv": [
             0,
@@ -284,42 +469,12 @@
           "rotation": 180,
           "texture": "#gear"
         },
-        "north": {
-          "uv": [
-            10,
-            6.5,
-            15,
-            8
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "east": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "south": {
-          "uv": [
-            10,
-            6.5,
-            15,
-            8
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
         "up": {
           "uv": [
             0,
             9,
             9,
-            14
+            12.5
           ],
           "rotation": 90,
           "texture": "#gear"
@@ -329,271 +484,89 @@
             0,
             9,
             9,
-            14
-          ],
-          "texture": "#gear",
-          "rotation": 90
-        }
-      }
-    },
-    {
-      "from": [
-        6.515,
-        0.9000000000000004,
-        5.5
-      ],
-      "to": [
-        9.485,
-        15.1,
-        10.5
-      ],
-      "neoforge_data": {
-        "calculate_normals": true
-      },
-      "rotation": {
-        "angle": 22.5,
-        "axis": "x",
-        "origin": [
-          8,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "west": {
-          "uv": [
-            1,
-            7,
-            1.5,
-            7.5
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "east": {
-          "uv": [
-            1,
-            7,
-            1.5,
-            7.5
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "up": {
-          "uv": [
-            10,
-            9,
-            15,
-            11.5
-          ],
-          "rotation": 0,
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            10,
-            9,
-            15,
-            11.5
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        6.515,
-        5.5,
-        0.9000000000000004
-      ],
-      "to": [
-        9.485,
-        10.5,
-        15.1
-      ],
-      "neoforge_data": {
-        "calculate_normals": true
-      },
-      "rotation": {
-        "angle": -22.5,
-        "axis": "x",
-        "origin": [
-          8,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "west": {
-          "uv": [
-            1,
-            7,
-            1.5,
-            7.5
+            12.5
           ],
           "rotation": 90,
           "texture": "#gear"
-        },
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
+        -1,
+        6.5
+      ],
+      "to": [
+        11.5,
+        17,
+        9.5
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -3,
+          0,
+          0
+        ]
+      },
+      "faces": {
         "north": {
           "uv": [
-            10,
+            0,
             9,
-            15,
-            11.5
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "east": {
-          "uv": [
-            1,
-            7,
-            1.5,
-            7.5
+            9,
+            12.5
           ],
           "rotation": 270,
           "texture": "#gear"
         },
-        "south": {
+        "east": {
           "uv": [
-            10,
+            0,
+            6.5,
             9,
-            15,
-            11.5
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        }
-      }
-    },
-    {
-      "from": [
-        6.515,
-        5.5,
-        0.9000000000000004
-      ],
-      "to": [
-        9.485,
-        10.5,
-        15.1
-      ],
-      "neoforge_data": {
-        "calculate_normals": true
-      },
-      "rotation": {
-        "angle": 22.5,
-        "axis": "x",
-        "origin": [
-          8,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "west": {
-          "uv": [
-            1,
-            7,
-            1.5,
-            7.5
+            8
           ],
           "rotation": 90,
           "texture": "#gear"
         },
-        "north": {
-          "uv": [
-            10,
-            9,
-            15,
-            11.5
-          ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "east": {
-          "uv": [
-            1,
-            7,
-            1.5,
-            7.5
-          ],
-          "rotation": 270,
-          "texture": "#gear"
-        },
         "south": {
           "uv": [
-            10,
+            0,
             9,
-            15,
-            11.5
+            9,
+            12.5
           ],
-          "texture": "#gear",
-          "rotation": 0
-        }
-      }
-    },
-    {
-      "from": [
-        6.515,
-        0.9000000000000004,
-        5.5
-      ],
-      "to": [
-        9.485,
-        15.1,
-        10.5
-      ],
-      "neoforge_data": {
-        "calculate_normals": true
-      },
-      "rotation": {
-        "angle": -22.5,
-        "axis": "x",
-        "origin": [
-          8,
-          8,
-          8
-        ]
-      },
-      "faces": {
+          "rotation": 90,
+          "texture": "#gear"
+        },
         "west": {
           "uv": [
-            1,
-            7,
-            1.5,
-            7.5
+            0,
+            6.5,
+            9,
+            8
           ],
-          "texture": "#gear",
-          "rotation": 0
-        },
-        "east": {
-          "uv": [
-            1,
-            7,
-            1.5,
-            7.5
-          ],
-          "texture": "#gear",
-          "rotation": 0
+          "rotation": 90,
+          "texture": "#gear"
         },
         "up": {
           "uv": [
             10,
-            9,
-            15,
-            11.5
+            6.5,
+            13.5,
+            8
           ],
-          "rotation": 0,
           "texture": "#gear"
         },
         "down": {
           "uv": [
             10,
-            9,
-            15,
-            11.5
+            6.5,
+            13.5,
+            8
           ],
           "rotation": 180,
           "texture": "#gear"
