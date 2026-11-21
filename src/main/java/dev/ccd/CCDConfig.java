@@ -85,6 +85,9 @@ public final class CCDConfig {
         int high=quantizePumpFlow(RECIPROCATING_MAX_FLOW.get());
         return quantizePumpFlow(interpolateFlow(low, high, signal));
     }
+    public static int bufferPumpRange(int nativeRange) {
+        return nativeRange + (boosterRange(nativeRange) - nativeRange) / 2;
+    }
     public static int quantizePumpFlow(int flow) {
         return (int)(Math.round(flow / 100.0) * 100);
     }
