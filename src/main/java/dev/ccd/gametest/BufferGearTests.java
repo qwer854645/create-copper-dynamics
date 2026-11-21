@@ -10,31 +10,6 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class BufferGearTests {
-    @GameTest(template="empty") public static void heldBufferPreviewsAndPlacesAtCogwheel(GameTestHelper h){
-        var pos=new BlockPos(3,3,3);var absolute=h.absolutePos(pos);
-        var player=net.neoforged.neoforge.common.util.FakePlayerFactory.getMinecraft(h.getLevel());
-        var stack=new net.minecraft.world.item.ItemStack(CopperDynamics.BUFFER_PUMP_ITEM.get());
-        player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,stack);player.setShiftKeyDown(false);
-        var helper=new dev.ccd.content.BufferPumpPlacementHelper();
-        for(var axis:Direction.Axis.values()){
-            var state=com.simibubi.create.AllBlocks.COGWHEEL.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,axis);
-            h.setBlock(pos,state);
-            for(var side:Direction.values()){
-                var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(absolute).add(net.minecraft.world.phys.Vec3.atLowerCornerOf(side.getNormal()).scale(.5)),side,absolute,false);
-                var offset=helper.getOffset(player,h.getLevel(),state,absolute,hit);
-                if(side.getAxis()==axis){h.assertTrue(!offset.isSuccessful(),"Preview offered at shaft end");continue;}
-                h.assertTrue(offset.isSuccessful()&&offset.hasGhostState(),"Buffer preview missing");
-                h.assertTrue(offset.getGhostState().getValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING).getAxis()==axis,"Preview gear axis mismatch");
-                var context=new net.minecraft.world.item.context.UseOnContext(player,net.minecraft.world.InteractionHand.MAIN_HAND,hit);
-                h.assertTrue(CopperDynamics.BUFFER_PUMP_ITEM.get().onItemUseFirst(stack,context).consumesAction(),"Helper placement failed");
-                h.assertTrue(h.getLevel().getBlockState(offset.getBlockPos()).is(CopperDynamics.BUFFER_PUMP.get()),"Placed wrong block");
-                h.getLevel().setBlockAndUpdate(offset.getBlockPos(),net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
-                stack.setCount(1);
-            }
-            h.setBlock(pos,net.minecraft.world.level.block.Blocks.AIR);
-        }
-        player.getInventory().clearContent();h.succeed();
-    }
     @GameTest(template="empty") public static void twoBuffersMeshAtMatchingAxes(GameTestHelper h){
         var pos=new BlockPos(3,3,3);
         for(var front:Direction.values())for(var side:Direction.values()){

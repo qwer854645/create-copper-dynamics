@@ -18,9 +18,13 @@ public final class BufferPumpRenderer extends SafeBlockEntityRenderer<BufferPump
     @Override protected void renderSafe(BufferPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
         var state=be.getBlockState();var axis=((BufferPumpBlock)state.getBlock()).getRotationAxis(state);
         float time=net.createmod.catnip.animation.AnimationTickHolder.getRenderTime(be.getLevel());
-        float angle=(float)Math.toRadians((time*be.getSpeed()*.3f)%360);
-        pose.pushPose();pose.translate(.5,.5,.5);
+        float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),axis);
         var facing=state.getValue(BufferPumpBlock.FACING);
+        // Native cog phase alternates by position, like the Millstone. The local +Y
+        // axis follows FACING, so negative-facing models need the inverse local angle.
+        int sign=facing.getAxisDirection()==Direction.AxisDirection.POSITIVE?1:-1;
+        float angle=(float)Math.toRadians(((time*be.getSpeed()*.3f+offset)*sign)%360);
+        pose.pushPose();pose.translate(.5,.5,.5);
         switch(facing){
             case DOWN->pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(180));
             case NORTH->pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-90));
