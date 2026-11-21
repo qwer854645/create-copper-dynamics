@@ -10,9 +10,11 @@ async function main(){
  base.elements=base.elements.map(e=>{const v=structuredClone(e);v.name='compressed_tank';v.from[1]*=5/16;v.to[1]*=5/16;if(v.rotation)v.rotation.origin[1]*=5/16;for(const f of Object.values(v.faces))delete f.cullface;return v;});
  Object.assign(base.textures,{pump:'create:block/pump',pipe:'create:block/pipes'});
  const native=model('create:block/mechanical_pump/block');
+ const tankElements=structuredClone(base.elements),headElements=[];
  for(const original of native.elements.filter(e=>e.from[1]>=8)){
   const e=structuredClone(original);e.name='native_upper_pump_end';
   for(const f of Object.values(e.faces))f.texture='#pump';base.elements.push(e);
+  const inherited=structuredClone(original);headElements.push(inherited);
  }
  // Native pump cog rotated from Z to Y, compressed into the upper two thirds.
  const cog=model('create:block/mechanical_pump/cog'),cogElements=[];
@@ -28,12 +30,17 @@ async function main(){
   for(const f of Object.values(e.faces)){f.texture='#pipe';delete f.cullface;}base.elements.push(e);
  }
  save('assets/ccd/models/block/buffer_pump.json',base);
+ save('assets/ccd/models/block/buffer_pump/tank.json',{...base,elements:tankElements});
+ save('assets/ccd/models/block/buffer_pump/pump_head.json',{parent:'create:block/mechanical_pump/block',elements:headElements});
+ const mouthElements=base.elements.filter(e=>e.name?.startsWith('native_pump_rim'));
+ save('assets/ccd/models/block/buffer_pump/mouth.json',{parent:'minecraft:block/block',textures:{pipe:'create:block/pipes'},elements:mouthElements});
  save('assets/ccd/models/block/buffer_pump/cog.json',{parent:'minecraft:block/block',textures:{pump:'create:block/pump'},elements:cogElements});
  const shaft=model('create:block/shaft_half'),shafts=[];
  for(const basis of [[[0,0,-1],[0,1,0],[1,0,0]],[[0,0,1],[0,1,0],[-1,0,0]]])for(const source of shaft.elements){const e=turn(source,basis);for(const f of Object.values(e.faces))f.texture=f.texture==='#0'?'#shaft_side':'#shaft_end';shafts.push(e);}
  save('assets/ccd/models/item/buffer_pump.json',{...base,elements:[...base.elements,...cogElements]});
- const variants={};for(const[facing,rotation]of Object.entries({up:{},down:{x:180},north:{x:90},south:{x:270},east:{x:90,y:90},west:{x:90,y:270}}))variants['facing='+facing]={model:'ccd:block/buffer_pump',...rotation};
- save('assets/ccd/blockstates/buffer_pump.json',{variants});
+ const multipart=[];for(const[facing,rotation]of Object.entries({up:{},down:{x:180},north:{x:90},south:{x:270},east:{x:90,y:90},west:{x:90,y:270}}))
+  for(const part of ['tank','pump_head','mouth'])multipart.push({when:{facing},apply:{model:'ccd:block/buffer_pump/'+part,...rotation}});
+ save('assets/ccd/blockstates/buffer_pump.json',{multipart});
  save('data/ccd/recipe/buffer_pump.json',{type:'minecraft:crafting_shapeless',ingredients:[{item:'create:mechanical_pump'},{item:'create:fluid_tank'}],result:{id:'ccd:buffer_pump',count:1}});
  save('data/ccd/loot_table/blocks/buffer_pump.json',{type:'minecraft:block',pools:[{rolls:1,entries:[{type:'minecraft:item',name:'ccd:buffer_pump'}],conditions:[{condition:'minecraft:survives_explosion'}]}]});
  for(const rel of ['data/create/tags/block/wrench_pickup.json','data/minecraft/tags/block/mineable/pickaxe.json']){const data=JSON.parse(fs.readFileSync(path.join(root,rel)));if(!data.values.includes('ccd:buffer_pump'))data.values.push('ccd:buffer_pump');save(rel,data);}

@@ -412,5 +412,8 @@
   "block.ccd.creative_delivery_fluid_tank": "输送式创造流体储罐",
   "ccd.creative_delivery.empty": "未选择流体",
   "ccd.creative_delivery.active": "无限供应 · 自动向开口输送",
-  "block.ccd.buffer_pump": "缓存泵"
+  "block.ccd.buffer_pump": "缓存泵",
+  "ccd.creative_delivery.mode": "??????",
+  "ccd.creative_delivery.containers_only": "??????",
+  "ccd.creative_delivery.allow_world": "???????"
 }

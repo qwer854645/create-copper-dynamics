@@ -11,6 +11,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 /** Finite buffer supplied externally; rotational power only pumps stored fluid outward. */
 public final class BufferPumpBlockEntity extends PumpBlockEntity {
     public static final int CAPACITY=2000;
+    private final dev.ccd.logistics.PumpOpenEnds openEnds=new dev.ccd.logistics.PumpOpenEnds();
     public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(CAPACITY){
         @Override protected void onContentsChanged(){setChanged();if(level!=null&&!level.isClientSide())sendData();}
     };
@@ -47,13 +48,14 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
                 continue;
             }
             var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,step.pos,step.entry);
+            if(target==null)target=openEnds.handler(this,step.pos,step.entry);
             if(target==null||target==buffer)continue;
             var offer=buffer.drain(remaining,IFluidHandler.FluidAction.SIMULATE);
             int accepted=target.fill(offer,IFluidHandler.FluidAction.SIMULATE);
             if(accepted>0){var drained=buffer.drain(Math.min(accepted,offer.getAmount()),IFluidHandler.FluidAction.EXECUTE);int filled=Math.clamp(target.fill(drained,IFluidHandler.FluidAction.EXECUTE),0,drained.getAmount());remaining-=filled;if(filled<drained.getAmount())buffer.fill(drained.copyWithAmount(drained.getAmount()-filled),IFluidHandler.FluidAction.EXECUTE);}
         }
     }
-    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));}
-    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));}
+    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));openEnds.write(tag,registries);}
+    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));openEnds.read(tag,registries);}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){super.addToGoggleTooltip(tooltip,sneaking);if(!buffer.isEmpty())tooltip.add(buffer.getFluid().getHoverName());tooltip.add(net.minecraft.network.chat.Component.literal(buffer.getFluidAmount()+" / "+CAPACITY+" mB"));return true;}
 }

@@ -1,29 +1,169 @@
 {
-  "variants": {
-    "facing=up": {
-      "model": "ccd:block/buffer_pump"
+  "multipart": [
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/tank"
+      }
     },
-    "facing=down": {
-      "model": "ccd:block/buffer_pump",
-      "x": 180
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/pump_head"
+      }
     },
-    "facing=north": {
-      "model": "ccd:block/buffer_pump",
-      "x": 90
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/mouth"
+      }
     },
-    "facing=south": {
-      "model": "ccd:block/buffer_pump",
-      "x": 270
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/tank",
+        "x": 180
+      }
     },
-    "facing=east": {
-      "model": "ccd:block/buffer_pump",
-      "x": 90,
-      "y": 90
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/pump_head",
+        "x": 180
+      }
     },
-    "facing=west": {
-      "model": "ccd:block/buffer_pump",
-      "x": 90,
-      "y": 270
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/mouth",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/tank",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/pump_head",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/mouth",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/tank",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/pump_head",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/mouth",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/tank",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/pump_head",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/mouth",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/tank",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/pump_head",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "ccd:block/buffer_pump/mouth",
+        "x": 90,
+        "y": 270
+      }
     }
-  }
+  ]
 }

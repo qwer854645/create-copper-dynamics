@@ -13,9 +13,19 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 /** Infinite creative source with bounded pipe traversal; no owned finite cargo. */
 public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     private FluidStack selected=FluidStack.EMPTY;
+    private final dev.ccd.logistics.PumpOpenEnds openEnds=new dev.ccd.logistics.PumpOpenEnds();
     public static final int RANGE=256, RATE=1000000, VISIT_LIMIT=4096;
     public CreativeDeliveryTankBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.CREATIVE_DELIVERY_TANK_BE.get(),pos,state);}
-    @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){}
+    public com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour worldOutput;
+    @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
+        behaviours.add(worldOutput=new com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour(
+            net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode"),this,
+            new com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform.Sided(){
+                @Override protected net.minecraft.world.phys.Vec3 getSouthLocation(){return new net.minecraft.world.phys.Vec3(.5,.25,1.01);}
+                @Override protected boolean isSideActive(BlockState state,Direction side){return side.getAxis()!=state.getValue(CreativeDeliveryTankBlock.FACING).getAxis();}
+            }).between(0,1).withFormatter(value->net.minecraft.network.chat.Component.translatable(
+                value==0?"ccd.creative_delivery.containers_only":"ccd.creative_delivery.allow_world").getString()));
+    }
     public void select(FluidStack fluid){selected=fluid.isEmpty()?FluidStack.EMPTY:fluid.copyWithAmount(1000);notifyUpdate();if(level!=null)level.invalidateCapabilities(worldPosition);}
     public final IFluidHandler handler=new IFluidHandler(){
         public int getTanks(){return 1;}
@@ -44,12 +54,13 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
             }else{
                 if(level.getBlockEntity(step.pos) instanceof CreativeDeliveryTankBlockEntity)continue;
                 var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,step.pos,step.entry);
+                if(target==null&&worldOutput.getValue()==1)target=openEnds.handler(this,step.pos,step.entry);
                 if(target!=null)remaining-=Math.clamp(target.fill(selected.copyWithAmount(remaining),IFluidHandler.FluidAction.EXECUTE),0,remaining);
             }
         }
     }
-    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("SelectedFluid",selected.saveOptional(registries));}
-    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);selected=FluidStack.parseOptional(registries,tag.getCompound("SelectedFluid"));}
+    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("SelectedFluid",selected.saveOptional(registries));openEnds.write(tag,registries);}
+    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);selected=FluidStack.parseOptional(registries,tag.getCompound("SelectedFluid"));openEnds.read(tag,registries);}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
         tooltip.add(selected.isEmpty()?net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.empty"):selected.getHoverName());
         if(!selected.isEmpty())tooltip.add(net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.active"));return true;

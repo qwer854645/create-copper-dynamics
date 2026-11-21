@@ -412,5 +412,8 @@
   "block.ccd.creative_delivery_fluid_tank": "Creative Delivery Fluid Tank",
   "ccd.creative_delivery.empty": "No fluid selected",
   "ccd.creative_delivery.active": "Infinite supply · automatic outward delivery",
-  "block.ccd.buffer_pump": "Buffer Pump"
+  "block.ccd.buffer_pump": "Buffer Pump",
+  "ccd.creative_delivery.mode": "World Output Mode",
+  "ccd.creative_delivery.containers_only": "Containers Only",
+  "ccd.creative_delivery.allow_world": "Allow World Output"
 }

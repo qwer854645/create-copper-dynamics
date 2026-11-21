@@ -1,0 +1,87 @@
+{
+  "parent": "create:block/mechanical_pump/block",
+  "elements": [
+    {
+      "from": [
+        2,
+        13,
+        2
+      ],
+      "to": [
+        14,
+        16,
+        14
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "z",
+        "origin": [
+          8,
+          14.5,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#4"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#4"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#4"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            6.5,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#4"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            6,
+            6
+          ],
+          "rotation": 180,
+          "texture": "#4"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6,
+            6
+          ],
+          "texture": "#4"
+        }
+      }
+    }
+  ]
+}
