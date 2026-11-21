@@ -28,7 +28,7 @@ public final class FluidWorldScripts {
         var a=fluid(first);var b=fluid(second);
         if(a.isSame(b))throw new IllegalArgumentException("Interaction requires different fluid families");
         var source=block(sourceResult);var flowing=block(flowingResult);var downward=block(downwardResult);
-        if(source==null&&flowing==null&&downward==null)throw new IllegalArgumentException("At least one result is required");
+        if(source==null&&flowing==null&&downward==null){RULES.remove(key);return;}
         RULES.put(key,new Rule(key,a,b,source,flowing,downward));
     }
     public static void remove(String id){RULES.remove(ResourceLocation.parse(id).toString());}
