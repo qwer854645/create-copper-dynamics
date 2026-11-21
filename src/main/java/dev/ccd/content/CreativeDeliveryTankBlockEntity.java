@@ -19,17 +19,18 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
     public CreativeDeliveryTankBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.CREATIVE_DELIVERY_TANK_BE.get(),pos,state);}
     public com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour worldOutput;
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
-        behaviours.add(worldOutput=new com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour(
+        behaviours.add(worldOutput=new com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour<OutputMode>(OutputMode.class,
             net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode"),this,
-            new CreativeDeliverySlotTransform()){
-                @Override public com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard createBoard(net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){
-                    return new com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsBoard(
-                        net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode"),1,1,
-                        java.util.List.of(net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode")),
-                        new com.simibubi.create.foundation.blockEntity.behaviour.ValueSettingsFormatter(setting->modeName(setting.value())));
-                }
-            }.between(0,1).withFormatter(value->net.minecraft.network.chat.Component.translatable(
-                value==0?"ccd.creative_delivery.containers_only":"ccd.creative_delivery.allow_world").getString()));
+            new CreativeDeliverySlotTransform()));
+    }
+    public enum OutputMode implements com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.INamedIconOptions {
+        CONTAINERS(com.simibubi.create.foundation.gui.AllIcons.I_FILL,"ccd.creative_delivery.containers_only"),
+        WORLD(com.simibubi.create.foundation.gui.AllIcons.I_PLACE,"ccd.creative_delivery.allow_world");
+        private final com.simibubi.create.foundation.gui.AllIcons icon;
+        private final String key;
+        OutputMode(com.simibubi.create.foundation.gui.AllIcons icon,String key){this.icon=icon;this.key=key;}
+        @Override public com.simibubi.create.foundation.gui.AllIcons getIcon(){return icon;}
+        @Override public String getTranslationKey(){return key;}
     }
     private static net.minecraft.network.chat.MutableComponent modeName(int value){return net.minecraft.network.chat.Component.translatable(value==0?"ccd.creative_delivery.containers_only":"ccd.creative_delivery.allow_world");}
     public void select(FluidStack fluid){selected=fluid.isEmpty()?FluidStack.EMPTY:fluid.copyWithAmount(1000);notifyUpdate();if(level!=null)level.invalidateCapabilities(worldPosition);}
