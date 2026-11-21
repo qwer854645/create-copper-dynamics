@@ -187,7 +187,7 @@ public final class CopperDynamics {
     public static final DeferredHolder<Item, BlockItem> BOOSTER_PUMP_ITEM =
         ITEMS.register("booster_pump", () -> new BlockItem(BOOSTER_PUMP.get(), new Item.Properties()));
     public static final DeferredHolder<net.minecraft.world.level.block.Block,dev.ccd.content.BufferPumpBlock> BUFFER_PUMP=BLOCKS.register("buffer_pump",()->new dev.ccd.content.BufferPumpBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
-    public static final DeferredHolder<Item,BlockItem> BUFFER_PUMP_ITEM=ITEMS.register("buffer_pump",()->new BlockItem(BUFFER_PUMP.get(),new Item.Properties()));
+    public static final DeferredHolder<Item,BlockItem> BUFFER_PUMP_ITEM=ITEMS.register("buffer_pump",()->new dev.ccd.content.BufferPumpBlockItem(BUFFER_PUMP.get(),new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.BufferPumpBlockEntity>> BUFFER_PUMP_BE=BLOCK_ENTITIES.register("buffer_pump",()->BlockEntityType.Builder.of(dev.ccd.content.BufferPumpBlockEntity::new,BUFFER_PUMP.get()).build(null));
     public static final DeferredHolder<net.minecraft.world.level.block.Block,dev.ccd.content.CreativeDeliveryTankBlock> CREATIVE_DELIVERY_TANK =
         BLOCKS.register("creative_delivery_fluid_tank",()->new dev.ccd.content.CreativeDeliveryTankBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
