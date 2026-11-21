@@ -10,7 +10,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 /** Finite buffer supplied externally; rotational power only pumps stored fluid outward. */
 public final class BufferPumpBlockEntity extends PumpBlockEntity {
-    public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(4000){
+    public static final int CAPACITY=2000;
+    public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(CAPACITY){
         @Override protected void onContentsChanged(){setChanged();if(level!=null&&!level.isClientSide())sendData();}
     };
     public BufferPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.BUFFER_PUMP_BE.get(),pos,state);}
@@ -54,5 +55,5 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     }
     @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));}
     @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));}
-    @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){super.addToGoggleTooltip(tooltip,sneaking);if(!buffer.isEmpty())tooltip.add(buffer.getFluid().getHoverName());tooltip.add(net.minecraft.network.chat.Component.literal(buffer.getFluidAmount()+" / 4000 mB"));return true;}
+    @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){super.addToGoggleTooltip(tooltip,sneaking);if(!buffer.isEmpty())tooltip.add(buffer.getFluid().getHoverName());tooltip.add(net.minecraft.network.chat.Component.literal(buffer.getFluidAmount()+" / "+CAPACITY+" mB"));return true;}
 }

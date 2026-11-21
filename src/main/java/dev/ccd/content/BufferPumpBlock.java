@@ -27,6 +27,15 @@ public final class BufferPumpBlock extends PumpBlock {
             var result=player.isShiftKeyDown()?onSneakWrenched(state,context):onWrenched(state,context);
             return result.consumesAction()?net.minecraft.world.ItemInteractionResult.SUCCESS:net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
+        if(player.isCreative()){
+            var sample=FluidStockItem.sample(stack);
+            if(!sample.isEmpty()&&level.getBlockEntity(pos) instanceof BufferPumpBlockEntity pump){
+                int accepted=pump.buffer.fill(sample.copyWithAmount(BufferPumpBlockEntity.CAPACITY),net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE);
+                if(accepted==0)return net.minecraft.world.ItemInteractionResult.FAIL;
+                if(!level.isClientSide())pump.buffer.fill(sample.copyWithAmount(accepted),net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+                return net.minecraft.world.ItemInteractionResult.SUCCESS;
+            }
+        }
         return super.useItemOn(stack,state,level,pos,player,hand,hit);
     }
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){return net.minecraft.world.phys.shapes.Shapes.block();}
