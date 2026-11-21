@@ -1,18 +1,214 @@
 {
   "parent": "create:block/mechanical_pump/block",
-  "textures": {"copper": "create:block/copper_underside"},
+  "textures": {
+    "copper": "create:block/copper_underside"
+  },
   "elements": [
     {
-      "name": "copper_middle_housing",
-      "from": [2, 5, 2],
-      "to": [14, 13, 14],
+      "name": "copper_lower_collar",
+      "from": [
+        2,
+        5,
+        2
+      ],
+      "to": [
+        14,
+        5.4,
+        14
+      ],
       "faces": {
-        "north": {"uv": [2, 3, 14, 11], "texture": "#copper"},
-        "east": {"uv": [2, 3, 14, 11], "texture": "#copper"},
-        "south": {"uv": [2, 3, 14, 11], "texture": "#copper"},
-        "west": {"uv": [2, 3, 14, 11], "texture": "#copper"},
-        "up": {"uv": [2, 2, 14, 14], "texture": "#copper"},
-        "down": {"uv": [2, 2, 14, 14], "texture": "#copper"}
+        "north": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "east": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "south": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "west": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        },
+        "down": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        }
+      }
+    },
+    {
+      "name": "copper_center_hub",
+      "from": [
+        6.75,
+        5.4,
+        6.75
+      ],
+      "to": [
+        9.25,
+        10.6,
+        9.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "east": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "south": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "west": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        },
+        "down": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        }
+      }
+    },
+    {
+      "name": "copper_middle_housing",
+      "from": [
+        2,
+        10.6,
+        2
+      ],
+      "to": [
+        14,
+        13,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "east": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "south": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "west": {
+          "uv": [
+            2,
+            3,
+            14,
+            11
+          ],
+          "texture": "#copper"
+        },
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        },
+        "down": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#copper"
+        }
       }
     },
     {

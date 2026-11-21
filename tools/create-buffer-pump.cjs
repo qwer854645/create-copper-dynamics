@@ -17,10 +17,13 @@ async function main(){
   const inherited=structuredClone(original);headElements.push(inherited);
   }
   // Close the gap between the tank lid and upper pump end with a solid copper body.
-  const housing={name:'copper_middle_housing',from:[2,5,2],to:[14,13,14],faces:{}};
+  const housing={name:'copper_middle_housing',from:[2,10.6,2],to:[14,13,14],faces:{}};
   for(const side of ['north','east','south','west'])housing.faces[side]={uv:[2,3,14,11],texture:'#copper'};
   for(const side of ['up','down'])housing.faces[side]={uv:[2,2,14,14],texture:'#copper'};
   base.elements.unshift(housing);headElements.unshift(structuredClone(housing));
+  const lower={...structuredClone(housing),name:'copper_lower_collar',from:[2,5,2],to:[14,5.4,14]};
+  const hub={...structuredClone(housing),name:'copper_center_hub',from:[6.75,5.4,6.75],to:[9.25,10.6,9.25]};
+  base.elements.unshift(lower,hub);headElements.unshift(structuredClone(lower),structuredClone(hub));
  // Native pump cog rotated from Z to Y, compressed into the upper two thirds.
  const cog=model('create:block/mechanical_pump/cog'),cogElements=[];
  for(const original of cog.elements){

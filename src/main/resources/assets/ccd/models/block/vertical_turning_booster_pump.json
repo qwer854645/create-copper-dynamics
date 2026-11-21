@@ -599,6 +599,165 @@
           "texture": "#native_pump"
         }
       }
+    },
+    {
+      "name": "copper_housing",
+      "from": [
+        4,
+        4,
+        14
+      ],
+      "to": [
+        12,
+        12,
+        15
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 90
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        }
+      }
+    },
+    {
+      "name": "copper_housing",
+      "from": [
+        4,
+        1,
+        4
+      ],
+      "to": [
+        12,
+        2,
+        12
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          -13,
+          0,
+          0
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 90
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            9,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        },
+        "west": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        },
+        "east": {
+          "uv": [
+            1,
+            1,
+            2,
+            9
+          ],
+          "texture": "#4",
+          "rotation": 270
+        }
+      }
     }
   ],
   "format_version": "26.3",

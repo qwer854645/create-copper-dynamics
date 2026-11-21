@@ -17,8 +17,11 @@ public final class FlowMeterRenderer extends SafeBlockEntityRenderer<FlowMeterBl
         var state=be.getBlockState();var face=state.getValue(FlowMeterBlock.FACING);
         float rotation=(float)((-face.toYRot()-90)/180*Math.PI);
         float progress=net.minecraft.util.Mth.lerp(pt,be.previousDial,be.dial),pivot=5.75f/16;
-        CachedBuffers.partial(AllPartialModels.GAUGE_DIAL,state).rotateCentered(rotation,Direction.UP)
-            .translate(0,pivot,pivot).rotate((float)(-Math.PI/2*progress),Direction.EAST).translate(0,-pivot,-pivot)
-            .light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));
+        pose.pushPose();
+        pose.translate(.5,.5,.5);pose.mulPose(com.mojang.math.Axis.YP.rotation(rotation));pose.translate(-.5,-.5,-.5);
+        pose.translate(1,pivot,pivot);pose.mulPose(com.mojang.math.Axis.XP.rotation((float)(-Math.PI/2*progress)));pose.translate(-1,-pivot,-pivot);
+        CachedBuffers.partial(AllPartialModels.GAUGE_DIAL,state).light(light).overlay(overlay)
+            .renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));
+        pose.popPose();
     }
 }

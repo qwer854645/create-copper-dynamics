@@ -17,7 +17,7 @@ save('assets/ccd/blockstates/flow_meter.json',{multipart});
 const dial=model('create:block/gauge/dial');
 const elements=structuredClone(base.elements);
 for(const [m,prefix]of [[head,'head'],[dial,'dial']])for(const original of m.elements){const e=structuredClone(original);for(const f of Object.values(e.faces))f.texture='#'+prefix;elements.push(e);}
-save('assets/ccd/models/item/flow_meter.json',{...base,textures:{...base.textures,head:'ccd:block/flow_meter',dial:'create:block/gauge'},elements});
+save('assets/ccd/models/item/flow_meter.json',{...base,display:{gui:{rotation:[30,225,0],translation:[0,0,0],scale:[.625,.625,.625]}},textures:{...base.textures,head:'ccd:block/flow_meter',dial:'create:block/gauge'},elements});
 save('data/ccd/recipe/flow_meter.json',{type:'minecraft:crafting_shapeless',ingredients:[{item:'create:stressometer'},{item:'create:fluid_pipe'},{item:'minecraft:copper_ingot'}],result:{id:'ccd:flow_meter',count:1}});
 save('data/ccd/loot_table/blocks/flow_meter.json',{type:'minecraft:block',pools:[{rolls:1,entries:[{type:'minecraft:item',name:'ccd:flow_meter'}],conditions:[{condition:'minecraft:survives_explosion'}]}]});
 for(const p of ['data/create/tags/block/wrench_pickup.json','data/minecraft/tags/block/mineable/pickaxe.json']){const d=JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));if(!d.values.includes('ccd:flow_meter'))d.values.push('ccd:flow_meter');save(p,d);}

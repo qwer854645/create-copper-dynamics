@@ -34,7 +34,7 @@ public final class FlowMeterBlockEntity extends FluidPipeBlockEntity implements 
         super.tick();if(level==null)return;
         if(level.isClientSide()){
             previousDial=dial;
-            float target=(float)(Math.log1p(flowRate/100d)/Math.log(101));
+            float target=(float)(Math.log1p(flowRate)/Math.log(10001));
             dial+=(Math.clamp(target,0,1)-dial)*.2f;return;
         }
         // Read the previous tick, independent of block entity/network ticking order.

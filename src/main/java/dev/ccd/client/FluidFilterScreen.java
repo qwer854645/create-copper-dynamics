@@ -169,7 +169,7 @@ public final class FluidFilterScreen extends AbstractContainerScreen<FluidFilter
         com.mojang.blaze3d.systems.RenderSystem.setShaderColor(1, 1, 1, 1);
     }
     private int inventoryX(int slot){return leftPos+(imageWidth-176)/2+7+(slot%9)*18;}
-    private int inventoryY(int slot){return topPos+background().getHeight()+4+(slot<9?83:25+((slot-9)/9)*18);}
+    private int inventoryY(int slot){return topPos+background().getHeight()+4+(slot<9?75:17+((slot-9)/9)*18);}
     @Override protected void renderLabels(GuiGraphics g, int x, int y) { g.drawString(font, title, (imageWidth-8-font.width(title))/2, 4, 0xff38332c, false); }
     @Override public void render(GuiGraphics g, int x, int y, float pt) {
         super.render(g, x, y, pt);

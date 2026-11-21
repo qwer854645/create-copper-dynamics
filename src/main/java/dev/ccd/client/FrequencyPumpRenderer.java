@@ -21,9 +21,12 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Recipro
     @Override protected void renderSafe(ReciprocatingFluidPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
         var state=be.getBlockState();var front=state.getValue(ReciprocatingFluidPumpBlock.FACING);
         float time=net.createmod.catnip.animation.AnimationTickHolder.getRenderTime(be.getLevel());
-        float angle=(float)Math.toRadians((time*be.getSpeed()*.3f)%360);
+        var axis=((ReciprocatingFluidPumpBlock)state.getBlock()).getRotationAxis(state);
+        float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),axis);
+        float angle=(float)Math.toRadians((time*be.getSpeed()*.3f+offset)%360);
         pose.pushPose();pose.translate(.5,.5,.5);
-        pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
+        // Align local +X with the positive world rotation axis, independent of flow facing.
+        if(axis==Direction.Axis.Z)pose.mulPose(Axis.YP.rotationDegrees(-90));
         pose.mulPose(Axis.XP.rotation(angle));
         pose.scale(.3f,1,1);
         pose.mulPose(Axis.YP.rotationDegrees(90));pose.translate(-.5,-.5,-.5);

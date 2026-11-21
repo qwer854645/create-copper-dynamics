@@ -596,6 +596,145 @@
           "texture": "#4"
         }
       }
+    },
+    {
+      "name": "native_rim_connector_up",
+      "from": [
+        4,
+        12,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          16,
+          0,
+          -16
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "texture": "#pipe",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "texture": "#pipe",
+          "rotation": 0
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            4,
+            2
+          ],
+          "texture": "#pipe",
+          "rotation": 0
+        },
+        "north": {
+          "uv": [
+            8,
+            0,
+            4,
+            2
+          ],
+          "texture": "#pipe",
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "name": "native_rim_up",
+      "from": [
+        0,
+        3,
+        3
+      ],
+      "to": [
+        2,
+        13,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        },
+        "up": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 0,
+          "texture": "#pipe"
+        },
+        "south": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 0,
+          "texture": "#pipe"
+        },
+        "down": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 0,
+          "texture": "#pipe"
+        },
+        "west": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 0,
+          "texture": "#pipe"
+        },
+        "east": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 180,
+          "texture": "#pipe"
+        }
+      }
     }
   ],
   "format_version": "26.3",

@@ -20,6 +20,10 @@ for(const suffix of ['','_reversed','_cross','_reversed_cross']){
    source.elements[index].faces[side]={texture:'#shaft_face',uv:[4,4,12,12]};
   for(const e of source.elements.slice(3))for(const f of Object.values(e.faces))
    if(f.texture==='#shaft_face')f.texture='#body';
+  // Move the original blank-side plates onto the two former shaft faces.
+  const original=model(sourceId);
+  source.elements.push(turn(original.elements[1],[[0,0,1],[0,1,0],[-1,0,0]]));
+  source.elements.push(turn(original.elements[2],[[0,1,0],[-1,0,0],[0,0,1]]));
  save(`assets/ccd/models/block/${id}${suffix}.json`,source);
  const basis=[[0,1,0],[-1,0,0],[0,0,1]];
  save(`assets/ccd/models/block/${id}${suffix}_cross.json`,{...source,elements:source.elements.map(e=>turn(e,basis))});
