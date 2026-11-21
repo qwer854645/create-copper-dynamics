@@ -29,4 +29,5 @@ for(const locale of ['zh_cn','en_us']){
  d['block.ccd.omni_pump.tooltip.summary']=zh?'用_扳手_逐面切换输入、输出、应力口和关闭。默认六面关闭。':'Use a _Wrench_ on each face to cycle input, output, shaft and closed. All faces start closed.';save(p,d);
 }
 async function main(){const out='outputs/omni-pump';fs.mkdirSync(out,{recursive:true});const base=await mesh('ccd:item/omni_pump'),panels=[{input:await render(base,500,480,[26,23,-34],{center:[8,8,8],scale:23}),left:0,top:0}];const configured=[...base,...await mesh('ccd:block/omni_pump/input')];panels.push({input:await render(configured,500,480,[26,23,-34],{center:[8,8,8],scale:23}),left:500,top:0});await sharp({create:{width:1000,height:480,channels:4,background:'#e5e8e2'}}).composite(panels).png().toFile(out+'/preview.png');}
+require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'sync-omni-pump-item.cjs'),process.argv[2]],{stdio:'inherit'});
 main().catch(e=>{console.error(e);process.exitCode=1;});
