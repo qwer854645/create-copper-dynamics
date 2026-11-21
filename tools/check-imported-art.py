@@ -29,6 +29,8 @@ with ZipFile(jar) as archive:
         for element in model.get('elements',[]):
             for face in element['faces'].values():
                 value=face['texture'];seen=set()
+                if not value.startswith('#'):
+                    errors.append((str(path.relative_to(ROOT)),'Face texture must reference a #variable: '+value))
                 while value.startswith('#') and value not in seen:
                     seen.add(value);value=mapping.get(value[1:],'MISSING:'+value)
                 if value.startswith(('MISSING:','#')): errors.append((str(path.relative_to(ROOT)),value))

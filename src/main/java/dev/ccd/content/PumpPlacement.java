@@ -15,6 +15,10 @@ public final class PumpPlacement {
             || state.getBlock() instanceof ReciprocatingFluidPumpBlock || state.getBlock() instanceof BufferPumpBlock;
     }
     public static boolean mouth(BlockState state,Direction side) {
+        if(state.getBlock() instanceof ThreeWayValveBlock)
+            return side.getAxis()==state.getValue(ThreeWayValveBlock.FACING).getAxis() || side==ThreeWayValveBlock.branch(state);
+        if(state.getBlock() instanceof FluidTransmitterBlock)
+            return side==state.getValue(FluidTransmitterBlock.FACING).getOpposite();
         if(state.getBlock() instanceof TurningBoosterPumpBlock)return TurningBoosterPumpBlock.open(state,side);
         if(state.getBlock() instanceof BufferPumpBlock || state.getBlock() instanceof CreativeDeliveryTankBlock)
             return side==state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING);
@@ -24,12 +28,20 @@ public final class PumpPlacement {
         var pos=context.getClickedPos().relative(side);var world=context.getLevel();
         if(!world.hasChunkAt(pos))return false;
         var state=world.getBlockState(pos);
-        if(state.getBlock() instanceof PumpBlock || state.getBlock() instanceof CreativeDeliveryTankBlock)
+        if(state.getBlock() instanceof PumpBlock || state.getBlock() instanceof CreativeDeliveryTankBlock
+            || state.getBlock() instanceof ThreeWayValveBlock || state.getBlock() instanceof FluidTransmitterBlock)
             return mouth(state,side.getOpposite());
         // A native pipe may grow a new arm toward this placement.
         if(FluidPipeBlock.isPipe(state))return true;
         var pipe=FluidPropagator.getPipe(world,pos);
-        return pipe!=null && pipe.canHaveFlowToward(state,side.getOpposite());
+        if(pipe!=null)return pipe.canHaveFlowToward(state,side.getOpposite());
+        return world.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,pos,side.getOpposite())!=null;
+    }
+    public static Direction preferredConnection(BlockPlaceContext context){
+        var attached=context.getClickedFace().getOpposite();
+        if(connects(context,attached))return attached;
+        for(var side:context.getNearestLookingDirections())if(connects(context,side))return side;
+        return null;
     }
     public static BlockState align(BlockPlaceContext context,BlockState fallback) {
         if(fallback==null||!isCcdPump(fallback))return fallback;

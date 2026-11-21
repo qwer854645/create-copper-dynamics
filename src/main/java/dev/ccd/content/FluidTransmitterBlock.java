@@ -31,7 +31,8 @@ public final class FluidTransmitterBlock extends DirectionalBlock implements IBE
         builder.add(FACING, POWERED);
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(FACING, context.getClickedFace())
+        var connection=PumpPlacement.preferredConnection(context);
+        return defaultBlockState().setValue(FACING, connection==null?context.getClickedFace():connection.getOpposite())
             .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
     @Override public BlockState rotate(BlockState state, Rotation rotation) {

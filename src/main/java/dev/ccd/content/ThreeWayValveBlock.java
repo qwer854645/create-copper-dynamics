@@ -65,8 +65,16 @@ public final class ThreeWayValveBlock extends DirectionalBlock
         throw new IllegalArgumentException("Three-way valve ports must be perpendicular");
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return withWater(defaultBlockState().setValue(FACING, context.getClickedFace())
-            .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos())), context);
+        var connection=PumpPlacement.preferredConnection(context);
+        var state=defaultBlockState().setValue(FACING,connection==null?context.getClickedFace():connection.getOpposite())
+            .setValue(POWERED,context.getLevel().hasNeighborSignal(context.getClickedPos()));
+        int best=-1;var selected=state;
+        for(int roll=0;roll<4;roll++){
+            var candidate=state.setValue(ROLL,roll);
+            int score=PumpPlacement.connects(context,branch(candidate))?1:0;
+            if(score>best){best=score;selected=candidate;}
+        }
+        return withWater(selected,context);
     }
     @Override public BlockState getRotatedBlockState(BlockState state, Direction clickedFace) {
         Direction forward = state.getValue(FACING);

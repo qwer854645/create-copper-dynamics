@@ -43,10 +43,14 @@ public final class FluidAccessBlock extends DirectionalBlock implements IBE<Flui
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction target = null;
+        Direction attached=context.getClickedFace().getOpposite();
+        var attachedPos=context.getClickedPos().relative(attached);
+        if(context.getLevel().hasChunkAt(attachedPos)&&context.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,attachedPos,attached.getOpposite())!=null)target=attached;
         for (Direction candidate : context.getNearestLookingDirections()) {
+            if(target!=null)break;
             BlockPos neighbour = context.getClickedPos().relative(candidate);
             if (context.getLevel().hasChunkAt(neighbour) && context.getLevel().getBlockEntity(neighbour) != null
-                && context.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, neighbour, null) != null) {
+                && context.getLevel().getCapability(Capabilities.FluidHandler.BLOCK, neighbour, candidate.getOpposite()) != null) {
                 target = candidate;
                 break;
             }

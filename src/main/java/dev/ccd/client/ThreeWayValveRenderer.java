@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 public final class ThreeWayValveRenderer extends SmartBlockEntityRenderer<ThreeWayValveBlockEntity> {
     private static final PartialModel POINTER=PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/three_way_valve/pointer"));
     private static final PartialModel DIAL=PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/three_way_valve/dial_unpowered"));
+    private static final PartialModel DIAL_MIRRORED=PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/three_way_valve/dial_mirrored"));
     public static void registerModels() {}
     public ThreeWayValveRenderer(BlockEntityRendererProvider.Context context) { super(context); }
     @Override protected void renderSafe(ThreeWayValveBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
@@ -33,10 +34,12 @@ public final class ThreeWayValveRenderer extends SmartBlockEntityRenderer<ThreeW
             var x=new org.joml.Vector3f(y).cross(z);
             pose.mulPose(new org.joml.Quaternionf().setFromNormalized(new org.joml.Matrix3f().setColumn(0,x).setColumn(1,y).setColumn(2,z)));
             pose.translate(-.5,-.5,-.5);
-            CachedBuffers.partial(DIAL,state).light(light).overlay(overlay)
+            var target=ThreeWayValveBlock.branch(state);
+            // The imported 90-degree UV places the red branch mark along local -X.
+            boolean mirrored=x.dot(new org.joml.Vector3f(target.getStepX(),target.getStepY(),target.getStepZ()))>0;
+            CachedBuffers.partial(mirrored?DIAL_MIRRORED:DIAL,state).light(light).overlay(overlay)
                 .renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));
             pose.translate(.5,.5,.5);
-            var target=ThreeWayValveBlock.branch(state);
             float sign=x.dot(new org.joml.Vector3f(target.getStepX(),target.getStepY(),target.getStepZ()))>0?-1:1;
             pose.mulPose(Axis.YP.rotationDegrees(sign*90*be.dial.getValue(pt)));
             pose.translate(-.5,-.5,-.5);

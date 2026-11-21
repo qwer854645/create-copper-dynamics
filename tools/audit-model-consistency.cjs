@@ -42,7 +42,8 @@ for(const p of walk(path.join(root,'models')).filter(p=>p.endsWith('.json'))){
  const id='ccd:'+path.relative(path.join(root,'models'),p).replaceAll('\\','/').slice(0,-5),m=model(id);models++;
  for(const e of m.elements||[]){
   if(e.rotation&&(!('angle'in e.rotation)||![-45,-22.5,0,22.5,45].includes(e.rotation.angle)))throw Error('Invalid element rotation '+id);
-  for(const f of Object.values(e.faces)){
+   for(const f of Object.values(e.faces)){
+    if(!f.texture?.startsWith('#'))throw Error('Face texture must use #variable '+id);
    let tex=f.texture;for(let i=0;tex?.startsWith('#')&&i<30;i++)tex=m.textures[tex.slice(1)];
    if(!tex||tex.startsWith('#'))throw Error('Missing texture '+id);
   }
@@ -71,9 +72,14 @@ console.log(`${models} resolved models; ${placements} blockstate placements vali
 for(const name of ['booster_pump','turning_booster_pump','bidirectional_fluid_pump','redstone_fluid_pump','buffer_pump']){
  const body=model(name==='redstone_fluid_pump'?'ccd:block/redstone_fluid_pump/block':'ccd:block/'+name);
  const item=model('ccd:item/'+name);
- if(!equal(item.elements.slice(0,body.elements.length),body.elements))throw Error('Item body mismatch '+name);
- for(const e of body.elements)for(const f of Object.values(e.faces))if(f.texture.startsWith('#')){
-  const key=f.texture.slice(1);if(item.textures[key]!==body.textures[key])throw Error('Item texture mismatch '+name+' '+key);
- }
+  const resolved=(elements,m)=>elements.map(e=>{
+   const copy=structuredClone(e);
+   for(const f of Object.values(copy.faces)){
+    for(let i=0;f.texture.startsWith('#')&&i<30;i++)f.texture=m.textures[f.texture.slice(1)];
+    delete f.cullface;
+   }
+   return copy;
+  });
+  if(!equal(resolved(item.elements.slice(0,body.elements.length),item),resolved(body.elements,body)))throw Error('Item body mismatch '+name);
 }
 console.log('Five pump item bodies match their block geometry and texture bindings.');

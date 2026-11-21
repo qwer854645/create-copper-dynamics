@@ -14,7 +14,7 @@ public final class CreativeDeliveryTankBlock extends DirectionalBlock implements
     public CreativeDeliveryTankBlock(Properties properties){super(properties);registerDefaultState(defaultBlockState().setValue(FACING,net.minecraft.core.Direction.UP));}
     @Override protected com.mojang.serialization.MapCodec<? extends DirectionalBlock> codec(){return simpleCodec(CreativeDeliveryTankBlock::new);}
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder){builder.add(FACING);}
-    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context){return defaultBlockState().setValue(FACING,context.getClickedFace());}
+    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context){var connection=PumpPlacement.preferredConnection(context);return defaultBlockState().setValue(FACING,connection==null?context.getClickedFace():connection);}
     @Override public BlockState getRotatedBlockState(BlockState state,net.minecraft.core.Direction clickedFace){
         var facing=state.getValue(FACING);
         // Clicking the outlet face must also work when it is parallel to the rotation axis.
