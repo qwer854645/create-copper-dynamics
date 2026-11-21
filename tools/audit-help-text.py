@@ -27,4 +27,11 @@ for locale,d in langs.items():
         for suffix in ['header']+[f'text_{n+1}' for n in range(count)]:
             if f'ccd.ponder.{id}.{suffix}' not in d:errors.append((locale,'missing ponder',id,suffix))
 assert not errors,errors
+help_keys=lambda d:{k for k in d if '.tooltip.' in k}
+assert help_keys(langs['zh_cn'])==help_keys(langs['en_us']),'Tooltip keys differ between languages'
+for locale,d in langs.items():
+    for prefix in {k.split('.tooltip.')[0] for k in help_keys(d)}:
+        for group in ['condition','control']:
+            indexes=sorted(int(k.rsplit(group,1)[1]) for k in d if k.startswith(prefix+'.tooltip.'+group))
+            assert indexes==list(range(1,len(indexes)+1)),(locale,prefix,group,'non-contiguous numbering')
 print(f'{len(ids)} directly registered items have bilingual Shift summaries; all storyboard lines and tooltip pairs resolve.')

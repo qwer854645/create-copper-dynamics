@@ -87,6 +87,56 @@ summaries={
 }
 source=Path(__file__).resolve().parents[1]/'src/main/java/dev/ccd/client/ponder/CCDPonderScenes.java'
 scene_source=source.read_text(encoding='utf-8')
+# Final concise descriptions replace their whole group, removing obsolete numbered rows.
+concise={
+'block.ccd.portable_fluid_pump':[
+('summary','通过_手动操作_或_旋转力_输送流体。','Moves fluids using _manual operation_ or _Rotational Power_.'),
+('control1','右键点击时','When R-Clicked'),('action1','手动驱动泵，潜行时_反向_操作。','Operates the pump manually. Sneak to _reverse_ rotation.')],
+'block.ccd.buffer_pump':[
+('summary','使用_旋转力_输出缓存中的流体。','Uses _Rotational Power_ to deliver buffered fluid.'),
+('control1','手持装液容器右键点击时','When R-Clicked with a filled container'),('action1','填充_2000 mB_缓存，也可通过管道注液。','Fills the _2000 mB_ buffer. Pipes can also supply fluid.')],
+'block.ccd.turning_booster_pump':[
+('summary','使用_旋转力_在相邻管口之间输送流体。','Uses _Rotational Power_ to move fluid between adjacent pipe connections.'),
+('condition1','连接传动轴时','When connecting Shafts'),('behaviour1','两个应力口与管口位于_同一平面_。','The two shaft connections lie _in the plane_ of the pipe connections.')],
+'block.ccd.vertical_turning_booster_pump':[
+('summary','使用_旋转力_在相邻管口之间输送流体。','Uses _Rotational Power_ to move fluid between adjacent pipe connections.'),
+('condition1','连接传动轴时','When connecting Shafts'),('behaviour1','贯通轴_垂直于_管口所在平面。','The shaft runs _perpendicular_ to the plane of the pipe connections.')],
+'block.ccd.redstone_fluid_pump':[
+('summary','使用_旋转力_输送流体。','Uses _Rotational Power_ to move fluid.'),
+('condition1','接收红石信号时','When powered by Redstone'),('behaviour1','_反转_流向。','_Reverses_ the direction of flow.')],
+'block.ccd.bidirectional_fluid_pump':[
+('summary','使用_旋转力_输送流体。','Uses _Rotational Power_ to move fluid.'),
+('condition1','反转旋转方向时','When rotation is reversed'),('behaviour1','_反转_流向。','_Reverses_ the direction of flow.')],
+'block.ccd.reciprocating_fluid_pump':[
+('summary','使用_旋转力_输送流体，流量和距离由_红石信号强度_控制。','Uses _Rotational Power_ to move fluid. _Redstone strength_ controls flow rate and range.'),
+('control1','在顶部或底部连接齿轮时','When meshing a Cogwheel above or below'),('action1','为泵提供_旋转力_。','Supplies _Rotational Power_.'),
+('condition1','接收红石信号时','When receiving a Redstone Signal'),('behaviour1','侧面指针显示_信号强度_。','The side needles indicate _signal strength_.')],
+'block.ccd.creative_delivery_fluid_tank':[
+('summary','无限供应选定的_流体_。','Provides an unlimited supply of the selected _fluid_.'),
+('control1','手持装液容器右键点击时','When R-Clicked with a filled container'),('action1','选择供应的_流体_。','Selects the supplied _fluid_.'),
+('control2','滚动顶部侧面控件时','When scrolling an upper side control'),('action2','切换_仅向容器输送_或_允许向世界排液_。','Switches between _container delivery_ and _world output_.'),
+('control3','使用扳手右键点击时','When R-Clicked with a Wrench'),('action3','调整_出液口_朝向。','Rotates the _outlet_.')],
+'block.ccd.omni_pump':[
+('summary','使用_旋转力_在自定义输入、输出面之间输送流体。','Uses _Rotational Power_ to move fluid between configurable inputs and outputs.'),
+('control1','使用扳手右键点击时','When R-Clicked with a Wrench'),('action1','切换所点击面的_输入_、_输出_、_应力口_和_关闭_模式。','Cycles the clicked face through _Input_, _Output_, _Shaft_ and _Closed_.'),
+('condition1','设置多个输出面时','When multiple outputs are configured'),('behaviour1','所有输出共用_输送流量_。','All outputs share the _transfer rate_.')],
+'block.ccd.flow_meter':[
+('summary','通过指针显示管道中的_流量_。','Indicates pipe _flow rate_ with a needle.'),
+('condition1','佩戴工程师护目镜时','When wearing Engineer’s Goggles'),('behaviour1','显示当前流量，单位为_mB/t_。','Displays the current flow rate in _mB/t_.'),
+('control1','使用扳手右键点击时','When R-Clicked with a Wrench'),('action1','调整_表盘_朝向。','Rotates the _dial_.')],
+'item.ccd.fluid_filter':[
+('summary','指定_允许_或_拒绝_通过的流体。','Selects fluids to _Allow_ or _Deny_.'),
+('control1','手持右键点击时','When R-Clicked in hand'),('action1','打开设置。拖入流体样本，右键点击槽位_清除_样本。','Opens the settings. Drag in fluid samples; R-Click a slot to _clear_ it.'),
+('condition1','启用精确匹配时','When exact matching is enabled'),('behaviour1','同时比较流体种类和_数据组件_。','Matches fluid type and _Data Components_.')],
+'item.ccd.fluid_attribute_filter':[
+('summary','根据_属性_允许或拒绝流体通过。','Allows or denies fluids by their _Attributes_.'),
+('control1','手持右键点击时','When R-Clicked in hand'),('action1','打开设置。放入参考流体，滚动选择属性并_添加_。','Opens the settings. Set a reference fluid, scroll to an attribute and _Add_ it.'),
+('condition1','反向添加属性时','When adding an inverted attribute'),('behaviour1','要求流体_不匹配_该属性。','Requires the fluid to _not match_ that attribute.')],
+'item.ccd.seething_reagent_bucket':[
+('summary','供烈焰人燃烧室进行_超级燃烧_的流体燃料。','A fluid fuel for _Superheating_ Blaze Burners.'),
+('condition1','供给烈焰人燃烧室时','When supplied to a Blaze Burner'),('behaviour1','每_1000 mB_提供_160 秒_超级燃烧。','Each _1000 mB_ provides _160 seconds_ of Superheating.'),
+('condition2','安装对应加工附属时','When the matching processing addon is installed'),('behaviour2','装入流体雾化器可提供_超热_加工。','Provides _Seething_ processing in a Fluid Atomizer.')]
+}
 for locale in ['zh_cn','en_us']:
     path=root/(locale+'.json');d=json.loads(path.read_text(encoding='utf-8'))
     for prefix,entries in rows.items():
@@ -103,4 +153,31 @@ for locale in ['zh_cn','en_us']:
     d['item.ccd.brass_bucket.tooltip.summary']='比铜桶容量更大的_黄铜桶_。' if locale=='zh_cn' else 'A _Brass Bucket_ with more capacity than the Copper Bucket.'
     for medium in ['enriching_reagent','soul_stripping_reagent','explosive_slurry','resonant_solution','sculk_suspension','purifying_solution']:
         d['item.ccd.'+medium+'_bucket.tooltip.condition1']='安装对应加工附属并装入雾化器时' if locale=='zh_cn' else 'When used in an Atomizer with the matching processing addon'
+    for prefix,entries in concise.items():
+        for key in list(d):
+            if key.startswith(prefix+'.tooltip.'):del d[key]
+        for suffix,zh,en in entries:d[prefix+'.tooltip.'+suffix]=zh if locale=='zh_cn' else en
+    # Shared wording for equivalent components; keep distinct behavior where it matters.
+    for material in ['copper','brass']:
+        prefix=f'item.ccd.{material}_bucket.tooltip.'
+        d[prefix+'control1']='对容器右键点击时' if locale=='zh_cn' else 'When R-Clicked on a container'
+        d[prefix+'action1']='从容器中_取液_。' if locale=='zh_cn' else '_Draws fluid_ from the container.'
+        d[prefix+'control2']='潜行右键点击时' if locale=='zh_cn' else 'When Sneak-R-Clicked'
+        d[prefix+'action2']='向容器或世界中_倒液_。' if locale=='zh_cn' else '_Pours fluid_ into a container or the world.'
+        d[prefix+'condition1']='在世界中取放流体时' if locale=='zh_cn' else 'When transferring fluid in the world'
+        d[prefix+'behaviour1']='每次取放_1000 mB_，只能收取流体源。' if locale=='zh_cn' else 'Transfers _1000 mB_ at a time and collects source blocks only.'
+    for id in ['smart_fluid_tank','horizontal_smart_fluid_tank']:
+        d[f'block.ccd.{id}.tooltip.condition1']='通过管道取液时' if locale=='zh_cn' else 'When extracting through Fluid Pipes'
+        d[f'block.ccd.{id}.tooltip.behaviour1']='优先输出列表中_靠前的流体_，可用过滤器指定流体。' if locale=='zh_cn' else 'Extracts the _first available fluid_. A filter can select a specific fluid.'
+    for id in ['faucet','smart_faucet']:
+        d[f'block.ccd.{id}.tooltip.behaviour1']='_暂停_出液。' if locale=='zh_cn' else '_Pauses_ fluid output.'
+    for key in list(d):
+        if '.tooltip.control' in key and locale=='zh_cn':
+            d[key]=d[key].replace('右击','右键点击').replace('左击','左键点击')
+        if '.tooltip.action' in key and locale=='zh_cn':
+            d[key]=d[key].replace('右击','右键点击').replace('左击','左键点击')
+    d['ccd.creative_delivery.active']='无限供应' if locale=='zh_cn' else 'Unlimited supply'
+    d['ccd.creative_delivery.mode']='输出模式' if locale=='zh_cn' else 'Output Mode'
+    d['ccd.filter.inverted']='反向属性' if locale=='zh_cn' else 'Inverted attribute'
+    d['ccd.filter.attribute_help']='在设置界面中选择并添加属性' if locale=='zh_cn' else 'Select and add attributes in the filter settings'
     path.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
