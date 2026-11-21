@@ -13,5 +13,5 @@ public final class AtomizerLifecycle {
     @SubscribeEvent public static void reload(AddReloadListenerEvent event) {
         event.addListener((ResourceManagerReloadListener) resources -> AtomizingRules.invalidate());
     }
-    @SubscribeEvent public static void stop(ServerStoppedEvent event) { AtomizerScripts.clear(); }
+    @SubscribeEvent public static void stop(ServerStoppedEvent event) { AtomizerScripts.clear(); dev.ccd.api.FluidWorldScripts.clear(); }
 }
