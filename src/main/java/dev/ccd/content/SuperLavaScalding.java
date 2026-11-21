@@ -11,7 +11,7 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 /** Powder-snow-like exposure timing, using heat damage rather than the freezing state. */
 @EventBusSubscriber(modid=CopperDynamics.ID)
 public final class SuperLavaScalding {
-    public static final int THRESHOLD=140, DAMAGE_INTERVAL=20;
+    public static final int THRESHOLD=20, DAMAGE_INTERVAL=10;
     private static final String EXPOSURE="ccdSuperLavaExposure";
     private SuperLavaScalding(){}
     public static boolean hot(ItemStack stack){
@@ -31,7 +31,7 @@ public final class SuperLavaScalding {
         if(next==0)player.getPersistentData().remove(EXPOSURE);
         else player.getPersistentData().putInt(EXPOSURE,next);
         if(holding&&next==THRESHOLD&&player.tickCount%DAMAGE_INTERVAL==0)
-            player.hurt(player.damageSources().hotFloor(),2);
+            player.hurt(player.damageSources().hotFloor(),4);
     }
     @SubscribeEvent public static void afterPlayerTick(PlayerTickEvent.Post event){tick(event.getEntity());}
 }

@@ -22,11 +22,11 @@ public class SuperLavaScaldingTests {
         }
         var player=h.makeMockPlayer(net.minecraft.world.level.GameType.SURVIVAL);
         player.setItemInHand(InteractionHand.OFF_HAND,new ItemStack(lava.bucket.get()));
-        for(int i=0;i<139;i++)SuperLavaScalding.tick(player);
-        h.assertTrue(SuperLavaScalding.exposure(player)==139,"Offhand exposure timing wrong");
+        for(int i=0;i<SuperLavaScalding.THRESHOLD-1;i++)SuperLavaScalding.tick(player);
+        h.assertTrue(SuperLavaScalding.exposure(player)==SuperLavaScalding.THRESHOLD-1,"Offhand exposure timing wrong");
         player.setItemInHand(InteractionHand.OFF_HAND,ItemStack.EMPTY);
         SuperLavaScalding.tick(player);
-        h.assertTrue(SuperLavaScalding.exposure(player)==137,"Exposure did not cool down");
+        h.assertTrue(SuperLavaScalding.exposure(player)==SuperLavaScalding.THRESHOLD-3,"Exposure did not cool down");
         h.succeed();
     }
 }
