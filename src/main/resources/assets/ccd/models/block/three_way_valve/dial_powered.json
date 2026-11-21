@@ -1,11 +1,12 @@
 {
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "dial": "create:block/valve_open",
-    "needle": "create:block/fluid_valve",
-    "glass": "create:block/fluid_valve"
+    "dial": "ccd:block/three_way_valve/valve",
+    "needle": "ccd:block/three_way_valve/fluid_valve"
   },
   "elements": [
     {
@@ -17,19 +18,55 @@
       ],
       "to": [
         13,
-        13.02,
+        14.02,
         13
       ],
       "faces": {
-        "up": {
-          "texture": "#dial",
+        "north": {
           "uv": [
             2,
             2,
-            14,
-            14
+            12,
+            3
           ],
-          "rotation": 90
+          "texture": "#dial"
+        },
+        "east": {
+          "uv": [
+            2,
+            2,
+            12,
+            3
+          ],
+          "texture": "#dial"
+        },
+        "south": {
+          "uv": [
+            2,
+            2,
+            12,
+            3
+          ],
+          "texture": "#dial"
+        },
+        "west": {
+          "uv": [
+            2,
+            2,
+            12,
+            3
+          ],
+          "texture": "#dial"
+        },
+        "up": {
+          "uv": [
+            2,
+            2,
+            12,
+            12
+          ],
+          "rotation": 90,
+          "texture": "#dial"
         }
       }
     },
@@ -37,23 +74,59 @@
       "name": "glass",
       "from": [
         3,
-        13.1,
+        13,
         3
       ],
       "to": [
         13,
-        13.1,
+        14,
         13
       ],
       "faces": {
-        "up": {
-          "texture": "#glass",
+        "north": {
           "uv": [
             1,
             1,
-            7,
-            7
-          ]
+            6,
+            1.5
+          ],
+          "texture": "#needle"
+        },
+        "east": {
+          "uv": [
+            1,
+            1,
+            6,
+            1.5
+          ],
+          "texture": "#needle"
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            6,
+            1.5
+          ],
+          "texture": "#needle"
+        },
+        "west": {
+          "uv": [
+            1,
+            1,
+            6,
+            1.5
+          ],
+          "texture": "#needle"
+        },
+        "up": {
+          "uv": [
+            1,
+            1,
+            6,
+            6
+          ],
+          "texture": "#needle"
         }
       }
     }

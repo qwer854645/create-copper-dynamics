@@ -1,31 +1,33 @@
 {
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "needle": "create:block/fluid_valve"
+    "needle": "ccd:block/three_way_valve/fluid_valve"
   },
   "elements": [
     {
       "name": "pointer",
       "from": [
         7.5,
-        13.07,
+        14.07,
         4.5
       ],
       "to": [
         8.5,
-        13.07,
+        14.07,
         11.5
       ],
       "faces": {
         "up": {
-          "texture": "#needle",
           "uv": [
             2,
             7.5,
             5.5,
             8
           ],
-          "rotation": 270
+          "rotation": 270,
+          "texture": "#needle"
         }
       }
     }

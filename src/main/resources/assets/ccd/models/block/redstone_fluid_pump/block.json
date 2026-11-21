@@ -163,15 +163,6 @@
         12,
         4
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          8,
-          0
-        ]
-      },
       "faces": {
         "east": {
           "uv": [
@@ -226,15 +217,6 @@
         13,
         2
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
@@ -306,15 +288,6 @@
         12,
         16
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          8,
-          0
-        ]
-      },
       "faces": {
         "east": {
           "uv": [
@@ -369,15 +342,6 @@
         13,
         16
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
@@ -446,7 +410,7 @@
       ],
       "to": [
         14,
-        14.01,
+        13.6,
         14
       ],
       "faces": {
@@ -502,30 +466,21 @@
       "name": "unused_stop_background_3",
       "from": [
         3,
-        14.02,
+        13.62,
         7
       ],
       "to": [
         6,
-        14.02,
+        13.62,
         9
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          -1,
-          0
-        ]
-      },
       "faces": {
         "up": {
           "uv": [
             3,
-            5,
+            7,
             6,
-            7
+            5
           ],
           "texture": "#dial"
         }
@@ -535,29 +490,20 @@
       "name": "unused_stop_background_10",
       "from": [
         10,
-        14.02,
+        13.62,
         7
       ],
       "to": [
         13,
-        14.02,
+        13.62,
         9
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          -1,
-          0
-        ]
-      },
       "faces": {
         "up": {
           "uv": [
-            3,
-            5,
             6,
+            5,
+            3,
             7
           ],
           "texture": "#dial"

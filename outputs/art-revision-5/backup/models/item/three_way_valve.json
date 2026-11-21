@@ -1,0 +1,659 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "body": "create:block/copper_underside",
+    "particle": "create:block/copper_underside",
+    "common": "ccd:block/three_way_valve/pipe_common",
+    "selected": "ccd:block/three_way_valve/pipe_selected",
+    "closed": "ccd:block/three_way_valve/pipe_closed",
+    "dial": "create:block/valve_open",
+    "needle": "create:block/fluid_valve",
+    "glass": "create:block/fluid_valve"
+  },
+  "elements": [
+    {
+      "name": "housing",
+      "from": [
+        3,
+        3,
+        3
+      ],
+      "to": [
+        13,
+        13,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#body",
+          "uv": [
+            13,
+            3,
+            3,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "east": {
+          "texture": "#body",
+          "uv": [
+            13,
+            3,
+            3,
+            13
+          ]
+        },
+        "west": {
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "up": {
+          "texture": "#body",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "down": {
+          "texture": "#body",
+          "uv": [
+            3,
+            13,
+            13,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "name": "native_rim_connector_north_0",
+      "from": [
+        4,
+        4,
+        0
+      ],
+      "to": [
+        12,
+        12,
+        4
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          8,
+          0
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 90,
+          "texture": "#common"
+        },
+        "west": {
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#common"
+        },
+        "up": {
+          "uv": [
+            4,
+            2,
+            8,
+            0
+          ],
+          "rotation": 180,
+          "texture": "#common"
+        },
+        "down": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "rotation": 180,
+          "texture": "#common"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        3,
+        0
+      ],
+      "to": [
+        13,
+        13,
+        2
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          28,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#common",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "texture": "#common"
+        },
+        "south": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#common"
+        },
+        "west": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#common"
+        },
+        "up": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 270,
+          "texture": "#common"
+        },
+        "down": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 270,
+          "texture": "#common"
+        }
+      },
+      "name": "native_rim_north_0"
+    },
+    {
+      "name": "native_rim_connector_south_0",
+      "from": [
+        4,
+        4,
+        12
+      ],
+      "to": [
+        12,
+        12,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          0,
+          8,
+          0
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            4,
+            6,
+            8,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#selected"
+        },
+        "west": {
+          "uv": [
+            4,
+            8,
+            8,
+            6
+          ],
+          "rotation": 90,
+          "texture": "#selected"
+        },
+        "up": {
+          "uv": [
+            4,
+            8,
+            8,
+            6
+          ],
+          "rotation": 180,
+          "texture": "#selected"
+        },
+        "down": {
+          "uv": [
+            4,
+            6,
+            8,
+            8
+          ],
+          "rotation": 180,
+          "texture": "#selected"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        3,
+        14
+      ],
+      "to": [
+        13,
+        13,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          28,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#selected"
+        },
+        "east": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "texture": "#selected"
+        },
+        "south": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "texture": "#selected",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "texture": "#selected"
+        },
+        "up": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 270,
+          "texture": "#selected"
+        },
+        "down": {
+          "uv": [
+            10.5,
+            11,
+            9.5,
+            16
+          ],
+          "rotation": 270,
+          "texture": "#selected"
+        }
+      },
+      "name": "native_rim_south_0"
+    },
+    {
+      "name": "native_rim_connector_up_0",
+      "from": [
+        4,
+        12,
+        4
+      ],
+      "to": [
+        12,
+        16,
+        12
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          16,
+          0,
+          -16
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "texture": "#closed"
+        },
+        "east": {
+          "uv": [
+            4,
+            0,
+            8,
+            2
+          ],
+          "texture": "#closed"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            4,
+            2
+          ],
+          "texture": "#closed"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            4,
+            2
+          ],
+          "texture": "#closed"
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        14,
+        3
+      ],
+      "to": [
+        13,
+        16,
+        13
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#closed"
+        },
+        "east": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#closed"
+        },
+        "south": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#closed"
+        },
+        "west": {
+          "uv": [
+            9.5,
+            16,
+            10.5,
+            11
+          ],
+          "rotation": 90,
+          "texture": "#closed"
+        },
+        "up": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 90,
+          "texture": "#closed",
+          "cullface": "up"
+        },
+        "down": {
+          "uv": [
+            11,
+            11,
+            16,
+            16
+          ],
+          "rotation": 270,
+          "texture": "#closed"
+        }
+      },
+      "name": "native_rim_up_0"
+    },
+    {
+      "name": "dial_item_east_dial",
+      "from": [
+        13.02,
+        3,
+        3
+      ],
+      "to": [
+        13.02,
+        13,
+        13
+      ],
+      "faces": {
+        "east": {
+          "texture": "#dial",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "rotation": 90
+        }
+      }
+    },
+    {
+      "name": "dial_item_east_pointer",
+      "from": [
+        13.07,
+        7.5,
+        7.6
+      ],
+      "to": [
+        13.07,
+        11.5,
+        8.4
+      ],
+      "faces": {
+        "east": {
+          "texture": "#needle",
+          "uv": [
+            2,
+            7.5,
+            5.5,
+            8
+          ],
+          "rotation": 270
+        }
+      }
+    },
+    {
+      "name": "dial_item_east_glass",
+      "from": [
+        13.1,
+        3,
+        3
+      ],
+      "to": [
+        13.1,
+        13,
+        13
+      ],
+      "faces": {
+        "east": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
+    },
+    {
+      "name": "dial_item_west_dial",
+      "from": [
+        2.9800000000000004,
+        3,
+        3
+      ],
+      "to": [
+        2.9800000000000004,
+        13,
+        13
+      ],
+      "faces": {
+        "west": {
+          "texture": "#dial",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "rotation": 90
+        }
+      }
+    },
+    {
+      "name": "dial_item_west_pointer",
+      "from": [
+        2.9299999999999997,
+        7.5,
+        7.6
+      ],
+      "to": [
+        2.9299999999999997,
+        11.5,
+        8.4
+      ],
+      "faces": {
+        "west": {
+          "texture": "#needle",
+          "uv": [
+            2,
+            7.5,
+            5.5,
+            8
+          ],
+          "rotation": 270
+        }
+      }
+    },
+    {
+      "name": "dial_item_west_glass",
+      "from": [
+        2.9000000000000004,
+        3,
+        3
+      ],
+      "to": [
+        2.9000000000000004,
+        13,
+        13
+      ],
+      "faces": {
+        "west": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            1,
+            7,
+            7
+          ]
+        }
+      }
+    }
+  ]
+}
