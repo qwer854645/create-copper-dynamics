@@ -14,7 +14,14 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         @Override protected void onContentsChanged(){setChanged();if(level!=null&&!level.isClientSide())sendData();}
     };
     public BufferPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.BUFFER_PUMP_BE.get(),pos,state);}
+    @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
+        super.addBehaviours(behaviours);
+        // This device owns finite storage and delivers from it directly. Running
+        // the native transparent pump transport creates an invalid empty-port lifecycle.
+        behaviours.removeIf(behaviour->behaviour instanceof com.simibubi.create.content.fluids.FluidTransportBehaviour);
+    }
     @Override public boolean isSideAccessible(Direction side){return false;}
+    @Override public void updatePipesOnSide(Direction side){} // No native transport behaviour to invalidate.
     @Override public void updatePressureChange(){} // No transparent bypass around the finite buffer.
     public int pumpingRange(){return dev.ccd.CCDConfig.bufferPumpRange(com.simibubi.create.content.fluids.FluidPropagator.getPumpRange());}
     private record Step(BlockPos pos,Direction entry,int distance){}
