@@ -36,7 +36,9 @@ function combine(parts){
  return {parent:'create:block/block',render_type:'minecraft:cutout_mipped',ambientocclusion:false,textures,elements};
 }
 async function main(){
- save('fluid_atomizer',combine([{id:'ccd:block/fluid_atomizer',basis:x90},{id:'ccd:block/fluid_atomizer/propeller'},{id:'create:block/shaft_half'}]));
+ const atomizer=combine([{id:'ccd:block/fluid_atomizer',basis:x90},{id:'ccd:block/fluid_atomizer/propeller'},{id:'create:block/shaft_half'}]);
+ atomizer.display={gui:{rotation:[30,225,0],translation:[0,0,0],scale:[.625,.625,.625]}};
+ save('fluid_atomizer',atomizer);
  const valve=combine([{id:'ccd:block/redstone_fluid_valve/block_horizontal_open'},{id:'ccd:block/redstone_fluid_valve/dial_open'}]);
  // A single static pointer pair matches the runtime unpowered/open position.
  const pointer=model('create:block/fluid_valve/pointer');
