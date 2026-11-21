@@ -184,4 +184,18 @@ for locale in ['zh_cn','en_us']:
         prefix=f'item.ccd.{item}.tooltip.'
         d[prefix+f'condition{index}']='手持超级熔岩时' if locale=='zh_cn' else 'When holding Super Lava'
         d[prefix+f'behaviour{index}']='持续手持会逐渐_烫伤_，放下后逐渐恢复。' if locale=='zh_cn' else 'Prolonged exposure causes _scalding_. Put it away to cool down.'
+    contact={
+        'quicksand':('接触时减速，头部浸没时受到_窒息伤害_。','Slows movement on contact and causes _suffocation_ when submerged.'),
+        'enriching_reagent':('安装 Create Nuclear 时，接触会积累_辐射污染_。','Contact causes _radiation contamination_ when Create Nuclear is installed.'),
+        'soul_stripping_reagent':('接触时施加_凋零_和_虚弱_。','Applies _Wither_ and _Weakness_ on contact.'),
+        'explosive_slurry':('接触时施加_中毒_，燃烧中的生物受到额外伤害。','Applies _Poison_ on contact and deals extra damage to burning entities.'),
+        'resonant_solution':('接触时施加_发光_和_缓慢_。','Applies _Glowing_ and _Slowness_ on contact.'),
+        'sculk_suspension':('接触时施加_黑暗_和_挖掘疲劳_。','Applies _Darkness_ and _Mining Fatigue_ on contact.'),
+        'purifying_solution':('接触时移除_有害效果_并熄灭身上的火焰。','Removes _harmful effects_ and extinguishes fire on contact.')
+    }
+    for id,(zh,en) in contact.items():
+        index=2 if id=='quicksand' else 2
+        prefix=f'item.ccd.{id}_bucket.tooltip.'
+        d[prefix+f'condition{index}']='生物接触流体时' if locale=='zh_cn' else 'When entities touch the fluid'
+        d[prefix+f'behaviour{index}']=zh if locale=='zh_cn' else en
     path.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
