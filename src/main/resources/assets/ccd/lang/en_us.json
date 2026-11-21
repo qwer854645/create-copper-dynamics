@@ -402,7 +402,7 @@
   "ccd.filter.attribute.light": "Light: %s",
   "ccd.filter.inverted": "Inverted; Shift-click to toggle",
   "ccd.filter.attribute_help": "Shift-click to invert this attribute",
-  "block.ccd.reciprocating_fluid_pump": "Reciprocating Fluid Pump",
+  "block.ccd.reciprocating_fluid_pump": "Variable Flow Mechanical Pump",
   "block.ccd.reciprocating_fluid_pump.tooltip.summary": "Pumps fluids using rotational power. _Redstone Signal Strength_ proportionally sets flow rate and range.",
   "ccd.reciprocating.flow": "Target flow: %s mB/t",
   "ccd.reciprocating.signal": "Redstone strength: %s / 15",

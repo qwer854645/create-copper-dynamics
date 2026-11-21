@@ -11,15 +11,9 @@ public class ReciprocatingFluidPumpBlockEntity extends PumpBlockEntity {
     private double phase;
     private double previousPhase;
     public double visualPhase(float partialTicks) { return previousPhase+(phase-previousPhase)*partialTicks; }
-    @Override protected net.minecraft.world.phys.AABB createRenderBoundingBox() {
-        return getBlockState().getBlock() instanceof TallReciprocatingPumpBlock
-            ?new net.minecraft.world.phys.AABB(worldPosition).expandTowards(0,1,0):super.createRenderBoundingBox();
-    }
     public ReciprocatingFluidPumpBlockEntity(BlockPos pos,BlockState state) { this(CopperDynamics.RECIPROCATING_PUMP_BE.get(),pos,state); }
     protected ReciprocatingFluidPumpBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
     public float pumpingSpeed() {
-        if(getBlockState().getBlock() instanceof TallReciprocatingPumpBlock)
-            return level!=null&&level.getBlockEntity(worldPosition.above()) instanceof ReciprocatingPumpDriveBlockEntity drive?drive.getSpeed():0;
         return getSpeed();
     }
     protected double strokePhaseStep() { return Math.abs(pumpingSpeed())/1200.0; }

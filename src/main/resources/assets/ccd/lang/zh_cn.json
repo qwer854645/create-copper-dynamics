@@ -402,7 +402,7 @@
   "ccd.filter.attribute.light": "发光类别：%s",
   "ccd.filter.inverted": "已取反；Shift+左键切换",
   "ccd.filter.attribute_help": "Shift+左键取反此属性",
-  "block.ccd.reciprocating_fluid_pump": "复进流体泵",
+  "block.ccd.reciprocating_fluid_pump": "调频动力泵",
   "block.ccd.reciprocating_fluid_pump.tooltip.summary": "使用旋转动力泵送流体，_红石信号强度_按比例设定流量与距离。",
   "ccd.reciprocating.flow": "目标流速：%s mB/t",
   "ccd.reciprocating.signal": "红石强度：%s / 15",

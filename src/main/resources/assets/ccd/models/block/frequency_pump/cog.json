@@ -1,0 +1,549 @@
+{
+  "parent": "create:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "copper": "create:block/copper_underside",
+    "shaft": "ccd:block/booster_pump/shaft_face",
+    "pipe": "create:block/pipes",
+    "gear": "create:block/pump",
+    "particle": "create:block/copper_underside"
+  },
+  "elements": [
+    {
+      "from": [
+        6.5,
+        0.35000000000000053,
+        6.725
+      ],
+      "to": [
+        9.5,
+        15.649999999999999,
+        9.275
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 270,
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "up": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 0,
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        6.725,
+        0.35000000000000053
+      ],
+      "to": [
+        9.5,
+        9.275,
+        15.649999999999999
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "texture": "#gear",
+          "rotation": 90
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        0.35000000000000053,
+        6.725
+      ],
+      "to": [
+        9.5,
+        15.649999999999999,
+        9.275
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 270,
+          "texture": "#gear"
+        },
+        "east": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "up": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 0,
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        }
+      }
+    },
+    {
+      "from": [
+        6.5,
+        6.725,
+        0.35000000000000053
+      ],
+      "to": [
+        9.5,
+        9.275,
+        15.649999999999999
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            6.5,
+            9,
+            8
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "south": {
+          "uv": [
+            10,
+            6.5,
+            15,
+            8
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            0,
+            9,
+            9,
+            14
+          ],
+          "texture": "#gear",
+          "rotation": 90
+        }
+      }
+    },
+    {
+      "from": [
+        6.515,
+        1.9650000000000007,
+        5.875
+      ],
+      "to": [
+        9.485,
+        14.035,
+        10.125
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 0,
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        }
+      }
+    },
+    {
+      "from": [
+        6.515,
+        5.875,
+        1.9650000000000007
+      ],
+      "to": [
+        9.485,
+        10.125,
+        14.035
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 270,
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "from": [
+        6.515,
+        5.875,
+        1.9650000000000007
+      ],
+      "to": [
+        9.485,
+        10.125,
+        14.035
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 90,
+          "texture": "#gear"
+        },
+        "north": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "rotation": 270,
+          "texture": "#gear"
+        },
+        "south": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "from": [
+        6.515,
+        1.9650000000000007,
+        5.875
+      ],
+      "to": [
+        9.485,
+        14.035,
+        10.125
+      ],
+      "neoforge_data": {
+        "calculate_normals": true
+      },
+      "faces": {
+        "west": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "east": {
+          "uv": [
+            1,
+            7,
+            1.5,
+            7.5
+          ],
+          "texture": "#gear",
+          "rotation": 0
+        },
+        "up": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 0,
+          "texture": "#gear"
+        },
+        "down": {
+          "uv": [
+            10,
+            9,
+            15,
+            11.5
+          ],
+          "rotation": 180,
+          "texture": "#gear"
+        }
+      }
+    }
+  ]
+}

@@ -10,6 +10,13 @@ import net.minecraft.world.InteractionResult;
 
 public final class PortableFluidPumpBlock extends ReciprocatingFluidPumpBlock {
     public PortableFluidPumpBlock(Properties properties) { super(properties); }
+    @Override public boolean isSmallCog(){return false;}
+    @Override public boolean hasShaftTowards(net.minecraft.world.level.LevelReader level,BlockPos pos,BlockState state,net.minecraft.core.Direction side){
+        return side.getAxis()==getRotationAxis(state);
+    }
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){
+        return net.minecraft.world.phys.shapes.Shapes.or(box(1,0,1,15,2,15),box(2,2,2,14,15,14));
+    }
     @Override public BlockState getRotatedBlockState(BlockState state,net.minecraft.core.Direction clickedFace) {
         // Bellows stays upright: rotate the horizontal fluid/shaft axes together.
         return state.setValue(FACING,state.getValue(FACING).getClockWise());

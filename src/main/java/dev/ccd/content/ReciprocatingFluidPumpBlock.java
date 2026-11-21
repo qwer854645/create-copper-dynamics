@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-/** Upright bellows pump: straight horizontal fluid ports and transverse shaft pair. */
+/** Copper flow-control pump with straight horizontal ports and a transverse gear shaft. */
 public class ReciprocatingFluidPumpBlock extends PumpBlock {
     public static final IntegerProperty SIGNAL=BlockStateProperties.POWER;
     public ReciprocatingFluidPumpBlock(Properties properties) {
@@ -32,8 +32,8 @@ public class ReciprocatingFluidPumpBlock extends PumpBlock {
     @Override public Direction.Axis getRotationAxis(BlockState state) {
         return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X;
     }
-    @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return side.getAxis()==getRotationAxis(state); }
-    @Override public boolean isSmallCog() { return false; }
+    @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return false; }
+    @Override public boolean isSmallCog() { return true; }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.RECIPROCATING_PUMP_BE.get(); }
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block block,BlockPos from,boolean moving) {
         super.neighborChanged(state,level,pos,block,from,moving);
@@ -46,6 +46,6 @@ public class ReciprocatingFluidPumpBlock extends PumpBlock {
     }
     protected int redstoneSignal(Level level,BlockPos pos){return level.getBestNeighborSignal(pos);}
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context) {
-        return net.minecraft.world.phys.shapes.Shapes.or(box(1,0,1,15,2,15),box(2,2,2,14,15,14));
+        return net.minecraft.world.phys.shapes.Shapes.block();
     }
 }

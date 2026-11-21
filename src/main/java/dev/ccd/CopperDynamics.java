@@ -197,14 +197,10 @@ public final class CopperDynamics {
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.PortableFluidPumpBlockEntity>> PORTABLE_PUMP_BE =
         BLOCK_ENTITIES.register("portable_fluid_pump",()->BlockEntityType.Builder.of(dev.ccd.content.PortableFluidPumpBlockEntity::new,PORTABLE_PUMP.get()).build(null));
     public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.ReciprocatingFluidPumpBlock> RECIPROCATING_PUMP =
-        BLOCKS.register("reciprocating_fluid_pump",()->new dev.ccd.content.TallReciprocatingPumpBlock(BlockBehaviour.Properties.of()
+        BLOCKS.register("reciprocating_fluid_pump",()->new dev.ccd.content.ReciprocatingFluidPumpBlock(BlockBehaviour.Properties.of()
             .mapColor(MapColor.COLOR_ORANGE).strength(3).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredHolder<Item,BlockItem> RECIPROCATING_PUMP_ITEM =
         ITEMS.register("reciprocating_fluid_pump",()->new BlockItem(RECIPROCATING_PUMP.get(),new Item.Properties()));
-    public static final DeferredHolder<net.minecraft.world.level.block.Block,dev.ccd.content.ReciprocatingPumpDriveBlock> RECIPROCATING_DRIVE =
-        BLOCKS.register("reciprocating_pump_drive",()->new dev.ccd.content.ReciprocatingPumpDriveBlock(BlockBehaviour.Properties.of().strength(3).noOcclusion()));
-    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.ReciprocatingPumpDriveBlockEntity>> RECIPROCATING_DRIVE_BE =
-        BLOCK_ENTITIES.register("reciprocating_pump_drive",()->BlockEntityType.Builder.of(dev.ccd.content.ReciprocatingPumpDriveBlockEntity::new,RECIPROCATING_DRIVE.get()).build(null));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.ReciprocatingFluidPumpBlockEntity>> RECIPROCATING_PUMP_BE =
         BLOCK_ENTITIES.register("reciprocating_fluid_pump",()->BlockEntityType.Builder.of(dev.ccd.content.ReciprocatingFluidPumpBlockEntity::new,RECIPROCATING_PUMP.get()).build(null));
     public static final DeferredHolder<net.minecraft.world.level.block.Block, dev.ccd.content.BidirectionalFluidPumpBlock> BIDIRECTIONAL_FLUID_PUMP =
@@ -449,7 +445,6 @@ public final class CopperDynamics {
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(CCDFluids::setup);
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(BUFFER_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
-        event.enqueueWork(() -> BlockStressValues.IMPACTS.register(RECIPROCATING_DRIVE.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(PORTABLE_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
         event.enqueueWork(() -> BlockStressValues.CAPACITIES.register(PORTABLE_PUMP.get(),
             ()->BlockStressValues.getCapacity(AllBlocks.HAND_CRANK.get())+BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));

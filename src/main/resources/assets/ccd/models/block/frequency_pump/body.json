@@ -3,31 +3,30 @@
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "copper": "create:block/copper_underside",
-    "metal": "create:block/industrial_iron_block",
-    "brass": "create:block/brass_block",
     "shaft": "ccd:block/booster_pump/shaft_face",
     "pipe": "create:block/pipes",
+    "gear": "create:block/pump",
     "particle": "create:block/copper_underside"
   },
   "elements": [
     {
-      "name": "copper_pump_body",
+      "name": "front_copper_housing",
       "from": [
         2,
         2,
-        2.05
+        2
       ],
       "to": [
         14,
-        11.99,
-        13.95
+        14,
+        6
       ],
       "faces": {
         "north": {
           "texture": "#copper",
           "uv": [
             2,
-            4.01,
+            2,
             14,
             14
           ]
@@ -36,26 +35,26 @@
           "texture": "#copper",
           "uv": [
             2,
-            4.01,
+            2,
             14,
             14
           ]
         },
         "east": {
-          "texture": "#copper",
+          "texture": "#shaft",
           "uv": [
-            2.05,
-            4.01,
-            13.95,
+            2,
+            2,
+            14,
             14
           ]
         },
         "west": {
-          "texture": "#copper",
+          "texture": "#shaft",
           "uv": [
-            2.05,
-            4.01,
-            13.95,
+            2,
+            2,
+            14,
             14
           ]
         },
@@ -63,93 +62,177 @@
           "texture": "#copper",
           "uv": [
             2,
-            2.05,
+            2,
             14,
-            13.95
+            14
           ]
         },
         "down": {
           "texture": "#copper",
           "uv": [
             2,
-            2.05,
+            2,
             14,
-            13.95
+            14
           ]
         }
       }
     },
     {
-      "name": "top_rod_guide",
+      "name": "rear_copper_housing",
       "from": [
-        5,
-        11.99,
-        5
+        2,
+        2,
+        10
       ],
       "to": [
-        11,
-        12.5,
-        11
+        14,
+        14,
+        14
       ],
       "faces": {
         "north": {
-          "texture": "#brass",
+          "texture": "#copper",
           "uv": [
-            5,
-            3.5,
-            11,
-            4.01
+            2,
+            2,
+            14,
+            14
           ]
         },
         "south": {
-          "texture": "#brass",
+          "texture": "#copper",
           "uv": [
-            5,
-            3.5,
-            11,
-            4.01
+            2,
+            2,
+            14,
+            14
           ]
         },
         "east": {
-          "texture": "#brass",
+          "texture": "#shaft",
           "uv": [
-            5,
-            3.5,
-            11,
-            4.01
+            2,
+            2,
+            14,
+            14
           ]
         },
         "west": {
-          "texture": "#brass",
+          "texture": "#shaft",
           "uv": [
-            5,
-            3.5,
-            11,
-            4.01
+            2,
+            2,
+            14,
+            14
           ]
         },
         "up": {
-          "texture": "#brass",
+          "texture": "#copper",
           "uv": [
-            5,
-            5,
-            11,
-            11
+            2,
+            2,
+            14,
+            14
           ]
         },
         "down": {
-          "texture": "#brass",
+          "texture": "#copper",
           "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "left_bearing",
+      "from": [
+        2,
+        5,
+        6
+      ],
+      "to": [
+        5,
+        11,
+        10
+      ],
+      "faces": {
+        "west": {
+          "texture": "#shaft",
+          "uv": [
+            6,
+            5,
+            10,
+            11
+          ]
+        },
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            2,
             5,
             5,
-            11,
+            11
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            2,
+            5,
+            5,
             11
           ]
         }
       }
     },
     {
-      "name": "rim_north",
+      "name": "right_bearing",
+      "from": [
+        11,
+        5,
+        6
+      ],
+      "to": [
+        14,
+        11,
+        10
+      ],
+      "faces": {
+        "east": {
+          "texture": "#shaft",
+          "uv": [
+            6,
+            5,
+            10,
+            11
+          ]
+        },
+        "north": {
+          "texture": "#copper",
+          "uv": [
+            11,
+            5,
+            14,
+            11
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            11,
+            5,
+            14,
+            11
+          ]
+        }
+      }
+    },
+    {
+      "name": "native_rim_connector_north",
       "from": [
         4,
         4,
@@ -289,10 +372,11 @@
           "rotation": 270,
           "texture": "#pipe"
         }
-      }
+      },
+      "name": "native_rim_north"
     },
     {
-      "name": "rim_south",
+      "name": "native_rim_connector_south",
       "from": [
         4,
         4,
@@ -432,7 +516,8 @@
           "rotation": 270,
           "texture": "#pipe"
         }
-      }
+      },
+      "name": "native_rim_south"
     }
   ]
 }
