@@ -28,18 +28,26 @@ public final class ProcessingMedia {
         public final String id;
         public final int color;
         public final DeferredHolder<FluidType,FluidType> type;
-        public final DeferredHolder<Fluid,BaseFlowingFluid.Source> source;
-        public final DeferredHolder<Fluid,BaseFlowingFluid.Flowing> flowing;
+        public final DeferredHolder<Fluid,? extends net.minecraft.world.level.material.FlowingFluid> source;
+        public final DeferredHolder<Fluid,? extends net.minecraft.world.level.material.FlowingFluid> flowing;
         public final DeferredHolder<Block,LiquidBlock> block;
         public final DeferredHolder<Item,BucketItem> bucket;
         private Medium(String id,int color,int temperature) {
             this.id=id; this.color=color;
-            type=TYPES.register(id,()->new FluidType(FluidType.Properties.create().descriptionId("fluid_type.ccd."+id)
+            boolean lava=id.equals("seething_reagent");
+            type=TYPES.register(id,()->lava?new FluidType(FluidType.Properties.create().descriptionId("fluid_type.ccd."+id)
+                .canSwim(false).canDrown(false).pathType(net.minecraft.world.level.pathfinder.PathType.LAVA).adjacentPathType(null)
+                .lightLevel(15).density(3000).viscosity(6000).temperature(2000)
+                .sound(SoundActions.BUCKET_FILL,SoundEvents.BUCKET_FILL_LAVA).sound(SoundActions.BUCKET_EMPTY,SoundEvents.BUCKET_EMPTY_LAVA)){
+                    @Override public double motionScale(net.minecraft.world.entity.Entity entity){return net.neoforged.neoforge.common.NeoForgeMod.LAVA_TYPE.value().motionScale(entity);}
+                    @Override public boolean move(net.minecraft.world.level.material.FluidState state,net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.phys.Vec3 movement,double gravity){return true;}
+                    @Override public void setItemMovement(net.minecraft.world.entity.item.ItemEntity entity){net.neoforged.neoforge.common.NeoForgeMod.LAVA_TYPE.value().setItemMovement(entity);}
+                }:new FluidType(FluidType.Properties.create().descriptionId("fluid_type.ccd."+id)
                 .density(1200).viscosity(2000).temperature(temperature)
                 .sound(SoundActions.BUCKET_FILL,SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY,SoundEvents.BUCKET_EMPTY)));
-            source=FLUIDS.register(id,()->new BaseFlowingFluid.Source(properties()));
-            flowing=FLUIDS.register("flowing_"+id,()->new BaseFlowingFluid.Flowing(properties()));
-            block=CopperDynamics.BLOCKS.register(id,()->new LiquidBlock(source.get(),BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)));
+            source=FLUIDS.register(id,()->lava?new SuperLavaFluid.Source():new BaseFlowingFluid.Source(properties()));
+            flowing=FLUIDS.register("flowing_"+id,()->lava?new SuperLavaFluid.Flowing():new BaseFlowingFluid.Flowing(properties()));
+            block=CopperDynamics.BLOCKS.register(id,()->new LiquidBlock(source.get(),BlockBehaviour.Properties.ofFullCopy(lava?Blocks.LAVA:Blocks.WATER)));
             bucket=CopperDynamics.ITEMS.register(id+"_bucket",()->new BucketItem(source.get(),new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
         }
         private BaseFlowingFluid.Properties properties() { return new BaseFlowingFluid.Properties(type,source,flowing).block(block).bucket(bucket).tickRate(10); }

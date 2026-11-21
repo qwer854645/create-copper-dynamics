@@ -464,6 +464,7 @@ public final class CopperDynamics {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(CCDFluids::setup);
+        event.enqueueWork(dev.ccd.compat.SuperLavaFluid::setupInteractions);
         event.enqueueWork(()->BlockStressValues.IMPACTS.register(OMNI_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())*CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(BUFFER_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(PORTABLE_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
