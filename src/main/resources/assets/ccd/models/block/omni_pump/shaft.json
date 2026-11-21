@@ -1,0 +1,83 @@
+{
+  "parent": "create:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "copper": "create:block/copper_underside",
+    "pipe": "create:block/pipes",
+    "shaft": "ccd:block/booster_pump/shaft_face",
+    "input": "ccd:block/three_way_valve/common",
+    "output": "ccd:block/three_way_valve/selected",
+    "particle": "create:block/copper_underside"
+  },
+  "elements": [
+    {
+      "name": "shaft_socket",
+      "from": [
+        3,
+        3,
+        0.5
+      ],
+      "to": [
+        13,
+        13,
+        2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#shaft",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "south": {
+          "texture": "#copper",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "east": {
+          "texture": "#copper",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "west": {
+          "texture": "#copper",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "up": {
+          "texture": "#copper",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        },
+        "down": {
+          "texture": "#copper",
+          "uv": [
+            3,
+            3,
+            13,
+            13
+          ]
+        }
+      }
+    }
+  ]
+}

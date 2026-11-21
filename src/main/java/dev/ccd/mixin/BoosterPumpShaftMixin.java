@@ -16,6 +16,7 @@ abstract class BoosterPumpShaftMixin {
     @Inject(method = "getAxisModifier", at = @At("HEAD"), cancellable = true)
     private static void ccd$boosterShaftModifier(KineticBlockEntity be, Direction direction,
         CallbackInfoReturnable<Float> cir) {
+        if(be instanceof dev.ccd.content.OmniPumpBlockEntity && dev.ccd.content.OmniPumpBlock.mode(be.getBlockState(),direction)==dev.ccd.content.OmniPumpBlock.SHAFT)cir.setReturnValue(1f);
         if (be instanceof BoosterPumpBlockEntity) {
             float factor = BoosterPumpBlock.shaftModifier(be.getBlockState(), direction);
             if (factor != 0) cir.setReturnValue(factor);

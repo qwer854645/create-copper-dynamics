@@ -236,6 +236,11 @@ public final class CopperDynamics {
     public static final DeferredHolder<Item,BlockItem> FLOW_METER_ITEM = ITEMS.register("flow_meter",()->new BlockItem(FLOW_METER.get(),new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.FlowMeterBlockEntity>> FLOW_METER_BE =
         BLOCK_ENTITIES.register("flow_meter",()->BlockEntityType.Builder.of(dev.ccd.content.FlowMeterBlockEntity::new,FLOW_METER.get()).build(null));
+    public static final DeferredHolder<net.minecraft.world.level.block.Block,dev.ccd.content.OmniPumpBlock> OMNI_PUMP =
+        BLOCKS.register("omni_pump",()->new dev.ccd.content.OmniPumpBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(3).requiresCorrectToolForDrops().noOcclusion()));
+    public static final DeferredHolder<Item,BlockItem> OMNI_PUMP_ITEM=ITEMS.register("omni_pump",()->new BlockItem(OMNI_PUMP.get(),new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.OmniPumpBlockEntity>> OMNI_PUMP_BE=
+        BLOCK_ENTITIES.register("omni_pump",()->BlockEntityType.Builder.of(dev.ccd.content.OmniPumpBlockEntity::new,OMNI_PUMP.get()).build(null));
     public static final DeferredHolder<Item, BlockItem> FLUID_TRANSMITTER_ITEM =
         ITEMS.register("fluid_transmitter", () -> new BlockItem(FLUID_TRANSMITTER.get(), new Item.Properties()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FluidTransmitterBlockEntity>> FLUID_TRANSMITTER_BE =
@@ -419,6 +424,7 @@ public final class CopperDynamics {
                 output.accept(BIDIRECTIONAL_FLUID_PUMP_ITEM.get());
                 output.accept(TURNING_BOOSTER_PUMP_ITEM.get());
                 output.accept(FLOW_METER_ITEM.get());
+                output.accept(OMNI_PUMP_ITEM.get());
                 output.accept(VERTICAL_TURNING_BOOSTER_PUMP_ITEM.get());
                 output.accept(REDSTONE_FLUID_PUMP_ITEM.get());
                 output.accept(FLUID_TRANSMITTER_ITEM.get());
@@ -456,6 +462,7 @@ public final class CopperDynamics {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(CCDFluids::setup);
+        event.enqueueWork(()->BlockStressValues.IMPACTS.register(OMNI_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())*CCDConfig.PUMP_STRESS_MULTIPLIER.get()));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(BUFFER_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
         event.enqueueWork(() -> BlockStressValues.IMPACTS.register(PORTABLE_PUMP.get(),()->BlockStressValues.getImpact(AllBlocks.MECHANICAL_PUMP.get())));
         event.enqueueWork(() -> BlockStressValues.CAPACITIES.register(PORTABLE_PUMP.get(),
@@ -479,6 +486,7 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,OMNI_PUMP_BE.get(),(be,side)->be.handler(side));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,BUFFER_PUMP_BE.get(),(be,side)->be.buffer);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,CREATIVE_DELIVERY_TANK_BE.get(),(be,side)->side==null||side==be.getBlockState().getValue(dev.ccd.content.CreativeDeliveryTankBlock.FACING)?be.handler:null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HORIZONTAL_SMART_TANK_BE.get(), (be,side)->be.inventory);

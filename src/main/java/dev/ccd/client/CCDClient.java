@@ -68,6 +68,7 @@ public final class CCDClient {
 
     @SubscribeEvent public static void renderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(CopperDynamics.FLOW_METER_BE.get(),FlowMeterRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.OMNI_PUMP_BE.get(),OmniPumpRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_PACKAGER_BE.get(), FluidPackagerRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FLUID_REPACKAGER_BE.get(), FluidPackagerRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.THREE_WAY_VALVE_BE.get(), ThreeWayValveRenderer::new);

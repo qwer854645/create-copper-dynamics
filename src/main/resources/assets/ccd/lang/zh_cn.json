@@ -420,5 +420,18 @@
   "block.ccd.vertical_turning_booster_pump.tooltip.summary": "传动轴_垂直于双管口平面_，输送能力与转向增压泵相同。",
   "block.ccd.flow_meter": "流量计",
   "ccd.flow_meter.rate": "当前流速：%s mB/t",
-  "block.ccd.flow_meter.tooltip.summary": "串接管道，使用_工程师护目镜_读取当前流速。"
+  "block.ccd.flow_meter.tooltip.summary": "串接管道，使用_工程师护目镜_读取当前流速。",
+  "block.ccd.omni_pump": "万向泵",
+  "ccd.omni_pump.mode.0": "关闭",
+  "ccd.omni_pump.mode.1": "输入",
+  "ccd.omni_pump.mode.2": "输出",
+  "ccd.omni_pump.mode.3": "应力口",
+  "ccd.omni_pump.face": "%s: %s",
+  "ccd.direction.north": "北",
+  "ccd.direction.south": "南",
+  "ccd.direction.east": "东",
+  "ccd.direction.west": "西",
+  "ccd.direction.up": "上",
+  "ccd.direction.down": "下",
+  "block.ccd.omni_pump.tooltip.summary": "用_扳手_逐面切换输入、输出、应力口和关闭。默认六面关闭。"
 }

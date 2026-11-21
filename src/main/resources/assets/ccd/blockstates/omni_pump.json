@@ -1,0 +1,168 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "ccd:block/omni_pump/body"
+      }
+    },
+    {
+      "when": {
+        "north": "1"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/input"
+      }
+    },
+    {
+      "when": {
+        "north": "2"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/output"
+      }
+    },
+    {
+      "when": {
+        "north": "3"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/shaft"
+      }
+    },
+    {
+      "when": {
+        "south": "1"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/input",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "2"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/output",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "south": "3"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/shaft",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "east": "1"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/input",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "2"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/output",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "east": "3"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/shaft",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": "1"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/input",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": "2"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/output",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "west": "3"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/shaft",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "up": "1"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/input",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "up": "2"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/output",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "up": "3"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/shaft",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "down": "1"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/input",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "2"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/output",
+        "x": 270
+      }
+    },
+    {
+      "when": {
+        "down": "3"
+      },
+      "apply": {
+        "model": "ccd:block/omni_pump/shaft",
+        "x": 270
+      }
+    }
+  ]
+}

@@ -420,5 +420,18 @@
   "block.ccd.vertical_turning_booster_pump.tooltip.summary": "The shaft is _perpendicular to the fluid port plane_, retaining Turning Booster Pump performance.",
   "block.ccd.flow_meter": "Flow Meter",
   "ccd.flow_meter.rate": "Current flow: %s mB/t",
-  "block.ccd.flow_meter.tooltip.summary": "Install in a pipe and read current flow with _Engineer’s Goggles_."
+  "block.ccd.flow_meter.tooltip.summary": "Install in a pipe and read current flow with _Engineer’s Goggles_.",
+  "block.ccd.omni_pump": "Omnidirectional Pump",
+  "ccd.omni_pump.mode.0": "Closed",
+  "ccd.omni_pump.mode.1": "Input",
+  "ccd.omni_pump.mode.2": "Output",
+  "ccd.omni_pump.mode.3": "Shaft",
+  "ccd.omni_pump.face": "%s: %s",
+  "ccd.direction.north": "North",
+  "ccd.direction.south": "South",
+  "ccd.direction.east": "East",
+  "ccd.direction.west": "West",
+  "ccd.direction.up": "Up",
+  "ccd.direction.down": "Down",
+  "block.ccd.omni_pump.tooltip.summary": "Use a _Wrench_ on each face to cycle input, output, shaft and closed. All faces start closed."
 }
