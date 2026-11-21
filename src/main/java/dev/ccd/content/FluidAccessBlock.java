@@ -74,7 +74,8 @@ public final class FluidAccessBlock extends DirectionalBlock implements IBE<Flui
     }
     @Override public BlockState getRotatedBlockState(BlockState state, Direction face) {
         Direction facing = state.getValue(FACING);
-        if (facing.getAxis() == face.getAxis()) return state;
+        if (facing.getAxis() == face.getAxis())
+            face=Direction.fromAxisAndDirection(face.getAxis()==Direction.Axis.Y?Direction.Axis.X:Direction.Axis.Y,Direction.AxisDirection.POSITIVE);
         Direction turned = facing.getClockWise(face.getAxis());
         if (!bridge && face.getAxis() != Direction.Axis.Y && face.getAxisDirection() == Direction.AxisDirection.NEGATIVE)
             turned = facing.getCounterClockWise(face.getAxis());

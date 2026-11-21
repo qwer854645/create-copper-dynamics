@@ -35,6 +35,13 @@ public final class FluidAtomizerBlock extends EncasedFanBlock {
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
         return super.getStateForPlacement(context).setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
+    @Override public BlockState getRotatedBlockState(BlockState state,net.minecraft.core.Direction face){
+        var facing=state.getValue(FACING);
+        var axis=face.getAxis()==facing.getAxis()
+            ?(facing.getAxis()==net.minecraft.core.Direction.Axis.Y?net.minecraft.core.Direction.Axis.X:net.minecraft.core.Direction.Axis.Y)
+            :face.getAxis();
+        return state.setValue(FACING,facing.getClockWise(axis));
+    }
     @Override public void neighborChanged(BlockState state, Level level, BlockPos pos, Block other, BlockPos from, boolean moving) {
         super.neighborChanged(state, level, pos, other, from, moving);
         updateSignal(level, pos);

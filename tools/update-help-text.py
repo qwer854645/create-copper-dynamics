@@ -13,7 +13,7 @@ rows={
 ('control1','手持装液容器右键点击','When R-Clicked with a filled container'),('action1','将流体装入_2000 mB_缓存。','Fills the _2000 mB_ buffer.')],
 'block.ccd.creative_delivery_fluid_tank':[
 ('summary','持续输出选定流体的_创造模式_储罐。','A _Creative_ tank that continuously supplies the selected fluid.'),
-('control1','在顶部侧槽选择流体','When setting a fluid in an upper side slot'),('action1','使用装液容器选择要供应的流体，四个槽位共用一个选择。','Selects the supplied fluid from a filled container. All four slots share the selection.'),
+('control1','手持装液容器右键点击','When R-Clicked with a filled container'),('action1','选择要供应的流体；顶部四侧控件用于切换_输出模式_。','Selects the supplied fluid. The four upper side controls set the _Output Mode_.'),
 ('control2','使用扳手右键点击','When R-Clicked with a Wrench'),('action2','调整_出液口_方向，侧面槽位随储罐转动。','Rotates the _outlet_. The side slots rotate with the tank.'),
 ('condition1','允许向世界输出时','When world output is enabled'),('behaviour1','可通过开放管口排液；默认只向_容器_供液。','May discharge through open pipe ends. By default, only _containers_ receive fluid.')],
 'item.ccd.fluid_filter':[
@@ -53,7 +53,7 @@ rows={
 scenes={
 'fluid_ordering':('监控与订购流体',['流体工厂仪表监控流体库存，并通过物流网络请求补足数量。','使用已调频的库存链接器选择网络，再用装液容器选择流体。','目标数量以 mB 设置，设为零时仅监控库存。','流体识别标记表示订单中的数量，实际流体通过铜包裹运输。']),
 'pump_variants':('选择泵的连接方式',['转向增压泵在两个相邻管口之间输送流体。','垂直转向增压泵的传动轴垂直于两个管口所在的平面。','红石信号会反转红石双向动力泵的输送方向。','双向动力泵随旋转方向反转流体方向。','调频动力泵根据信号强度调整流量和距离，齿轮从顶部或底部接入。','右键点击便携式流体泵即可手动操作，潜行时反向操作。']),
-'buffered_delivery':('输送缓存中的流体',['缓存泵可储存由管道或手持容器注入的 2000 mB 流体。','旋转力将缓存中的流体送至出液口，不会主动从其他容器抽液。','输送式创造储罐可无限供应顶部侧槽所选的流体。','使用扳手调整出液口，启用向世界输出后可从开放管口排液。']),
+'buffered_delivery':('输送缓存中的流体',['缓存泵可储存由管道或手持容器注入的 2000 mB 流体。','旋转力将缓存中的流体送至出液口，不会主动从其他容器抽液。','手持装液容器右键选择流体，输送式创造储罐可无限供应该流体。','使用扳手调整出液口，顶部侧面控件可切换容器供液与向世界输出。']),
 'omni_pumping':('设置万向泵的接口',['万向泵放下时，六个面均为关闭状态。','用扳手右键点击一个面，可依次切换输入、输出、应力口和关闭。','向应力口接入旋转力，即可从输入面收液并向输出面供液。','所有输出共用输送能力，反转旋转方向不会交换接口模式。']),
 'flow_metering':('测量管道流量',['将流量计串接在两根流体管道之间。','指针随实际输送量变化，停止流动时归零。','佩戴工程师护目镜可查看流速，单位为 mB/t。','使用扳手调整表盘朝向。']),
 'redstone_valving':('控制流体通路',['红石流体阀门未通电时允许流体通过。','红石信号会关闭通路，信号消失后重新开启。','仍需使用动力泵驱动管道中的流体。']),

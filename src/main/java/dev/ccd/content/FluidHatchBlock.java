@@ -28,6 +28,9 @@ public class FluidHatchBlock extends ItemHatchBlock {
     public static final MapCodec<FluidHatchBlock> CODEC = simpleCodec(FluidHatchBlock::new);
 
     public FluidHatchBlock(Properties properties) { super(properties); }
+    @Override public BlockState getRotatedBlockState(BlockState state,Direction face){
+        return state.setValue(FACING,state.getValue(FACING).getClockWise());
+    }
 
 
 

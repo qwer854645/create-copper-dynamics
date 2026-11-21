@@ -250,8 +250,8 @@ public final class CCDPonderScenes {
         text(s,util,B,"Buffer Pumps hold 2000 mB supplied by pipes or handheld containers");
         text(s,util,B,"Rotational power delivers stored fluid through the outlet without extracting from other containers");
         s.world().setBlock(B,CopperDynamics.CREATIVE_DELIVERY_TANK.get().defaultBlockState(),true);
-        text(s,util,B,"Creative Delivery Tanks supply an unlimited amount of the fluid selected at their upper side slots");
-        text(s,util,B,"Use a Wrench to rotate the outlet; enable world output to discharge through open pipe ends");s.markAsFinished();
+        text(s,util,B,"R-Click with a filled container to select the fluid supplied by a Creative Delivery Tank");
+        text(s,util,B,"Use a Wrench to rotate the outlet; upper side controls switch between container delivery and world output");s.markAsFinished();
     }
     public static void omniPumping(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"omni_pumping","Configuring Pump Faces");

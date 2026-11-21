@@ -34,6 +34,10 @@ public class ReciprocatingFluidPumpBlock extends PumpBlock {
     }
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return false; }
     @Override public boolean isSmallCog() { return true; }
+    @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace){
+        // This model remains upright; a wrench rotates the horizontal pipe and gear axes together.
+        return state.setValue(FACING,state.getValue(FACING).getClockWise());
+    }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.RECIPROCATING_PUMP_BE.get(); }
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block block,BlockPos from,boolean moving) {
         super.neighborChanged(state,level,pos,block,from,moving);
