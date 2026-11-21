@@ -220,6 +220,85 @@ public final class CCDPonderScenes {
         s.world().modifyBlock(B,state->state.setValue(FluidTransmitterBlock.POWERED,true),false);
         text(s,util,B,"A Redstone Signal pauses the transfer"); s.markAsFinished();
     }
+    public static void ordering(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"fluid_ordering","Monitoring and Ordering Fluids");
+        show(s,util,B,AllBlocks.FLUID_TANK.getDefaultState());water(s,B,4000);
+        text(s,util,B,"Fluid Factory Gauges monitor fluid stock and request missing quantities through a logistics network");
+        text(s,util,B,"Use a linked Stock Link to choose the network, then select a fluid with a filled container");
+        text(s,util,B,"Set the target amount in mB; a target of zero only monitors stock");
+        text(s,util,B,"Fluid Stock Tokens represent quantities in orders; actual fluids travel in Copper Packages");s.markAsFinished();
+    }
+    public static void pumpVariants(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"pump_variants","Choosing Fluid Pump Connections");
+        show(s,util,B,CopperDynamics.TURNING_BOOSTER_PUMP.get().defaultBlockState());
+        text(s,util,B,"Turning Booster Pumps move fluids between two adjacent pipe mouths");
+        s.world().setBlock(B,CopperDynamics.VERTICAL_TURNING_BOOSTER_PUMP.get().defaultBlockState(),true);
+        text(s,util,B,"Perpendicular Turning Booster Pumps place their shaft normal to the two pipe mouths");
+        s.world().setBlock(B,CopperDynamics.REDSTONE_FLUID_PUMP.get().defaultBlockState(),true);
+        text(s,util,B,"A Redstone Signal reverses the Redstone Pump's fluid flow");
+        s.world().setBlock(B,CopperDynamics.BIDIRECTIONAL_FLUID_PUMP.get().defaultBlockState(),true);
+        text(s,util,B,"Bidirectional Pumps reverse fluid flow when their rotation reverses");
+        s.world().setBlock(B,CopperDynamics.RECIPROCATING_PUMP.get().defaultBlockState(),true);
+        text(s,util,B,"Variable Flow Pumps use Redstone strength to adjust flow and range; Cogwheels connect above or below");
+        s.world().setBlock(B,CopperDynamics.PORTABLE_PUMP.get().defaultBlockState(),true);
+        s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick();
+        text(s,util,B,"R-Click Portable Pumps to operate them manually; Sneak to reverse manual rotation");s.markAsFinished();
+    }
+    public static void buffering(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"buffered_delivery","Supplying Stored Fluids");
+        show(s,util,B,CopperDynamics.BUFFER_PUMP.get().defaultBlockState());
+        text(s,util,B,"Buffer Pumps hold 2000 mB supplied by pipes or handheld containers");
+        text(s,util,B,"Rotational power delivers stored fluid through the outlet without extracting from other containers");
+        s.world().setBlock(B,CopperDynamics.CREATIVE_DELIVERY_TANK.get().defaultBlockState(),true);
+        text(s,util,B,"Creative Delivery Tanks supply an unlimited amount of the fluid selected at their upper side slots");
+        text(s,util,B,"Use a Wrench to rotate the outlet; enable world output to discharge through open pipe ends");s.markAsFinished();
+    }
+    public static void omniPumping(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"omni_pumping","Configuring Pump Faces");
+        show(s,util,B,CopperDynamics.OMNI_PUMP.get().defaultBlockState());
+        text(s,util,B,"All six faces of an Omnidirectional Pump start closed");
+        s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(com.simibubi.create.AllItems.WRENCH.asStack());
+        s.world().modifyBlock(B,state->state.setValue(OmniPumpBlock.PORTS.get(Direction.NORTH),OmniPumpBlock.INPUT),false);
+        text(s,util,B,"R-Click a face with a Wrench to cycle Input, Output, Shaft and Closed");
+        s.world().modifyBlock(B,state->state.setValue(OmniPumpBlock.PORTS.get(Direction.SOUTH),OmniPumpBlock.OUTPUT).setValue(OmniPumpBlock.PORTS.get(Direction.UP),OmniPumpBlock.SHAFT),false);
+        text(s,util,B,"Supply rotational power at a Shaft port to draw from inputs and deliver to outputs");
+        text(s,util,B,"All outputs share the pump's transfer rate; reversing rotation does not swap the configured modes");s.markAsFinished();
+    }
+    public static void metering(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"flow_metering","Measuring Fluid Flow");show(s,util,B,CopperDynamics.FLOW_METER.get().getAxisState(Direction.Axis.Z));
+        text(s,util,B,"Install a Flow Meter between two Fluid Pipes");
+        text(s,util,B,"The needle responds to transferred fluid and returns to zero when flow stops");
+        text(s,util,B,"Engineer’s Goggles display the current flow in mB per tick");
+        text(s,util,B,"Use a Wrench to change the dial orientation");s.markAsFinished();
+    }
+    public static void redstoneValve(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"redstone_valving","Controlling Fluid Connections");show(s,util,B,CopperDynamics.REDSTONE_FLUID_VALVE.get().defaultBlockState());
+        text(s,util,B,"Redstone Fluid Valves allow flow while unpowered");
+        text(s,util,B,"A Redstone Signal closes the connection; removing the signal opens it again");
+        text(s,util,B,"A Mechanical Pump is still required to move fluid through the pipe");s.markAsFinished();
+    }
+    public static void filtering(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"fluid_filtering","Filtering Fluids");show(s,util,B,CopperDynamics.SMART_FLUID_TANK.get().defaultBlockState());
+        s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(CopperDynamics.FLUID_FILTER.get()));
+        text(s,util,B,"R-Click a Fluid Filter in hand to configure its fluid samples");
+        text(s,util,B,"Copy fluids from handheld containers or drag fluid entries from a recipe browser; samples are not consumed");
+        text(s,util,B,"Fluid Attribute Filters use a reference fluid to select properties; Add or Add Inverted saves the selected rule");
+        text(s,util,B,"Choose Any, All or Deny to combine attributes, then place the filter in a component's filter slot");s.markAsFinished();
+    }
+    public static void buckets(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"metal_buckets","Using High-Capacity Buckets");show(s,util,B,AllBlocks.FLUID_TANK.getDefaultState());water(s,B,4000);
+        s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(CopperDynamics.COPPER_BUCKET.get()));
+        text(s,util,B,"Copper and Brass Buckets can hold several buckets of a single fluid");
+        text(s,util,B,"R-Click containers to draw fluid; Sneak and R-Click to pour");
+        text(s,util,B,"World interactions transfer one bucket at a time; Brass Buckets hold more than Copper Buckets");s.markAsFinished();
+    }
+    public static void media(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"fluid_media","Using Processing Fluids");show(s,util,B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState());
+        text(s,util,B,"Fluid Atomizers use stored fluid to give air currents a processing effect");
+        text(s,util,B,"Optional processing fluids require the matching addon to provide their fan-processing type");
+        s.world().setBlock(B,AllBlocks.BLAZE_BURNER.getDefaultState(),true);
+        text(s,util,B,"Super Lava can also fuel Blaze Burners, providing 160 seconds of Superheating per 1000 mB");s.markAsFinished();
+    }
     public static void pumping(SceneBuilder builder,SceneBuildingUtil util) {
         var s=begin(builder,"booster_pumping","Fluid Transportation using Booster Pumps");
         var source=new BlockPos(2,1,0); var target=new BlockPos(2,1,4);
