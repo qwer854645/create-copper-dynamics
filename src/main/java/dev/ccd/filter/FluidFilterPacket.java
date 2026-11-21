@@ -30,25 +30,7 @@ public record FluidFilterPacket(int menu, int operation, int slot, FluidStack sa
             var player = context.player();
             if (!(player.containerMenu instanceof FluidFilterMenu menu) || menu.containerId != packet.menu || !menu.stillValid(player)) return;
             var data = FluidFilterItem.data(menu.filter);
-            var entries = data.getList("entries", net.minecraft.nbt.Tag.TAG_COMPOUND).copy();
-            if (packet.operation == 0 && packet.slot >= 0 && packet.slot < FluidFilterRules.SLOTS && !packet.sample.isEmpty()) {
-                var entry = new net.minecraft.nbt.CompoundTag();
-                if (menu.attributes) {
-                    var options = FluidFilterRules.choices(packet.sample);
-                    if (packet.choice < 0 || packet.choice >= options.size()) return;
-                    entry = options.get(packet.choice).copy();
-                }
-                entry.put("fluid", packet.sample.copyWithAmount(1).saveOptional(player.registryAccess()));
-                if (packet.slot < entries.size()) entries.set(packet.slot, entry);
-                else if (entries.size() < FluidFilterRules.SLOTS) entries.add(entry);
-            } else if (packet.operation == 1 && packet.slot >= 0 && packet.slot < entries.size()) entries.remove(packet.slot);
-            else if (packet.operation == 2) data.putBoolean("blacklist", !data.getBoolean("blacklist"));
-            else if (packet.operation == 3) data.putBoolean(menu.attributes ? "all" : "components", !data.getBoolean(menu.attributes ? "all" : "components"));
-            else if (packet.operation == 4 && menu.attributes && packet.slot >= 0 && packet.slot < entries.size()) {
-                var entry = entries.getCompound(packet.slot); entry.putBoolean("invert", !entry.getBoolean("invert"));
-            } else if(packet.operation==5)entries.clear();
-            else return;
-            data.put("entries", entries);
+            if(!dev.ccd.content.FluidFilterEditor.apply(data,menu.attributes,player.registryAccess(),packet.operation,packet.slot,packet.sample,packet.choice))return;
             menu.filter.set(CopperDynamics.FLUID_FILTER_DATA.get(), CustomData.of(data));
             player.getInventory().setChanged();
             player.inventoryMenu.broadcastChanges();

@@ -21,7 +21,7 @@ public final class CCDJeiPlugin implements IModPlugin {
                     .orElseGet(() -> ingredient.getIngredient(VanillaTypes.ITEM_STACK).map(dev.ccd.content.FluidStockItem::sample).orElse(FluidStack.EMPTY));
                 if (fluid.isEmpty()) return java.util.List.of();
                 var targets = new java.util.ArrayList<Target<I>>();
-                for (int i=0;i<dev.ccd.content.FluidFilterRules.SLOTS;i++) {
+                for (int i=0;i<screen.targetCount();i++) {
                     final int slot=i;
                     targets.add(new Target<I>() {
                         @Override public net.minecraft.client.renderer.Rect2i getArea() { return screen.target(slot); }

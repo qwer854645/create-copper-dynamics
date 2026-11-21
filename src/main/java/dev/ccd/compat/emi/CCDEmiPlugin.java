@@ -15,7 +15,7 @@ public final class CCDEmiPlugin implements EmiPlugin {
                     fluid = new net.neoforged.neoforge.fluids.FluidStack(source, 1);
                 else fluid = dev.ccd.content.FluidStockItem.sample(stack.getItemStack());
                 if (fluid.isEmpty()) continue;
-                for (int i=0;i<dev.ccd.content.FluidFilterRules.SLOTS;i++) if(screen.target(i).contains(x,y)) {
+                for (int i=0;i<screen.targetCount();i++) if(screen.target(i).contains(x,y)) {
                     screen.acceptFluid(i,fluid); return true;
                 }
             }

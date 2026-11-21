@@ -18,6 +18,25 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class FluidFilterTests {
+    @GameTest(template="empty") public static void editorPreservesSlotsAndAtomicAttributes(GameTestHelper h){
+        var data=new CompoundTag();var water=new FluidStack(Fluids.WATER,1);var lava=new FluidStack(Fluids.LAVA,1);
+        var registries=h.getLevel().registryAccess();
+        dev.ccd.content.FluidFilterEditor.apply(data,false,registries,0,17,water,0);
+        dev.ccd.content.FluidFilterEditor.apply(data,false,registries,0,4,lava,0);
+        dev.ccd.content.FluidFilterEditor.apply(data,false,registries,1,4,FluidStack.EMPTY,0);
+        var entries=data.getList("entries",10);
+        h.assertTrue(entries.size()==1&&entries.getCompound(0).getInt("slot")==17,"Removing a sample shifted another slot");
+        h.assertTrue(FluidFilterRules.matches(data,false,h.getLevel(),water)&&!FluidFilterRules.matches(data,false,h.getLevel(),lava),"Sparse filter changed matching");
+        dev.ccd.content.FluidFilterEditor.apply(data,false,registries,2,0,FluidStack.EMPTY,1);
+        dev.ccd.content.FluidFilterEditor.apply(data,false,registries,2,0,FluidStack.EMPTY,1);
+        h.assertTrue(data.getBoolean("blacklist"),"Repeated mode selection toggled state");
+        data=new CompoundTag();
+        h.assertTrue(dev.ccd.content.FluidFilterEditor.apply(data,true,registries,6,0,water,0),"Inverted attribute rejected");
+        h.assertTrue(data.getList("entries",10).getCompound(0).getBoolean("invert"),"Inversion not saved atomically");
+        h.assertTrue(!dev.ccd.content.FluidFilterEditor.apply(data,true,registries,0,1,water,0),"Duplicate attribute accepted");
+        dev.ccd.content.FluidFilterEditor.apply(data,true,registries,5,0,FluidStack.EMPTY,0);
+        h.assertTrue(data.getList("entries",10).isEmpty(),"Clear failed");h.succeed();
+    }
     @GameTest(template="empty") public static void listFilterUsesNativeWrapperAndPersists(GameTestHelper h) {
         var water = new FluidStack(Fluids.WATER, 1000);
         var lava = new FluidStack(Fluids.LAVA, 1000);
