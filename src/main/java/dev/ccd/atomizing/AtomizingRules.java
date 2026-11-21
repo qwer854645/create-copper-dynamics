@@ -47,6 +47,8 @@ public final class AtomizingRules {
         }
         if (AllFluids.POTION.is(fluid.getFluid()))
             return new Selection("ccd:potions", null, null, CCDConfig.ATOMIZER_POTION_COST.get(), 20, true);
+        if(fluid.getFluid().getFluidType()==dev.ccd.CCDFluids.HAUNTING_TYPE.get())
+            return new Selection("ccd:haunting",null,AllFanProcessingTypes.HAUNTING,CCDConfig.ATOMIZER_NORMAL_COST.get(),20,false);
         if(fluid.getFluid().getFluidType()==dev.ccd.CCDFluids.SLIME_TYPE.get())
             return new Selection("ccd:slime",null,dev.ccd.CopperDynamics.BULK_GLUING.get(),CCDConfig.ATOMIZER_NORMAL_COST.get(),20,false);
         if(fluid.getFluid().getFluidType()==dev.ccd.CCDFluids.QUICKSAND_TYPE.get())

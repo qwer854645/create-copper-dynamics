@@ -31,6 +31,10 @@ public final class CCDFluids {
     private CCDFluids() {}
     private static final DeferredRegister<FluidType> TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, CopperDynamics.ID);
     private static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(Registries.FLUID, CopperDynamics.ID);
+    public static final DeferredHolder<FluidType,FluidType> HAUNTING_TYPE=TYPES.register("haunting",()->new FluidType(FluidType.Properties.create().descriptionId("fluid_type.ccd.haunting").density(1200).viscosity(2000)));
+    public static final DeferredHolder<Fluid,BaseFlowingFluid.Source> HAUNTING=FLUIDS.register("haunting",()->new BaseFlowingFluid.Source(hauntingProperties()));
+    public static final DeferredHolder<Fluid,BaseFlowingFluid.Flowing> FLOWING_HAUNTING=FLUIDS.register("flowing_haunting",()->new BaseFlowingFluid.Flowing(hauntingProperties()));
+    private static BaseFlowingFluid.Properties hauntingProperties(){return new BaseFlowingFluid.Properties(HAUNTING_TYPE,HAUNTING,FLOWING_HAUNTING).block(CopperDynamics.HAUNTING_BLOCK).bucket(CopperDynamics.HAUNTING_BUCKET).tickRate(15);}
     public static final DeferredHolder<FluidType,FluidType> SLIME_TYPE=TYPES.register("slime",()->new FluidType(FluidType.Properties.create().descriptionId("fluid_type.ccd.slime").density(1500).viscosity(4000)));
     public static final DeferredHolder<Fluid,BaseFlowingFluid.Source> SLIME=FLUIDS.register("slime",()->new BaseFlowingFluid.Source(slimeProperties()));
     public static final DeferredHolder<Fluid,BaseFlowingFluid.Flowing> FLOWING_SLIME=FLUIDS.register("flowing_slime",()->new BaseFlowingFluid.Flowing(slimeProperties()));

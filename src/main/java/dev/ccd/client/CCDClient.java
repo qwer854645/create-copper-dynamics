@@ -102,6 +102,11 @@ public final class CCDClient {
         event.registerFluidType(new IClientFluidTypeExtensions(){
             @Override public ResourceLocation getStillTexture(){return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_still");}
             @Override public ResourceLocation getFlowingTexture(){return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_flow");}
+            @Override public int getTintColor(){return 0xff59c8c5;}
+        },CCDFluids.HAUNTING_TYPE.get());
+        event.registerFluidType(new IClientFluidTypeExtensions(){
+            @Override public ResourceLocation getStillTexture(){return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_still");}
+            @Override public ResourceLocation getFlowingTexture(){return ResourceLocation.fromNamespaceAndPath("ccd","block/processing_medium_flow");}
             @Override public int getTintColor(){return 0xff82c66a;}
         },CCDFluids.SLIME_TYPE.get());
         for(var medium:dev.ccd.compat.ProcessingMedia.ALL) event.registerFluidType(new IClientFluidTypeExtensions() {

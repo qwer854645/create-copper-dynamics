@@ -21,6 +21,13 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 
 /** Short, deterministic storyboards. State changes are staged, not dependent on live simulation. */
 public final class CCDPonderScenes {
+    public static void haunting(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"fluid_haunting","Bulk Haunting with Haunting Fluid");
+        show(s,util,B,CopperDynamics.HAUNTING_BLOCK.get().defaultBlockState());
+        text(s,util,B,"Air currents passing through Haunting Fluid process items using Haunting recipes");
+        s.world().setBlock(B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState(),true);
+        text(s,util,B,"Fluid Atomizers can use Haunting Fluid to provide the same Haunting effect");s.markAsFinished();
+    }
     public static void gluing(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"bulk_gluing","Bulk Gluing with Slime Fluid");
         show(s,util,B,CopperDynamics.SLIME_BLOCK.get().defaultBlockState());

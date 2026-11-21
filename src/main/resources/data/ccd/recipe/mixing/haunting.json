@@ -1,0 +1,8 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {"type":"neoforge:single","fluid":"minecraft:water","amount":1000},
+    {"item":"minecraft:soul_sand"}
+  ],
+  "results": [{"id":"ccd:haunting","amount":1000}]
+}

@@ -106,6 +106,9 @@ public final class CopperDynamics {
     public static final DeferredHolder<FanProcessingType, dev.ccd.atomizing.SandblastingType> SANDBLASTING =
         FAN_TYPES.register("sandblasting", dev.ccd.atomizing.SandblastingType::new);
     public static final DeferredHolder<FanProcessingType,dev.ccd.atomizing.BulkGluingType> BULK_GLUING=FAN_TYPES.register("bulk_gluing",dev.ccd.atomizing.BulkGluingType::new);
+    public static final DeferredHolder<FanProcessingType,dev.ccd.atomizing.FluidHauntingType> FLUID_HAUNTING=FAN_TYPES.register("fluid_haunting",dev.ccd.atomizing.FluidHauntingType::new);
+    public static final DeferredHolder<net.minecraft.world.level.block.Block,net.minecraft.world.level.block.LiquidBlock> HAUNTING_BLOCK=BLOCKS.register("haunting",()->new net.minecraft.world.level.block.LiquidBlock(CCDFluids.HAUNTING.get(),BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.WATER)));
+    public static final DeferredHolder<Item,net.minecraft.world.item.BucketItem> HAUNTING_BUCKET=ITEMS.register("haunting_bucket",()->new net.minecraft.world.item.BucketItem(CCDFluids.HAUNTING.get(),new Item.Properties().stacksTo(1).craftRemainder(net.minecraft.world.item.Items.BUCKET)));
     public static final DeferredHolder<net.minecraft.world.level.block.Block,net.minecraft.world.level.block.LiquidBlock> SLIME_BLOCK=BLOCKS.register("slime",()->new net.minecraft.world.level.block.LiquidBlock(CCDFluids.SLIME.get(),BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.WATER)));
     public static final DeferredHolder<Item,net.minecraft.world.item.BucketItem> SLIME_BUCKET=ITEMS.register("slime_bucket",()->new net.minecraft.world.item.BucketItem(CCDFluids.SLIME.get(),new Item.Properties().stacksTo(1).craftRemainder(net.minecraft.world.item.Items.BUCKET)));
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, ID);
@@ -458,6 +461,7 @@ public final class CopperDynamics {
                 output.accept(BRASS_BUCKET.get());
                 output.accept(QUICKSAND_BUCKET.get());
                 output.accept(SLIME_BUCKET.get());
+                output.accept(HAUNTING_BUCKET.get());
                 for(var medium:dev.ccd.compat.ProcessingMedia.ALL) if(medium.visible()) output.accept(medium.bucket.get());
                 output.accept(net.minecraft.world.item.Items.POWDER_SNOW_BUCKET);
             }).build());
