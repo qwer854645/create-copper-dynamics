@@ -180,4 +180,8 @@ for locale in ['zh_cn','en_us']:
     d['ccd.creative_delivery.mode']='输出模式' if locale=='zh_cn' else 'Output Mode'
     d['ccd.filter.inverted']='反向属性' if locale=='zh_cn' else 'Inverted attribute'
     d['ccd.filter.attribute_help']='在设置界面中选择并添加属性' if locale=='zh_cn' else 'Select and add attributes in the filter settings'
+    for item,index in [('seething_reagent_bucket',3),('copper_bucket',2),('brass_bucket',2)]:
+        prefix=f'item.ccd.{item}.tooltip.'
+        d[prefix+f'condition{index}']='手持超级熔岩时' if locale=='zh_cn' else 'When holding Super Lava'
+        d[prefix+f'behaviour{index}']='持续手持会逐渐_烫伤_，放下后逐渐恢复。' if locale=='zh_cn' else 'Prolonged exposure causes _scalding_. Put it away to cool down.'
     path.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

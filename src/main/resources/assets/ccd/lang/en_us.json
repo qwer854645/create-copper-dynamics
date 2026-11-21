@@ -523,5 +523,11 @@
   "item.ccd.seething_reagent_bucket.tooltip.condition1": "When supplied to a Blaze Burner",
   "item.ccd.seething_reagent_bucket.tooltip.behaviour1": "Each _1000 mB_ provides _160 seconds_ of Superheating.",
   "item.ccd.seething_reagent_bucket.tooltip.condition2": "When the matching processing addon is installed",
-  "item.ccd.seething_reagent_bucket.tooltip.behaviour2": "Provides _Seething_ processing in a Fluid Atomizer."
+  "item.ccd.seething_reagent_bucket.tooltip.behaviour2": "Provides _Seething_ processing in a Fluid Atomizer.",
+  "item.ccd.seething_reagent_bucket.tooltip.condition3": "When holding Super Lava",
+  "item.ccd.seething_reagent_bucket.tooltip.behaviour3": "Prolonged exposure causes _scalding_. Put it away to cool down.",
+  "item.ccd.copper_bucket.tooltip.condition2": "When holding Super Lava",
+  "item.ccd.copper_bucket.tooltip.behaviour2": "Prolonged exposure causes _scalding_. Put it away to cool down.",
+  "item.ccd.brass_bucket.tooltip.condition2": "When holding Super Lava",
+  "item.ccd.brass_bucket.tooltip.behaviour2": "Prolonged exposure causes _scalding_. Put it away to cool down."
 }

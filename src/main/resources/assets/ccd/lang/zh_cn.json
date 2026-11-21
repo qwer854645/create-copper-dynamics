@@ -523,5 +523,11 @@
   "item.ccd.seething_reagent_bucket.tooltip.condition1": "供给烈焰人燃烧室时",
   "item.ccd.seething_reagent_bucket.tooltip.behaviour1": "每_1000 mB_提供_160 秒_超级燃烧。",
   "item.ccd.seething_reagent_bucket.tooltip.condition2": "安装对应加工附属时",
-  "item.ccd.seething_reagent_bucket.tooltip.behaviour2": "装入流体雾化器可提供_超热_加工。"
+  "item.ccd.seething_reagent_bucket.tooltip.behaviour2": "装入流体雾化器可提供_超热_加工。",
+  "item.ccd.seething_reagent_bucket.tooltip.condition3": "手持超级熔岩时",
+  "item.ccd.seething_reagent_bucket.tooltip.behaviour3": "持续手持会逐渐_烫伤_，放下后逐渐恢复。",
+  "item.ccd.copper_bucket.tooltip.condition2": "手持超级熔岩时",
+  "item.ccd.copper_bucket.tooltip.behaviour2": "持续手持会逐渐_烫伤_，放下后逐渐恢复。",
+  "item.ccd.brass_bucket.tooltip.condition2": "手持超级熔岩时",
+  "item.ccd.brass_bucket.tooltip.behaviour2": "持续手持会逐渐_烫伤_，放下后逐渐恢复。"
 }
