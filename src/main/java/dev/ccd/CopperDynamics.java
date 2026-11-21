@@ -486,6 +486,7 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.simibubi.create.AllBlockEntityTypes.HEATER.get(),(be,side)->new dev.ccd.compat.SuperLavaFuel(be));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,OMNI_PUMP_BE.get(),(be,side)->be.handler(side));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,BUFFER_PUMP_BE.get(),(be,side)->be.buffer);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,CREATIVE_DELIVERY_TANK_BE.get(),(be,side)->side==null||side==be.getBlockState().getValue(dev.ccd.content.CreativeDeliveryTankBlock.FACING)?be.handler:null);

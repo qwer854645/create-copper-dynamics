@@ -4,6 +4,7 @@
   "package": "dev.ccd.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlazeBurnerFuelInvoker",
     "FrequencyPumpGearMixin",
     "FlowMeterNetworkMixin",
     "PipeConnectionFlowAccessor",
