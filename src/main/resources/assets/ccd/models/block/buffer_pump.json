@@ -7,10 +7,8 @@
     "part0_4": "create:block/fluid_tank_inner",
     "part0_6": "create:block/item_drain_top",
     "part0_particle": "create:block/fluid_tank",
-    "part1_4": "create:block/pump",
-    "part1_particle": "create:block/pump",
-    "part1_copper": "create:block/axis",
-    "part2_pipe": "create:block/pipes"
+    "part2_pipe": "create:block/pipes",
+    "part1_copper": "create:block/pump"
   },
   "elements": [
     {
@@ -746,61 +744,76 @@
       }
     },
     {
-      "name": "copper_center_hub",
+      "name": "native_pump_rim_up",
       "from": [
-        6,
-        5,
-        6
+        2,
+        13,
+        2
       ],
       "to": [
-        10,
-        11,
-        10
+        14,
+        15,
+        14
       ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          -0.75,
-          -0.4,
-          -0.75
-        ]
-      },
       "faces": {
         "north": {
           "uv": [
+            6.5,
             6,
-            0,
-            10,
-            6
+            7.5,
+            0
           ],
+          "rotation": 90,
           "texture": "#part1_copper"
         },
         "east": {
           "uv": [
+            6.5,
             6,
-            0,
-            10,
-            6
+            7.5,
+            0
           ],
+          "rotation": 90,
           "texture": "#part1_copper"
         },
         "south": {
           "uv": [
+            6.5,
             6,
-            0,
-            10,
-            6
+            7.5,
+            0
           ],
+          "rotation": 90,
           "texture": "#part1_copper"
         },
         "west": {
           "uv": [
+            6.5,
             6,
+            7.5,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#part1_copper"
+        },
+        "up": {
+          "uv": [
             0,
-            10,
+            0,
+            6,
             6
           ],
+          "rotation": 90,
+          "texture": "#part1_copper"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6,
+            6
+          ],
+          "rotation": 270,
           "texture": "#part1_copper"
         }
       }
