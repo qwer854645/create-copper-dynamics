@@ -38,6 +38,7 @@ public final class CCDClient {
     public static void init() {
         net.createmod.ponder.foundation.PonderIndex.addPlugin(new dev.ccd.client.ponder.CCDPonderPlugin());
         AtomizerModels.init();
+        BufferPumpRenderer.registerModels();
         FluidPackagerRenderer.registerModels();
         FluidGaugeModel.registerModels();
         FluidArmModels.registerModels();

@@ -13,9 +13,16 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 
 public final class BufferPumpRenderer extends SafeBlockEntityRenderer<BufferPumpBlockEntity> {
+    private static final dev.engine_room.flywheel.lib.model.baked.PartialModel COG=dev.engine_room.flywheel.lib.model.baked.PartialModel.of(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ccd","block/buffer_pump/cog"));
+    public static void registerModels(){}
     public BufferPumpRenderer(BlockEntityRendererProvider.Context context){}
     @Override protected void renderSafe(BufferPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
         var state=be.getBlockState();var axis=((BufferPumpBlock)state.getBlock()).getRotationAxis(state);
+        float time=net.createmod.catnip.animation.AnimationTickHolder.getRenderTime(be.getLevel());
+        float angle=(float)Math.toRadians((time*be.getSpeed()*.3f)%360);
+        pose.pushPose();pose.translate(.5,10/16d,.5);
+        pose.mulPose(com.mojang.math.Axis.XP.rotation(angle));pose.translate(-.5,-10/16d,-.5);
+        CachedBuffers.partial(COG,state).light(light).renderInto(pose,buffers.getBuffer(RenderType.solid()));pose.popPose();
         for(var side:Direction.values())if(side.getAxis()==axis)
             KineticBlockEntityRenderer.standardKineticRotationTransform(CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF,state,side),be,light).renderInto(pose,buffers.getBuffer(RenderType.solid()));
         if(!be.buffer.isEmpty())net.createmod.catnip.platform.NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(be.buffer.getFluid(),
