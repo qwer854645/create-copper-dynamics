@@ -26,7 +26,7 @@ public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
     @Override public void initialize() { super.initialize();if(level!=null&&!level.isClientSide())updatePressureChange(); }
     @Override public void tick() {
         super.tick();
-        if(level!=null&&(level.isClientSide()||isVirtual())) {
+        if(level!=null&&(level.isClientSide()||isVirtual()||this instanceof PortableFluidPumpBlockEntity)) {
             previousStroke=stroke;
             previousPhase=phase;
             if(pumpingSpeed()!=0&&!isOverStressed()&&targetFlow()>0&&targetRange()>0) {

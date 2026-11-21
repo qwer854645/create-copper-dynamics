@@ -9,14 +9,21 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.InteractionResult;
 
 public final class PortableFluidPumpBlock extends VariableFlowPumpBlock {
-    public PortableFluidPumpBlock(Properties properties) { super(properties); }
+    public PortableFluidPumpBlock(Properties properties) { super(properties.dynamicShape()); }
     @Override public boolean isSmallCog(){return false;}
     @Override public boolean hasShaftTowards(net.minecraft.world.level.LevelReader level,BlockPos pos,BlockState state,net.minecraft.core.Direction side){
         return side.getAxis()==getRotationAxis(state);
     }
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){
-        return net.minecraft.world.phys.shapes.Shapes.or(box(1,0,1,15,2,15),box(2,2,2,14,15,14));
+        float stroke=level.getBlockEntity(pos) instanceof PortableFluidPumpBlockEntity pump?pump.stroke:0;
+        return strokeShape(stroke);
     }
+    public static net.minecraft.world.phys.shapes.VoxelShape strokeShape(float stroke){
+        double top=15-2.2*net.minecraft.util.Mth.clamp(stroke,0,1);
+        return net.minecraft.world.phys.shapes.Shapes.or(box(1,0,1,15,2,15),box(2,2,2,14,top,14));
+    }
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){return getShape(state,level,pos,context);}
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getInteractionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos){return getShape(state,level,pos,net.minecraft.world.phys.shapes.CollisionContext.empty());}
     @Override public BlockState getRotatedBlockState(BlockState state,net.minecraft.core.Direction clickedFace) {
         // Bellows stays upright: rotate the horizontal fluid/shaft axes together.
         return state.setValue(FACING,state.getValue(FACING).getClockWise());
