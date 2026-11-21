@@ -14,7 +14,7 @@ public final class BufferPumpBlock extends PumpBlock {
     @Override public Direction.Axis getRotationAxis(BlockState state){return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X;}
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side){return side.getAxis()==getRotationAxis(state);}
     @Override public boolean isSmallCog(){return false;}
-    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context){return defaultBlockState().setValue(FACING,Direction.UP).setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER));}
+    @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext context){return super.getStateForPlacement(context);}
     @Override public BlockState getRotatedBlockState(BlockState state,Direction side){
         Direction facing=state.getValue(FACING);
         Direction.Axis axis=side.getAxis()==facing.getAxis()
