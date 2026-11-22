@@ -27,6 +27,12 @@ side="BOTH"
 [[mixins]]
 config="ccd.mixins.json"
 [[dependencies.ccd]]
+modId="pipesnphysics"
+type="optional"
+versionRange="[3.2.1,3.3)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies.ccd]]
 modId="kubejs"
 type="optional"
 versionRange="[2101.7.2,2102)"

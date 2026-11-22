@@ -10,6 +10,10 @@ import net.minecraft.world.level.block.state.BlockState;
 public final class NativeEndpointPump extends PumpBlockEntity {
     public static final ThreadLocal<Boolean> UPDATING=ThreadLocal.withInitial(()->false);
     public static void changed(Level level,BlockPos pos){
+        if(dev.ccd.compat.pnp.PnPCompat.active()){
+            de.devin.pipesnphysics.engine.EngineTickHandler.markChanged(level,pos);
+            return;
+        }
         boolean old=UPDATING.get();UPDATING.set(true);
         try{com.simibubi.create.content.fluids.FluidPropagator.propagateChangedPipe(level,pos,level.getBlockState(pos));}
         finally{UPDATING.set(old);}
@@ -31,6 +35,7 @@ public final class NativeEndpointPump extends PumpBlockEntity {
     @Override protected boolean isFront(Direction side){return side==port;}
     @Override public boolean isPullingOnSide(boolean front){return pulling;}
     public void distribute(Direction side,boolean input,float pressure){
+        if(dev.ccd.compat.pnp.PnPCompat.active())return;
         this.port=side;this.pulling=input;this.pressure=pressure;
         if(pressure>0){
             boolean old=UPDATING.get();UPDATING.set(true);

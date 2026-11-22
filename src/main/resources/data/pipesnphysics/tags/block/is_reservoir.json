@@ -1,0 +1,4 @@
+{
+  "replace": false,
+  "values": ["ccd:buffer_pump", "ccd:omni_pump"]
+}

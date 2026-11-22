@@ -31,6 +31,8 @@ public final class RedstoneFluidValveBlockEntity extends FluidValveBlockEntity {
     }
     private void drivePointer() {
         boolean powered = getBlockState().getValue(RedstoneFluidValveBlock.POWERED);
+        if(net.neoforged.fml.ModList.get().isLoaded("pipesnphysics"))
+            ((de.devin.pipesnphysics.engine.valve.ValveThrottle)(Object)this).pipesnphysics$adjustThrottle(powered?-90:90);
         ((FluidValvePointerAccessor) (Object) this).ccd$getPointer().chase(powered ? 0 : 1, 1, Chaser.LINEAR);
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
