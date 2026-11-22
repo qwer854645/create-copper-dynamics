@@ -11,6 +11,21 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class BulkGluingTests {
+    @GameTest(template="empty") public static void atomizerFilterDoesNotAffectOrdinaryFan(GameTestHelper h){
+        var pos=new net.minecraft.core.BlockPos(2,2,2);h.setBlock(pos,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState());
+        var owner=(dev.ccd.content.FluidAtomizerBlockEntity)h.getBlockEntity(pos);
+        var filter=owner.getBehaviour(com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour.TYPE);
+        var type=CopperDynamics.BULK_GLUING.get();var input=new ItemStack(Items.PISTON,12);
+        filter.setFilter(new ItemStack(Items.GOLD_INGOT));
+        dev.ccd.atomizing.AtomizerProcessing.withSource(owner,()->{
+            h.assertTrue(!type.canProcess(input,h.getLevel())&&type.process(input,h.getLevel())==null,"Gluing bypassed output filter");
+        });
+        h.assertTrue(type.canProcess(input,h.getLevel()),"Atomizer filter leaked into ordinary fan");
+        filter.setFilter(new ItemStack(Items.STICKY_PISTON));
+        dev.ccd.atomizing.AtomizerProcessing.withSource(owner,()->{
+            var output=type.process(input,h.getLevel());h.assertTrue(output!=null&&output.getFirst().getCount()==12,"Matching gluing output rejected");
+        });h.assertTrue(input.getCount()==12,"Filtering mutated input");h.succeed();
+    }
     @GameTest(template="empty") public static void slimeProcessesLiveCraftingRecipes(GameTestHelper h){
         var type=CopperDynamics.BULK_GLUING.get();var input=new ItemStack(Items.PISTON,12);
         h.assertTrue(type.canProcess(input,h.getLevel()),"Piston recipe not detected");

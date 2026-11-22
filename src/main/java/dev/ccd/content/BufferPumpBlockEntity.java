@@ -13,7 +13,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     public static final int CAPACITY=2000;
     private final dev.ccd.logistics.PumpOpenEnds openEnds=new dev.ccd.logistics.PumpOpenEnds();
     public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(CAPACITY){
-        @Override protected void onContentsChanged(){setChanged();if(level!=null&&!level.isClientSide())sendData();}
+        @Override protected void onContentsChanged(){dev.ccd.logistics.FluidSyncBehaviour.changed(BufferPumpBlockEntity.this);}
     };
     public BufferPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.BUFFER_PUMP_BE.get(),pos,state);}
     public IFluidHandler handler(Direction side){
@@ -30,6 +30,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     }
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
         super.addBehaviours(behaviours);
+        behaviours.add(new dev.ccd.logistics.FluidSyncBehaviour(this));
         // This device owns finite storage and delivers from it directly. Running
         // the native transparent pump transport creates an invalid empty-port lifecycle.
         behaviours.removeIf(behaviour->behaviour instanceof com.simibubi.create.content.fluids.FluidTransportBehaviour);

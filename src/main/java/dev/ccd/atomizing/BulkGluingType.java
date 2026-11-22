@@ -24,7 +24,9 @@ public final class BulkGluingType implements FanProcessingType {
                 var crafting=CraftingInput.of(3,3,grid);
                 if(!recipe.matches(crafting,level))continue;
                 if(recipe.getRemainingItems(crafting).stream().anyMatch(s->!s.isEmpty()))continue;
-                return recipe.assemble(crafting,level.registryAccess());
+                var output=recipe.assemble(crafting,level.registryAccess());
+                var owner=AtomizerProcessing.source();
+                return owner==null||owner.acceptsOutput(output)?output:ItemStack.EMPTY;
             }
         }
         return ItemStack.EMPTY;

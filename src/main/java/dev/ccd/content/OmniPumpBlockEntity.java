@@ -19,9 +19,12 @@ public final class OmniPumpBlockEntity extends KineticBlockEntity implements com
     private int remainingOutput(){resetBudget();return Math.max(0,Math.max(1,(int)(Math.abs(getSpeed())/2))-outputUsed);}
     private void resetBudget(){if(level!=null&&budgetTick!=level.getGameTime()){budgetTick=level.getGameTime();outputUsed=0;inputUsed=0;}}
     public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(2000){
-        @Override protected void onContentsChanged(){setChanged();}
+        @Override protected void onContentsChanged(){dev.ccd.logistics.FluidSyncBehaviour.changed(OmniPumpBlockEntity.this);}
     };
     public OmniPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.OMNI_PUMP_BE.get(),pos,state);}
+    @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
+        super.addBehaviours(behaviours);behaviours.add(new dev.ccd.logistics.FluidSyncBehaviour(this));
+    }
     private boolean powered(){return getSpeed()!=0&&!isOverStressed();}
     public IFluidHandler handler(Direction side){
         if(side==null)return null;int mode=OmniPumpBlock.mode(getBlockState(),side);

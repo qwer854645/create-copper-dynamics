@@ -14,7 +14,7 @@ import com.simibubi.create.foundation.fluid.SmartFluidTank;
 /** Native burner with a finite reservoir; all actual fuel acceptance is decided by Create. */
 public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity implements com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation {
     public final SmartFluidTank tank=new SmartFluidTank(4000,fluid->{}){
-        @Override protected void onContentsChanged(){super.onContentsChanged();setChanged();if(level!=null&&!level.isClientSide())sendData();}
+        @Override protected void onContentsChanged(){super.onContentsChanged();dev.ccd.logistics.FluidSyncBehaviour.changed(TankBlazeBurnerBlockEntity.this);}
         @Override public boolean isFluidValid(FluidStack fluid){
             // Buffer native liquid fuels even while the burner cannot currently take more fuel.
             var bucket=new ItemStack(fluid.getFluid().getBucket());
@@ -28,6 +28,9 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
         }
     };
     public TankBlazeBurnerBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.TANK_BURNER_BE.get(),pos,state);}
+    @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
+        super.addBehaviours(behaviours);behaviours.add(new dev.ccd.logistics.FluidSyncBehaviour(this));
+    }
     @Override public void tick(){
         super.tick();
         if(level!=null&&!level.isClientSide()&&!tank.isEmpty()){
@@ -37,7 +40,7 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
                     activeFuel=fuel.superheated()?FuelType.SPECIAL:FuelType.NORMAL;
                     remainingBurnTime+=fuel.ticks();
                     tank.drain(fuel.amount(),IFluidHandler.FluidAction.EXECUTE);
-                    updateBlockState();sendData();
+                    updateBlockState();
                 }
                 return;
             }
