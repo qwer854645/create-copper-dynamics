@@ -1,8 +1,19 @@
 {
   "multipart": [
     {
+      "when": {
+        "powered": false
+      },
       "apply": {
         "model": "ccd:block/smart_collection_grate"
+      }
+    },
+    {
+      "when": {
+        "powered": true
+      },
+      "apply": {
+        "model": "ccd:block/smart_collection_grate_powered"
       }
     }
   ]

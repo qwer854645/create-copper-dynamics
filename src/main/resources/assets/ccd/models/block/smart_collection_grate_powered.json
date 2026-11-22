@@ -1,0 +1,6 @@
+{
+  "parent": "ccd:block/smart_collection_grate",
+  "textures": {
+    "6": "ccd:block/smart_collection_grate/body_powered"
+  }
+}
