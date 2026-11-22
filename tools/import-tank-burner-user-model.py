@@ -17,7 +17,7 @@ shell['elements'][0]['faces']['down']['texture']='#tank_top'
 shell['elements'][0]['faces']['up']['texture']='#4'
 next(e for e in shell['elements'] if e.get('name')=='Lid' and e['from'][1]==4)['faces']['up']['texture']='#tank_top'
 shell['elements'].append({'name':'cage_floor','from':[2,5,2],'to':[14,5.5,14],
-    'faces':{side:{'uv':[2,2,14,14],'texture':'#4'} for side in ['up','down']}})
+    'faces':{'up':{'uv':[0,0,16,16],'texture':'#tank_top'},'down':{'uv':[2,2,14,14],'texture':'#4'}}})
 (assets/'models/block/tank_blaze_burner/block.json').write_text(json.dumps(shell,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 shutil.copy2(downloads/'glass_of_tank_blaze_burner.png',assets/'textures/block/glass_of_tank_blaze_burner.png')
 jar=next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar'))
