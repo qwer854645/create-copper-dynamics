@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "ccd:corrupting_fluid",
+    "ccd:flowing_corrupting_fluid"
+  ]
+}

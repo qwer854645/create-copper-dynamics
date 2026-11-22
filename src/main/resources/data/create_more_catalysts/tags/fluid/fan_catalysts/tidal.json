@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "ccd:conduit_energy_fluid",
+    "ccd:flowing_conduit_energy_fluid"
+  ]
+}

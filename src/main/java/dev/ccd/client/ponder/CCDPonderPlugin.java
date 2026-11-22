@@ -28,7 +28,7 @@ public final class CCDPonderPlugin implements PonderPlugin {
         scene(helper,"valves",CCDPonderScenes::redstoneValve,"redstone_fluid_valve");
         scene(helper,"tanks",CCDPonderScenes::filtering,"fluid_filter","fluid_attribute_filter");
         scene(helper,"collection",CCDPonderScenes::buckets,"copper_bucket","brass_bucket");
-        scene(helper,"atomizing",CCDPonderScenes::media,"quicksand_bucket","seething_reagent_bucket","enriching_reagent_bucket","soul_stripping_reagent_bucket","explosive_slurry_bucket","resonant_solution_bucket","sculk_suspension_bucket","purifying_solution_bucket");
+        scene(helper,"atomizing",CCDPonderScenes::media,"quicksand_bucket","seething_reagent_bucket","enriching_reagent_bucket","soul_stripping_reagent_bucket","explosive_slurry_bucket","resonant_solution_bucket","sculk_suspension_bucket","purifying_solution_bucket","withering_fluid_bucket","conduit_energy_fluid_bucket","moss_suspension_bucket","tear_solution_bucket","corrupting_fluid_bucket");
         scene(helper,"packaging",CCDPonderScenes::packaging,"fluid_arm_cargo");
         scene(helper,"packaging",CCDPonderScenes::ordering,"fluid_stock","fluid_gauge");
         for(var variant:MetalPackages.VARIANTS)

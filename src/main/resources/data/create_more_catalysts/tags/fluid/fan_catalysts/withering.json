@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "ccd:withering_fluid",
+    "ccd:flowing_withering_fluid"
+  ]
+}

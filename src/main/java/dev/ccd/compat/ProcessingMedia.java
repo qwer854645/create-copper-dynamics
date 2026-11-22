@@ -51,7 +51,11 @@ public final class ProcessingMedia {
             bucket=CopperDynamics.ITEMS.register(id+"_bucket",()->new BucketItem(source.get(),new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
         }
         private BaseFlowingFluid.Properties properties() { return new BaseFlowingFluid.Properties(type,source,flowing).block(block).bucket(bucket).tickRate(10); }
-        public boolean available() { return id.equals("seething_reagent") || net.neoforged.fml.ModList.get().isLoaded(requiredMod(id)); }
+        public boolean available() {
+            var mods=net.neoforged.fml.ModList.get();
+            return id.equals("seething_reagent") || mods.isLoaded(requiredMod(id))
+                && (!id.equals("corrupting_fluid") || mods.isLoaded("anvilcraft") || mods.isLoaded("l2hostility"));
+        }
         // Temporary preview, independent of whether the optional processing recipe is available.
         public boolean visible() { return true; }
     }
@@ -70,7 +74,12 @@ public final class ProcessingMedia {
         new Medium("explosive_slurry",0xffa64e36,300),
         new Medium("resonant_solution",0xffb774c9,300),
         new Medium("sculk_suspension",0xff1a8b7e,300),
-        new Medium("purifying_solution",0xffffedb0,300)
+        new Medium("purifying_solution",0xffffedb0,300),
+        new Medium("withering_fluid",0xff423448,300),
+        new Medium("conduit_energy_fluid",0xff46cabb,300),
+        new Medium("moss_suspension",0xff668b36,300),
+        new Medium("tear_solution",0xff985de0,300),
+        new Medium("corrupting_fluid",0xff8d294e,300)
     );
     public static void register(IEventBus bus) { TYPES.register(bus); FLUIDS.register(bus); }
 }

@@ -91,6 +91,20 @@ public final class FluidWorldEffects {
         }
         for(var medium:ProcessingMedia.ALL)if(fluid==medium.type.get()){
             switch(medium.id){
+                case "withering_fluid" -> mistEffect(entity,MobEffects.WITHER,80,0,mist);
+                case "conduit_energy_fluid" -> {
+                    mistEffect(entity,MobEffects.WATER_BREATHING,100,0,mist);
+                    mistEffect(entity,MobEffects.DIG_SPEED,100,0,mist);
+                }
+                case "moss_suspension" -> mistEffect(entity,MobEffects.MOVEMENT_SLOWDOWN,80,0,mist);
+                case "tear_solution" -> {
+                    mistEffect(entity,MobEffects.BLINDNESS,60,0,mist);
+                    mistEffect(entity,MobEffects.WEAKNESS,80,0,mist);
+                }
+                case "corrupting_fluid" -> {
+                    mistEffect(entity,MobEffects.WITHER,80,0,mist);
+                    mistEffect(entity,MobEffects.WEAKNESS,80,0,mist);
+                }
                 case "enriching_reagent" -> irradiate(entity,mist);
                 case "soul_stripping_reagent" -> {
                     mistEffect(entity,MobEffects.WITHER,60,0,mist);

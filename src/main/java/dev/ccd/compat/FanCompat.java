@@ -31,7 +31,12 @@ public final class FanCompat {
         new Rule("create_more_catalysts","exploding","fan_catalysts/exploding","fan_exploding_catalyst"),
         new Rule("create_more_catalysts","resonance","fan_catalysts/resonance","fan_resonance_catalyst"),
         new Rule("create_more_catalysts","sculking","fan_catalysts/sculking","fan_sculking_catalyst"),
-        new Rule("create_more_catalysts","purifying","fan_catalysts/purifying","fan_purifying_catalyst")
+        new Rule("create_more_catalysts","purifying","fan_catalysts/purifying","fan_purifying_catalyst"),
+        new Rule("create_more_catalysts","withering","fan_catalysts/withering","fan_withering_catalyst"),
+        new Rule("create_more_catalysts","tidal","fan_catalysts/tidal","fan_tidal_catalyst"),
+        new Rule("create_more_catalysts","mossify","fan_catalysts/mossify","fan_mossify_catalyst"),
+        new Rule("create_more_catalysts","tear","fan_catalysts/tear","fan_tear_catalyst"),
+        new Rule("create_more_catalysts","corrupted","fan_catalysts/corrupted","fan_corrupted_catalyst")
     );
     private FanCompat() {}
     public static FanProcessingType find(String mod,String path) {
