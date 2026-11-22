@@ -22,10 +22,10 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
         behaviours.add(filtering = new FilteringBehaviour(this, new HatchFilterSlot() {
             @Override public net.minecraft.world.phys.Vec3 getLocalOffset(net.minecraft.world.level.LevelAccessor level,
                 BlockPos pos,BlockState state) {
-                // Imported bezel moved in its local tilted plane; rotate the same
-                // displacement with the hatch's native horizontal orientation.
+                // Include the latest -0.14 voxel X shift on top of the existing alignment;
+                // native testHit and the rendered filter both use this offset in every facing.
                 var delta=net.createmod.catnip.math.VecHelper.rotate(
-                    new net.minecraft.world.phys.Vec3(-.14/16,-2.30/16,.90/16),
+                    new net.minecraft.world.phys.Vec3(-.28/16,-2.30/16,.90/16),
                     net.createmod.catnip.math.AngleHelper.horizontalAngle(state.getValue(FluidHatchBlock.FACING)),
                     net.minecraft.core.Direction.Axis.Y);
                 return super.getLocalOffset(level,pos,state).add(delta);

@@ -64,9 +64,9 @@
 		},
 		{
 			"name": "smart_pipe_filter_slot",
-			"from": [4.14, -1.335, 6.595],
-			"to": [12.14, 6.665, 7.595],
-			"rotation": {"angle": 45, "axis": "x", "origin": [8, 4.825, 6.825]},
+			"from": [4, -1.335, 6.595],
+			"to": [12, 6.665, 7.595],
+			"rotation": {"angle": 45, "axis": "x", "origin": [7.86, 4.825, 6.825]},
 			"faces": {
 				"north": {"uv": [0, 8, 8, 16], "texture": "#filter"},
 				"east": {"uv": [15, 0, 16, 8], "texture": "#filter"},
