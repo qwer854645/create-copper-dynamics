@@ -11,7 +11,7 @@ public final class TankBlazeBurnerRenderer extends BlazeBurnerRenderer {
     public static void registerModels(){}
     public TankBlazeBurnerRenderer(BlockEntityRendererProvider.Context context){super(context);}
     @Override protected void renderSafe(BlazeBurnerBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
-        pose.pushPose();pose.translate(0,5/16d,0);pose.scale(1,11/16f,1);
+        pose.pushPose();pose.translate(0,4/16d,0);pose.scale(1,11/16f,1);
         super.renderSafe(be,pt,pose,buffers,light,overlay);pose.popPose();
         if(be.getHeatLevelForRender()==com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel.SMOULDERING){
             net.createmod.catnip.render.CachedBuffers.partial(IDLE_RODS,be.getBlockState()).light(light).overlay(overlay)

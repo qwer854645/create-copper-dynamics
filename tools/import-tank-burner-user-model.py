@@ -19,8 +19,8 @@ with ZipFile(jar) as z:
     blaze=json.loads(z.read('assets/create/models/block/blaze_burner/blaze/idle.json'))
     # Keep native UVs, fit the same upper-space transform used by the runtime renderer.
     for e in blaze['elements']:
-        for k in ['from','to']:e[k][1]=5+e[k][1]*11/16
-        if 'rotation' in e:e['rotation']['origin'][1]=5+e['rotation']['origin'][1]*11/16
+        for k in ['from','to']:e[k][1]=4+e[k][1]*11/16
+        if 'rotation' in e:e['rotation']['origin'][1]=4+e['rotation']['origin'][1]*11/16
     (assets/'models/block/tank_blaze_burner/item_blaze.json').write_text(json.dumps(blaze,indent=2)+'\n')
     # Include all native blaze geometry (head plus both rod groups), excluding its old cage.
     obj=z.read('assets/create/models/block/blaze_burner/item.obj').decode()
@@ -28,7 +28,7 @@ with ZipFile(jar) as z:
     for line in obj.splitlines():
         if line.startswith('mtllib '):line='mtllib create:models/block/blaze_burner/item.mtl'
         if line.startswith('v '):
-            x,y,zz=map(float,line.split()[1:]);line=f'v {x:.6f} {5/16+y*11/16:.6f} {zz:.6f}'
+            x,y,zz=map(float,line.split()[1:]);line=f'v {x:.6f} {4/16+y*11/16:.6f} {zz:.6f}'
         if line.startswith('usemtl '):material=line.split()[1]
         if line.startswith('f ') and material!='m_1':continue
         lines.append(line)
