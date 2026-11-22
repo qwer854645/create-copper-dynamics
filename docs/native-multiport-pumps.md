@@ -2,7 +2,7 @@
 
 本轮替代先前每刻相邻 drain/fill。AdjacentFluidTransfer 及其异常恢复测试删除；不再有新相邻转移失败后生成恢复包裹的逻辑。
 
-万向泵使用 FluidTransportBehaviour，输入／输出面提供对应压力。无输入、无输出、无动力不提供驱动压力；不注册 IFluidHandler，不拥有2000mB储罐。源流体通过原生流动建立与 FluidNetwork 直接到目标，堵塞不转存到泵内。旧Buffer存档内容一次性导出为真实流体包裹（迁移，而非异常搬液恢复）；待迁移内容在保存前仍保留Buffer键。
+万向泵使用 FluidTransportBehaviour，输入／输出面提供对应压力。无输入、无输出、无动力不提供驱动压力；不注册 IFluidHandler，不拥有2000mB储罐。源流体通过原生流动建立与 FluidNetwork 直接到目标，堵塞不转存到泵内。按用户要求不兼容旧缓存：不读取或保存旧Buffer，不迁移或生成装液包裹，旧缓存内容不保留。
 
 缓存泵保留有限缓存，创造输送储罐保留无限源。StoredSourceTransport以内部源连接与真实输出连接驱动原生PipeConnection/FluidNetwork，直接贴容器或开放口也可运行，不强制添加管道。内部连接提供自身储液，不访问背面容器；只有实际输出面参与外部连接。开放口及网络保存遵循原生行为，不再用这些设备自己的PumpOpenEnds。
 

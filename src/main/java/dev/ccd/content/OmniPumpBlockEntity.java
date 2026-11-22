@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 /** Multi-port native pipe pump. No owned reservoir and no fluid capability. */
 public final class OmniPumpBlockEntity extends KineticBlockEntity implements com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation {
     private boolean pressureDirty=true;
-    private net.neoforged.neoforge.fluids.FluidStack legacyContents=net.neoforged.neoforge.fluids.FluidStack.EMPTY;
     public OmniPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.OMNI_PUMP_BE.get(),pos,state);}
     public boolean powered(){return getSpeed()!=0&&!isOverStressed();}
     public boolean hasPorts(int mode){for(var side:Direction.values())if(OmniPumpBlock.mode(getBlockState(),side)==mode)return true;return false;}
@@ -25,10 +24,6 @@ public final class OmniPumpBlockEntity extends KineticBlockEntity implements com
     @Override public void onSpeedChanged(float previous){super.onSpeedChanged(previous);invalidatePressure();}
     @Override public void tick(){
         super.tick();if(level==null||level.isClientSide())return;
-        if(!legacyContents.isEmpty()){
-            var cargo=legacyContents;legacyContents=net.neoforged.neoforge.fluids.FluidStack.EMPTY;setChanged();
-            net.minecraft.world.Containers.dropItemStack(level,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,FluidPackageItem.containingFluid(cargo));
-        }
         if(!pressureDirty)return;
         pressureDirty=false;
         var pipe=getBehaviour(FluidTransportBehaviour.TYPE);
@@ -44,14 +39,6 @@ public final class OmniPumpBlockEntity extends KineticBlockEntity implements com
             adapter.distribute(side,mode==OmniPumpBlock.INPUT,pressure);
             pipe.addPressure(side,mode==OmniPumpBlock.INPUT,pressure);
         }
-    }
-    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){
-        super.read(tag,registries,packet);
-        if(!packet){var old=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(2000);old.readFromNBT(registries,tag.getCompound("Buffer"));legacyContents=old.getFluid().copy();}
-    }
-    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){
-        super.write(tag,registries,packet);
-        if(!packet&&!legacyContents.isEmpty()){var old=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(2000);old.setFluid(legacyContents);tag.put("Buffer",old.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));}
     }
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
         super.addToGoggleTooltip(tooltip,sneaking);dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.connections");
