@@ -37,6 +37,10 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
     @Override public void write(CompoundTag tag,HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("FuelTank",tank.writeToNBT(registries,new CompoundTag()));}
     @Override protected void read(CompoundTag tag,HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);tank.readFromNBT(registries,tag.getCompound("FuelTank"));}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
-        dev.ccd.CCDTooltip.fluidContents(tooltip,tank.isEmpty()?java.util.List.of():java.util.List.of(tank.getFluid()),tank.getCapacity());return true;
+        dev.ccd.CCDTooltip.fluidContents(tooltip,tank.isEmpty()?java.util.List.of():java.util.List.of(tank.getFluid()),tank.getCapacity());
+        dev.ccd.CCDTooltip.heading(tooltip,"ccd.tank_burner.heating");
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.tank_burner.heat",net.minecraft.network.chat.Component.translatable("ccd.tank_burner.heat."+getHeatLevelFromBlock().getSerializedName()));
+        dev.ccd.CCDTooltip.line(tooltip,"ccd.tank_burner.remaining",dev.ccd.CCDTooltip.number((remainingBurnTime+19)/20));
+        return true;
     }
 }

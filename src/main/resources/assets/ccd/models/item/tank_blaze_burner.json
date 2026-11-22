@@ -1,10 +1,27 @@
 {
-  "parent": "ccd:block/tank_blaze_burner/block",
+  "loader": "neoforge:composite",
+  "children": {
+    "tank": {
+      "parent": "ccd:block/tank_blaze_burner/tank"
+    },
+    "burner": {
+      "loader": "neoforge:obj",
+      "flip_v": true,
+      "model": "ccd:models/block/tank_blaze_burner/item.obj",
+      "textures": {
+        "0": "create:block/blaze_heater_brazier",
+        "1": "create:block/blaze_idle"
+      }
+    }
+  },
+  "textures": {
+    "particle": "create:block/dark_metal_block"
+  },
   "display": {
     "gui": {
       "rotation": [
         30,
-        225,
+        315,
         0
       ],
       "scale": [

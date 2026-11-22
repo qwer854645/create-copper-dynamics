@@ -685,5 +685,13 @@
   "ccd.ponder.tank_burner.header": "为储罐烈焰人燃烧室供液",
   "ccd.ponder.tank_burner.text_1": "下部储罐可储存 4000 mB 单种液体燃料，通过管道或移液臂注入",
   "ccd.ponder.tank_burner.text_2": "每 1000 mB 按对应桶燃料供燃，沿用原生供热规则",
-  "ccd.ponder.tank_burner.text_3": "移液臂可直接选择燃烧室，无需流体舱口；固体燃料仍可照常使用"
+  "ccd.ponder.tank_burner.text_3": "移液臂可直接选择燃烧室，无需流体舱口；固体燃料仍可照常使用",
+  "ccd.tank_burner.heating": "燃烧室状态：",
+  "ccd.tank_burner.heat": "热量：%s",
+  "ccd.tank_burner.remaining": "剩余燃烧时间：%s 秒",
+  "ccd.tank_burner.heat.none": "无烈焰人",
+  "ccd.tank_burner.heat.smouldering": "待燃",
+  "ccd.tank_burner.heat.fading": "余热",
+  "ccd.tank_burner.heat.kindled": "燃烧",
+  "ccd.tank_burner.heat.seething": "超级燃烧"
 }

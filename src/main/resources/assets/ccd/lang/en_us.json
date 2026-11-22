@@ -685,5 +685,13 @@
   "ccd.ponder.tank_burner.header": "Supplying a Tank Blaze Burner",
   "ccd.ponder.tank_burner.text_1": "The lower tank stores 4000 mB of one liquid fuel supplied by pipes or Fluid Arms",
   "ccd.ponder.tank_burner.text_2": "Every 1000 mB is burned as its corresponding bucket fuel, using native heating rules",
-  "ccd.ponder.tank_burner.text_3": "Fluid Arms may select the Burner directly without a Fluid Hatch; solid fuels still work normally"
+  "ccd.ponder.tank_burner.text_3": "Fluid Arms may select the Burner directly without a Fluid Hatch; solid fuels still work normally",
+  "ccd.tank_burner.heating": "Burner Status:",
+  "ccd.tank_burner.heat": "Heat: %s",
+  "ccd.tank_burner.remaining": "Remaining burn time: %s s",
+  "ccd.tank_burner.heat.none": "Empty",
+  "ccd.tank_burner.heat.smouldering": "Smouldering",
+  "ccd.tank_burner.heat.fading": "Fading",
+  "ccd.tank_burner.heat.kindled": "Heated",
+  "ccd.tank_burner.heat.seething": "Superheated"
 }

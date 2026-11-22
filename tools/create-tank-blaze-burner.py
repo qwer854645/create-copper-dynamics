@@ -22,11 +22,19 @@ with ZipFile(jar) as z:
         for f in e['faces'].values():f.pop('cullface',None)
     tank.pop('groups',None)
     save('assets/ccd/models/block/tank_blaze_burner/tank.json',tank)
+    item=z.read('assets/create/models/block/blaze_burner/item.obj').decode()
+    itemlines=[]
+    for line in item.splitlines():
+        if line.startswith('v '):
+            x,y,zz=map(float,line.split()[1:]);line=f'v {x:.6f} {0.25+y*0.75:.6f} {zz:.6f}'
+        if line.startswith('mtllib '):line='mtllib create:models/block/blaze_burner/item.mtl'
+        itemlines.append(line)
+    (p.parent/'item.obj').write_text('\n'.join(itemlines)+'\n')
 save('assets/ccd/models/block/tank_blaze_burner/cage.json',{'parent':'minecraft:block/block','loader':'neoforge:obj','flip_v':True,'model':'ccd:models/block/tank_blaze_burner/cage.obj','textures':{'0':'create:block/blaze_heater_brazier','particle':'create:block/dark_metal_block'}})
 # Composite loader preserves the native OBJ rather than approximating it with cuboids.
 save('assets/ccd/models/block/tank_blaze_burner/block.json',{'loader':'neoforge:composite','children':{'tank':{'parent':'ccd:block/tank_blaze_burner/tank'},'burner':{'parent':'ccd:block/tank_blaze_burner/cage'}},'render_type':'minecraft:cutout_mipped','textures':{'particle':'create:block/fluid_tank'}})
 save('assets/ccd/blockstates/tank_blaze_burner.json',{'variants':{'':{'model':'ccd:block/tank_blaze_burner/block'}}})
-save('assets/ccd/models/item/tank_blaze_burner.json',{'parent':'ccd:block/tank_blaze_burner/block','display':{'gui':{'rotation':[30,225,0],'scale':[.7,.7,.7]}}})
+save('assets/ccd/models/item/tank_blaze_burner.json',{'loader':'neoforge:composite','children':{'tank':{'parent':'ccd:block/tank_blaze_burner/tank'},'burner':{'loader':'neoforge:obj','flip_v':True,'model':'ccd:models/block/tank_blaze_burner/item.obj','textures':{'0':'create:block/blaze_heater_brazier','1':'create:block/blaze_idle'}}},'textures':{'particle':'create:block/dark_metal_block'},'display':{'gui':{'rotation':[30,315,0],'scale':[.7,.7,.7]}}})
 save('data/ccd/recipe/tank_blaze_burner.json',{'type':'minecraft:crafting_shapeless','ingredients':[{'item':'create:blaze_burner'},{'item':'create:fluid_tank'},{'item':'create:fluid_pipe'},{'item':'create:copper_sheet'}],'result':{'id':'ccd:tank_blaze_burner','count':1}})
 save('data/ccd/loot_table/blocks/tank_blaze_burner.json',{'type':'minecraft:block','pools':[{'rolls':1,'entries':[{'type':'minecraft:item','name':'ccd:tank_blaze_burner'}],'conditions':[{'condition':'minecraft:survives_explosion'}]}]})
 for path in ['data/create/tags/block/wrench_pickup.json','data/minecraft/tags/block/mineable/pickaxe.json']:
