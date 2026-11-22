@@ -1,10 +1,22 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
-    {"item": "ccd:fluid_hatch"},
-    {"item": "create:brass_ingot"},
-    {"item": "create:electron_tube"}
+    {
+      "item": "ccd:fluid_hatch"
+    },
+    {
+      "item": "create:brass_sheet"
+    },
+    {
+      "item": "create:electron_tube"
+    },
+    {
+      "item": "create:filter"
+    }
   ],
-  "result": {"id": "ccd:smart_fluid_hatch", "count": 1}
+  "result": {
+    "id": "ccd:smart_fluid_hatch",
+    "count": 1
+  }
 }

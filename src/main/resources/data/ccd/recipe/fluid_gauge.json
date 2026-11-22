@@ -1,1 +1,19 @@
-{"type":"minecraft:crafting_shapeless","category":"redstone","ingredients":[{"item":"create:factory_gauge"},{"item":"minecraft:copper_ingot"},{"item":"create:fluid_pipe"}],"result":{"id":"ccd:fluid_gauge","count":1}}
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "create:factory_gauge"
+    },
+    {
+      "item": "create:fluid_pipe"
+    },
+    {
+      "item": "create:electron_tube"
+    }
+  ],
+  "result": {
+    "id": "ccd:fluid_gauge",
+    "count": 1
+  }
+}

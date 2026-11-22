@@ -1,12 +1,30 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": [" P ", "CFC", " M "],
+  "category": "misc",
+  "pattern": [
+    " S ",
+    "CFC",
+    " MT"
+  ],
   "key": {
-    "P": {"item": "create:spout"},
-    "C": {"item": "create:copper_casing"},
-    "F": {"item": "create:encased_fan"},
-    "M": {"item": "create:precision_mechanism"}
+    "S": {
+      "item": "create:spout"
+    },
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "F": {
+      "item": "create:encased_fan"
+    },
+    "M": {
+      "item": "create:precision_mechanism"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    }
   },
-  "result": {"id": "ccd:fluid_atomizer", "count": 1}
+  "result": {
+    "id": "ccd:fluid_atomizer",
+    "count": 1
+  }
 }

@@ -1,7 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "redstone",
-  "pattern": ["C C", "CWC", " C "],
-  "key": {"C": {"item": "minecraft:copper_ingot"}, "W": {"item": "minecraft:water_bucket"}},
-  "result": {"id": "ccd:copper_water_basin", "count": 1}
+  "category": "misc",
+  "pattern": [
+    "C C",
+    "CTC",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    }
+  },
+  "result": {
+    "id": "ccd:copper_water_basin",
+    "count": 1
+  }
 }

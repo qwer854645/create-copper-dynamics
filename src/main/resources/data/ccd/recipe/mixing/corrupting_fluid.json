@@ -1,5 +1,30 @@
 {
   "type": "create:mixing",
+  "ingredients": [
+    {
+      "type": "neoforge:single",
+      "fluid": "ccd:withering_fluid",
+      "amount": 250
+    },
+    {
+      "type": "neoforge:single",
+      "fluid": "ccd:sculk_suspension",
+      "amount": 250
+    },
+    {
+      "item": "minecraft:echo_shard"
+    },
+    {
+      "item": "minecraft:fermented_spider_eye"
+    }
+  ],
+  "results": [
+    {
+      "id": "ccd:corrupting_fluid",
+      "amount": 500
+    }
+  ],
+  "processing_time": 400,
   "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
@@ -19,28 +44,5 @@
       ]
     }
   ],
-  "ingredients": [
-    {
-      "type": "neoforge:single",
-      "fluid": "minecraft:water",
-      "amount": 1000
-    },
-    {
-      "type": "neoforge:single",
-      "fluid": "ccd:withering_fluid",
-      "amount": 250
-    },
-    {
-      "item": "minecraft:echo_shard"
-    },
-    {
-      "item": "minecraft:fermented_spider_eye"
-    }
-  ],
-  "results": [
-    {
-      "id": "ccd:corrupting_fluid",
-      "amount": 1000
-    }
-  ]
+  "heat_requirement": "heated"
 }

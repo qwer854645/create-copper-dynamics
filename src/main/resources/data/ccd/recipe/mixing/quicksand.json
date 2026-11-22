@@ -2,7 +2,15 @@
   "type": "create:mixing",
   "ingredients": [
     {
-      "item": "minecraft:sand"
+      "type": "neoforge:single",
+      "fluid": "minecraft:water",
+      "amount": 250
+    },
+    {
+      "tag": "minecraft:sand"
+    },
+    {
+      "tag": "minecraft:sand"
     }
   ],
   "results": [

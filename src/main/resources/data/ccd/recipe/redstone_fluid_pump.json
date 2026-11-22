@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
     {
-      "item": "create:mechanical_pump"
+      "item": "ccd:bidirectional_fluid_pump"
     },
     {
-      "item": "ccd:redstone_fluid_valve"
+      "item": "minecraft:repeater"
     },
     {
-      "item": "create:shaft"
+      "item": "create:electron_tube"
     }
   ],
   "result": {

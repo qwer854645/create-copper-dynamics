@@ -1,17 +1,18 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
-      "item": "create:mechanical_pump"
+      "item": "ccd:bidirectional_fluid_pump"
     },
     {
-      "item": "create:copper_casing"
-    },
-    {
-      "item": "create:belt_connector"
+      "item": "create:precision_mechanism"
     },
     {
       "item": "create:electron_tube"
+    },
+    {
+      "item": "minecraft:comparator"
     }
   ],
   "result": {

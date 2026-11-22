@@ -1,13 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "ccd:booster_pump"
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "GBG",
+    " M "
+  ],
+  "key": {
+    "P": {
+      "item": "create:fluid_pipe"
     },
-    {
+    "G": {
+      "item": "create:gearbox"
+    },
+    "B": {
+      "item": "ccd:buffer_pump"
+    },
+    "M": {
       "item": "create:precision_mechanism"
     }
-  ],
+  },
   "result": {
     "id": "ccd:omni_pump",
     "count": 1

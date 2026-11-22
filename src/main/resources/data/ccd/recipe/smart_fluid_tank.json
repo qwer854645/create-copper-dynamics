@@ -1,15 +1,27 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "redstone",
+  "category": "misc",
   "pattern": [
     " B ",
-    "PTP",
-    " B "
+    "FTF",
+    " E "
   ],
   "key": {
-    "B": {"item": "create:brass_casing"},
-    "P": {"item": "create:precision_mechanism"},
-    "T": {"item": "create:fluid_tank"}
+    "B": {
+      "item": "create:brass_casing"
+    },
+    "F": {
+      "item": "create:filter"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    },
+    "E": {
+      "item": "create:electron_tube"
+    }
   },
-  "result": {"id": "ccd:smart_fluid_tank", "count": 2}
+  "result": {
+    "id": "ccd:smart_fluid_tank",
+    "count": 1
+  }
 }

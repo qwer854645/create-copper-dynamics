@@ -1,6 +1,27 @@
 {
- "type":"minecraft:crafting_shaped","category":"redstone",
- "pattern":[" C "," P "," T "],
- "key":{"C":{"item":"minecraft:copper_ingot"},"P":{"item":"create:packager"},"T":{"item":"create:fluid_tank"}},
- "result":{"id":"ccd:fluid_packager","count":1}
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "PST",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    },
+    "P": {
+      "item": "create:packager"
+    },
+    "S": {
+      "item": "create:spout"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    }
+  },
+  "result": {
+    "id": "ccd:fluid_packager",
+    "count": 1
+  }
 }

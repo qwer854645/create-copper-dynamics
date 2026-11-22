@@ -1,19 +1,16 @@
 {
   "type": "create:mixing",
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "create_more_catalysts"
-    }
-  ],
   "ingredients": [
     {
       "type": "neoforge:single",
       "fluid": "minecraft:water",
-      "amount": 1000
+      "amount": 500
     },
     {
       "item": "minecraft:nautilus_shell"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
     },
     {
       "item": "minecraft:prismarine_crystals"
@@ -22,7 +19,14 @@
   "results": [
     {
       "id": "ccd:conduit_energy_fluid",
-      "amount": 1000
+      "amount": 500
+    }
+  ],
+  "processing_time": 300,
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create_more_catalysts"
     }
   ]
 }

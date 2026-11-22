@@ -1,22 +1,23 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
-  "ingredients": [
-    {
-      "item": "minecraft:copper_ingot"
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " CP",
+    " L "
+  ],
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
     },
-    {
-      "item": "minecraft:copper_ingot"
-    },
-    {
+    "P": {
       "item": "create:fluid_pipe"
     },
-    {
+    "L": {
       "item": "minecraft:lever"
     }
-  ],
+  },
   "result": {
     "id": "ccd:faucet",
-    "count": 1
+    "count": 2
   }
 }

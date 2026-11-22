@@ -4,18 +4,25 @@
     {
       "type": "neoforge:single",
       "fluid": "minecraft:water",
-      "amount": 1000
+      "amount": 500
     },
     {
       "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:redstone"
     }
   ],
   "results": [
     {
       "id": "ccd:explosive_slurry",
-      "amount": 1000
+      "amount": 500
     }
   ],
+  "processing_time": 200,
   "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",

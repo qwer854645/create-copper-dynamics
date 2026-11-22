@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "redstone",
+  "category": "misc",
   "pattern": [
-    " C ",
-    "GPG",
-    " C "
+    " G ",
+    "CPC",
+    " G "
   ],
   "key": {
+    "G": {
+      "item": "create:large_cogwheel"
+    },
     "C": {
       "item": "create:copper_casing"
-    },
-    "G": {
-      "item": "create:gearbox"
     },
     "P": {
       "item": "create:mechanical_pump"

@@ -1,11 +1,22 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
-    {"item": "ccd:copper_collection_grate"},
-    {"item": "create:brass_casing"},
-    {"item": "create:electron_tube"},
-    {"item": "create:precision_mechanism"}
+    {
+      "item": "ccd:copper_collection_grate"
+    },
+    {
+      "item": "create:brass_casing"
+    },
+    {
+      "item": "create:electron_tube"
+    },
+    {
+      "item": "create:filter"
+    }
   ],
-  "result": {"id": "ccd:smart_collection_grate", "count": 1}
+  "result": {
+    "id": "ccd:smart_collection_grate",
+    "count": 1
+  }
 }

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "create:mechanical_pump"
@@ -9,6 +10,9 @@
     },
     {
       "item": "create:belt_connector"
+    },
+    {
+      "item": "create:copper_sheet"
     }
   ],
   "result": {

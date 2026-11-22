@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
     {
       "item": "create:mechanical_arm"
@@ -12,7 +12,7 @@
       "item": "create:fluid_pipe"
     },
     {
-      "item": "create:copper_casing"
+      "item": "create:spout"
     }
   ],
   "result": {

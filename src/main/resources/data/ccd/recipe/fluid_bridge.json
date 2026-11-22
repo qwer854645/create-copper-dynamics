@@ -1,22 +1,25 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "create:brass_casing"
-    },
-    {
-      "item": "ccd:fluid_access_port"
-    },
-    {
-      "item": "ccd:fluid_access_port"
-    },
-    {
-      "item": "create:electron_tube"
-    },
-    {
-      "item": "create:electron_tube"
-    }
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " E ",
+    "PMP",
+    " B "
   ],
+  "key": {
+    "E": {
+      "item": "create:electron_tube"
+    },
+    "P": {
+      "item": "ccd:fluid_access_port"
+    },
+    "M": {
+      "item": "create:precision_mechanism"
+    },
+    "B": {
+      "item": "create:brass_casing"
+    }
+  },
   "result": {
     "id": "ccd:fluid_bridge",
     "count": 1

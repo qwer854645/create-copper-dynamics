@@ -1,11 +1,8 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
-  "ingredients": [
-    {
-      "item": "ccd:vertical_turning_booster_pump"
-    }
-  ],
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ccd:vertical_turning_booster_pump"
+  },
   "result": {
     "id": "ccd:turning_booster_pump",
     "count": 1

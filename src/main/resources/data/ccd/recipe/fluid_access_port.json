@@ -1,16 +1,19 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "create:copper_casing"
-    },
-    {
-      "item": "create:fluid_pipe"
-    },
-    {
-      "item": "create:fluid_pipe"
-    }
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "PCP",
+    " P "
   ],
+  "key": {
+    "P": {
+      "item": "create:fluid_pipe"
+    },
+    "C": {
+      "item": "create:copper_casing"
+    }
+  },
   "result": {
     "id": "ccd:fluid_access_port",
     "count": 2

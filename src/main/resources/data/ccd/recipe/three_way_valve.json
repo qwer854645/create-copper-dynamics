@@ -1,9 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "redstone",
+  "category": "misc",
   "ingredients": [
     {
       "item": "ccd:redstone_fluid_valve"
+    },
+    {
+      "item": "create:fluid_pipe"
     },
     {
       "item": "create:fluid_pipe"

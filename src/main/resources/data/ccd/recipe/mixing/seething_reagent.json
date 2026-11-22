@@ -3,18 +3,22 @@
   "ingredients": [
     {
       "type": "neoforge:single",
-      "fluid": "minecraft:water",
+      "fluid": "minecraft:lava",
       "amount": 1000
     },
     {
-      "item": "minecraft:blaze_powder"
+      "item": "create:blaze_cake"
+    },
+    {
+      "item": "minecraft:magma_cream"
     }
   ],
   "results": [
     {
       "id": "ccd:seething_reagent",
-      "amount": 1000
+      "amount": 500
     }
   ],
+  "processing_time": 400,
   "heat_requirement": "superheated"
 }

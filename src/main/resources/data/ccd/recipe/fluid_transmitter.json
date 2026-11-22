@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "redstone",
+  "category": "misc",
   "pattern": [
     " C ",
     "PHP",
@@ -8,7 +8,7 @@
   ],
   "key": {
     "C": {
-      "item": "minecraft:copper_ingot"
+      "item": "create:copper_sheet"
     },
     "P": {
       "item": "create:fluid_pipe"

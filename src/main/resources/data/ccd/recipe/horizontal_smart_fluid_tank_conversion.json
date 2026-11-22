@@ -1,10 +1,8 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "ccd:smart_fluid_tank"
-    }
-  ],
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ccd:smart_fluid_tank"
+  },
   "result": {
     "id": "ccd:horizontal_smart_fluid_tank",
     "count": 1

@@ -1,7 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
-  "pattern": ["C C", "C C", " C "],
-  "key": {"C": {"item": "minecraft:copper_ingot"}},
-  "result": {"id": "ccd:copper_bucket", "count": 1}
+  "pattern": [
+    "C C",
+    "C C",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "create:copper_sheet"
+    }
+  },
+  "result": {
+    "id": "ccd:copper_bucket",
+    "count": 1
+  }
 }

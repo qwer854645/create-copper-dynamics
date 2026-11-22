@@ -4,22 +4,27 @@
     {
       "type": "neoforge:single",
       "fluid": "minecraft:water",
-      "amount": 1000
+      "amount": 500
     },
     {
       "tag": "c:dusts/uranium"
+    },
+    {
+      "item": "minecraft:redstone"
     }
   ],
   "results": [
     {
       "id": "ccd:enriching_reagent",
-      "amount": 1000
+      "amount": 500
     }
   ],
+  "processing_time": 300,
   "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
       "modid": "createnuclear"
     }
-  ]
+  ],
+  "heat_requirement": "heated"
 }

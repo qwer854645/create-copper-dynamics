@@ -4,18 +4,25 @@
     {
       "type": "neoforge:single",
       "fluid": "minecraft:water",
-      "amount": 1000
+      "amount": 500
     },
     {
       "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:quartz"
     }
   ],
   "results": [
     {
       "id": "ccd:resonant_solution",
-      "amount": 1000
+      "amount": 500
     }
   ],
+  "processing_time": 200,
   "neoforge:conditions": [
     {
       "type": "neoforge:mod_loaded",
