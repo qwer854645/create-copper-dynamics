@@ -11,9 +11,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 /** Finite buffer supplied externally; rotational power only pumps stored fluid outward. */
 public final class BufferPumpBlockEntity extends PumpBlockEntity {
     public static final int CAPACITY=2000;
-    public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(CAPACITY){
-        @Override protected void onContentsChanged(){dev.ccd.logistics.FluidSyncBehaviour.changed(BufferPumpBlockEntity.this);}
-    };
+    public com.simibubi.create.foundation.fluid.SmartFluidTank buffer;
     public BufferPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.BUFFER_PUMP_BE.get(),pos,state);}
     public IFluidHandler handler(Direction side){
         if(side==null)return buffer;
@@ -29,7 +27,8 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     }
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
         super.addBehaviours(behaviours);
-        behaviours.add(new dev.ccd.logistics.FluidSyncBehaviour(this));
+        var storage=com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour.single(this,CAPACITY);
+        behaviours.add(storage);buffer=storage.getPrimaryHandler();
         // This device owns finite storage and delivers from it directly. Running
         // the native transparent pump transport creates an invalid empty-port lifecycle.
         behaviours.removeIf(behaviour->behaviour instanceof com.simibubi.create.content.fluids.FluidTransportBehaviour);
@@ -51,7 +50,5 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         dev.ccd.logistics.NativeEndpointPump.changed(level,neighbor);
         new dev.ccd.logistics.NativeEndpointPump(level,worldPosition,getBlockState()).distribute(port,false,isOverStressed()?0:Math.abs(getSpeed()));
     }
-    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));}
-    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){super.addToGoggleTooltip(tooltip,sneaking);dev.ccd.CCDTooltip.fluidContents(tooltip,buffer.isEmpty()?java.util.List.of():java.util.List.of(buffer.getFluid()),CAPACITY);return true;}
 }

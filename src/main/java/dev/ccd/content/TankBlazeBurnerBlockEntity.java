@@ -13,9 +13,8 @@ import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
 /** Native burner with a finite reservoir; all actual fuel acceptance is decided by Create. */
 public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity implements com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation {
-    public final SmartFluidTank tank=new SmartFluidTank(4000,fluid->{}){
-        @Override protected void onContentsChanged(){super.onContentsChanged();dev.ccd.logistics.FluidSyncBehaviour.changed(TankBlazeBurnerBlockEntity.this);}
-        @Override public boolean isFluidValid(FluidStack fluid){
+    public SmartFluidTank tank;
+    private boolean acceptsFuel(FluidStack fluid){
             // Buffer native liquid fuels even while the burner cannot currently take more fuel.
             var bucket=new ItemStack(fluid.getFluid().getBucket());
             if(fluid.isEmpty())return false;
@@ -25,11 +24,12 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
                 || fluid.getFluid().isSame(dev.ccd.compat.ProcessingMedia.ALL.getFirst().source.get())
                 || bucket.getBurnTime(net.minecraft.world.item.crafting.RecipeType.SMELTING)>0
                 || tryUpdateFuel(bucket,false,true));
-        }
-    };
+    }
     public TankBlazeBurnerBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.TANK_BURNER_BE.get(),pos,state);}
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
-        super.addBehaviours(behaviours);behaviours.add(new dev.ccd.logistics.FluidSyncBehaviour(this));
+        super.addBehaviours(behaviours);
+        var storage=com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour.single(this,4000);
+        behaviours.add(storage);tank=storage.getPrimaryHandler();tank.setValidator(this::acceptsFuel);
     }
     @Override public void tick(){
         super.tick();
@@ -53,8 +53,6 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
         if(!bucket.isEmpty()&&tryUpdateFuel(bucket,false,true)&&tryUpdateFuel(bucket,false,false))
             tank.drain(1000,IFluidHandler.FluidAction.EXECUTE);
     }
-    @Override public void write(CompoundTag tag,HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("FuelTank",tank.writeToNBT(registries,new CompoundTag()));}
-    @Override protected void read(CompoundTag tag,HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);tank.readFromNBT(registries,tag.getCompound("FuelTank"));}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
         dev.ccd.CCDTooltip.fluidContents(tooltip,tank.isEmpty()?java.util.List.of():java.util.List.of(tank.getFluid()),tank.getCapacity());
         dev.ccd.CCDTooltip.heading(tooltip,"ccd.tank_burner.heating");

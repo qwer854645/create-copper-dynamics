@@ -25,7 +25,6 @@ neoForge {
             if (project.hasProperty('ccdBenchmark')) systemProperty 'ccd.benchmark', 'true'
             if (project.hasProperty('gluingBaseline')) systemProperty 'ccd.gluingBaseline', 'true'
             if (project.hasProperty('deviceMeasurements')) systemProperty 'ccd.deviceMeasurements', 'true'
-            if (project.hasProperty('syncBaseline')) systemProperty 'ccd.syncBaseline', 'true'
             if (project.hasProperty('thirdPartyFilterProbe')) systemProperty 'ccd.thirdPartyFilterProbe', 'true'
             if (project.hasProperty('mappingFixture')) systemProperty 'ccd.mappingFixture', 'true'
         }
