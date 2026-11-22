@@ -38,6 +38,7 @@ public final class FluidArmPoint extends ArmInteractionPoint {
     /** Shared by selection and every capability lookup, including points restored from older saves. */
     public static boolean canTarget(Level level, BlockPos pos) {
         return level.hasChunkAt(pos) && (level.getBlockState(pos).getBlock() instanceof FluidHatchBlock
+            || level.getBlockEntity(pos) instanceof com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity
             || CCDConfig.ARM_ALLOW_DIRECT_CONTAINER_INTERACTION.get());
     }
     @Nullable private IFluidHandler handler() {
@@ -47,7 +48,25 @@ public final class FluidArmPoint extends ArmInteractionPoint {
     @Nullable public static IFluidHandler interactionHandler(Level level, BlockPos pos, Direction face) {
         if (!level.hasChunkAt(pos)) return null;
         if (level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch) return hatch.interactionHandler(face);
-        return level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face);
+        var handler=level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face);
+        if(level.getBlockEntity(pos) instanceof com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity burner){
+            var fallback=new dev.ccd.compat.SuperLavaFuel(burner);
+            if(handler==null)return fallback;
+            return new IFluidHandler(){
+                public int getTanks(){return handler.getTanks();}
+                public FluidStack getFluidInTank(int tank){return handler.getFluidInTank(tank);}
+                public int getTankCapacity(int tank){return handler.getTankCapacity(tank);}
+                public boolean isFluidValid(int tank,FluidStack fluid){return handler.isFluidValid(tank,fluid)||fallback.isFluidValid(0,fluid);}
+                public int fill(FluidStack fluid,FluidAction action){
+                    // Preserve third-party fuel handlers and only fall back when they decline.
+                    int accepted=handler.fill(fluid,FluidAction.SIMULATE);
+                    return accepted>0?handler.fill(fluid,action):fallback.fill(fluid,action);
+                }
+                public FluidStack drain(int amount,FluidAction action){return FluidStack.EMPTY;}
+                public FluidStack drain(FluidStack fluid,FluidAction action){return FluidStack.EMPTY;}
+            };
+        }
+        return handler;
     }
     private boolean allowed(ArmBlockEntity arm) {
         return arm instanceof FluidArmBlockEntity && !arm.isRemoved() && level == arm.getLevel()

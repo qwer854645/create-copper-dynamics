@@ -1,4 +1,6 @@
 {
+  "block.ccd.fluid_arm.tooltip.condition3": "When fueling a Blaze Burner",
+  "block.ccd.fluid_arm.tooltip.behaviour3": "Select the Burner directly without a Hatch. Accepts _Lava_, _Super Lava_ and other fluid fuels supported by the Burner.",
   "ccd.atomizer.output_filter": "Target Output",
   "fluid_type.ccd.haunting": "Soul Fluid",
   "fluid.ccd.haunting": "Soul Fluid",
