@@ -43,7 +43,7 @@ def render(name,extra_faces=()):
             tile=im.transform((480,490),Image.Transform.AFFINE,coeff,Image.Resampling.NEAREST)
             mask=Image.new('L',tile.size);ImageDraw.Draw(mask).polygon([tuple(v) for v in q],fill=255)
             mask=np.minimum(np.asarray(mask),np.asarray(tile.getchannel('A')))
-            tile.putalpha(Image.fromarray(mask));faces.append((p.mean(axis=0)@camera,tile))
+            tile.putalpha(Image.fromarray(mask));faces.append((p.mean(axis=0)@camera,tile,q[:3],p[:3]@camera))
     for points,uv,im in extra_faces:
         p=np.array(points,float);n=np.cross(p[1]-p[0],p[2]-p[0])
         if n@camera<=0:continue
@@ -56,9 +56,22 @@ def render(name,extra_faces=()):
             tile=im.transform((480,490),Image.Transform.AFFINE,coeff,Image.Resampling.NEAREST)
             mask=Image.new('L',tile.size);ImageDraw.Draw(mask).polygon([tuple(v) for v in q[tri]],fill=255)
             tile.putalpha(Image.fromarray(np.minimum(np.asarray(mask),np.asarray(tile.getchannel('A')))))
-            faces.append((p[tri].mean(axis=0)@camera,tile))
-    out=Image.new('RGBA',(480,490),'#e5e8e2')
-    for _,tile in sorted(faces,key=lambda f:f[0]):out.alpha_composite(tile)
+            faces.append((p[tri].mean(axis=0)@camera,tile,q[tri],p[tri]@camera))
+    # Sort surfaces per pixel: small surface markings must not be hidden by a
+    # large housing face merely because the latter's centre is closer to the camera.
+    yy,xx=np.mgrid[:490,:480];depths=[];pixels=[]
+    for _,tile,q,z in faces:
+        plane=np.linalg.solve(np.c_[q,np.ones(3)],z)
+        rgba=np.asarray(tile).astype(np.float32)/255
+        depths.append(np.where(rgba[:,:,3]>0,plane[0]*xx+plane[1]*yy+plane[2],-np.inf))
+        pixels.append(rgba)
+    order=np.argsort(np.stack(depths),axis=0)
+    layers=np.stack(pixels)
+    result=np.empty((490,480,4),dtype=np.float32);result[:]=[229/255,232/255,226/255,1]
+    for rank in range(len(faces)):
+        layer=layers[order[rank],yy,xx];alpha=layer[:,:,3:4]
+        result[:,:,:3]=layer[:,:,:3]*alpha+result[:,:,:3]*(1-alpha)
+    out=Image.fromarray(np.clip(result*255,0,255).astype('uint8'),'RGBA')
     return out
 out=Image.new('RGBA',(960,550),'#e5e8e2')
 out.paste(render('ccd:block/smart_collection_grate'),(0,40))

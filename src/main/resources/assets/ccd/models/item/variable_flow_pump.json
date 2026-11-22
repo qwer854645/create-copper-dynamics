@@ -8,7 +8,8 @@
     "copper": "create:block/copper_underside",
     "pipe": "create:block/pipes",
     "gear": "ccd:block/variable_flow_pump",
-    "gauge": "create:block/gauge"
+    "gauge": "create:block/gauge",
+    "outlet_mark": "ccd:block/variable_flow_pump_outlet_arrow"
   },
   "elements": [
     {
@@ -1481,6 +1482,54 @@
           ],
           "rotation": 180,
           "texture": "#gear"
+        }
+      }
+    },
+    {
+      "name": "outlet_arrow_3.5_up",
+      "from": [
+        2.25,
+        14.02,
+        4
+      ],
+      "to": [
+        4.75,
+        14.02,
+        5.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#outlet_mark"
+        }
+      }
+    },
+    {
+      "name": "outlet_arrow_12.5_up",
+      "from": [
+        11.25,
+        14.02,
+        4
+      ],
+      "to": [
+        13.75,
+        14.02,
+        5.5
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#outlet_mark"
         }
       }
     }
