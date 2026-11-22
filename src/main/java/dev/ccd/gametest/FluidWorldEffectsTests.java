@@ -9,6 +9,17 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class FluidWorldEffectsTests {
+    @GameTest(template="empty") public static void mistIsStrongerAndShorter(GameTestHelper h){
+        var normal=h.spawn(net.minecraft.world.entity.EntityType.COW,4,2,2);
+        FluidWorldEffects.apply(normal,dev.ccd.CCDFluids.HAUNTING_TYPE.get(),false);
+        var normalSlow=normal.getEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN);
+        h.assertTrue(normalSlow!=null&&normalSlow.getAmplifier()==0&&normalSlow.getDuration()==60,"World/fan strength changed");
+        var cow=h.spawn(net.minecraft.world.entity.EntityType.COW,2,2,2);
+        FluidWorldEffects.applyMist(cow,dev.ccd.CCDFluids.HAUNTING_TYPE.get());
+        var slow=cow.getEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN);
+        h.assertTrue(slow!=null&&slow.getAmplifier()==2&&slow.getDuration()==30,"Soul mist must apply Slowness III for 1.5 seconds");
+        h.succeed();
+    }
     @GameTest(template="empty",timeoutTicks=150) public static void purificationHealsSlowlyAndExplosionPreservesBlocks(GameTestHelper h){
         var cow=h.spawn(net.minecraft.world.entity.EntityType.COW,2,2,2);cow.setNoAi(true);cow.setHealth(5);
         var pure=ProcessingMedia.ALL.stream().filter(m->m.id.equals("purifying_solution")).findFirst().orElseThrow();

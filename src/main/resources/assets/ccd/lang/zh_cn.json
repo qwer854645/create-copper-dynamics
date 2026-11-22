@@ -388,7 +388,7 @@
   "block.ccd.fluid_bridge.tooltip.condition1": "接收红石信号时",
   "block.ccd.fluid_bridge.tooltip.behaviour1": "_断开_两端连接。未通电时，比较器输出两端信号之和的一半。",
   "block.ccd.fluid_atomizer.tooltip.condition1": "装入药水流体时",
-  "block.ccd.fluid_atomizer.tooltip.behaviour1": "对气流中的生物施加_药水效果_，时长为原来的四分之一，最长 30 秒；瞬间效果强度降低。",
+  "block.ccd.fluid_atomizer.tooltip.behaviour1": "对气流中的生物施加_强化药水效果_，等级提升一级，时长为原来的四分之一，最长 30 秒。",
   "block.ccd.three_way_valve.tooltip.control1": "使用扳手右键点击时",
   "block.ccd.three_way_valve.tooltip.action1": "调整支路朝向或旋转阀体。",
   "ccd.hint.fluid_arm_no_targets": "动力移液臂未设置取液点或注液点",

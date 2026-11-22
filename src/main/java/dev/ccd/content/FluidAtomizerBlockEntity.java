@@ -123,7 +123,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
         if (level.isClientSide() || !mistActive || active == null || level.getGameTime() < nextEntityPulse) return;
         nextEntityPulse = level.getGameTime() + (active.recipe() == null ? 20 : active.recipe().entityInterval());
         for (var entity : entities) if (entity instanceof LivingEntity living && entity.isAlive() && entity.getBoundingBox().intersects(airCurrent.bounds)) {
-            dev.ccd.compat.FluidWorldEffects.apply(living,activeFluid.getFluidType(),true);
+            dev.ccd.compat.FluidWorldEffects.applyMist(living,activeFluid.getFluidType());
             var recipe = active.recipe();
             if (recipe != null && !recipe.entityTypes().isEmpty() && !recipe.entityTypes().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()))) continue;
             AtomizerScripts.EntityResult scripted = null;
@@ -134,7 +134,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
                 if (scripted == null) continue;
             }
             if (active.potion()) for (var effect : activeFluid.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getAllEffects()) {
-                applyEffect(living, mistPotionEffect(effect), .25);
+                applyEffect(living, mistPotionEffect(effect), 1);
             }
             if (recipe != null) {
                 for (var effect : recipe.effects()) applyEffect(living, effect, .5);
@@ -148,7 +148,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     }
     public static MobEffectInstance mistPotionEffect(MobEffectInstance effect){
         int duration=effect.isInfiniteDuration()?600:Math.max(1,Math.min(600,effect.getDuration()/4));
-        return new MobEffectInstance(effect.getEffect(),duration,effect.getAmplifier(),effect.isAmbient(),effect.isVisible(),effect.showIcon());
+        return new MobEffectInstance(effect.getEffect(),duration,Math.min(255,effect.getAmplifier()+1),effect.isAmbient(),effect.isVisible(),effect.showIcon());
     }
     private void applyEffect(LivingEntity target, MobEffectInstance effect, double strength) {
         if (effect.getEffect().value().isInstantenous()) effect.getEffect().value().applyInstantenousEffect(null, null, target, effect.getAmplifier(), strength);
