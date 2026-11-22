@@ -388,7 +388,7 @@
   "block.ccd.fluid_bridge.tooltip.condition1": "When Powered by Redstone",
   "block.ccd.fluid_bridge.tooltip.behaviour1": "_Disconnects_ both containers. While unpowered, a Comparator outputs half the sum of their signals.",
   "block.ccd.fluid_atomizer.tooltip.condition1": "When filled with Potion Fluid",
-  "block.ccd.fluid_atomizer.tooltip.behaviour1": "Applies _potion effects_ to entities in the air current.",
+  "block.ccd.fluid_atomizer.tooltip.behaviour1": "Applies _potion effects_ at a quarter of their duration, up to 30 seconds. Instant effects have reduced strength.",
   "block.ccd.three_way_valve.tooltip.control1": "R-Click with a Wrench",
   "block.ccd.three_way_valve.tooltip.action1": "Adjusts the branch orientation or rotates the valve.",
   "ccd.hint.fluid_arm_no_targets": "No inputs or outputs configured for this Mechanical Fluid Arm",

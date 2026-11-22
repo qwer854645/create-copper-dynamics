@@ -134,8 +134,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
                 if (scripted == null) continue;
             }
             if (active.potion()) for (var effect : activeFluid.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).getAllEffects()) {
-                int duration = effect.isInfiniteDuration() ? 60 : Math.min(60, effect.getDuration());
-                applyEffect(living, new MobEffectInstance(effect.getEffect(), duration, effect.getAmplifier()), .25);
+                applyEffect(living, mistPotionEffect(effect), .25);
             }
             if (recipe != null) {
                 for (var effect : recipe.effects()) applyEffect(living, effect, .5);
@@ -146,6 +145,10 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
                 if (scripted.damage() > 0) living.hurt(level.damageSources().magic(), scripted.damage());
             }
         }
+    }
+    public static MobEffectInstance mistPotionEffect(MobEffectInstance effect){
+        int duration=effect.isInfiniteDuration()?600:Math.max(1,Math.min(600,effect.getDuration()/4));
+        return new MobEffectInstance(effect.getEffect(),duration,effect.getAmplifier(),effect.isAmbient(),effect.isVisible(),effect.showIcon());
     }
     private void applyEffect(LivingEntity target, MobEffectInstance effect, double strength) {
         if (effect.getEffect().value().isInstantenous()) effect.getEffect().value().applyInstantenousEffect(null, null, target, effect.getAmplifier(), strength);
