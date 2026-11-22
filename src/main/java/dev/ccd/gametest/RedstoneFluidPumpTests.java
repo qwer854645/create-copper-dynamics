@@ -10,6 +10,22 @@ import net.neoforged.neoforge.gametest.*;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class RedstoneFluidPumpTests {
+ @GameTest(template="empty") public static void wrenchReachesAllSixFacings(GameTestHelper h) {
+  var block=CopperDynamics.REDSTONE_FLUID_PUMP.get();
+  var reached=java.util.EnumSet.noneOf(Direction.class);
+  var queue=new java.util.ArrayDeque<net.minecraft.world.level.block.state.BlockState>();
+  queue.add(block.defaultBlockState().setValue(RedstoneFluidPumpBlock.POWERED,true));
+  while(!queue.isEmpty()) {
+   var state=queue.remove();if(!reached.add(state.getValue(RedstoneFluidPumpBlock.FACING)))continue;
+   for(var side:Direction.values()) {
+    var rotated=block.getRotatedBlockState(state,side);
+    h.assertTrue(rotated.getValue(RedstoneFluidPumpBlock.POWERED),"Wrench cleared redstone state");
+    h.assertTrue(block.getRotationAxis(rotated)!=rotated.getValue(RedstoneFluidPumpBlock.FACING).getAxis(),"Shaft overlaps fluid ports");
+    queue.add(rotated);
+   }
+  }
+  h.assertTrue(reached.size()==6,"Wrench cannot reach all six pump directions: "+reached);h.succeed();
+ }
  @GameTest(template="empty") public static void redstoneReversesNativePumpSides(GameTestHelper h) {
   var pos=new BlockPos(2,2,2);var block=CopperDynamics.REDSTONE_FLUID_PUMP.get();
   for(var facing:Direction.values()) {

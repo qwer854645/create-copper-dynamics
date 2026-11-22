@@ -22,6 +22,22 @@ public final class RedstoneFluidPumpBlock extends PumpBlock {
     @Override public Direction.Axis getRotationAxis(BlockState state) { return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X; }
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return side.getAxis()==getRotationAxis(state); }
     @Override public boolean isSmallCog() { return false; }
+    @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace) {
+        Direction facing=state.getValue(FACING);
+        // Clicking an end still reverses flow-facing; a side turns the pipe axis by 90 degrees.
+        return state.setValue(FACING,facing.getAxis()==clickedFace.getAxis()
+            ?facing.getOpposite():facing.getClockWise(clickedFace.getAxis()));
+    }
+    @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving) {
+        super.onPlace(state,level,pos,old,moving);
+        if(!level.isClientSide()&&old.getBlock()==this&&old.getValue(FACING)!=state.getValue(FACING)) {
+            for(Direction side:new Direction[]{old.getValue(FACING),old.getValue(FACING).getOpposite()}) {
+                var neighbor=pos.relative(side);
+                com.simibubi.create.content.fluids.FluidPropagator.propagateChangedPipe(level,neighbor,level.getBlockState(neighbor));
+            }
+            if(level.getBlockEntity(pos) instanceof RedstoneFluidPumpBlockEntity pump)pump.updatePressureChange();
+        }
+    }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) { return super.getStateForPlacement(context).setValue(POWERED,context.getLevel().hasNeighborSignal(context.getClickedPos())); }
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block block,BlockPos from,boolean moving) {
         super.neighborChanged(state,level,pos,block,from,moving);
