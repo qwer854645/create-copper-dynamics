@@ -34,6 +34,9 @@ public class VariableFlowPumpBlock extends PumpBlock {
     }
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return false; }
     @Override public boolean isSmallCog() { return true; }
+    public static Direction.Axis gearContactAxis(BlockState state){
+        return state.getValue(FACING).getAxis().isVertical()?Direction.Axis.Z:Direction.Axis.Y;
+    }
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace){
         var facing=state.getValue(FACING);
         if(this instanceof PortableFluidPumpBlock)return state.setValue(FACING,facing.getClockWise());

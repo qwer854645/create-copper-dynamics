@@ -18,8 +18,9 @@ abstract class FrequencyPumpGearMixin {
             if(!(state.getBlock() instanceof VariableFlowPumpBlock block)||!block.isSmallCog())continue;
             var other=pump==from?to:from;
             var diff=other.getBlockPos().subtract(pump.getBlockPos());
-            // Only top/bottom adjacent gears reach the exposed wheel; pipe mouths cannot mesh.
-            if(diff.getX()!=0||diff.getZ()!=0||Math.abs(diff.getY())!=1)cir.setReturnValue(0f);
+            // The exposed rim turns with the body: vertical pumps mesh north/south.
+            var axis=VariableFlowPumpBlock.gearContactAxis(state);
+            if(diff.distManhattan(net.minecraft.core.BlockPos.ZERO)!=1||Math.abs(axis.choose(diff.getX(),diff.getY(),diff.getZ()))!=1)cir.setReturnValue(0f);
         }
     }
 }

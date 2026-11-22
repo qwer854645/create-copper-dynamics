@@ -22,7 +22,7 @@ abstract class FrequencyPumpPlacementHelperMixin {
         if(!frequency&&!buffer)return;
         var kinetic=(com.simibubi.create.content.kinetics.base.KineticBlock)state.getBlock();
         var axis=kinetic.getRotationAxis(state);
-        var exposedAxis=frequency&&state.getValue(VariableFlowPumpBlock.FACING).getAxis().isVertical()?Direction.Axis.Z:Direction.Axis.Y;
+        var exposedAxis=frequency?VariableFlowPumpBlock.gearContactAxis(state):Direction.Axis.Y;
         if(frequency?hit.getDirection().getAxis()!=exposedAxis:hit.getDirection().getAxis()==axis){cir.setReturnValue(PlacementOffset.fail());return;}
         var target=pos.relative(hit.getDirection());
         if(!level.getBlockState(target).canBeReplaced()||!com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock.isValidCogwheelPosition(false,level,target,axis)){
