@@ -12,6 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract class ScriptFluidInteractionMixin {
     @Inject(method="canInteract",at=@At("HEAD"),cancellable=true)
     private static void ccd$scriptPair(Level level,BlockPos pos,CallbackInfoReturnable<Boolean> cir){
-        if(FluidWorldScripts.adjacent(level,pos))cir.setReturnValue(true);
+        if(FluidWorldScripts.blockContact(level,pos)||FluidWorldScripts.adjacent(level,pos))cir.setReturnValue(true);
     }
 }

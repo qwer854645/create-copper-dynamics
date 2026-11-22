@@ -1,6 +1,6 @@
 # KubeJS 兼容检查与接口说明
 
-当前目标：Minecraft 1.21.1、KubeJS NeoForge 2101.7.2-build.382。插件通过 `kubejs.plugins.txt` 发现，只在 SERVER 脚本绑定 `CCDAtomizer`；未安装 KubeJS 时公共代码不引用其类。
+当前目标：Minecraft 1.21.1、KubeJS NeoForge 2101.7.2-build.382。插件通过 `kubejs.plugins.txt` 发现，在 SERVER 脚本绑定 `CCDAtomizer` 和 `CCDFluids`；未安装 KubeJS 时公共代码不引用其类。
 
 ## 支持内容
 
@@ -16,6 +16,10 @@
 - 物品上下文有 getInput／getFluid／getSpeed／getPosition／getDimension；生物上下文另有 getEntityType／getUuid／getHealth。物品与流体为副本，不提供实体或世界的可变引用。
 - 回调返回 null 或抛出 RuntimeException：放弃本次处理，保留原物品；异常每个 ID 在重载前只记录一次。空输出或 EMPTY 输出表示主动销毁输入。
 - SERVER 脚本加载前清空旧回调，资源重载刷新规则缓存，服务器停止清空回调。startup 注册流体需要重启，不能仅 /reload。
+- `CCDFluids.interaction(id, first, second, sourceResult, flowingResult, downwardResult)` 定义双流体接触／向下流入的方块替换。
+- `CCDFluids.blockInteraction(id, fluid, target, mode, fluidResult, blockResult)` 定义源液／流动液接触方块或标签时，只改流体、只改目标或双侧替换；`mode` 为 source／flowing／both。结果为 null 保留、air 移除。
+- `CCDFluids.remove(id)`／`clear()` 删除上述世界规则。详见 `kubejs-fluid-interactions.md`。
+- 雾化器目标产物过滤检查声明的 results，接受整条配方并保留副产物。安装过滤器时，动态 script 规则须声明可匹配的 results，且实际返回至少一个匹配物品；不会为了预览执行脚本。
 
 ## 本轮修正
 
@@ -25,7 +29,7 @@
 
 ## 限制与尚未验证
 
-兼容是雾化器专用，不提供管道、泵、世界接触效果或手持烫伤的专用 KJS 事件。普通配方／标签可以用 KubeJS 常规数据接口修改。没有自动把工作台配方变为雾化配方的 KJS API；批量粘接由独立内置加工读取工作台配方。
+专用 API 覆盖雾化器和流体世界方块交互，不提供管道、泵、生物直接接触流体效果或手持烫伤的专用 KJS 事件。普通配方／标签可以用 KubeJS 常规数据接口修改。没有自动把工作台配方变为雾化配方的 KJS API；批量粘接由独立内置加工读取工作台配方。
 
 KubeJS 回调驻留服务端；客户端只同步配方数据和雾化状态。脚本加载失败后回调可能部分缺失，不具备事务回滚。实体脚本返回 null 会跳过该实体本次固定效果，若需不追加伤害请返回 `CCDAtomizer.damage(0)`。
 
