@@ -33,7 +33,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
         pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
         // The dial measures signal, not shaft speed, and remains live while the pump is stopped.
-        float progress=state.getValue(VariableFlowPumpBlock.SIGNAL)/15f;
+        float progress=net.minecraft.util.Mth.lerp(pt,be.previousSignalDial,be.signalDial);
         for(int side:new int[]{1,-1}){
             pose.pushPose();pose.translate(.5,.5,.5);
             if(front.getAxis().isVertical())pose.mulPose(Axis.XP.rotationDegrees(front==Direction.UP?90:-90));

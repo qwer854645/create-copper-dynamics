@@ -8,6 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
     public float previousStroke,stroke;
+    public float previousSignalDial,signalDial;
+    private boolean signalDialInitialized;
     private double phase;
     private double previousPhase;
     public double visualPhase(float partialTicks) { return previousPhase+(phase-previousPhase)*partialTicks; }
@@ -26,6 +28,12 @@ public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
     @Override public void initialize() { super.initialize();if(level!=null&&!level.isClientSide())updatePressureChange(); }
     @Override public void tick() {
         super.tick();
+        if(level!=null&&(level.isClientSide()||isVirtual())){
+            float target=getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)/15f;
+            if(!signalDialInitialized){signalDial=previousSignalDial=target;signalDialInitialized=true;}
+            previousSignalDial=signalDial;
+            signalDial+=(target-signalDial)*.25f;
+        }
         if(level!=null&&(level.isClientSide()||isVirtual()||this instanceof PortableFluidPumpBlockEntity)) {
             previousStroke=stroke;
             previousPhase=phase;
