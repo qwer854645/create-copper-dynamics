@@ -65,8 +65,7 @@ public final class FluidAtomizerBlock extends EncasedFanBlock {
         if (!(level.getBlockEntity(pos) instanceof FluidAtomizerBlockEntity atomizer)) return ItemInteractionResult.FAIL;
         if (level.isClientSide()) return ItemInteractionResult.SUCCESS;
         // Handheld access works on every face; machine capabilities remain side-only.
-        if (!FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, atomizer))
-            FluidHelper.tryFillItemFromBE(level, player, hand, stack, atomizer);
+        dev.ccd.logistics.HandheldFluidExchange.emptyThenFill(player,hand,stack,atomizer);
         return ItemInteractionResult.SUCCESS;
     }
     @Override public BlockEntityType<? extends FluidAtomizerBlockEntity> getBlockEntityType() {

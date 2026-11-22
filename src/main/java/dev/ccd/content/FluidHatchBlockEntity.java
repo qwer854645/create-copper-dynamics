@@ -52,8 +52,7 @@ public class FluidHatchBlockEntity extends ItemHatchBlockEntity implements IHave
         if (level == null || level.isClientSide() || exchangeContainer != null) return false;
         exchangeContainer = stack.copy();
         try {
-            return FluidHelper.tryEmptyItemIntoBE(level, player, hand, stack, this)
-                || FluidHelper.tryFillItemFromBE(level, player, hand, stack, this);
+            return dev.ccd.logistics.HandheldFluidExchange.emptyThenFill(player,hand,stack,this);
         } finally {
             exchangeContainer = null;
         }
