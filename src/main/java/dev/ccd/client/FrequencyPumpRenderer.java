@@ -26,6 +26,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
         float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),axis);
         float angle=(float)Math.toRadians((time*be.getSpeed()*.3f+offset)%360);
         pose.pushPose();pose.translate(.5,.5,.5);
+        if(front.getAxis().isVertical())pose.mulPose(Axis.XP.rotationDegrees(front==Direction.UP?90:-90));
         // Align local +X with the positive world rotation axis, independent of flow facing.
         if(axis==Direction.Axis.Z)pose.mulPose(Axis.YP.rotationDegrees(-90));
         pose.mulPose(Axis.XP.rotation(angle));
@@ -35,6 +36,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
         float progress=state.getValue(VariableFlowPumpBlock.SIGNAL)/15f;
         for(int side:new int[]{1,-1}){
             pose.pushPose();pose.translate(.5,.5,.5);
+            if(front.getAxis().isVertical())pose.mulPose(Axis.XP.rotationDegrees(front==Direction.UP?90:-90));
             pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
             if(side<0)pose.mulPose(Axis.YP.rotationDegrees(180));
             pose.translate(-.5,-.5,-.5);

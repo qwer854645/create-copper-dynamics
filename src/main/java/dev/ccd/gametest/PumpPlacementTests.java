@@ -28,7 +28,7 @@ public class PumpPlacementTests {
             h.setBlock(origin,CopperDynamics.BUFFER_PUMP.get().defaultBlockState().setValue(BufferPumpBlock.FACING,face));
             var absolute=h.absolutePos(origin);
             for(BlockItem item:items){
-                if(item.getBlock() instanceof VariableFlowPumpBlock&&face.getAxis().isVertical())continue;
+                if(item.getBlock() instanceof PortableFluidPumpBlock&&face.getAxis().isVertical())continue;
                 var stack=new ItemStack(item);player.setItemInHand(InteractionHand.MAIN_HAND,stack);
                 var hit=new BlockHitResult(Vec3.atCenterOf(absolute).add(Vec3.atLowerCornerOf(face.getNormal()).scale(.5)),face,absolute,false);
                 var context=new BlockPlaceContext(player,InteractionHand.MAIN_HAND,stack,hit);

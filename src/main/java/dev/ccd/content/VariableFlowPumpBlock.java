@@ -25,7 +25,7 @@ public class VariableFlowPumpBlock extends PumpBlock {
         super.createBlockStateDefinition(builder);builder.add(SIGNAL);
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return PumpPlacement.align(context,defaultBlockState().setValue(FACING,context.getHorizontalDirection().getOpposite())
+        return PumpPlacement.align(context,defaultBlockState().setValue(FACING,(this instanceof PortableFluidPumpBlock?context.getHorizontalDirection():context.getNearestLookingDirection()).getOpposite())
             .setValue(SIGNAL,context.getLevel().getBestNeighborSignal(context.getClickedPos()))
             .setValue(BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER)));
     }
@@ -35,10 +35,21 @@ public class VariableFlowPumpBlock extends PumpBlock {
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return false; }
     @Override public boolean isSmallCog() { return true; }
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace){
-        // This model remains upright; a wrench rotates the horizontal pipe and gear axes together.
-        return state.setValue(FACING,state.getValue(FACING).getClockWise());
+        var facing=state.getValue(FACING);
+        if(this instanceof PortableFluidPumpBlock)return state.setValue(FACING,facing.getClockWise());
+        return state.setValue(FACING,facing.getAxis()==clickedFace.getAxis()?facing.getOpposite():facing.getClockWise(clickedFace.getAxis()));
     }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(); }
+    @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
+        super.onPlace(state,level,pos,old,moving);
+        if(!level.isClientSide()&&old.getBlock()==this&&old.getValue(FACING)!=state.getValue(FACING)){
+            for(var side:new Direction[]{old.getValue(FACING),old.getValue(FACING).getOpposite()}){
+                var neighbor=pos.relative(side);
+                com.simibubi.create.content.fluids.FluidPropagator.propagateChangedPipe(level,neighbor,level.getBlockState(neighbor));
+            }
+            if(level.getBlockEntity(pos) instanceof VariableFlowPumpBlockEntity pump)pump.updatePressureChange();
+        }
+    }
     @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block block,BlockPos from,boolean moving) {
         super.neighborChanged(state,level,pos,block,from,moving);
         if(level.isClientSide())return;

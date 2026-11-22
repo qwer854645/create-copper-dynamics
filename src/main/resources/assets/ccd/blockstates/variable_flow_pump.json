@@ -16,10 +16,12 @@
       "y": 270
     },
     "facing=up": {
-      "model": "ccd:block/variable_flow_pump/body"
+      "model": "ccd:block/variable_flow_pump/body",
+      "x": 270
     },
     "facing=down": {
-      "model": "ccd:block/variable_flow_pump/body"
+      "model": "ccd:block/variable_flow_pump/body",
+      "x": 90
     }
   }
 }

@@ -47,7 +47,7 @@ public final class PumpPlacement {
     public static BlockState align(BlockPlaceContext context,BlockState fallback) {
         if(fallback==null||!isCcdPump(fallback))return fallback;
         Direction attached=context.getClickedFace().getOpposite();
-        boolean horizontal=fallback.getBlock() instanceof VariableFlowPumpBlock;
+        boolean horizontal=fallback.getBlock() instanceof PortableFluidPumpBlock;
         Direction preferred=null;
         if((!horizontal||attached.getAxis().isHorizontal())&&connects(context,attached))preferred=attached;
         if(preferred==null)for(var side:context.getPlayer()==null?Direction.values():Direction.orderedByNearest(context.getPlayer())) {
