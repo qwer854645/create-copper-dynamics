@@ -26,7 +26,9 @@ public class TankBurnerTests {
         h.assertTrue(be.tank.getFluidAmount()==4000,"Tank did not persist");
         h.runAfterDelay(15,()->{
             h.assertTrue(be.getRemainingBurnTime()>0,"Tank did not feed native burner");
-            h.assertTrue(be.tank.getFluidAmount()<4000&&be.tank.getFluidAmount()%1000==0,"Fuel volume not consumed by bucket");
+            var fuel=dev.ccd.compat.LiquidFuelCompat.find(Fluids.LAVA);
+            int quantum=fuel==null?1000:fuel.amount();
+            h.assertTrue(be.tank.getFluidAmount()<4000&&(4000-be.tank.getFluidAmount())%quantum==0,"Fuel volume not consumed at configured rate");
             h.assertTrue(com.simibubi.create.content.processing.burner.BlazeBurnerBlock.getHeatLevelOf(be.getBlockState()).isAtLeast(com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel.KINDLED),"Heat not available to recipes");h.succeed();
         });
     }

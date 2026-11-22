@@ -9,16 +9,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import com.simibubi.create.foundation.fluid.SmartFluidTank;
 
 /** Native burner with a finite reservoir; all actual fuel acceptance is decided by Create. */
 public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity implements com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation {
-    public final FluidTank tank=new FluidTank(4000){
-        @Override protected void onContentsChanged(){setChanged();if(level!=null&&!level.isClientSide())sendData();}
+    public final SmartFluidTank tank=new SmartFluidTank(4000,fluid->{}){
+        @Override protected void onContentsChanged(){super.onContentsChanged();setChanged();if(level!=null&&!level.isClientSide())sendData();}
         @Override public boolean isFluidValid(FluidStack fluid){
             // Buffer native liquid fuels even while the burner cannot currently take more fuel.
             var bucket=new ItemStack(fluid.getFluid().getBucket());
-            return !fluid.isEmpty()&&!bucket.isEmpty()
+            if(fluid.isEmpty())return false;
+            if(dev.ccd.compat.LiquidFuelCompat.find(fluid.getFluid())!=null)return true;
+            return !bucket.isEmpty()
                 && (fluid.getFluid().isSame(net.minecraft.world.level.material.Fluids.LAVA)
                 || fluid.getFluid().isSame(dev.ccd.compat.ProcessingMedia.ALL.getFirst().source.get())
                 || bucket.getBurnTime(net.minecraft.world.item.crafting.RecipeType.SMELTING)>0
@@ -28,6 +30,18 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
     public TankBlazeBurnerBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.TANK_BURNER_BE.get(),pos,state);}
     @Override public void tick(){
         super.tick();
+        if(level!=null&&!level.isClientSide()&&!tank.isEmpty()){
+            var fuel=dev.ccd.compat.LiquidFuelCompat.find(tank.getFluid().getFluid());
+            if(fuel!=null){
+                if(tank.getFluidAmount()>=fuel.amount()&&remainingBurnTime<=MAX_HEAT_CAPACITY-fuel.ticks()){
+                    activeFuel=fuel.superheated()?FuelType.SPECIAL:FuelType.NORMAL;
+                    remainingBurnTime+=fuel.ticks();
+                    tank.drain(fuel.amount(),IFluidHandler.FluidAction.EXECUTE);
+                    updateBlockState();sendData();
+                }
+                return;
+            }
+        }
         if(level==null||level.isClientSide()||level.getGameTime()%10!=0||tank.getFluidAmount()<1000)return;
         var fluid=tank.getFluid();
         var bucket=new ItemStack(fluid.getFluid().getBucket());

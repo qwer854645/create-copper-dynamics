@@ -28,6 +28,10 @@ public class ArmBurnerTests {
         h.assertTrue(handler.fill(new FluidStack(Fluids.WATER,1000),FluidAction.EXECUTE)==0,"Water accepted as fuel");
         h.assertTrue(handler.fill(new FluidStack(Fluids.LAVA,500),FluidAction.EXECUTE)==500,"Partial lava rejected");
         h.assertTrue(handler.fill(new FluidStack(Fluids.LAVA,500),FluidAction.EXECUTE)==500,"Remaining lava rejected");
-        h.assertTrue(burner.getActiveFuel()==BlazeBurnerBlockEntity.FuelType.NORMAL&&burner.getRemainingBurnTime()>0,"Lava failed to fuel burner");h.succeed();
+        if(net.neoforged.fml.ModList.get().isLoaded("createliquidfuel")){
+            h.runAfterDelay(5,()->{h.assertTrue(burner.getRemainingBurnTime()>0,"Liquid Fuel did not burn buffered lava");h.succeed();});
+        }else{
+            h.assertTrue(burner.getActiveFuel()==BlazeBurnerBlockEntity.FuelType.NORMAL&&burner.getRemainingBurnTime()>0,"Lava failed to fuel burner");h.succeed();
+        }
     }
 }
