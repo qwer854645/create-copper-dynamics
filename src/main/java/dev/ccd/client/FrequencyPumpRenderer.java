@@ -26,9 +26,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
         float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),axis);
         float angle=(float)Math.toRadians((time*be.getSpeed()*.3f+offset)%360);
         pose.pushPose();pose.translate(.5,.5,.5);
-        if(front.getAxis().isVertical())pose.mulPose(Axis.XP.rotationDegrees(front==Direction.UP?90:-90));
-        if(front.getAxis().isHorizontal())pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
-        pose.mulPose(Axis.ZP.rotationDegrees(-90*state.getValue(VariableFlowPumpBlock.ROLL)));
+        PumpRenderFrame.apply(pose,state,VariableFlowPumpBlock.ROLL);
         pose.mulPose(Axis.XP.rotation(angle));
         pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
@@ -36,9 +34,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
         float progress=net.minecraft.util.Mth.lerp(pt,be.previousSignalDial,be.signalDial);
         for(int side:new int[]{1,-1}){
             pose.pushPose();pose.translate(.5,.5,.5);
-            if(front.getAxis().isVertical())pose.mulPose(Axis.XP.rotationDegrees(front==Direction.UP?90:-90));
-            pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
-            pose.mulPose(Axis.ZP.rotationDegrees(-90*state.getValue(VariableFlowPumpBlock.ROLL)));
+            PumpRenderFrame.apply(pose,state,VariableFlowPumpBlock.ROLL);
             if(side<0)pose.mulPose(Axis.YP.rotationDegrees(180));
             pose.translate(-.5,-.5,-.5);
             pose.translate(-1.9/16f,0,0);

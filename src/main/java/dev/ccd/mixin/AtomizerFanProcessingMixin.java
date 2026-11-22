@@ -15,6 +15,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /** Supply custom timers without replacing Create's stack conversion, processing loop or item entity handling. */
 @Mixin(FanProcessing.class)
 public abstract class AtomizerFanProcessingMixin {
+    @com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation(method={"applyProcessing(Lnet/minecraft/world/entity/item/ItemEntity;Lcom/simibubi/create/content/kinetics/fan/processing/FanProcessingType;)Z","applyProcessing(Lcom/simibubi/create/content/kinetics/belt/transport/TransportedItemStack;Lnet/minecraft/world/level/Level;Lcom/simibubi/create/content/kinetics/fan/processing/FanProcessingType;)Lcom/simibubi/create/content/kinetics/belt/behaviour/TransportedItemStackHandlerBehaviour$TransportedResult;"},at=@At(value="INVOKE",target="Lcom/simibubi/create/content/kinetics/fan/processing/FanProcessingType;process(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;)Ljava/util/List;"))
+    private static java.util.List<net.minecraft.world.item.ItemStack> ccd$guardUnknownProcessing(FanProcessingType type,net.minecraft.world.item.ItemStack input,Level level,
+        com.llamalad7.mixinextras.injector.wrapoperation.Operation<java.util.List<net.minecraft.world.item.ItemStack>> original){
+        return AtomizerProcessing.supportsOutputFilter(type,input,level)?original.call(type,input,level):null;
+    }
     @Inject(method = "canProcess(Lnet/minecraft/world/entity/item/ItemEntity;Lcom/simibubi/create/content/kinetics/fan/processing/FanProcessingType;)Z", at = @At("HEAD"))
     private static void ccd$prepareEntity(ItemEntity item, FanProcessingType type, CallbackInfoReturnable<Boolean> cir) {
         AtomizerProcessing.prepare(item, type);

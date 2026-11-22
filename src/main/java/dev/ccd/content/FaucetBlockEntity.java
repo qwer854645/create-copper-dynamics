@@ -59,7 +59,7 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
         flowDistance=distance;
         flowTicks=SpoutBlockEntity.FILLING_TIME;
         notifyUpdate();
-        if (level instanceof ServerLevel server) server.sendParticles(FluidFX.getFluidParticle(fluid),
+        if (level instanceof ServerLevel server) server.sendParticles(new com.simibubi.create.content.fluids.particle.FluidParticleData(com.simibubi.create.AllParticleTypes.FLUID_PARTICLE.get(),fluid.copy()),
             worldPosition.getX() + .5, worldPosition.getY() + .1 - (distance - 1), worldPosition.getZ() + .5,
             6, .04, .1, .04, .02);
     }

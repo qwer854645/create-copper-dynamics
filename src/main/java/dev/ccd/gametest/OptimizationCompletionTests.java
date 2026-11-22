@@ -20,6 +20,12 @@ public class OptimizationCompletionTests {
             var roll=block instanceof RedstoneFluidPumpBlock?RedstoneFluidPumpBlock.ROLL:VariableFlowPumpBlock.ROLL;
             for(var front:Direction.values())for(int r=0;r<4;r++){
                 var state=block.defaultBlockState().setValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING,front).setValue(roll,r);
+                var right=PumpOrientation.side(state,roll,Direction.EAST);
+                var up=PumpOrientation.side(state,roll,Direction.UP);var south=front.getOpposite();
+                var basis=new org.joml.Matrix3f(right.getStepX(),right.getStepY(),right.getStepZ(),up.getStepX(),up.getStepY(),up.getStepZ(),south.getStepX(),south.getStepY(),south.getStepZ());
+                var quaternion=new org.joml.Quaternionf().setFromNormalized(basis);
+                var rendered=new org.joml.Vector3f(1,0,0).rotate(quaternion);
+                h.assertTrue(rendered.distance(right.getStepX(),right.getStepY(),right.getStepZ())<.0001f,"Render quaternion disagrees with logical shaft");
                 for(var mirror:Mirror.values()){
                     var next=state.mirror(mirror);
                     h.assertTrue(PumpOrientation.side(next,roll,Direction.EAST)==mirror.mirror(PumpOrientation.side(state,roll,Direction.EAST)),"Mirror lost shaft frame");

@@ -36,6 +36,8 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
         if(level!=null&&!level.isClientSide()&&!tank.isEmpty()){
             var fuel=dev.ccd.compat.LiquidFuelCompat.find(tank.getFluid().getFluid());
             if(fuel!=null){
+                // A queued ordinary liquid must not downgrade still-burning special fuel.
+                if(activeFuel==FuelType.SPECIAL&&!fuel.superheated())return;
                 if(tank.getFluidAmount()>=fuel.amount()&&remainingBurnTime<=MAX_HEAT_CAPACITY-fuel.ticks()){
                     activeFuel=fuel.superheated()?FuelType.SPECIAL:FuelType.NORMAL;
                     remainingBurnTime+=fuel.ticks();

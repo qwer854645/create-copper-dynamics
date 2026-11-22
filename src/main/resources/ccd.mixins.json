@@ -4,6 +4,8 @@
   "package": "dev.ccd.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DeviceMeasurementMixin",
+    "DeviceSyncMeasurementMixin",
     "LiquidFuelTankBurnerMixin",
     "FluidArmHintMixin",
     "TankBurnerAnimationMixin",

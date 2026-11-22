@@ -20,6 +20,26 @@ public final class AtomizerProcessing {
     private static final ThreadLocal<FluidAtomizerBlockEntity> SOURCE = new ThreadLocal<>();
     private static final Map<TransportedItemStack, String> KEYS = new WeakHashMap<>();
     public static FluidAtomizerBlockEntity source() { return SOURCE.get(); }
+    public static boolean supportsOutputFilter(FanProcessingType type,ItemStack input,net.minecraft.world.level.Level level){
+        var owner=source();
+        if(owner==null||!owner.hasOutputFilter())return true;
+        if(type==CopperDynamics.ATOMIZING_FAN_TYPE.get()||type==CopperDynamics.BULK_GLUING.get())return true;
+        // Allow only routes whose recipe execution is guarded before output rolling.
+        if(type==CopperDynamics.SANDBLASTING.get()||type==CopperDynamics.FLUID_HAUNTING.get())return true;
+        var key=com.simibubi.create.api.registry.CreateBuiltInRegistries.FAN_PROCESSING_TYPE.getKey(type);
+        if(key==null||com.simibubi.create.api.registry.CreateBuiltInRegistries.FAN_PROCESSING_TYPE.get(key)!=type)return false;
+        if(type==com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.BLASTING){
+            var recipeInput=new net.minecraft.world.item.crafting.SingleRecipeInput(input);
+            var manager=level.getRecipeManager();
+            return manager.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.SMELTING,recipeInput,level)
+                .filter(com.simibubi.create.AllRecipeTypes.CAN_BE_AUTOMATED).isPresent()
+                ||manager.getRecipeFor(net.minecraft.world.item.crafting.RecipeType.BLASTING,recipeInput,level)
+                .filter(com.simibubi.create.AllRecipeTypes.CAN_BE_AUTOMATED).isPresent();
+        }
+        if(key.getNamespace().equals("create"))return true;
+        // More Catalysts common types execute through RecipeApplier (verified release 1.2.4).
+        return key.getNamespace().equals("create_more_catalysts");
+    }
     public static void withSource(FluidAtomizerBlockEntity owner, Runnable work) {
         var previous = SOURCE.get();
         SOURCE.set(owner);

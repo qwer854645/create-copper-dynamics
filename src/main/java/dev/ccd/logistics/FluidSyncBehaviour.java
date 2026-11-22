@@ -12,6 +12,7 @@ public final class FluidSyncBehaviour extends BlockEntityBehaviour {
     public FluidSyncBehaviour(SmartBlockEntity owner){super(owner);}
     public static void changed(SmartBlockEntity owner){
         owner.setChanged();
+        if(Boolean.getBoolean("ccd.syncBaseline")){if(owner.getLevel()!=null&&!owner.getLevel().isClientSide())owner.sendData();return;}
         var behaviour=owner.getBehaviour(TYPE);
         if(behaviour!=null)behaviour.dirty=true;
     }
