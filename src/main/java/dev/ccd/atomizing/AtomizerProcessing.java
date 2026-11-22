@@ -38,7 +38,8 @@ public final class AtomizerProcessing {
         }
         if(key.getNamespace().equals("create"))return true;
         // More Catalysts common types execute through RecipeApplier (verified release 1.2.4).
-        return key.getNamespace().equals("create_more_catalysts");
+        return key.getNamespace().equals("create_more_catalysts")
+            ||dev.ccd.compat.ThirdPartyOutputFilters.allows(type,input,level,owner);
     }
     public static void withSource(FluidAtomizerBlockEntity owner, Runnable work) {
         var previous = SOURCE.get();
@@ -89,7 +90,7 @@ public final class AtomizerProcessing {
         if(rule!=null&&!acceptsRule(owner,rule))return null;
         if (rule == null) {
             var fallback = owner.nativeFallback();
-            return fallback == null ? null : fallback.process(input, owner.getLevel());
+            return fallback == null || !supportsOutputFilter(fallback,input,owner.getLevel()) ? null : fallback.process(input, owner.getLevel());
         }
         List<ItemStack> results = new ArrayList<>();
         if (!rule.script().isEmpty()) {

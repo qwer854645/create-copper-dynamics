@@ -26,6 +26,7 @@ neoForge {
             if (project.hasProperty('gluingBaseline')) systemProperty 'ccd.gluingBaseline', 'true'
             if (project.hasProperty('deviceMeasurements')) systemProperty 'ccd.deviceMeasurements', 'true'
             if (project.hasProperty('syncBaseline')) systemProperty 'ccd.syncBaseline', 'true'
+            if (project.hasProperty('thirdPartyFilterProbe')) systemProperty 'ccd.thirdPartyFilterProbe', 'true'
         }
     }
     mods { ccd { sourceSet sourceSets.main } }
