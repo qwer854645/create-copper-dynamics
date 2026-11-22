@@ -44,7 +44,7 @@ public class VariableFlowPumpBlock extends PumpBlock {
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace){
         var facing=state.getValue(FACING);
         if(this instanceof PortableFluidPumpBlock)return state.setValue(FACING,facing.getClockWise());
-        return PumpOrientation.next(state,ROLL);
+        return PumpOrientation.rotate(state,ROLL,clickedFace);
     }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(); }
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){

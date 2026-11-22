@@ -24,7 +24,7 @@ public final class RedstoneFluidPumpBlock extends PumpBlock {
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return side.getAxis()==getRotationAxis(state); }
     @Override public boolean isSmallCog() { return false; }
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace) {
-        return PumpOrientation.next(state,ROLL);
+        return PumpOrientation.rotate(state,ROLL,clickedFace);
     }
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving) {
         super.onPlace(state,level,pos,old,moving);

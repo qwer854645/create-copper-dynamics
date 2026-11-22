@@ -461,7 +461,7 @@
   "ccd.ponder.pump_variants.text_1": "Turning Booster Pumps move fluids between two adjacent pipe mouths",
   "ccd.ponder.pump_variants.text_2": "Perpendicular Turning Booster Pumps place their shaft normal to the two pipe mouths",
   "ccd.ponder.pump_variants.text_3": "A Redstone Signal reverses the Redstone Pump's fluid flow",
-  "ccd.ponder.pump_variants.text_4": "Repeatedly wrench any face to cycle all six pipe directions and four shaft orientations",
+  "ccd.ponder.pump_variants.text_4": "Wrench a face to rotate the entire pump around that face axis; pipe ends roll the shaft without changing the pipe direction",
   "ccd.ponder.pump_variants.text_5": "Bidirectional Pumps reverse fluid flow when their rotation reverses",
   "ccd.ponder.pump_variants.text_6": "Variable Flow Pumps use Redstone strength to adjust flow and range; Cogwheels connect above or below",
   "ccd.ponder.buffered_delivery.header": "Supplying Stored Fluids",
@@ -636,7 +636,7 @@
   "block.ccd.fluid_atomizer.tooltip.condition3": "When changing the target output filter",
   "block.ccd.fluid_atomizer.tooltip.behaviour3": "Restarts processing progress. Filtering _does not switch processing types_ or restrict entity effects.",
   "block.ccd.redstone_fluid_pump.tooltip.condition2": "When adjusting the facing with a Wrench",
-  "block.ccd.redstone_fluid_pump.tooltip.behaviour2": "Repeatedly R-Click any face with a Wrench to cycle _six pipe directions_ and _four gear or shaft orientations_.",
+  "block.ccd.redstone_fluid_pump.tooltip.behaviour2": "Use a Wrench to rotate the entire machine around the _clicked face axis_. Click a pipe end to roll the gear or shaft; click a side to turn the ports.",
   "block.ccd.smart_collection_grate.tooltip.condition2": "When receiving a Redstone signal",
   "block.ccd.smart_collection_grate.tooltip.behaviour2": "The red indicators _light up_ and collection and discharge pause. Without a signal, the indicators turn dark.",
   "item.ccd.moss_suspension_bucket.tooltip.condition3": "When the liquid touches moss-replaceable blocks",
@@ -696,5 +696,5 @@
   "ccd.tank_burner.heat.kindled": "Heated",
   "ccd.tank_burner.heat.seething": "Superheated",
   "block.ccd.variable_flow_pump.tooltip.condition2": "When using a Wrench",
-  "block.ccd.variable_flow_pump.tooltip.behaviour2": "Repeatedly R-Click any face with a Wrench to cycle _six pipe directions_ and _four gear or shaft orientations_."
+  "block.ccd.variable_flow_pump.tooltip.behaviour2": "Use a Wrench to rotate the entire machine around the _clicked face axis_. Click a pipe end to roll the gear or shaft; click a side to turn the ports."
 }
