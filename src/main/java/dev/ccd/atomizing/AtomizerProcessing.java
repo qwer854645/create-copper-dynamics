@@ -35,26 +35,28 @@ public final class AtomizerProcessing {
     public static boolean canProcess(ItemStack stack) {
         var owner = source();
         if (owner == null || !owner.mistActive()) return false;
-        if (owner.itemRule(stack) != null) return true;
+        if (owner.itemRule(stack) != null) return acceptsRule(owner,owner.itemRule(stack));
         var fallback = owner.nativeFallback();
         return fallback != null && fallback.canProcess(stack, owner.getLevel());
     }
     public static void prepare(TransportedItemStack item, FanProcessingType type) {
-        if (!custom(type)) return;
-        String key = source().processingKey(item.stack);
+        if (source()==null) return;
+        String key = source().processingKey(item.stack)+":"+com.simibubi.create.api.registry.CreateBuiltInRegistries.FAN_PROCESSING_TYPE.getKey(type);
         if (item.processedBy == type && key.equals(KEYS.get(item))) return;
         KEYS.put(item, key);
+        if(!custom(type)) { item.processedBy=null; return; }
         item.processedBy = type;
         item.processingTime = canProcess(item.stack) ? duration(item.stack) : -1;
     }
     public static void prepare(ItemEntity entity, FanProcessingType type) {
-        if (!custom(type)) return;
+        if (source()==null) return;
         CompoundTag root = entity.getPersistentData();
-        String key = source().processingKey(entity.getItem());
+        String key = source().processingKey(entity.getItem())+":"+com.simibubi.create.api.registry.CreateBuiltInRegistries.FAN_PROCESSING_TYPE.getKey(type);
         CompoundTag create = root.getCompound("CreateData");
         CompoundTag progress = create.getCompound("Processing");
-        if (key.equals(root.getString("CCDAtomizingRule")) && "ccd:atomizing".equals(progress.getString("Type"))) return;
+        if (key.equals(root.getString("CCDAtomizingRule"))) return;
         root.putString("CCDAtomizingRule", key);
+        if(!custom(type)) { create.remove("Processing");root.put("CreateData",create);return; }
         progress.putString("Type", "ccd:atomizing");
         progress.putInt("Time", canProcess(entity.getItem()) ? duration(entity.getItem()) : -1);
         create.put("Processing", progress);
@@ -64,6 +66,7 @@ public final class AtomizerProcessing {
         var owner = source();
         if (owner == null || !owner.mistActive()) return null;
         var rule = owner.itemRule(input);
+        if(rule!=null&&!acceptsRule(owner,rule))return null;
         if (rule == null) {
             var fallback = owner.nativeFallback();
             return fallback == null ? null : fallback.process(input, owner.getLevel());
@@ -72,7 +75,7 @@ public final class AtomizerProcessing {
         if (!rule.script().isEmpty()) {
             var result = AtomizerScripts.processItem(rule.script(), new AtomizerScripts.ItemContext(input, owner.activeFluid(),
                 owner.getSpeed(), owner.getBlockPos(), owner.getLevel().dimension().location()));
-            if (result == null) return null;
+            if (result == null || owner.hasOutputFilter()&&result.outputs().stream().noneMatch(owner::acceptsOutput)) return null;
             for (var stack : result.outputs()) split(results, stack, stack.getCount());
         } else for (var output : rule.results()) {
             ItemStack stack = output.stack();
@@ -81,6 +84,11 @@ public final class AtomizerProcessing {
             split(results, stack, amount);
         }
         return results;
+    }
+    private static boolean acceptsRule(FluidAtomizerBlockEntity owner,AtomizingRecipe.ItemRule rule) {
+        // Script callbacks are not safe to execute speculatively: require declared results
+        // when a target filter is installed, then check their actual output before conversion.
+        return !owner.hasOutputFilter()||rule.results().stream().anyMatch(output->output.chance()>0&&owner.acceptsOutput(output.stack()));
     }
     private static void split(List<ItemStack> results, ItemStack stack, long amount) {
         if (stack.isEmpty()) return;

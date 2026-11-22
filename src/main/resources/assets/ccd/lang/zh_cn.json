@@ -1,4 +1,5 @@
 {
+  "ccd.atomizer.output_filter": "目标产物",
   "fluid_type.ccd.haunting": "灵魂液",
   "fluid.ccd.haunting": "灵魂液",
   "fluid.ccd.flowing_haunting": "灵魂液",

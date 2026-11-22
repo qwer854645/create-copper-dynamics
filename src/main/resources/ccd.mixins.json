@@ -46,6 +46,7 @@
     "ThreeWayValveEndpointMixin",
     "FluidArmAccessor",
     "AtomizerFanProcessingMixin",
+    "AtomizerOutputRecipeMixin",
     "PowderSnowFluidTargetMixin"
   ],
   "injectors": {

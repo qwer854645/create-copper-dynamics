@@ -43,6 +43,8 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     private long lookupRevision = -1, activeRevision = -1, paidUntil, nextEntityPulse;
     private boolean mistActive;
     private String processingContext = "";
+    private com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour outputFilter;
+    private long filterRevision;
 
     public FluidAtomizerBlockEntity(BlockPos pos, BlockState state) {
         super(CopperDynamics.FLUID_ATOMIZER_BE.get(), pos, state);
@@ -51,6 +53,22 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         behaviours.add(tank = SmartFluidTankBehaviour.single(this, CAPACITY));
+        behaviours.add(outputFilter = new com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour(this,
+            new com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform.Sided() {
+                @Override protected Vec3 getSouthLocation() { return new Vec3(.5,.5,1.01); }
+                @Override protected boolean isSideActive(BlockState state,Direction side) {
+                    return side.getAxis()!=state.getValue(FluidAtomizerBlock.FACING).getAxis();
+                }
+            }).withCallback(stack -> { filterRevision++; updateAirFlow=true; }));
+        outputFilter.setLabel(Component.translatable("ccd.atomizer.output_filter"));
+    }
+    public boolean hasOutputFilter() { return outputFilter!=null&&!outputFilter.getFilter().isEmpty(); }
+    public boolean acceptsOutput(ItemStack stack) { return !hasOutputFilter()||!stack.isEmpty()&&outputFilter.test(stack); }
+    public boolean acceptsRecipe(net.minecraft.world.item.crafting.Recipe<?> recipe) {
+        if(!hasOutputFilter())return true;
+        if(recipe instanceof com.simibubi.create.content.processing.recipe.ProcessingRecipe<?,?> processing)
+            return processing.getRollableResults().stream().anyMatch(result->result.getChance()>0&&acceptsOutput(result.getStack()));
+        return acceptsOutput(recipe.getResultItem(level.registryAccess()));
     }
     @Override public void initialize() {
         super.initialize();
@@ -74,7 +92,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     }
     public String processingKey(ItemStack stack) {
         int index = active == null || active.recipe() == null ? -1 : active.recipe().items().indexOf(itemRule(stack));
-        return processingContext + ":" + index;
+        return processingContext + ":" + index + ":" + filterRevision;
     }
     @Override public void tick() {
         if (level != null && !level.isClientSide()) prepareMist();

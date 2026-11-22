@@ -55,6 +55,11 @@ public final class FluidAtomizerBlock extends EncasedFanBlock {
     }
     @Override protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
         Player player, InteractionHand hand, BlockHitResult hit) {
+        if(level.getBlockEntity(pos) instanceof FluidAtomizerBlockEntity atomizer) {
+            var filter=atomizer.getBehaviour(com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour.TYPE);
+            if(filter!=null&&filter.getSlotPositioning().testHit(level,pos,state,hit.getLocation().subtract(net.minecraft.world.phys.Vec3.atLowerCornerOf(pos))))
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
         if (stack.is(Tags.Items.TOOLS_WRENCH) || !FluidHatchBlock.isFluidContainer(level, stack))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if (!(level.getBlockEntity(pos) instanceof FluidAtomizerBlockEntity atomizer)) return ItemInteractionResult.FAIL;

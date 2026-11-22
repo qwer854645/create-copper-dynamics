@@ -1,4 +1,5 @@
 {
+  "ccd.atomizer.output_filter": "Target Output",
   "fluid_type.ccd.haunting": "Soul Fluid",
   "fluid.ccd.haunting": "Soul Fluid",
   "fluid.ccd.flowing_haunting": "Soul Fluid",
