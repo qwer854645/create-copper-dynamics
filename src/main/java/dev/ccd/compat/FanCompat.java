@@ -36,7 +36,15 @@ public final class FanCompat {
         new Rule("create_more_catalysts","tidal","fan_catalysts/tidal","fan_tidal_catalyst"),
         new Rule("create_more_catalysts","mossify","fan_catalysts/mossify","fan_mossify_catalyst"),
         new Rule("create_more_catalysts","tear","fan_catalysts/tear","fan_tear_catalyst"),
-        new Rule("create_more_catalysts","corrupted","fan_catalysts/corrupted","fan_corrupted_catalyst")
+        new Rule("create_more_catalysts","corrupted","fan_catalysts/corrupted","fan_corrupted_catalyst"),
+        new Rule("create_more_catalysts","preservation","fan_catalysts/preservation","fan_preservation_catalyst"),
+        new Rule("create_more_catalysts","salout","fan_catalysts/salout","fan_salout_catalyst"),
+        new Rule("create_more_catalysts","etch","fan_catalysts/etch","fan_etch_catalyst"),
+        new Rule("create_more_catalysts","sulfon","fan_catalysts/sulfon","fan_sulfon_catalyst"),
+        new Rule("create_more_catalysts","dehyd","fan_catalysts/dehyd","fan_dehyd_catalyst"),
+        new Rule("create_more_catalysts","oxidize","fan_catalysts/oxidize","fan_oxidize_catalyst"),
+        new Rule("create_more_catalysts","reduce","fan_catalysts/reduce","fan_reduce_catalyst"),
+        new Rule("create_more_catalysts","ferment","fan_catalysts/ferment","fan_ferment_catalyst")
     );
     private FanCompat() {}
     public static FanProcessingType find(String mod,String path) {
