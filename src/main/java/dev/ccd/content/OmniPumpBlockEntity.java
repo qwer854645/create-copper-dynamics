@@ -16,6 +16,7 @@ public final class OmniPumpBlockEntity extends KineticBlockEntity implements com
     private long budgetTick=Long.MIN_VALUE;
     private int outputUsed;
     private int inputUsed;
+    private final IFluidHandler[][] ports=new IFluidHandler[6][2];
     private int remainingOutput(){resetBudget();return Math.max(0,Math.max(1,(int)(Math.abs(getSpeed())/2))-outputUsed);}
     private void resetBudget(){if(level!=null&&budgetTick!=level.getGameTime()){budgetTick=level.getGameTime();outputUsed=0;inputUsed=0;}}
     public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(2000){
@@ -29,7 +30,9 @@ public final class OmniPumpBlockEntity extends KineticBlockEntity implements com
     public IFluidHandler handler(Direction side){
         if(side==null)return null;int mode=OmniPumpBlock.mode(getBlockState(),side);
         if(mode!=OmniPumpBlock.INPUT&&mode!=OmniPumpBlock.OUTPUT)return null;
-        return new IFluidHandler(){
+        int index=mode==OmniPumpBlock.INPUT?0:1;
+        if(ports[side.get3DDataValue()][index]!=null)return ports[side.get3DDataValue()][index];
+        return ports[side.get3DDataValue()][index]=new IFluidHandler(){
             public int getTanks(){return 1;}
             public FluidStack getFluidInTank(int tank){return buffer.getFluid().copy();}
             public int getTankCapacity(int tank){return buffer.getCapacity();}

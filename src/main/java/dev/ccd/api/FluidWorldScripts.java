@@ -20,6 +20,10 @@ public final class FluidWorldScripts {
         boolean matches(BlockState state){return tag==null?state.is(target):state.is(tag);}
     }
     private static final java.util.Map<String,BlockRule> BLOCK_RULES=new ConcurrentHashMap<>();
+    private static volatile java.util.List<Rule> orderedRules=java.util.List.of();
+    private static volatile java.util.List<BlockRule> orderedBlockRules=java.util.List.of();
+    private static void rebuildRules(){orderedRules=RULES.values().stream().sorted(java.util.Comparator.comparing(Rule::id)).toList();}
+    private static void rebuildBlockRules(){orderedBlockRules=BLOCK_RULES.values().stream().sorted(java.util.Comparator.comparing(BlockRule::id)).toList();}
     private static final ThreadLocal<Boolean> APPLYING=ThreadLocal.withInitial(()->false);
     private static net.minecraft.world.level.material.Fluid fluid(String id){
         var key=ResourceLocation.parse(id);if(!BuiltInRegistries.FLUID.containsKey(key))throw new IllegalArgumentException("Unknown fluid: "+id);
@@ -30,16 +34,17 @@ public final class FluidWorldScripts {
         var key=ResourceLocation.parse(id);if(!BuiltInRegistries.BLOCK.containsKey(key))throw new IllegalArgumentException("Unknown block: "+id);
         return BuiltInRegistries.BLOCK.get(key).defaultBlockState();
     }
-    public static void interaction(String id,String first,String second,String sourceResult,String flowingResult,String downwardResult){
+    public static synchronized void interaction(String id,String first,String second,String sourceResult,String flowingResult,String downwardResult){
         var key=ResourceLocation.parse(id).toString();
         var a=fluid(first);var b=fluid(second);
         if(a.isSame(b))throw new IllegalArgumentException("Interaction requires different fluid families");
         var source=block(sourceResult);var flowing=block(flowingResult);var downward=block(downwardResult);
-        if(source==null&&flowing==null&&downward==null){RULES.remove(key);return;}
+        if(source==null&&flowing==null&&downward==null){RULES.remove(key);rebuildRules();return;}
         RULES.put(key,new Rule(key,a,b,source,flowing,downward));
+        rebuildRules();
     }
     /** mode: both, source or flowing. Null result keeps that position unchanged. */
-    public static void blockInteraction(String id,String fluidId,String target,String mode,String fluidResult,String blockResult){
+    public static synchronized void blockInteraction(String id,String fluidId,String target,String mode,String fluidResult,String blockResult){
         var key=ResourceLocation.parse(id).toString();
         if(!java.util.Set.of("both","source","flowing").contains(mode))throw new IllegalArgumentException("Unknown fluid contact mode: "+mode);
         var first=fluid(fluidId);
@@ -48,15 +53,16 @@ public final class FluidWorldScripts {
         if(target.startsWith("#"))tag=net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK,ResourceLocation.parse(target.substring(1)));
         else {var parsed=block(target);if(parsed==null)throw new IllegalArgumentException("A contact target is required");targetBlock=parsed.getBlock();}
         var a=block(fluidResult);var b=block(blockResult);
-        if(a==null&&b==null){BLOCK_RULES.remove(key);return;}
+        if(a==null&&b==null){BLOCK_RULES.remove(key);rebuildBlockRules();return;}
         BLOCK_RULES.put(key,new BlockRule(key,first,targetBlock,tag,mode,a,b));
+        rebuildBlockRules();
     }
-    public static void remove(String id){var key=ResourceLocation.parse(id).toString();RULES.remove(key);BLOCK_RULES.remove(key);}
-    public static void clear(){RULES.clear();BLOCK_RULES.clear();}
+    public static synchronized void remove(String id){var key=ResourceLocation.parse(id).toString();RULES.remove(key);BLOCK_RULES.remove(key);rebuildRules();rebuildBlockRules();}
+    public static synchronized void clear(){RULES.clear();BLOCK_RULES.clear();orderedRules=java.util.List.of();orderedBlockRules=java.util.List.of();}
     public static boolean blockContact(net.minecraft.world.level.Level level,BlockPos pos){
         if(level.isClientSide()||BLOCK_RULES.isEmpty()||APPLYING.get())return false;
         var fluidState=level.getFluidState(pos);if(fluidState.isEmpty())return false;
-        for(var rule:BLOCK_RULES.values().stream().sorted(java.util.Comparator.comparing(BlockRule::id)).toList()){
+        for(var rule:orderedBlockRules){
             if(!rule.fluid.isSame(fluidState.getType())||rule.mode.equals("source")&&!fluidState.isSource()
                 ||rule.mode.equals("flowing")&&fluidState.isSource())continue;
             for(var side:Direction.values()){
@@ -76,7 +82,7 @@ public final class FluidWorldScripts {
         }
         return false;
     }
-    private static java.util.List<Rule> rules(){return RULES.values().stream().sorted(java.util.Comparator.comparing(Rule::id)).toList();}
+    private static java.util.List<Rule> rules(){return orderedRules;}
     private static void replace(LevelAccessor level,BlockPos pos,BlockPos origin,BlockState result){
         level.setBlock(pos,net.neoforged.neoforge.event.EventHooks.fireFluidPlaceBlockEvent(level,pos,origin,result),3);
         level.levelEvent(1501,pos,0);

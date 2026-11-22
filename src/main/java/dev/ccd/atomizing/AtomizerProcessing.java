@@ -95,8 +95,10 @@ public final class AtomizerProcessing {
         if (!rule.script().isEmpty()) {
             var result = AtomizerScripts.processItem(rule.script(), new AtomizerScripts.ItemContext(input, owner.activeFluid(),
                 owner.getSpeed(), owner.getBlockPos(), owner.getLevel().dimension().location()));
-            if (result == null || owner.hasOutputFilter()&&result.outputs().stream().noneMatch(owner::acceptsOutput)) return null;
-            for (var stack : result.outputs()) split(results, stack, stack.getCount());
+            if(result==null)return null;
+            var outputs=result.outputs();
+            if(owner.hasOutputFilter()&&outputs.stream().noneMatch(owner::acceptsOutput))return null;
+            for (var stack : outputs) split(results, stack, stack.getCount());
         } else for (var output : rule.results()) {
             ItemStack stack = output.stack();
             long amount = 0;
