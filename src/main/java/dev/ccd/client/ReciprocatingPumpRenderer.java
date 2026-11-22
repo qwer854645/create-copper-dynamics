@@ -26,8 +26,10 @@ public final class ReciprocatingPumpRenderer extends SafeBlockEntityRenderer<Var
             KineticBlockEntityRenderer.standardKineticRotationTransform(CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF,state,side),be,light)
                 .renderInto(pose,buffers.getBuffer(RenderType.solid()));
         float stroke=net.minecraft.util.Mth.lerp(pt,be.previousStroke,be.stroke);
+        pose.pushPose();pose.translate(.5,.5,.5);PumpRenderFrame.apply(pose,state,VariableFlowPumpBlock.ROLL);pose.translate(-.5,-.5,-.5);
         pose.pushPose();pose.translate(0,10/16d,0);pose.scale(1,1-stroke*.55f,1);pose.translate(0,-10/16d,0);
         CachedBuffers.partial(BELLOWS,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.solid()));pose.popPose();
         CachedBuffers.partial(PLATE,state).translate(0,-stroke*2.2/16,0).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.solid()));
+        pose.popPose();
     }
 }

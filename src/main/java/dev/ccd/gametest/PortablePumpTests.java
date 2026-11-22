@@ -11,6 +11,21 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class PortablePumpTests {
+    @GameTest(template="empty") public static void allPortablePosesRotateShapeAndShaft(GameTestHelper h){
+        var block=CopperDynamics.PORTABLE_PUMP.get();var pos=new BlockPos(2,2,2);
+        for(var front:Direction.values())for(int roll=0;roll<4;roll++){
+            var state=block.defaultBlockState().setValue(dev.ccd.content.VariableFlowPumpBlock.FACING,front).setValue(dev.ccd.content.VariableFlowPumpBlock.ROLL,roll);
+            h.setBlock(pos,state);var pump=(PortableFluidPumpBlockEntity)h.getBlockEntity(pos);
+            pump.stroke=0;var expanded=block.getShape(state,h.getLevel(),h.absolutePos(pos),net.minecraft.world.phys.shapes.CollisionContext.empty()).bounds();
+            pump.stroke=1;var compressed=block.getShape(state,h.getLevel(),h.absolutePos(pos),net.minecraft.world.phys.shapes.CollisionContext.empty()).bounds();
+            var strokeAxis=dev.ccd.content.PumpOrientation.side(state,dev.ccd.content.VariableFlowPumpBlock.ROLL,Direction.UP).getAxis();
+            double a=strokeAxis.choose(expanded.getXsize(),expanded.getYsize(),expanded.getZsize());
+            double b=strokeAxis.choose(compressed.getXsize(),compressed.getYsize(),compressed.getZsize());
+            h.assertTrue(a>b,"Rotated bellows shape did not compress: "+front+"/"+roll);
+            int shafts=0;for(var side:Direction.values())if(block.hasShaftTowards(h.getLevel(),h.absolutePos(pos),state,side)){shafts++;h.assertTrue(side.getAxis()!=front.getAxis(),"Shaft overlaps mouth");}
+            h.assertTrue(shafts==2,"Wrong shaft count");
+        }h.succeed();
+    }
     @GameTest(template="empty") public static void handDrivePowersShaftAndStops(GameTestHelper h) {
         var pos=new BlockPos(2,2,2);
         h.setBlock(pos,CopperDynamics.PORTABLE_PUMP.get().defaultBlockState());
@@ -25,7 +40,7 @@ public class PortablePumpTests {
                 h.assertTrue(pump.calculateAddedStressCapacity()>pump.calculateStressApplied(),"No spare capacity for external devices");
                 var state=pump.getBlockState();
                 var flipped=CopperDynamics.PORTABLE_PUMP.get().getRotatedBlockState(state,Direction.UP);
-                h.assertTrue(flipped.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING)==state.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING).getClockWise(),"Wrench did not rotate body");
+                 h.assertTrue(flipped.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING)==state.getValue(dev.ccd.content.PortableFluidPumpBlock.FACING).getClockWise(Direction.Axis.Y),"Wrench did not rotate body");
                 h.assertTrue(!pump.isPullingOnSide(true),"Positive speed must push at front");
                 pump.turn(true);
                 h.assertTrue(pump.getGeneratedSpeed()==-32&&pump.isPullingOnSide(true),"Sneaking must reverse shaft and flow");

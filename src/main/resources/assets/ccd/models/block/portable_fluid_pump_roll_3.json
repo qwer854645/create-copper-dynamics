@@ -1,0 +1,9 @@
+{
+  "parent": "ccd:block/portable_fluid_pump",
+  "transform": {
+    "rotation": {
+      "z": -270
+    },
+    "origin": "center"
+  }
+}

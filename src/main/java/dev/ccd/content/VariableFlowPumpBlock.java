@@ -26,7 +26,7 @@ public class VariableFlowPumpBlock extends PumpBlock implements com.simibubi.cre
         super.createBlockStateDefinition(builder);builder.add(SIGNAL,ROLL);
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return PumpPlacement.align(context,defaultBlockState().setValue(FACING,(this instanceof PortableFluidPumpBlock?context.getHorizontalDirection():context.getNearestLookingDirection()).getOpposite())
+        return PumpPlacement.align(context,defaultBlockState().setValue(FACING,context.getNearestLookingDirection().getOpposite())
             .setValue(SIGNAL,context.getLevel().getBestNeighborSignal(context.getClickedPos()))
             .setValue(BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER)));
     }
@@ -43,7 +43,6 @@ public class VariableFlowPumpBlock extends PumpBlock implements com.simibubi.cre
     }
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace){
         var facing=state.getValue(FACING);
-        if(this instanceof PortableFluidPumpBlock)return state.setValue(FACING,facing.getClockWise());
         return PumpOrientation.rotate(state,ROLL,clickedFace);
     }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(); }
