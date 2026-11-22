@@ -50,20 +50,29 @@ public final class FluidWorldEffects {
     public static void apply(LivingEntity entity,FluidType fluid,boolean submerged){
         if(entity.level().isClientSide()||!entity.isAlive()||entity.isSpectator()
             ||entity instanceof Player player&&player.isCreative())return;
+        String stamp="ccdFluidEffect/"+fluid.getDescriptionId();
+        long now=entity.level().getGameTime();
+        if(entity.getPersistentData().contains(stamp)&&entity.getPersistentData().getLong(stamp)==now)return;
+        entity.getPersistentData().putLong(stamp,now);
         if(fluid==CCDFluids.QUICKSAND_TYPE.get()){
             // Keep vertical sinking possible, but resist lateral movement and upward escape.
             var velocity=entity.getDeltaMovement();
             entity.setDeltaMovement(velocity.x*.35,Math.min(velocity.y,0),velocity.z*.35);
-            if(submerged&&entity.tickCount%20==0)entity.hurt(entity.damageSources().inWall(),2);
+            if(submerged&&pulse(entity,stamp,now))entity.hurt(entity.damageSources().inWall(),2);
             return;
         }
         if(fluid==CCDFluids.SLIME_TYPE.get()){
             var velocity=entity.getDeltaMovement();
             entity.setDeltaMovement(velocity.x*.6,velocity.y>0?velocity.y*.5:velocity.y,velocity.z*.6);
-            if(entity.tickCount%20==0)effect(entity,MobEffects.MOVEMENT_SLOWDOWN,60,1);
+            if(pulse(entity,stamp,now))effect(entity,MobEffects.MOVEMENT_SLOWDOWN,60,1);
             return;
         }
-        if(entity.tickCount%20!=0)return;
+        if(!pulse(entity,stamp,now))return;
+        if(fluid==ProcessingMedia.ALL.getFirst().type.get()){
+            entity.igniteForSeconds(15);
+            if(!entity.fireImmune())entity.hurt(entity.damageSources().lava(),20);
+            return;
+        }
         if(fluid==CCDFluids.HAUNTING_TYPE.get()){
             effect(entity,MobEffects.MOVEMENT_SLOWDOWN,60,0);
             effect(entity,MobEffects.WEAKNESS,60,0);
@@ -79,7 +88,17 @@ public final class FluidWorldEffects {
                 case "explosive_slurry" -> {
                     effect(entity,MobEffects.POISON,60,0);
                     // Volatile slurry flashes on contact with a burning entity, without a terrain explosion.
-                    if(entity.isOnFire())entity.hurt(entity.damageSources().onFire(),4);
+                    if(entity.isOnFire()){
+                        String key="ccdSlurryExplosion";
+                        if(!entity.getPersistentData().contains(key)||now-entity.getPersistentData().getLong(key)>=40){
+                            entity.getPersistentData().putLong(key,now);
+                            entity.level().explode(null,entity.getX(),entity.getY()-.1,entity.getZ(),1.0f,false,net.minecraft.world.level.Level.ExplosionInteraction.NONE);
+                            // The triggering entity can shield the blast ray at its own center.
+                            // Give it an explicit upward impulse as well as the radial blast.
+                            entity.push(0,.45,0);
+                            entity.hurtMarked=true;
+                        }
+                    }
                 }
                 case "resonant_solution" -> {
                     effect(entity,MobEffects.GLOWING,100,0);
@@ -90,16 +109,24 @@ public final class FluidWorldEffects {
                     effect(entity,MobEffects.DIG_SLOWDOWN,60,0);
                 }
                 case "purifying_solution" -> {
-                    // Remove harmful effects only; do not turn this fluid into a healing source.
+                    // Purification is immediate; healing is deliberately slow.
                     for(var active:java.util.List.copyOf(entity.getActiveEffects()))
                         if(active.getEffect().value().getCategory()==net.minecraft.world.effect.MobEffectCategory.HARMFUL)
                             entity.removeEffect(active.getEffect());
                     entity.clearFire();
+                    String healed="ccdPurificationHeal";
+                    if(!entity.getPersistentData().contains(healed)){entity.getPersistentData().putLong(healed,now);}
+                    else if(now-entity.getPersistentData().getLong(healed)>=100){entity.heal(1);entity.getPersistentData().putLong(healed,now);}
                 }
                 default -> {} // Super lava owns its native lava contact behavior.
             }
             return;
         }
+    }
+    private static boolean pulse(LivingEntity entity,String stamp,long now){
+        String key=stamp+"/pulse";
+        if(entity.getPersistentData().contains(key)&&now-entity.getPersistentData().getLong(key)<20)return false;
+        entity.getPersistentData().putLong(key,now);return true;
     }
     @SubscribeEvent public static void contact(EntityTickEvent.Post event){
         if(!(event.getEntity() instanceof LivingEntity entity)||entity.level().isClientSide())return;

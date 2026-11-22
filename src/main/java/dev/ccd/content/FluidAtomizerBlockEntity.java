@@ -123,6 +123,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
         if (level.isClientSide() || !mistActive || active == null || level.getGameTime() < nextEntityPulse) return;
         nextEntityPulse = level.getGameTime() + (active.recipe() == null ? 20 : active.recipe().entityInterval());
         for (var entity : entities) if (entity instanceof LivingEntity living && entity.isAlive() && entity.getBoundingBox().intersects(airCurrent.bounds)) {
+            dev.ccd.compat.FluidWorldEffects.apply(living,activeFluid.getFluidType(),true);
             var recipe = active.recipe();
             if (recipe != null && !recipe.entityTypes().isEmpty() && !recipe.entityTypes().contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()))) continue;
             AtomizerScripts.EntityResult scripted = null;

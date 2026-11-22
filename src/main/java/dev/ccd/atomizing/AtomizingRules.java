@@ -63,6 +63,8 @@ public final class AtomizingRules {
         if (AllFluidTags.FAN_PROCESSING_CATALYSTS_SMOKING.matches(f) && (type == null || type.getPriority() < AllFanProcessingTypes.SMOKING.getPriority())) type = AllFanProcessingTypes.SMOKING;
         if (AllFluidTags.FAN_PROCESSING_CATALYSTS_HAUNTING.matches(f) && (type == null || type.getPriority() < AllFanProcessingTypes.HAUNTING.getPriority())) type = AllFanProcessingTypes.HAUNTING;
         if (AllFluidTags.FAN_PROCESSING_CATALYSTS_SPLASHING.matches(f) && (type == null || type.getPriority() < AllFanProcessingTypes.SPLASHING.getPriority())) type = AllFanProcessingTypes.SPLASHING;
+        if(type==null&&dev.ccd.compat.ProcessingMedia.ALL.stream().anyMatch(m->m.type.get()==fluid.getFluidType()))
+            type=CopperDynamics.ATOMIZING_FAN_TYPE.get();
         return type == null ? null : new Selection("ccd:native", null, type, CCDConfig.ATOMIZER_NORMAL_COST.get(), 20, false);
     }
     public static FanProcessingType parseType(String id) {

@@ -188,10 +188,10 @@ for locale in ['zh_cn','en_us']:
         'quicksand':('接触时减速，头部浸没时受到_窒息伤害_。','Slows movement on contact and causes _suffocation_ when submerged.'),
         'enriching_reagent':('安装 Create Nuclear 时，接触会积累_辐射污染_。','Contact causes _radiation contamination_ when Create Nuclear is installed.'),
         'soul_stripping_reagent':('接触时施加_凋零_和_虚弱_。','Applies _Wither_ and _Weakness_ on contact.'),
-        'explosive_slurry':('接触时施加_中毒_，燃烧中的生物受到额外伤害。','Applies _Poison_ on contact and deals extra damage to burning entities.'),
+        'explosive_slurry':('施加_中毒_，燃烧中的生物触发不破坏方块的_小爆炸_。','Applies _Poison_. Burning entities trigger a _small explosion_ that leaves blocks intact.'),
         'resonant_solution':('接触时施加_发光_和_缓慢_。','Applies _Glowing_ and _Slowness_ on contact.'),
         'sculk_suspension':('接触时施加_黑暗_和_挖掘疲劳_。','Applies _Darkness_ and _Mining Fatigue_ on contact.'),
-        'purifying_solution':('接触时移除_有害效果_并熄灭身上的火焰。','Removes _harmful effects_ and extinguishes fire on contact.')
+        'purifying_solution':('移除_有害效果_并灭火，每 5 秒缓慢恢复_半颗心_。','Removes _harmful effects_, extinguishes fire and restores _half a heart_ every 5 seconds.')
     }
     for id,(zh,en) in contact.items():
         index=2 if id=='quicksand' else 2
