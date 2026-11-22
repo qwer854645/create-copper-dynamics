@@ -19,7 +19,12 @@ neoForge {
     runs {
         client { client() }
         server { server(); programArgument '--nogui' }
-        gameTestServer { type = 'gameTestServer'; systemProperty 'neoforge.enabledGameTestNamespaces', 'ccd' }
+        gameTestServer {
+            type = 'gameTestServer'; systemProperty 'neoforge.enabledGameTestNamespaces', 'ccd'
+            if (project.hasProperty('kjsProbe')) systemProperty 'ccd.kjsProbe', 'true'
+            if (project.hasProperty('ccdBenchmark')) systemProperty 'ccd.benchmark', 'true'
+            if (project.hasProperty('gluingBaseline')) systemProperty 'ccd.gluingBaseline', 'true'
+        }
     }
     mods { ccd { sourceSet sourceSets.main } }
 }

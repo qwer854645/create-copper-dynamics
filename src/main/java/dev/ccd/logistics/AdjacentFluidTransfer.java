@@ -25,7 +25,7 @@ public final class AdjacentFluidTransfer {
         int returned=Math.clamp(source.fill(rest.copy(),IFluidHandler.FluidAction.EXECUTE),0,rest.getAmount());
         return rest.copyWithAmount(rest.getAmount()-returned);
     }
-    private static void preserve(SmartBlockEntity owner,net.neoforged.neoforge.fluids.FluidStack rest){
+    public static void recover(SmartBlockEntity owner,net.neoforged.neoforge.fluids.FluidStack rest){
         if(rest.isEmpty())return;
         // Output wrappers are deliberately drain-only. Restore the actual owned buffer,
         // without treating a rollback as another port input or resetting delivery budgets.
@@ -44,13 +44,13 @@ public final class AdjacentFluidTransfer {
         if(target==null||target==source)return;
         var rest=transfer(source,target,rate);
         // Creative sources own no finite cargo to recover.
-        if(!(owner instanceof dev.ccd.content.CreativeDeliveryTankBlockEntity))preserve(owner,rest);
+        if(!(owner instanceof dev.ccd.content.CreativeDeliveryTankBlockEntity))recover(owner,rest);
     }
     public static void input(SmartBlockEntity owner,Direction side,IFluidHandler target,int rate){
         var level=owner.getLevel();var pos=owner.getBlockPos().relative(side);
         if(!level.hasChunkAt(pos)||com.simibubi.create.content.fluids.FluidPropagator.getPipe(level,pos)!=null)return;
         var source=level.getCapability(Capabilities.FluidHandler.BLOCK,pos,side.getOpposite());
         if(source==null||source==target)return;
-        preserve(owner,transfer(source,target,rate));
+        recover(owner,transfer(source,target,rate));
     }
 }

@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 /** Copper flow-control pump with straight horizontal ports and a transverse gear shaft. */
-public class VariableFlowPumpBlock extends PumpBlock {
+public class VariableFlowPumpBlock extends PumpBlock implements com.simibubi.create.api.contraption.transformable.TransformableBlock {
     public static final IntegerProperty ROLL=IntegerProperty.create("roll",0,3);
     public static final IntegerProperty SIGNAL=BlockStateProperties.POWER;
     public VariableFlowPumpBlock(Properties properties) {
@@ -47,6 +47,9 @@ public class VariableFlowPumpBlock extends PumpBlock {
         return PumpOrientation.rotate(state,ROLL,clickedFace);
     }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(); }
+    @Override public BlockState rotate(BlockState state,net.minecraft.world.level.block.Rotation rotation){return PumpOrientation.oriented(state,ROLL,rotation.rotate(state.getValue(FACING)),rotation.rotate(PumpOrientation.side(state,ROLL,Direction.EAST)));}
+    @Override public BlockState mirror(BlockState state,net.minecraft.world.level.block.Mirror mirror){return PumpOrientation.oriented(state,ROLL,mirror.mirror(state.getValue(FACING)),mirror.mirror(PumpOrientation.side(state,ROLL,Direction.EAST)));}
+    @Override public BlockState transform(BlockState state,com.simibubi.create.content.contraptions.StructureTransform transform){return PumpOrientation.transform(state,ROLL,transform);}
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
         super.onPlace(state,level,pos,old,moving);
         if(!level.isClientSide()&&old.getBlock()==this&&(old.getValue(FACING)!=state.getValue(FACING)||old.getValue(ROLL)!=state.getValue(ROLL))){

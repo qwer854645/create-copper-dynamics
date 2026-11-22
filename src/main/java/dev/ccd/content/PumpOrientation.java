@@ -20,6 +20,11 @@ public final class PumpOrientation {
         }
         throw new IllegalArgumentException("Pump frame axes must be perpendicular");
     }
+    public static BlockState transform(BlockState state,IntegerProperty roll,com.simibubi.create.content.contraptions.StructureTransform transform){
+        var front=state.getValue(PumpBlock.FACING);var right=side(state,roll,Direction.EAST);
+        if(transform.mirror!=null){front=transform.mirror.mirror(front);right=transform.mirror.mirror(right);}
+        return oriented(state,roll,transform.rotateFacing(front),transform.rotateFacing(right));
+    }
     public static Direction side(BlockState state,IntegerProperty roll,Direction side){
         for(int i=0;i<state.getValue(roll);i++)side=side.getClockWise(Direction.Axis.Z);
         var front=state.getValue(PumpBlock.FACING);

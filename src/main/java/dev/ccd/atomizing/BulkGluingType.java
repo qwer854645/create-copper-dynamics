@@ -9,9 +9,24 @@ import java.util.List;
 
 /** Live crafting lookup: exactly one workpiece and one slimeball, with no lost remainders. */
 public final class BulkGluingType implements FanProcessingType {
+    private record Candidates(long revision,List<RecipeHolder<CraftingRecipe>> recipes){}
+    private static final java.util.Map<RecipeManager,Candidates> CANDIDATES=new java.util.WeakHashMap<>();
+    private static synchronized List<RecipeHolder<CraftingRecipe>> candidates(Level level){
+        if(Boolean.getBoolean("ccd.gluingBaseline"))return level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING);
+        var manager=level.getRecipeManager();var cached=CANDIDATES.get(manager);
+        if(cached==null||cached.revision()!=AtomizingRules.revision()){
+            var slime=new ItemStack(Items.SLIME_BALL);
+            var recipes=manager.getAllRecipesFor(RecipeType.CRAFTING).stream().filter(holder->{
+                var ingredients=holder.value().getIngredients().stream().filter(i->!i.isEmpty()).toList();
+                return ingredients.size()==2&&ingredients.stream().anyMatch(i->i.test(slime));
+            }).toList();
+            cached=new Candidates(AtomizingRules.revision(),recipes);CANDIDATES.put(manager,cached);
+        }
+        return cached.recipes();
+    }
     private static ItemStack result(ItemStack input,Level level){
         if(input.isEmpty()||input.is(Items.SLIME_BALL))return ItemStack.EMPTY;
-        for(var holder:level.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING)){
+        for(var holder:candidates(level)){
             var recipe=holder.value();
             var ingredients=recipe.getIngredients().stream().filter(i->!i.isEmpty()).toList();
             if(ingredients.size()!=2)continue;
