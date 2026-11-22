@@ -16,6 +16,18 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         @Override protected void onContentsChanged(){setChanged();if(level!=null&&!level.isClientSide())sendData();}
     };
     public BufferPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.BUFFER_PUMP_BE.get(),pos,state);}
+    public IFluidHandler handler(Direction side){
+        if(side==null)return buffer;
+        return new IFluidHandler(){
+            public int getTanks(){return 1;}
+            public FluidStack getFluidInTank(int tank){return buffer.getFluid().copy();}
+            public int getTankCapacity(int tank){return CAPACITY;}
+            public boolean isFluidValid(int tank,FluidStack fluid){return true;}
+            public int fill(FluidStack fluid,FluidAction action){return buffer.fill(fluid,action);}
+            public FluidStack drain(int amount,FluidAction action){return side==getBlockState().getValue(BufferPumpBlock.FACING)&&getSpeed()!=0&&!isOverStressed()?buffer.drain(amount,action):FluidStack.EMPTY;}
+            public FluidStack drain(FluidStack fluid,FluidAction action){return FluidStack.isSameFluidSameComponents(fluid,buffer.getFluid())?drain(fluid.getAmount(),action):FluidStack.EMPTY;}
+        };
+    }
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
         super.addBehaviours(behaviours);
         // This device owns finite storage and delivers from it directly. Running
@@ -23,38 +35,21 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         behaviours.removeIf(behaviour->behaviour instanceof com.simibubi.create.content.fluids.FluidTransportBehaviour);
     }
     @Override public boolean isSideAccessible(Direction side){return false;}
-    @Override public void updatePipesOnSide(Direction side){} // No native transport behaviour to invalidate.
-    @Override public void updatePressureChange(){} // No transparent bypass around the finite buffer.
+    @Override public void updatePipesOnSide(Direction side){if(!dev.ccd.logistics.NativeEndpointPump.UPDATING.get())invalidatePressure();} // Endpoint pressure only.
+    @Override public void updatePressureChange(){invalidatePressure();} // No transparent bypass around the finite buffer.
     public int pumpingRange(){return dev.ccd.CCDConfig.bufferPumpRange(com.simibubi.create.content.fluids.FluidPropagator.getPumpRange());}
-    private record Step(BlockPos pos,Direction entry,int distance){}
+    private boolean pressureDirty=true;
+    public void invalidatePressure(){pressureDirty=true;}
+    @Override public void onSpeedChanged(float previous){super.onSpeedChanged(previous);invalidatePressure();}
     @Override public void tick(){
-        super.tick();if(level==null||level.isClientSide()||getSpeed()==0||isOverStressed())return;
-        if(buffer.isEmpty())return;
-        int remaining=Math.max(1,(int)(Math.abs(getSpeed())/2));
-        var queue=new java.util.ArrayDeque<Step>();var visited=new java.util.HashSet<BlockPos>();
-        var parents=new java.util.HashMap<BlockPos,BlockPos>();
-        Direction output=getBlockState().getValue(BufferPumpBlock.FACING);
-        queue.add(new Step(worldPosition.relative(output),output.getOpposite(),1));visited.add(worldPosition);parents.put(worldPosition.relative(output),worldPosition);
-        int range=pumpingRange();
-        while(!queue.isEmpty()&&remaining>0&&!buffer.isEmpty()&&visited.size()<4096){
-            var step=queue.removeFirst();
-            if(step.distance>range||!level.hasChunkAt(step.pos)||!visited.add(step.pos))continue;
-            var state=level.getBlockState(step.pos);
-            var pipe=com.simibubi.create.content.fluids.FluidPropagator.getPipe(level,step.pos);
-            if(pipe!=null){
-                if(!pipe.canHaveFlowToward(state,step.entry)||!pipe.canPullFluidFrom(buffer.getFluid(),state,step.entry))continue;
-                if(level.getBlockEntity(step.pos) instanceof PumpBlockEntity)continue;
-                for(var side:Direction.values())if(side!=step.entry&&pipe.canHaveFlowToward(state,side))
-                    if(!parents.containsKey(step.pos.relative(side))){parents.put(step.pos.relative(side),step.pos);queue.add(new Step(step.pos.relative(side),side.getOpposite(),step.distance+1));}
-                continue;
-            }
-            var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,step.pos,step.entry);
-            if(target==null)target=openEnds.handler(this,step.pos,step.entry);
-            if(target==null||target==buffer)continue;
-            var offer=buffer.drain(remaining,IFluidHandler.FluidAction.SIMULATE);
-            int accepted=target.fill(offer,IFluidHandler.FluidAction.SIMULATE);
-            if(accepted>0){var drained=buffer.drain(Math.min(accepted,offer.getAmount()),IFluidHandler.FluidAction.EXECUTE);int filled=Math.clamp(target.fill(drained,IFluidHandler.FluidAction.EXECUTE),0,drained.getAmount());FlowMeterBlockEntity.recordPath(level,step.pos,parents,filled);remaining-=filled;if(filled<drained.getAmount())buffer.fill(drained.copyWithAmount(drained.getAmount()-filled),IFluidHandler.FluidAction.EXECUTE);}
-        }
+        super.tick();if(level==null||level.isClientSide())return;
+        if(getSpeed()!=0&&!isOverStressed())dev.ccd.logistics.AdjacentFluidTransfer.output(this,getBlockState().getValue(BufferPumpBlock.FACING),buffer,Math.max(1,(int)(Math.abs(getSpeed())/2)),openEnds);
+        if(!pressureDirty)return;
+        pressureDirty=false;
+        var port=getBlockState().getValue(BufferPumpBlock.FACING);
+        var neighbor=worldPosition.relative(port);
+        dev.ccd.logistics.NativeEndpointPump.changed(level,neighbor);
+        new dev.ccd.logistics.NativeEndpointPump(level,worldPosition,getBlockState()).distribute(port,false,isOverStressed()?0:Math.abs(getSpeed()));
     }
     @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));openEnds.write(tag,registries);}
     @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));openEnds.read(tag,registries);}

@@ -24,6 +24,10 @@ public final class OmniPumpBlock extends KineticBlock implements IBE<OmniPumpBlo
     @Override protected com.mojang.serialization.MapCodec<? extends KineticBlock> codec(){return simpleCodec(OmniPumpBlock::new);}
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder){builder.add(PORTS.values().toArray(IntegerProperty[]::new));}
     public static int mode(BlockState state,Direction side){return state.getValue(PORTS.get(side));}
+    @Override public void neighborChanged(BlockState state,net.minecraft.world.level.Level level,BlockPos pos,Block other,BlockPos neighbor,boolean moving){
+        super.neighborChanged(state,level,pos,other,neighbor,moving);
+        if(!level.isClientSide()&&level.getBlockEntity(pos) instanceof OmniPumpBlockEntity pump)pump.invalidatePressure();
+    }
     @Override public Direction.Axis getRotationAxis(BlockState state){for(var side:Direction.values())if(mode(state,side)==SHAFT)return side.getAxis();return Direction.Axis.Y;}
     @Override public boolean hasShaftTowards(LevelReader world,BlockPos pos,BlockState state,Direction side){return mode(state,side)==SHAFT;}
     @Override public InteractionResult onWrenched(BlockState state,UseOnContext context){
@@ -31,7 +35,7 @@ public final class OmniPumpBlock extends KineticBlock implements IBE<OmniPumpBlo
             var level=context.getLevel();var pos=context.getClickedPos();var side=context.getClickedFace();
             if(level.getBlockEntity(pos) instanceof OmniPumpBlockEntity pump)pump.detachKinetics();
             var next=state.cycle(PORTS.get(side));level.setBlockAndUpdate(pos,next);level.invalidateCapabilities(pos);
-            if(level.getBlockEntity(pos) instanceof OmniPumpBlockEntity pump){pump.attachKinetics();pump.notifyUpdate();}
+            if(level.getBlockEntity(pos) instanceof OmniPumpBlockEntity pump){pump.attachKinetics();pump.invalidatePressure();pump.notifyUpdate();}
             context.getPlayer().displayClientMessage(net.minecraft.network.chat.Component.translatable("ccd.omni_pump.mode."+mode(next,side)),true);
         }
         return InteractionResult.SUCCESS;

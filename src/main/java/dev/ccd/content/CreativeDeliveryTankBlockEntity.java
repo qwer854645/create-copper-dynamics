@@ -33,7 +33,7 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
         @Override public String getTranslationKey(){return key;}
     }
     private static net.minecraft.network.chat.MutableComponent modeName(int value){return net.minecraft.network.chat.Component.translatable(value==0?"ccd.creative_delivery.containers_only":"ccd.creative_delivery.allow_world");}
-    public void select(FluidStack fluid){selected=fluid.isEmpty()?FluidStack.EMPTY:fluid.copyWithAmount(1000);notifyUpdate();if(level!=null)level.invalidateCapabilities(worldPosition);}
+    public void select(FluidStack fluid){invalidatePressure();selected=fluid.isEmpty()?FluidStack.EMPTY:fluid.copyWithAmount(1000);notifyUpdate();if(level!=null)level.invalidateCapabilities(worldPosition);}
     public final IFluidHandler handler=new IFluidHandler(){
         public int getTanks(){return 1;}
         public FluidStack getFluidInTank(int tank){return selected.isEmpty()?FluidStack.EMPTY:selected.copyWithAmount(Integer.MAX_VALUE);}
@@ -43,29 +43,16 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
         public FluidStack drain(int amount,FluidAction action){return amount<=0||selected.isEmpty()?FluidStack.EMPTY:selected.copyWithAmount(amount);}
         public FluidStack drain(FluidStack fluid,FluidAction action){return FluidStack.isSameFluidSameComponents(fluid,selected)?drain(fluid.getAmount(),action):FluidStack.EMPTY;}
     };
-    private record Step(BlockPos pos,Direction entry,int distance){}
+    private boolean pressureDirty=true;
+    public void invalidatePressure(){pressureDirty=true;}
     @Override public void tick(){
-        super.tick();if(level==null||level.isClientSide()||selected.isEmpty())return;
-        var front=getBlockState().getValue(CreativeDeliveryTankBlock.FACING);
-        var queue=new java.util.ArrayDeque<Step>();var visited=new java.util.HashSet<BlockPos>();
-        var parents=new java.util.HashMap<BlockPos,BlockPos>();
-        queue.add(new Step(worldPosition.relative(front),front.getOpposite(),1));visited.add(worldPosition);parents.put(worldPosition.relative(front),worldPosition);
-        int remaining=RATE;
-        while(!queue.isEmpty()&&remaining>0&&visited.size()<VISIT_LIMIT){
-            var step=queue.removeFirst();if(step.distance>RANGE||!level.hasChunkAt(step.pos)||!visited.add(step.pos))continue;
-            var state=level.getBlockState(step.pos);var pipe=FluidPropagator.getPipe(level,step.pos);
-            if(pipe!=null){
-                if(!pipe.canHaveFlowToward(state,step.entry)||!pipe.canPullFluidFrom(selected,state,step.entry))continue;
-                // Other pumps retain control of their own pressure and route.
-                if(level.getBlockEntity(step.pos) instanceof com.simibubi.create.content.fluids.pump.PumpBlockEntity)continue;
-                for(var side:Direction.values())if(side!=step.entry&&pipe.canHaveFlowToward(state,side)&&!parents.containsKey(step.pos.relative(side))){parents.put(step.pos.relative(side),step.pos);queue.add(new Step(step.pos.relative(side),side.getOpposite(),step.distance+1));}
-            }else{
-                if(level.getBlockEntity(step.pos) instanceof CreativeDeliveryTankBlockEntity)continue;
-                var target=level.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,step.pos,step.entry);
-                if(target==null&&worldOutput.getValue()==1)target=openEnds.handler(this,step.pos,step.entry);
-                if(target!=null){int filled=Math.clamp(target.fill(selected.copyWithAmount(remaining),IFluidHandler.FluidAction.EXECUTE),0,remaining);FlowMeterBlockEntity.recordPath(level,step.pos,parents,filled);remaining-=filled;}
-            }
-        }
+        super.tick();if(level==null||level.isClientSide())return;
+        if(!selected.isEmpty())dev.ccd.logistics.AdjacentFluidTransfer.output(this,getBlockState().getValue(CreativeDeliveryTankBlock.FACING),handler,RATE,worldOutput.getValue()==1?openEnds:null);
+        if(!pressureDirty)return;
+        pressureDirty=false;
+        var side=getBlockState().getValue(CreativeDeliveryTankBlock.FACING);var next=worldPosition.relative(side);
+        dev.ccd.logistics.NativeEndpointPump.changed(level,next);
+        if(!selected.isEmpty())new dev.ccd.logistics.NativeEndpointPump(level,worldPosition,getBlockState()).distribute(side,false,RATE*2f);
     }
     @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("SelectedFluid",selected.saveOptional(registries));openEnds.write(tag,registries);}
     @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);selected=FluidStack.parseOptional(registries,tag.getCompound("SelectedFluid"));openEnds.read(tag,registries);}

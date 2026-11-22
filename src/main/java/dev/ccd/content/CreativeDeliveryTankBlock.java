@@ -27,6 +27,7 @@ public final class CreativeDeliveryTankBlock extends DirectionalBlock implements
     @Override public BlockState mirror(BlockState state,net.minecraft.world.level.block.Mirror mirror){return state.setValue(FACING,mirror.mirror(state.getValue(FACING)));}
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
         super.onPlace(state,level,pos,old,moving);
+        if(level.getBlockEntity(pos) instanceof CreativeDeliveryTankBlockEntity tank)tank.invalidatePressure();
         if(!level.isClientSide()&&old.is(this)&&state.getValue(FACING)!=old.getValue(FACING)){
             level.invalidateCapabilities(pos);
             for(var side:new net.minecraft.core.Direction[]{old.getValue(FACING),state.getValue(FACING)}){
@@ -36,6 +37,10 @@ public final class CreativeDeliveryTankBlock extends DirectionalBlock implements
         }
     }
     @Override public Class<CreativeDeliveryTankBlockEntity> getBlockEntityClass(){return CreativeDeliveryTankBlockEntity.class;}
+    @Override public void neighborChanged(BlockState state,Level level,BlockPos pos,Block other,BlockPos neighbor,boolean moving){
+        super.neighborChanged(state,level,pos,other,neighbor,moving);
+        if(!level.isClientSide()&&level.getBlockEntity(pos) instanceof CreativeDeliveryTankBlockEntity tank)tank.invalidatePressure();
+    }
     @Override public net.minecraft.world.level.block.entity.BlockEntityType<? extends CreativeDeliveryTankBlockEntity> getBlockEntityType(){return CopperDynamics.CREATIVE_DELIVERY_TANK_BE.get();}
     @Override protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
         if(stack.is(net.neoforged.neoforge.common.Tags.Items.TOOLS_WRENCH)){

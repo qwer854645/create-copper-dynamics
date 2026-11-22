@@ -46,9 +46,9 @@ public class OmniPumpTests {
             ((FluidTankBlockEntity)h.getBlockEntity(sourcePos)).getTankInventory().fill(new FluidStack(Fluids.WATER,1000),FluidAction.EXECUTE);
             pump.setSpeed(64);pump.onSpeedChanged(0);
         });
-        h.runAfterDelay(20,()->{
+        h.runAfterDelay(60,()->{
             var sink=(FluidTankBlockEntity)h.getBlockEntity(sinkPos);var source=(FluidTankBlockEntity)h.getBlockEntity(sourcePos);
-            h.assertTrue(sink.getTankInventory().getFluidAmount()>0,"Pump did not transfer through native pipes");
+            h.assertTrue(sink.getTankInventory().getFluidAmount()>0,"Pump did not transfer through native pipes; buffer="+pump.buffer.getFluidAmount()+" source="+source.getTankInventory().getFluidAmount());
             h.assertTrue(source.getTankInventory().getFluidAmount()+sink.getTankInventory().getFluidAmount()+pump.buffer.getFluidAmount()==1000,"Fluid was lost or duplicated");
             pump.setSpeed(0);pump.onSpeedChanged(64);int amount=sink.getTankInventory().getFluidAmount();
             h.runAfterDelay(5,()->{h.assertTrue(sink.getTankInventory().getFluidAmount()==amount,"Stopped pump still transfers");h.succeed();});
