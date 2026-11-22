@@ -23,13 +23,16 @@ public final class MossificationEffect extends MobEffect {
             var shape=state.getCollisionShape(level,cursor);
             boolean touching=shape.toAabbs().stream().anyMatch(box->box.move(cursor).intersects(bounds));
             if(!touching)continue;
-            var pos=cursor.immutable();
+            spreadAt(level,cursor.immutable());
+        }
+        return true;
+    }
+    public static void spreadAt(ServerLevel level,BlockPos pos){
+            if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(BlockTags.MOSS_REPLACEABLE))return;
             level.setBlockAndUpdate(pos,Blocks.MOSS_BLOCK.defaultBlockState());
             if(level.isEmptyBlock(pos.above())){
                 ((BonemealableBlock)Blocks.MOSS_BLOCK).performBonemeal(level,level.random,pos,Blocks.MOSS_BLOCK.defaultBlockState());
                 level.levelEvent(1505,pos,0);
             }
-        }
-        return true;
     }
 }

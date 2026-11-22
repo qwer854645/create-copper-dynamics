@@ -606,7 +606,7 @@
   "item.ccd.moss_suspension_bucket.tooltip.condition1": "When used in an Atomizer with the matching processing addon",
   "item.ccd.moss_suspension_bucket.tooltip.behaviour1": "Applies _mossifying_ processing to the air current.",
   "item.ccd.moss_suspension_bucket.tooltip.condition2": "When touching the fluid or exposed to its air current",
-  "item.ccd.moss_suspension_bucket.tooltip.behaviour2": "Grants _Mossification_: touching vanilla moss-replaceable blocks turns them into moss and triggers vanilla bonemeal spread and vegetation. Atomized exposure lasts less time.",
+  "item.ccd.moss_suspension_bucket.tooltip.behaviour2": "Grants _Mossification_: touching vanilla moss-replaceable blocks turns them into moss and triggers vanilla bonemeal spread and vegetation. The liquid also mossifies adjacent valid targets. Atomized exposure lasts less time.",
   "fluid_type.ccd.tear_solution": "Lachrymatory Solution",
   "fluid.ccd.tear_solution": "Lachrymatory Solution",
   "fluid.ccd.flowing_tear_solution": "Lachrymatory Solution",

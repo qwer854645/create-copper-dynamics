@@ -10,6 +10,28 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class MossificationTests {
+    @GameTest(template="empty",timeoutTicks=60) public static void liquidContactConvertsOnlyLegalTargets(GameTestHelper h){
+        var medium=dev.ccd.compat.ProcessingMedia.ALL.stream().filter(m->m.id.equals("moss_suspension")).findFirst().orElseThrow();
+        for(int x:new int[]{2,5}){
+            var pos=new BlockPos(x,2,2);
+            h.setBlock(pos.below(),Blocks.STONE);
+            h.setBlock(pos.east(),Blocks.STONE);
+            h.setBlock(pos.west(),Blocks.GLASS);
+            h.setBlock(pos.north(),Blocks.GLASS);
+            h.setBlock(pos.south(),Blocks.GLASS);
+            h.setBlock(pos.above(),Blocks.GLASS);
+            h.setBlock(pos,medium.block.get().defaultBlockState().setValue(net.minecraft.world.level.block.LiquidBlock.LEVEL,x==2?0:4));
+        }
+        h.runAfterDelay(5,()->{
+            for(int x:new int[]{2,5}){
+                var pos=new BlockPos(x,2,2);
+                h.assertTrue(h.getBlockState(pos.below()).is(Blocks.MOSS_BLOCK),"Liquid floor contact failed");
+                h.assertTrue(h.getBlockState(pos.east()).is(Blocks.MOSS_BLOCK),"Liquid side contact failed");
+                h.assertTrue(h.getBlockState(pos.west()).is(Blocks.GLASS),"Liquid converted an illegal target");
+            }
+            h.succeed();
+        });
+    }
     @GameTest(template="empty") public static void actualContactUsesVanillaTargets(GameTestHelper h){
         var floor=new BlockPos(2,1,2);
         h.setBlock(floor,Blocks.STONE);

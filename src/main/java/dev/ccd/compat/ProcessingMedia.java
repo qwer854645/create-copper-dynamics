@@ -47,7 +47,9 @@ public final class ProcessingMedia {
                 .sound(SoundActions.BUCKET_FILL,SoundEvents.BUCKET_FILL).sound(SoundActions.BUCKET_EMPTY,SoundEvents.BUCKET_EMPTY)));
             source=FLUIDS.register(id,()->lava?new SuperLavaFluid.Source():new BaseFlowingFluid.Source(properties()));
             flowing=FLUIDS.register("flowing_"+id,()->lava?new SuperLavaFluid.Flowing():new BaseFlowingFluid.Flowing(properties()));
-            block=CopperDynamics.BLOCKS.register(id,()->new LiquidBlock(source.get(),BlockBehaviour.Properties.ofFullCopy(lava?Blocks.LAVA:Blocks.WATER)));
+            block=CopperDynamics.BLOCKS.register(id,()->id.equals("moss_suspension")
+                ?new dev.ccd.content.MossSuspensionBlock(source.get(),BlockBehaviour.Properties.ofFullCopy(Blocks.WATER))
+                :new LiquidBlock(source.get(),BlockBehaviour.Properties.ofFullCopy(lava?Blocks.LAVA:Blocks.WATER)));
             bucket=CopperDynamics.ITEMS.register(id+"_bucket",()->new BucketItem(source.get(),new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
         }
         private BaseFlowingFluid.Properties properties() { return new BaseFlowingFluid.Properties(type,source,flowing).block(block).bucket(bucket).tickRate(10); }

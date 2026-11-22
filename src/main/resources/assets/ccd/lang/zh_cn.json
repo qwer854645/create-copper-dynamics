@@ -606,7 +606,7 @@
   "item.ccd.moss_suspension_bucket.tooltip.condition1": "安装对应加工附属并装入雾化器时",
   "item.ccd.moss_suspension_bucket.tooltip.behaviour1": "使气流获得_苔化_加工效果。",
   "item.ccd.moss_suspension_bucket.tooltip.condition2": "接触流体或受其气流影响时",
-  "item.ccd.moss_suspension_bucket.tooltip.behaviour2": "给予_苔化_：持续期间接触原版苔藓可替换方块时，将其化为苔藓，并按骨粉催生苔藓的规则扩散与生长植被。雾化后持续时间更短。",
+  "item.ccd.moss_suspension_bucket.tooltip.behaviour2": "给予_苔化_：持续期间接触原版苔藓可替换方块时，将其化为苔藓，并按骨粉催生苔藓的规则扩散与生长植被。液体本身也会苔化相邻合法目标。雾化后持续时间更短。",
   "fluid_type.ccd.tear_solution": "催泪溶液",
   "fluid.ccd.tear_solution": "催泪溶液",
   "fluid.ccd.flowing_tear_solution": "催泪溶液",

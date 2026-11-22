@@ -9,8 +9,8 @@ with ZipFile(next((root/'build/moddev/artifacts').glob('*minecraft-resources.jar
     icon.parent.mkdir(parents=True,exist_ok=True)
     icon.write_bytes(z.read('assets/minecraft/textures/block/flowering_azalea_side.png'))
 for locale,name,description in [
- ('zh_cn','苔化','给予_苔化_：持续期间接触原版苔藓可替换方块时，将其化为苔藓，并按骨粉催生苔藓的规则扩散与生长植被。雾化后持续时间更短。'),
- ('en_us','Mossification','Grants _Mossification_: touching vanilla moss-replaceable blocks turns them into moss and triggers vanilla bonemeal spread and vegetation. Atomized exposure lasts less time.')]:
+ ('zh_cn','苔化','给予_苔化_：持续期间接触原版苔藓可替换方块时，将其化为苔藓，并按骨粉催生苔藓的规则扩散与生长植被。液体本身也会苔化相邻合法目标。雾化后持续时间更短。'),
+ ('en_us','Mossification','Grants _Mossification_: touching vanilla moss-replaceable blocks turns them into moss and triggers vanilla bonemeal spread and vegetation. The liquid also mossifies adjacent valid targets. Atomized exposure lasts less time.')]:
     p=assets/f'lang/{locale}.json';d=json.loads(p.read_text(encoding='utf-8'))
     d['effect.ccd.mossification']=name
     d['item.ccd.moss_suspension_bucket.tooltip.behaviour2']=description
