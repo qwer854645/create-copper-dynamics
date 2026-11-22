@@ -13,7 +13,7 @@ for(const [mode,source]of [['input','common_north'],['output','selected_north']]
 }
 const socket=cube('shaft_socket',[3,3,.5],[13,13,2],'#copper',[3,3,13,13]);socket.faces.north={texture:'#shaft',uv:[3,3,13,13]};
 save('assets/ccd/models/block/omni_pump/shaft.json',wrap([socket]));
-const rotations={north:{},south:{y:180},east:{y:90},west:{y:270},up:{x:90},down:{x:270}};
+const rotations={north:{},south:{y:180},east:{y:90},west:{y:270},up:{x:270},down:{x:90}};
 const multipart=[{apply:{model:'ccd:block/omni_pump/body'}}];
 for(const side of faces)for(const [mode,id]of [[1,'input'],[2,'output'],[3,'shaft']])multipart.push({when:{[side]:String(mode)},apply:{model:'ccd:block/omni_pump/'+id,...rotations[side]}});
 save('assets/ccd/blockstates/omni_pump.json',{multipart});save('assets/ccd/models/item/omni_pump.json',{parent:'ccd:block/omni_pump/body'});
