@@ -1,0 +1,42 @@
+package dev.ccd.content;
+
+import com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity;
+import dev.ccd.CopperDynamics;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+
+/** Native burner with a finite reservoir; all actual fuel acceptance is decided by Create. */
+public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity implements com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation {
+    public final FluidTank tank=new FluidTank(4000){
+        @Override protected void onContentsChanged(){setChanged();if(level!=null&&!level.isClientSide())sendData();}
+        @Override public boolean isFluidValid(FluidStack fluid){
+            // Buffer native liquid fuels even while the burner cannot currently take more fuel.
+            var bucket=new ItemStack(fluid.getFluid().getBucket());
+            return !fluid.isEmpty()&&!bucket.isEmpty()
+                && (fluid.getFluid().isSame(net.minecraft.world.level.material.Fluids.LAVA)
+                || fluid.getFluid().isSame(dev.ccd.compat.ProcessingMedia.ALL.getFirst().source.get())
+                || bucket.getBurnTime(net.minecraft.world.item.crafting.RecipeType.SMELTING)>0
+                || tryUpdateFuel(bucket,false,true));
+        }
+    };
+    public TankBlazeBurnerBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.TANK_BURNER_BE.get(),pos,state);}
+    @Override public void tick(){
+        super.tick();
+        if(level==null||level.isClientSide()||level.getGameTime()%10!=0||tank.getFluidAmount()<1000)return;
+        var fluid=tank.getFluid();
+        var bucket=new ItemStack(fluid.getFluid().getBucket());
+        if(!bucket.isEmpty()&&tryUpdateFuel(bucket,false,true)&&tryUpdateFuel(bucket,false,false))
+            tank.drain(1000,IFluidHandler.FluidAction.EXECUTE);
+    }
+    @Override public void write(CompoundTag tag,HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("FuelTank",tank.writeToNBT(registries,new CompoundTag()));}
+    @Override protected void read(CompoundTag tag,HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);tank.readFromNBT(registries,tag.getCompound("FuelTank"));}
+    @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
+        dev.ccd.CCDTooltip.fluidContents(tooltip,tank.isEmpty()?java.util.List.of():java.util.List.of(tank.getFluid()),tank.getCapacity());return true;
+    }
+}

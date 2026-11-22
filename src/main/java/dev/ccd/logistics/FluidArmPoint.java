@@ -49,6 +49,7 @@ public final class FluidArmPoint extends ArmInteractionPoint {
         if (!level.hasChunkAt(pos)) return null;
         if (level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch) return hatch.interactionHandler(face);
         var handler=level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face);
+        if(level.getBlockEntity(pos) instanceof dev.ccd.content.TankBlazeBurnerBlockEntity)return handler;
         if(level.getBlockEntity(pos) instanceof com.simibubi.create.content.processing.burner.BlazeBurnerBlockEntity burner){
             var fallback=new dev.ccd.compat.SuperLavaFuel(burner);
             if(handler==null)return fallback;

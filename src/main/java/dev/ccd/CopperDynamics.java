@@ -88,6 +88,9 @@ public final class CopperDynamics {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, ID);
     public static final DeferredRegister<net.minecraft.world.level.block.Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ID);
+    public static final DeferredHolder<net.minecraft.world.level.block.Block,dev.ccd.content.TankBlazeBurnerBlock> TANK_BURNER=BLOCKS.register("tank_blaze_burner",()->new dev.ccd.content.TankBlazeBurnerBlock(BlockBehaviour.Properties.of().strength(3.5f).requiresCorrectToolForDrops().noOcclusion().lightLevel(com.simibubi.create.content.processing.burner.BlazeBurnerBlock::getLight)));
+    public static final DeferredHolder<Item,BlockItem> TANK_BURNER_ITEM=ITEMS.register("tank_blaze_burner",()->new BlockItem(TANK_BURNER.get(),new Item.Properties()));
+    public static final DeferredHolder<BlockEntityType<?>,BlockEntityType<dev.ccd.content.TankBlazeBurnerBlockEntity>> TANK_BURNER_BE=BLOCK_ENTITIES.register("tank_blaze_burner",()->BlockEntityType.Builder.of(dev.ccd.content.TankBlazeBurnerBlockEntity::new,TANK_BURNER.get()).build(null));
     public static final DeferredRegister<DataComponentType<?>> COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, ID);
     public static final DeferredRegister<net.minecraft.world.inventory.MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, ID);
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<net.minecraft.world.item.component.CustomData>> FLUID_FILTER_DATA =
@@ -424,6 +427,7 @@ public final class CopperDynamics {
             .displayItems((parameters, output) -> {
                 // Screenshot order: left to right, then top to bottom (nine columns).
                 output.accept(FLOW_METER_ITEM.get());
+                output.accept(TANK_BURNER_ITEM.get());
                 output.accept(BOOSTER_PUMP_ITEM.get());
                 output.accept(TURNING_BOOSTER_PUMP_ITEM.get());
                 output.accept(VERTICAL_TURNING_BOOSTER_PUMP_ITEM.get());
@@ -500,6 +504,7 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,TANK_BURNER_BE.get(),(be,side)->be.tank);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.simibubi.create.AllBlockEntityTypes.HEATER.get(),(be,side)->new dev.ccd.compat.SuperLavaFuel(be));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,OMNI_PUMP_BE.get(),(be,side)->be.handler(side));
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,BUFFER_PUMP_BE.get(),(be,side)->be.handler(side));

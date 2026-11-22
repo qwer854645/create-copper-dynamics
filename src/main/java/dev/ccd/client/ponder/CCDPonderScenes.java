@@ -21,6 +21,15 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 
 /** Short, deterministic storyboards. State changes are staged, not dependent on live simulation. */
 public final class CCDPonderScenes {
+    public static void tankBurner(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"tank_burner","Supplying a Tank Blaze Burner");
+        show(s,util,B,CopperDynamics.TANK_BURNER.get().defaultBlockState());
+        show(s,util,A,AllBlocks.FLUID_PIPE.getDefaultState());
+        text(s,util,B,"The lower tank stores 4000 mB of one liquid fuel supplied by pipes or Fluid Arms");
+        s.world().modifyBlockEntity(B,TankBlazeBurnerBlockEntity.class,be->be.tank.fill(new FluidStack(Fluids.LAVA,2000),FluidAction.EXECUTE));
+        text(s,util,B,"Every 1000 mB is burned as its corresponding bucket fuel, using native heating rules");
+        text(s,util,B,"Fluid Arms may select the Burner directly without a Fluid Hatch; solid fuels still work normally");s.markAsFinished();
+    }
     public static void outputFiltering(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"atomizer_output_filter","Selecting Atomizer Outputs");
         show(s,util,B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState().setValue(FluidAtomizerBlock.FACING,Direction.SOUTH));

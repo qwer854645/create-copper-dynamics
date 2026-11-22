@@ -31,6 +31,7 @@
     "ccd:buffer_pump",
     "ccd:vertical_turning_booster_pump",
     "ccd:flow_meter",
-    "ccd:omni_pump"
+    "ccd:omni_pump",
+    "ccd:tank_blaze_burner"
   ]
 }

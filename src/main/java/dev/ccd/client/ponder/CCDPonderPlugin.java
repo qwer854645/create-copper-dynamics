@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 public final class CCDPonderPlugin implements PonderPlugin {
     @Override public String getModId() { return CopperDynamics.ID; }
     @Override public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
+        scene(helper,"tanks",CCDPonderScenes::tankBurner,"tank_blaze_burner");
         scene(helper,"packaging",CCDPonderScenes::packaging,"fluid_packager","fluid_repackager","fluid_package","composite_package");
         scene(helper,"hatches",CCDPonderScenes::hatches,"fluid_hatch","smart_fluid_hatch","fluid_arm");
         scene(helper,"access",CCDPonderScenes::access,"fluid_access_port","fluid_bridge");

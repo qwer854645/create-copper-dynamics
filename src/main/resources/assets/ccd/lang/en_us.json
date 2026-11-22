@@ -677,5 +677,13 @@
   "ccd.ponder.fluid_exposure.text_4": "Purifying Solution removes harmful effects, extinguishes fire and heals gradually",
   "ccd.ponder.fluid_exposure.text_5": "Item processing needs the matching addon; Corrupting processing also requires AnvilCraft or L2 Hostility",
   "ccd.ponder.fluid_collection.text_6": "Copper Water Basins supply handheld containers and pipes, but do not fill adjacent containers automatically",
-  "ccd.ponder.pump_variants.text_7": "R-Click Portable Pumps to operate them manually; Sneak to reverse manual rotation"
+  "ccd.ponder.pump_variants.text_7": "R-Click Portable Pumps to operate them manually; Sneak to reverse manual rotation",
+  "block.ccd.tank_blaze_burner": "Tank Blaze Burner",
+  "block.ccd.tank_blaze_burner.tooltip.summary": "A Blaze Burner with a _4000 mB tank_, retaining native heating and solid fuel interactions.",
+  "block.ccd.tank_blaze_burner.tooltip.condition1": "When supplying liquid fuel through pipes or a Fluid Arm",
+  "block.ccd.tank_blaze_burner.tooltip.behaviour1": "Stores one fuel at a time and automatically burns _1000 mB_ as its corresponding bucket fuel. Fluid Arms can target it directly without a Hatch.",
+  "ccd.ponder.tank_burner.header": "Supplying a Tank Blaze Burner",
+  "ccd.ponder.tank_burner.text_1": "The lower tank stores 4000 mB of one liquid fuel supplied by pipes or Fluid Arms",
+  "ccd.ponder.tank_burner.text_2": "Every 1000 mB is burned as its corresponding bucket fuel, using native heating rules",
+  "ccd.ponder.tank_burner.text_3": "Fluid Arms may select the Burner directly without a Fluid Hatch; solid fuels still work normally"
 }

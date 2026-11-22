@@ -677,5 +677,13 @@
   "ccd.ponder.fluid_exposure.text_4": "净化液移除有害效果、灭火，并缓慢恢复生命",
   "ccd.ponder.fluid_exposure.text_5": "物品加工需要对应附属；腐化加工还需要铁砧工艺或 L2 敌对",
   "ccd.ponder.fluid_collection.text_6": "铜水槽可供手持容器和管道取水，但不会自动向外供水",
-  "ccd.ponder.pump_variants.text_7": "右键点击便携式流体泵即可手动操作，潜行时反向操作。"
+  "ccd.ponder.pump_variants.text_7": "右键点击便携式流体泵即可手动操作，潜行时反向操作。",
+  "block.ccd.tank_blaze_burner": "储罐烈焰人燃烧室",
+  "block.ccd.tank_blaze_burner.tooltip.summary": "内置_4000 mB 储罐_的烈焰人燃烧室，保留原生供热与固体燃料交互。",
+  "block.ccd.tank_blaze_burner.tooltip.condition1": "通过管道或移液臂注入液体燃料时",
+  "block.ccd.tank_blaze_burner.tooltip.behaviour1": "储存单种燃料，每累计_1000 mB_按对应桶燃料自动供燃。移液臂可直接选择，无需舱口。",
+  "ccd.ponder.tank_burner.header": "为储罐烈焰人燃烧室供液",
+  "ccd.ponder.tank_burner.text_1": "下部储罐可储存 4000 mB 单种液体燃料，通过管道或移液臂注入",
+  "ccd.ponder.tank_burner.text_2": "每 1000 mB 按对应桶燃料供燃，沿用原生供热规则",
+  "ccd.ponder.tank_burner.text_3": "移液臂可直接选择燃烧室，无需流体舱口；固体燃料仍可照常使用"
 }

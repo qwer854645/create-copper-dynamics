@@ -1,0 +1,336 @@
+{
+  "credit": "Made with Blockbench",
+  "parent": "block/block",
+  "textures": {
+    "0": "create:block/fluid_tank_top",
+    "1": "create:block/fluid_tank",
+    "4": "create:block/fluid_tank_inner",
+    "particle": "create:block/fluid_tank"
+  },
+  "elements": [
+    {
+      "name": "Lid",
+      "from": [
+        0,
+        0.0,
+        0
+      ],
+      "to": [
+        16,
+        1.0,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          2.0,
+          -23
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#4"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "SideRight",
+      "from": [
+        15,
+        1.0,
+        0
+      ],
+      "to": [
+        16,
+        3.0,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          3.0,
+          8
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "SideRight",
+      "from": [
+        0,
+        1.0,
+        15
+      ],
+      "to": [
+        16,
+        3.0,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          3.0,
+          8
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "SideRight",
+      "from": [
+        0,
+        1.0,
+        0
+      ],
+      "to": [
+        1,
+        3.0,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          3.0,
+          8
+        ]
+      },
+      "faces": {
+        "east": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "Lid",
+      "from": [
+        0,
+        3.0,
+        0
+      ],
+      "to": [
+        16,
+        4.0,
+        16
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          2.0,
+          -23
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#4"
+        }
+      }
+    },
+    {
+      "name": "SideRight",
+      "from": [
+        0,
+        1.0,
+        0
+      ],
+      "to": [
+        16,
+        3.0,
+        1
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          8,
+          2.0,
+          -23
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            0,
+            4,
+            16,
+            12
+          ],
+          "texture": "#1"
+        }
+      }
+    }
+  ]
+}

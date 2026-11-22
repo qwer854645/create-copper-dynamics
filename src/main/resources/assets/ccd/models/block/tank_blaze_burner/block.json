@@ -1,0 +1,15 @@
+{
+  "loader": "neoforge:composite",
+  "children": {
+    "tank": {
+      "parent": "ccd:block/tank_blaze_burner/tank"
+    },
+    "burner": {
+      "parent": "ccd:block/tank_blaze_burner/cage"
+    }
+  },
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "particle": "create:block/fluid_tank"
+  }
+}

@@ -4,6 +4,10 @@ import json,re
 root=Path(__file__).resolve().parents[1]
 source=(root/'src/main/java/dev/ccd/client/ponder/CCDPonderScenes.java').read_text(encoding='utf-8')
 translations={
+'tank_burner':('为储罐烈焰人燃烧室供液',[
+'下部储罐可储存 4000 mB 单种液体燃料，通过管道或移液臂注入',
+'每 1000 mB 按对应桶燃料供燃，沿用原生供热规则',
+'移液臂可直接选择燃烧室，无需流体舱口；固体燃料仍可照常使用']),
 'atomizer_output_filter':('选择雾化器的目标产物',[
 '在雾化器侧面设置目标物品或物品过滤器',
 '仅允许可能产出匹配物品的配方；不匹配的输入保持原样',
