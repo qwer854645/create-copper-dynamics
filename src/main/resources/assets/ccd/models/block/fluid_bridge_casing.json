@@ -5,7 +5,8 @@
   "ambientocclusion": false,
   "textures": {
     "socket": "ccd:block/fluid_access/connected_bridge_unpowered",
-    "band": "ccd:block/fluid_access/bridge_band_unpowered"
+    "band": "ccd:block/fluid_access/bridge_band_unpowered",
+    "particle": "ccd:block/fluid_access/connected_bridge_unpowered"
   },
   "elements": [
     {

@@ -1,24 +1,81 @@
 {
-	"format_version": "26.3",
-	"credit": "Made with Blockbench",
-	"parent": "create:block/block",
-	"render_type": "minecraft:cutout_mipped",
-	"textures": {
-		"5": "create:block/whistle"
-	},
-	"elements": [
-		{
-			"name": "copper_housing",
-			"from": [2, 2, 2],
-			"to": [14, 14, 14],
-			"faces": {
-				"north": {"uv": [0.5, 12.5, 3.5, 15.5], "texture": "#5"},
-				"east": {"uv": [0.5, 12.5, 3.5, 15.5], "texture": "#5"},
-				"south": {"uv": [0.5, 12.5, 3.5, 15.5], "texture": "#5"},
-				"west": {"uv": [0.5, 12.5, 3.5, 15.5], "texture": "#5"},
-				"up": {"uv": [0.5, 12.5, 3.5, 15.5], "texture": "#5"},
-				"down": {"uv": [0.5, 12.5, 3.5, 15.5], "texture": "#5"}
-			}
-		}
-	]
+  "format_version": "26.3",
+  "credit": "Made with Blockbench",
+  "parent": "create:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "5": "create:block/whistle",
+    "particle": "create:block/whistle"
+  },
+  "elements": [
+    {
+      "name": "copper_housing",
+      "from": [
+        2,
+        2,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
+        },
+        "east": {
+          "uv": [
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
+        },
+        "south": {
+          "uv": [
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
+        },
+        "west": {
+          "uv": [
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
+        },
+        "up": {
+          "uv": [
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
+        },
+        "down": {
+          "uv": [
+            0.5,
+            12.5,
+            3.5,
+            15.5
+          ],
+          "texture": "#5"
+        }
+      }
+    }
+  ]
 }

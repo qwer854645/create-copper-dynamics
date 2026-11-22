@@ -4,7 +4,8 @@
   "parent": "minecraft:block/block",
   "ambientocclusion": false,
   "textures": {
-    "socket": "ccd:block/fluid_access/connected_port_unpowered"
+    "socket": "ccd:block/fluid_access/connected_port_unpowered",
+    "particle": "ccd:block/fluid_access/connected_port_unpowered"
   },
   "elements": [
     {

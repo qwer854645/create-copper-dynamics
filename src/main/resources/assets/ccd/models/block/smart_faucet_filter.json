@@ -2,7 +2,8 @@
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "filter": "create:block/smart_pipe_2"
+    "filter": "create:block/smart_pipe_2",
+    "particle": "create:block/smart_pipe_2"
   },
   "elements": [
     {
