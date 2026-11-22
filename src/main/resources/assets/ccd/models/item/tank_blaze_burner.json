@@ -1,21 +1,17 @@
 {
+  "parent": "minecraft:block/block",
   "loader": "neoforge:composite",
+  "render_type": "minecraft:cutout_mipped",
   "children": {
-    "tank": {
-      "parent": "ccd:block/tank_blaze_burner/tank"
+    "shell": {
+      "parent": "ccd:block/tank_blaze_burner/block"
     },
-    "burner": {
-      "loader": "neoforge:obj",
-      "flip_v": true,
-      "model": "ccd:models/block/tank_blaze_burner/item.obj",
-      "textures": {
-        "0": "create:block/blaze_heater_brazier",
-        "1": "create:block/blaze_idle"
-      }
+    "blaze": {
+      "parent": "ccd:block/tank_blaze_burner/item_blaze"
     }
   },
   "textures": {
-    "particle": "create:block/dark_metal_block"
+    "particle": "create:block/fluid_tank"
   },
   "display": {
     "gui": {
