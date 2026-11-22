@@ -21,6 +21,84 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
 
 /** Short, deterministic storyboards. State changes are staged, not dependent on live simulation. */
 public final class CCDPonderScenes {
+    public static void outputFiltering(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"atomizer_output_filter","Selecting Atomizer Outputs");
+        show(s,util,B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState().setValue(FluidAtomizerBlock.FACING,Direction.SOUTH));
+        water(s,B,3000);s.world().setKineticSpeed(util.select().position(B),64);
+        s.overlay().showFilterSlotInput(util.vector().centerOf(B.east()),Direction.EAST,60);
+        s.world().setFilterData(util.select().position(B),FluidAtomizerBlockEntity.class,new ItemStack(Items.IRON_NUGGET));
+        text(s,util,B,"Set a target item or an Item Filter on a side of the Atomizer");
+        var depot=B.south(2);show(s,util,depot,AllBlocks.DEPOT.getDefaultState());
+        s.world().createItemOnBeltLike(depot,Direction.NORTH,com.simibubi.create.AllItems.CRUSHED_IRON.asStack());
+        text(s,util,depot,"Only recipes with a possible matching output are allowed; rejected inputs stay unchanged");
+        text(s,util,depot,"Accepted recipes keep all byproducts and their original output chances");
+        s.world().setFilterData(util.select().position(B),FluidAtomizerBlockEntity.class,ItemStack.EMPTY);
+        text(s,util,B,"An empty filter allows all outputs; changing it restarts processing without switching the processing type");
+        text(s,util,B,"Output filters do not restrict potion or entity effects");s.markAsFinished();
+    }
+    public static void mossification(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"mossification","Spreading Moss with Moss Suspension");
+        var medium=dev.ccd.compat.ProcessingMedia.ALL.stream().filter(m->m.id.equals("moss_suspension")).findFirst().orElseThrow();
+        show(s,util,A,Blocks.STONE.defaultBlockState());show(s,util,B,medium.block.get().defaultBlockState());
+        text(s,util,B,"Source and flowing Moss Suspension mossify adjacent vanilla moss-replaceable blocks");
+        s.world().setBlock(A,Blocks.MOSS_BLOCK.defaultBlockState(),true);
+        show(s,util,A.above(),Blocks.MOSS_CARPET.defaultBlockState());
+        text(s,util,A,"With space above, moss spreads and grows vegetation using vanilla bonemeal rules");
+        show(s,util,C,Blocks.GLASS.defaultBlockState());
+        text(s,util,C,"Blocks outside the moss-replaceable tag, such as Glass, remain unchanged");
+        s.world().setBlock(B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState(),true);
+        text(s,util,B,"Exposed creatures gain Mossification and mossify valid blocks touched by their feet or body");
+        text(s,util,B,"Contact and ordinary fans grant 4 seconds; atomized Mossification lasts 2 seconds and refreshes during exposure");s.markAsFinished();
+    }
+    public static void powderSnow(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"powder_snow_fluid","Handling Powder Snow as a Fluid");
+        show(s,util,B,AllBlocks.FLUID_TANK.getDefaultState());
+        s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,50).rightClick().withItem(new ItemStack(Items.POWDER_SNOW_BUCKET));
+        text(s,util,B,"Powder Snow Buckets provide 1000 mB of Powder Snow to fluid containers");
+        s.world().modifyBlockEntity(B,net.minecraft.world.level.block.entity.BlockEntity.class,be->{var cap=be.getLevel().getCapability(Capabilities.FluidHandler.BLOCK,B,null);if(cap!=null)cap.fill(new FluidStack(dev.ccd.CCDFluids.POWDER_SNOW.get(),1000),FluidAction.EXECUTE);});
+        show(s,util,C,AllBlocks.FLUID_PIPE.getDefaultState());
+        text(s,util,C,"Pipes and fluid machines can transport it like other stored fluids");
+        s.world().setBlock(B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState(),true);
+        text(s,util,B,"An Atomizer can use it for Freezing when a supported processing addon supplies that type");
+        text(s,util,B,"This does not automatically enable every snow-related processing type from other addons");s.markAsFinished();
+    }
+    public static void fluidArm(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"fluid_arm_setup","Setting Up a Mechanical Fluid Arm");
+        show(s,util,A,AllBlocks.FLUID_TANK.getDefaultState());water(s,A,3000);
+        show(s,util,C,AllBlocks.FLUID_TANK.getDefaultState());
+        var input=A.south();var output=C.south();
+        show(s,util,input,CopperDynamics.FLUID_HATCH.get().defaultBlockState().setValue(FluidHatchBlock.FACING,Direction.NORTH));
+        show(s,util,output,CopperDynamics.FLUID_HATCH.get().defaultBlockState().setValue(FluidHatchBlock.FACING,Direction.NORTH));
+        show(s,util,B.south(2),CopperDynamics.FLUID_ARM.get().defaultBlockState());
+        s.overlay().showControls(util.vector().centerOf(A),Pointing.DOWN,50).rightClick().withItem(new ItemStack(CopperDynamics.FLUID_ARM_ITEM.get()));
+        s.overlay().showOutline(PonderPalette.BLUE,"arm_input",util.select().position(A),70);
+        text(s,util,A,"While holding the Fluid Arm, select accessible fluid endpoints before placing it");
+        s.overlay().showOutline(PonderPalette.GREEN,"arm_output",util.select().position(C),70);
+        text(s,util,output,"R-Click a Fluid Hatch to select an input; click it again to switch between input and output");
+        s.world().setKineticSpeed(util.select().position(B.south(2)),32);
+        water(s,A,2000);water(s,C,1000);
+        text(s,util,B.south(2),"Place the configured Arm and supply rotation to move real fluid between its selected endpoints");
+        text(s,util,C,"Fluid Hatches can provide controlled access to the containers behind them");s.markAsFinished();
+    }
+    public static void repackaging(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"fluid_repackaging","Repacking Fluid Orders");
+        show(s,util,B,CopperDynamics.FLUID_REPACKAGER.get().defaultBlockState());
+        var depot=B.south();show(s,util,depot,AllBlocks.DEPOT.getDefaultState());
+        s.world().createItemOnBeltLike(depot,Direction.NORTH,FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,1000)));
+        text(s,util,depot,"Fluid orders travel in Copper Packages; item packages can travel alongside them");
+        text(s,util,B,"The Fluid Repackager combines items and fluids belonging to the same order into Brass Packages");
+        text(s,util,B,"Preserve the logistics order and address information when routing packages to the Repackager");
+        text(s,util,B,"Repacking combines package contents; it does not create extra fluid");s.markAsFinished();
+    }
+    public static void exposure(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"fluid_exposure","Processing Media and Living Creatures");
+        show(s,util,B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState());
+        text(s,util,B,"Withering Fluid applies Wither; Tear Solution applies Blindness and Weakness");
+        text(s,util,B,"Conduit Energy Fluid grants Water Breathing and Haste; Corrupting Fluid applies Wither and Weakness");
+        text(s,util,B,"Direct contact and ordinary fans use normal effects; atomized effects are stronger and shorter");
+        text(s,util,B,"Purifying Solution removes harmful effects, extinguishes fire and heals gradually");
+        text(s,util,B,"Item processing needs the matching addon; Corrupting processing also requires AnvilCraft or L2 Hostility");s.markAsFinished();
+    }
     public static void haunting(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"fluid_haunting","Bulk Haunting with Soul Fluid");
         show(s,util,B,CopperDynamics.HAUNTING_BLOCK.get().defaultBlockState());
@@ -209,6 +287,9 @@ public final class CCDPonderScenes {
         text(s,util,B,"Collected fluids drain into a container directly below");
         s.world().setBlock(grate,CopperDynamics.SMART_COLLECTION_GRATE.get().defaultBlockState(),true);
         text(s,util,grate,"Smart Collection Grates can filter fluids; Redstone pauses collection and draining");
+        s.overlay().showFilterSlotInput(util.vector().centerOf(grate),Direction.SOUTH,45);
+        s.world().setFilterData(util.select().position(grate),SmartCollectionGrateBlockEntity.class,new ItemStack(Items.WATER_BUCKET));
+        text(s,util,grate,"Use a filled container or Fluid Filter in the filter slot; lit red indicators mean a Redstone signal is pausing the grate");
         s.world().hideSection(util.select().fromTo(B,grate),Direction.UP); s.idle(20);
         s.world().setBlock(B,CopperDynamics.COPPER_WATER_SUPPLY.get().defaultBlockState(),false);
         s.world().showSection(util.select().position(B),Direction.DOWN);
@@ -251,6 +332,8 @@ public final class CCDPonderScenes {
         text(s,util,B,"Perpendicular Turning Booster Pumps place their shaft normal to the two pipe mouths");
         s.world().setBlock(B,CopperDynamics.REDSTONE_FLUID_PUMP.get().defaultBlockState(),true);
         text(s,util,B,"A Redstone Signal reverses the Redstone Pump's fluid flow");
+        s.world().modifyBlock(B,state->state.setValue(RedstoneFluidPumpBlock.FACING,Direction.UP),true);
+        text(s,util,B,"Wrench a side to rotate the Redstone Pump through all six directions; wrench a pipe end to flip its facing");
         s.world().setBlock(B,CopperDynamics.BIDIRECTIONAL_FLUID_PUMP.get().defaultBlockState(),true);
         text(s,util,B,"Bidirectional Pumps reverse fluid flow when their rotation reverses");
         s.world().setBlock(B,CopperDynamics.VARIABLE_FLOW_PUMP.get().defaultBlockState(),true);
