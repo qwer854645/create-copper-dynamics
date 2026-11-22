@@ -5,3 +5,4 @@ CCDAtomizer.itemHandler('ccd_probe:error', ctx => { throw new Error('Intentional
 CCDFluids.interaction('ccd_probe:pair', 'minecraft:lava', 'minecraft:water', 'minecraft:gold_block', null, null)
 CCDFluids.blockInteraction('ccd_probe:block', 'minecraft:water', 'minecraft:glass', 'both', null, 'minecraft:diamond_block')
 console.info('CCD_INTEGRATION_PROBE_REGISTERED')
+CCDProcessing.script('ccd_probe:processing', 'minecraft:lava', 'create:haunting', 50)

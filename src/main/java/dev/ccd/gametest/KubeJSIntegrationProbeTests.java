@@ -12,6 +12,7 @@ import net.neoforged.neoforge.gametest.*;
 public class KubeJSIntegrationProbeTests {
     @GameTest(template="empty") public static void realRhinoCallbacksAndRules(GameTestHelper h){
         if(!Boolean.getBoolean("ccd.kjsProbe")){h.succeed();return;}
+        h.assertTrue(dev.ccd.api.FluidProcessingMappings.select(new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.LAVA,1000))==com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.HAUNTING,"Real JS processing mapping failed");
         var context=new AtomizerScripts.ItemContext(new ItemStack(Items.DIRT,7),net.neoforged.neoforge.fluids.FluidStack.EMPTY,32,BlockPos.ZERO,h.getLevel().dimension().location());
         var result=AtomizerScripts.processItem("ccd_probe:item",context);
         h.assertTrue(result!=null&&result.outputs().getFirst().is(Items.CLAY_BALL)&&result.outputs().getFirst().getCount()==7,"Real JS item callback failed");

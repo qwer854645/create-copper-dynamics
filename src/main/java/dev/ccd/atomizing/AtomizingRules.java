@@ -45,6 +45,8 @@ public final class AtomizingRules {
             if (recipe.items().isEmpty() && type == CopperDynamics.ATOMIZING_FAN_TYPE.get()) type = null;
             return new Selection(holder.id().toString(), recipe, type, recipe.consumption().amount(), recipe.consumption().interval(), false);
         }
+        var mapped=dev.ccd.api.FluidProcessingMappings.select(fluid);
+        if(mapped!=null)return new Selection("ccd:mapped/"+com.simibubi.create.api.registry.CreateBuiltInRegistries.FAN_PROCESSING_TYPE.getKey(mapped),null,mapped,CCDConfig.ATOMIZER_NORMAL_COST.get(),20,false);
         if (AllFluids.POTION.is(fluid.getFluid()))
             return new Selection("ccd:potions", null, null, CCDConfig.ATOMIZER_POTION_COST.get(), 20, true);
         if(fluid.getFluid().getFluidType()==dev.ccd.CCDFluids.HAUNTING_TYPE.get())
@@ -63,6 +65,7 @@ public final class AtomizingRules {
         if (AllFluidTags.FAN_PROCESSING_CATALYSTS_SMOKING.matches(f) && (type == null || type.getPriority() < AllFanProcessingTypes.SMOKING.getPriority())) type = AllFanProcessingTypes.SMOKING;
         if (AllFluidTags.FAN_PROCESSING_CATALYSTS_HAUNTING.matches(f) && (type == null || type.getPriority() < AllFanProcessingTypes.HAUNTING.getPriority())) type = AllFanProcessingTypes.HAUNTING;
         if (AllFluidTags.FAN_PROCESSING_CATALYSTS_SPLASHING.matches(f) && (type == null || type.getPriority() < AllFanProcessingTypes.SPLASHING.getPriority())) type = AllFanProcessingTypes.SPLASHING;
+        if(type==null)type=dev.ccd.api.FluidProcessingMappings.discover(fluid);
         if(type==null&&dev.ccd.compat.ProcessingMedia.ALL.stream().anyMatch(m->m.type.get()==fluid.getFluidType()))
             type=CopperDynamics.ATOMIZING_FAN_TYPE.get();
         return type == null ? null : new Selection("ccd:native", null, type, CCDConfig.ATOMIZER_NORMAL_COST.get(), 20, false);

@@ -1,0 +1,6 @@
+{
+  "fluid": "#minecraft:water",
+  "processing_type": "create:haunting",
+  "priority": 10,
+  "enabled": true
+}

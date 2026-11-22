@@ -11,7 +11,8 @@ import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 @EventBusSubscriber(modid = CopperDynamics.ID)
 public final class AtomizerLifecycle {
     @SubscribeEvent public static void reload(AddReloadListenerEvent event) {
+        event.addListener((ResourceManagerReloadListener)dev.ccd.api.FluidProcessingMappings::reload);
         event.addListener((ResourceManagerReloadListener) resources -> AtomizingRules.invalidate());
     }
-    @SubscribeEvent public static void stop(ServerStoppedEvent event) { AtomizerScripts.clear(); dev.ccd.api.FluidWorldScripts.clear(); }
+    @SubscribeEvent public static void stop(ServerStoppedEvent event) { AtomizerScripts.clear(); dev.ccd.api.FluidWorldScripts.clear(); dev.ccd.api.FluidProcessingMappings.clearScripts(); }
 }

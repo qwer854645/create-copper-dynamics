@@ -27,6 +27,7 @@ neoForge {
             if (project.hasProperty('deviceMeasurements')) systemProperty 'ccd.deviceMeasurements', 'true'
             if (project.hasProperty('syncBaseline')) systemProperty 'ccd.syncBaseline', 'true'
             if (project.hasProperty('thirdPartyFilterProbe')) systemProperty 'ccd.thirdPartyFilterProbe', 'true'
+            if (project.hasProperty('mappingFixture')) systemProperty 'ccd.mappingFixture', 'true'
         }
     }
     mods { ccd { sourceSet sourceSets.main } }

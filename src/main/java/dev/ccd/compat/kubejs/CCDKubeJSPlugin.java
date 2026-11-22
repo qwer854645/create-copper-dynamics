@@ -12,9 +12,10 @@ public final class CCDKubeJSPlugin implements KubeJSPlugin {
         if (bindings.type() == ScriptType.SERVER) {
             bindings.add("CCDAtomizer", AtomizerScripts.class);
             bindings.add("CCDFluids",dev.ccd.api.FluidWorldScripts.class);
+            bindings.add("CCDProcessing",dev.ccd.api.FluidProcessingMappings.class);
         }
     }
     @Override public void beforeScriptsLoaded(ScriptManager manager) {
-        if (manager.scriptType == ScriptType.SERVER) { AtomizerScripts.clear(); dev.ccd.api.FluidWorldScripts.clear(); }
+        if (manager.scriptType == ScriptType.SERVER) { AtomizerScripts.clear(); dev.ccd.api.FluidWorldScripts.clear(); dev.ccd.api.FluidProcessingMappings.clearScripts(); }
     }
 }
