@@ -10,7 +10,7 @@ for rel in ['models/block/tank_blaze_burner/block.json','models/item/tank_blaze_
     p=assets/rel
     if p.exists() and not (backup/rel).exists():
         (backup/rel).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,backup/rel)
-shell=json.loads((downloads/'tank (1).json').read_text(encoding='utf-8'))
+shell=json.loads((downloads/'tank (2).json').read_text(encoding='utf-8'))
 shell['render_type']='minecraft:cutout_mipped'
 (assets/'models/block/tank_blaze_burner/block.json').write_text(json.dumps(shell,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 shutil.copy2(downloads/'glass_of_tank_blaze_burner.png',assets/'textures/block/glass_of_tank_blaze_burner.png')
@@ -68,6 +68,6 @@ with ZipFile(jar) as z:
             indices=[tuple(int(v) for v in token.split('/')[:2]) for token in parts[1:]]
             extra.append(([vertices[v-1] for v,t in indices],[uvs[t-1] for v,t in indices],texture))
     module.render('preview',extra).save(out/'preview.png')
-original=json.loads((downloads/'tank (1).json').read_text())
+original=json.loads((downloads/'tank (2).json').read_text())
 assert shell['elements']==original['elements'] and shell['textures']==original['textures']
 print('Imported shell without geometry/UV edits, embedded native item blaze, and generated preview.')

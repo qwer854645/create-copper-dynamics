@@ -4,7 +4,7 @@
 
 当前资源文件是最终依据。修改前先查看 git diff，明确生成器的写入路径；运行后检查差异，只提交授权内容。
 
-储罐燃烧室最新外壳来自用户 `tank (1).json`，入口为 `import-tank-burner-user-model.py`。旧 `create-tank-blaze-burner.py` 会生成旧OBJ笼架并覆盖新版外壳／物品，禁止为常规更新运行。新模型保留所有用户坐标（包括反向界限）与UV，玻璃贴图来自下载目录；物品补原生idle烈焰人，世界原生动态渲染按底座5/16与上部11/16适配。静态预览不代表完整动画。旧资源备份位于outputs/tank-burner-user-model/backup。
+储罐燃烧室最新外壳来自用户 `tank (2).json`，入口为 `import-tank-burner-user-model.py`。旧 `create-tank-blaze-burner.py` 会生成旧OBJ笼架并覆盖新版外壳／物品，禁止为常规更新运行。新模型保留所有用户坐标（包括反向界限）与UV，顶底使用用户指定encased_pipe材质，玻璃贴图来自下载目录；物品补原生idle烈焰人与两组杆体，世界原生动态渲染按底座5/16与上部11/16适配。静态预览不代表完整动画。旧资源备份位于outputs/tank-burner-user-model/backup。
 
 ## 当前维护入口
 
