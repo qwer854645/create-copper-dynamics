@@ -7,7 +7,8 @@
     "3": "create:block/blaze_heater_brazier",
     "4": "create:block/fluid_tank_inner",
     "5": "ccd:block/glass_of_tank_blaze_burner",
-    "particle": "create:block/fluid_tank"
+    "particle": "create:block/fluid_tank",
+    "tank_top": "create:block/fluid_tank_top"
   },
   "elements": [
     {
@@ -75,7 +76,7 @@
             16,
             16
           ],
-          "texture": "#5"
+          "texture": "#4"
         },
         "down": {
           "uv": [
@@ -84,7 +85,7 @@
             16,
             16
           ],
-          "texture": "#5"
+          "texture": "#tank_top"
         }
       }
     },
@@ -561,7 +562,7 @@
             16,
             16
           ],
-          "texture": "#5"
+          "texture": "#tank_top"
         },
         "down": {
           "uv": [
@@ -1027,6 +1028,39 @@
             3
           ],
           "texture": "#5"
+        }
+      }
+    },
+    {
+      "name": "cage_floor",
+      "from": [
+        2,
+        5,
+        2
+      ],
+      "to": [
+        14,
+        5.5,
+        14
+      ],
+      "faces": {
+        "up": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#4"
+        },
+        "down": {
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "texture": "#4"
         }
       }
     }

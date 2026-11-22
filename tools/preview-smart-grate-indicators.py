@@ -14,7 +14,7 @@ def model(name):
     own=json.loads(asset(name,'models').read_text())
     parent=model(own['parent']) if own.get('parent') and own['parent'] not in ('minecraft:block/block','block/block') else {}
     return {**parent,**own,'textures':{**parent.get('textures',{}),**own.get('textures',{})}}
-def render(name):
+def render(name,extra_faces=()):
     m=model(name);faces=[]
     camera=np.array([26,24,38],float);camera/=np.linalg.norm(camera)
     right=np.cross([0,1,0],camera);right/=np.linalg.norm(right);up=np.cross(camera,right)
@@ -44,6 +44,19 @@ def render(name):
             mask=Image.new('L',tile.size);ImageDraw.Draw(mask).polygon([tuple(v) for v in q],fill=255)
             mask=np.minimum(np.asarray(mask),np.asarray(tile.getchannel('A')))
             tile.putalpha(Image.fromarray(mask));faces.append((p.mean(axis=0)@camera,tile))
+    for points,uv,im in extra_faces:
+        p=np.array(points,float);n=np.cross(p[1]-p[0],p[2]-p[0])
+        if n@camera<=0:continue
+        q=np.array([[240+(v-[8,8,8])@right*19,245-(v-[8,8,8])@up*19] for v in p])
+        coords=np.array(uv,float)
+        for i in range(1,len(p)-1):
+            tri=[0,i,i+1]
+            try:coeff=np.linalg.solve(np.c_[q[tri],np.ones(3)],coords[tri]).T.flatten()
+            except np.linalg.LinAlgError:continue
+            tile=im.transform((480,490),Image.Transform.AFFINE,coeff,Image.Resampling.NEAREST)
+            mask=Image.new('L',tile.size);ImageDraw.Draw(mask).polygon([tuple(v) for v in q[tri]],fill=255)
+            tile.putalpha(Image.fromarray(np.minimum(np.asarray(mask),np.asarray(tile.getchannel('A')))))
+            faces.append((p[tri].mean(axis=0)@camera,tile))
     out=Image.new('RGBA',(480,490),'#e5e8e2')
     for _,tile in sorted(faces,key=lambda f:f[0]):out.alpha_composite(tile)
     return out

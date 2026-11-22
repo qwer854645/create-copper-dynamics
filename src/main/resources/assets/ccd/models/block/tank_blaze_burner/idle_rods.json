@@ -1,0 +1,9 @@
+{
+  "loader": "neoforge:obj",
+  "flip_v": true,
+  "model": "ccd:models/block/tank_blaze_burner/idle_rods.obj",
+  "textures": {
+    "0": "create:block/blaze_heater_brazier",
+    "1": "create:block/blaze_idle"
+  }
+}
