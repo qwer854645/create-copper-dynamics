@@ -12,12 +12,6 @@ for rel in ['models/block/tank_blaze_burner/block.json','models/item/tank_blaze_
         (backup/rel).parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,backup/rel)
 shell=json.loads((downloads/'tank (1).json').read_text(encoding='utf-8'))
 shell['render_type']='minecraft:cutout_mipped'
-shell['textures']['tank_top']='create:block/fluid_tank_top'
-shell['elements'][0]['faces']['down']['texture']='#tank_top'
-shell['elements'][0]['faces']['up']['texture']='#4'
-next(e for e in shell['elements'] if e.get('name')=='Lid' and e['from'][1]==4)['faces']['up']['texture']='#tank_top'
-shell['elements'].append({'name':'cage_floor','from':[2,5,2],'to':[14,5.5,14],
-    'faces':{'up':{'uv':[0,0,16,16],'texture':'#tank_top'},'down':{'uv':[2,2,14,14],'texture':'#4'}}})
 (assets/'models/block/tank_blaze_burner/block.json').write_text(json.dumps(shell,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 shutil.copy2(downloads/'glass_of_tank_blaze_burner.png',assets/'textures/block/glass_of_tank_blaze_burner.png')
 jar=next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar'))
@@ -75,5 +69,5 @@ with ZipFile(jar) as z:
             extra.append(([vertices[v-1] for v,t in indices],[uvs[t-1] for v,t in indices],texture))
     module.render('preview',extra).save(out/'preview.png')
 original=json.loads((downloads/'tank (1).json').read_text())
-assert all(e['from']==original['elements'][i]['from'] and e['to']==original['elements'][i]['to'] for i,e in enumerate(shell['elements'][:-1]))
+assert shell['elements']==original['elements'] and shell['textures']==original['textures']
 print('Imported shell without geometry/UV edits, embedded native item blaze, and generated preview.')
