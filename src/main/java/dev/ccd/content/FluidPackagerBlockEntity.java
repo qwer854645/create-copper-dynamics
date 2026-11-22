@@ -38,6 +38,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     private FluidStack recovery = FluidStack.EMPTY;
     private String status = "ready";
     private InventorySummary fluidSummary;
+    private final dev.ccd.logistics.AdjacentFluidCapability fluidEndpoint=new dev.ccd.logistics.AdjacentFluidCapability(this);
 
     public FluidPackagerBlockEntity(BlockPos pos, BlockState state) {
         super(CopperDynamics.FLUID_PACKAGER_BE.get(), pos, state);
@@ -127,7 +128,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         Direction facing = getBlockState().getValue(PackagerBlock.FACING);
         BlockPos target = worldPosition.relative(facing.getOpposite());
         if (!level.hasChunkAt(target)) return null;
-        return level.getCapability(Capabilities.FluidHandler.BLOCK, target, facing);
+        return fluidEndpoint.get(target,facing);
     }
     public BlockPos targetFluidPos() {
         return worldPosition.relative(getBlockState().getValue(PackagerBlock.FACING).getOpposite());
@@ -263,6 +264,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         recovery = FluidStack.EMPTY;
         super.destroy();
     }
+    @Override public void invalidate(){super.invalidate();fluidEndpoint.clear();}
     @Override public void clearContent() {
         recovery = FluidStack.EMPTY;
         super.clearContent();

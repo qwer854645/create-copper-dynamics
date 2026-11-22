@@ -28,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 /** A basic container-fed faucet. No internal tank, item-processing behaviour or exposed fluid inventory. */
 public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     public static final int LIMIT = 1_000;
+    private final dev.ccd.logistics.AdjacentFluidCapability sourceCapability=new dev.ccd.logistics.AdjacentFluidCapability(this);
+    private final dev.ccd.logistics.AdjacentFluidCapability targetCapability=new dev.ccd.logistics.AdjacentFluidCapability(this);
     private int cooldown;
     protected boolean transferring;
     private FluidStack flowing = FluidStack.EMPTY;
@@ -45,7 +47,7 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
         if (level == null) return null;
         Direction front = getBlockState().getValue(FaucetBlock.FACING);
         BlockPos input = worldPosition.relative(front.getOpposite());
-        return level.hasChunkAt(input) ? level.getCapability(Capabilities.FluidHandler.BLOCK, input, front) : null;
+        return sourceCapability.get(input,front);
     }
     protected void returnUndelivered(IFluidHandler source, FluidStack fluid) {
         FluidStack rest = FluidTransfers.fillAndKeepRemainder(source, fluid);
@@ -78,7 +80,7 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
         if (!level.hasChunkAt(output)) return;
         var source = inputHandler();
         if (source == null) return;
-        var target = level.getCapability(Capabilities.FluidHandler.BLOCK, output, Direction.UP);
+        var target = targetCapability.get(output,Direction.UP);
         if (source == target) return;
         transferring = true;
         try {
@@ -141,6 +143,7 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
     @Override protected net.minecraft.world.phys.AABB createRenderBoundingBox() {
         return new net.minecraft.world.phys.AABB(worldPosition).expandTowards(0,-2,0);
     }
+    @Override public void invalidate(){super.invalidate();sourceCapability.clear();targetCapability.clear();}
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         String mode = getBlockState().getValue(FaucetBlock.POWERED) ? "paused"
             : getBlockState().getValue(FaucetBlock.OPEN) ? "open" : "closed";
