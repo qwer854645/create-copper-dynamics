@@ -1,7 +1,8 @@
 package dev.ccd.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllPartialModels;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.minecraft.resources.ResourceLocation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRenderer;
 import dev.ccd.content.BufferPumpBlock;
@@ -13,6 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 
 public final class BufferPumpRenderer extends SafeBlockEntityRenderer<BufferPumpBlockEntity> {
+    private static final PartialModel COG=PartialModel.of(ResourceLocation.fromNamespaceAndPath("ccd","block/buffer_pump/cog"));
     public static void registerModels(){}
     public BufferPumpRenderer(BlockEntityRendererProvider.Context context){}
     @Override protected void renderSafe(BufferPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
@@ -36,8 +38,8 @@ public final class BufferPumpRenderer extends SafeBlockEntityRenderer<BufferPump
         pose.translate(-.5,-.5,-.5);
         pose.pushPose();pose.translate(.5,.5,.5);
         pose.mulPose(com.mojang.math.Axis.YP.rotation(angle));
-        pose.scale(1,.5f,1);pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-90));pose.translate(-.5,-.5,-.5);
-        CachedBuffers.partial(AllPartialModels.MECHANICAL_PUMP_COG,state).light(light).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
+        pose.translate(-.5,-.5,-.5);
+        CachedBuffers.partial(COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
         if(!be.buffer.isEmpty())net.createmod.catnip.platform.NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(be.buffer.getFluid(),
             3/16f,1/16f,3/16f,13/16f,(1+3.5f*Math.min(1f,be.buffer.getFluidAmount()/(float)BufferPumpBlockEntity.CAPACITY))/16,13/16f,buffers,pose,light,false,true);
         pose.popPose();

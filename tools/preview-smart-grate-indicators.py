@@ -24,7 +24,14 @@ def render(name):
                'north':[(X,Y,z),(X,y,z),(x,y,z),(x,Y,z)],'south':[(x,Y,Z),(x,y,Z),(X,y,Z),(X,Y,Z)],
                'west':[(x,Y,z),(x,y,z),(x,y,Z),(x,Y,Z)],'east':[(X,Y,Z),(X,y,Z),(X,y,z),(X,Y,z)]}
         for face,spec in e['faces'].items():
-            p=np.array(verts[face],float);n=np.cross(p[1]-p[0],p[2]-p[0]);n/=np.linalg.norm(n)
+            p=np.array(verts[face],float)
+            rot=e.get('rotation',{})
+            if rot.get('angle'):
+                origin=np.array(rot['origin']);p-=origin
+                i,j={'x':(1,2),'y':(2,0),'z':(0,1)}[rot['axis']]
+                angle=np.deg2rad(rot['angle']);c,s=np.cos(angle),np.sin(angle)
+                vi,vj=p[:,i].copy(),p[:,j].copy();p[:,i]=vi*c-vj*s;p[:,j]=vi*s+vj*c;p+=origin
+            n=np.cross(p[1]-p[0],p[2]-p[0]);n/=np.linalg.norm(n)
             if n@camera<=0:continue
             q=np.array([[240+(v-[8,8,8])@right*19,245-(v-[8,8,8])@up*19] for v in p])
             tex=spec['texture']

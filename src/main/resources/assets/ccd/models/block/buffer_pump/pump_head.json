@@ -1,23 +1,89 @@
 {
-	"format_version": "26.3",
-	"credit": "Made with Blockbench",
-	"parent": "create:block/mechanical_pump/block",
-	"textures": {
-		"copper": "create:block/pump"
-	},
-	"elements": [
-		{
-			"name": "native_pump_rim_up",
-			"from": [2, 13, 2],
-			"to": [14, 15, 14],
-			"faces": {
-				"north": {"uv": [6.5, 6, 7.5, 0], "rotation": 90, "texture": "#copper"},
-				"east": {"uv": [6.5, 6, 7.5, 0], "rotation": 90, "texture": "#copper"},
-				"south": {"uv": [6.5, 6, 7.5, 0], "rotation": 90, "texture": "#copper"},
-				"west": {"uv": [6.5, 6, 7.5, 0], "rotation": 90, "texture": "#copper"},
-				"up": {"uv": [0, 0, 6, 6], "rotation": 90, "texture": "#copper"},
-				"down": {"uv": [0, 0, 6, 6], "rotation": 270, "texture": "#copper"}
-			}
-		}
-	]
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "1": "create:block/fluid_tank",
+    "4": "create:block/fluid_tank_inner",
+    "5": "create:block/item_drain_top",
+    "particle": "create:block/fluid_tank",
+    "pump": "ccd:block/reciprocating_fluid_pump",
+    "pipe": "create:block/pipes"
+  },
+  "elements": [
+    {
+      "name": "native_pump_rim_up",
+      "from": [
+        2,
+        13,
+        2
+      ],
+      "to": [
+        14,
+        15,
+        14
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6.5,
+            6,
+            7.5,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        },
+        "east": {
+          "uv": [
+            6.5,
+            6,
+            7.5,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        },
+        "south": {
+          "uv": [
+            6.5,
+            6,
+            7.5,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        },
+        "west": {
+          "uv": [
+            6.5,
+            6,
+            7.5,
+            0
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            6,
+            6
+          ],
+          "rotation": 90,
+          "texture": "#pump"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            6,
+            6
+          ],
+          "rotation": 270,
+          "texture": "#pump"
+        }
+      }
+    }
+  ]
 }
