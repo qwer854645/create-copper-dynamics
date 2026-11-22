@@ -11,7 +11,7 @@ for relative in ['models/block/variable_flow_pump/body.json','models/item/variab
     d['textures']['outlet_mark']='ccd:block/variable_flow_pump_outlet_arrow'
     d['elements']=[e for e in d['elements'] if not e.get('name','').startswith('outlet_arrow_')]
     for x in [3.5,12.5]:
-        d['elements'].append({'name':f'outlet_arrow_{x}_up','from':[x-1.25,14.02,4],'to':[x+1.25,14.02,5.5],
+        d['elements'].append({'name':f'outlet_arrow_{x}_up','from':[x-1.25,14.02,7.25],'to':[x+1.25,14.02,8.75],
             'faces':{'up':{'uv':[0,0,16,16],'texture':'#outlet_mark'}}})
     d['render_type']='minecraft:cutout_mipped'
     p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
