@@ -1,0 +1,9 @@
+{
+  "parent": "ccd:block/variable_flow_pump/body",
+  "transform": {
+    "rotation": {
+      "z": -270
+    },
+    "origin": "center"
+  }
+}

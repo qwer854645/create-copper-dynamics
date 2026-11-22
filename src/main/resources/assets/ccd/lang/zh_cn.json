@@ -1,4 +1,5 @@
 {
+  "ccd.hint.fluid_arm_no_targets.title": "移液臂尚未设置目标",
   "block.ccd.fluid_arm.tooltip.condition3": "向烈焰人燃烧室供料时",
   "block.ccd.fluid_arm.tooltip.behaviour3": "可直接选择燃烧室，无需舱口。支持_熔岩_、_超热介质_及燃烧室认可的其他流体燃料。",
   "ccd.atomizer.output_filter": "目标产物",

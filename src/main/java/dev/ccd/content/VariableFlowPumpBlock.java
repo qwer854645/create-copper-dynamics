@@ -17,12 +17,13 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 /** Copper flow-control pump with straight horizontal ports and a transverse gear shaft. */
 public class VariableFlowPumpBlock extends PumpBlock {
+    public static final IntegerProperty ROLL=IntegerProperty.create("roll",0,3);
     public static final IntegerProperty SIGNAL=BlockStateProperties.POWER;
     public VariableFlowPumpBlock(Properties properties) {
-        super(properties);registerDefaultState(defaultBlockState().setValue(FACING,Direction.NORTH).setValue(SIGNAL,0));
+        super(properties);registerDefaultState(defaultBlockState().setValue(FACING,Direction.NORTH).setValue(SIGNAL,0).setValue(ROLL,0));
     }
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) {
-        super.createBlockStateDefinition(builder);builder.add(SIGNAL);
+        super.createBlockStateDefinition(builder);builder.add(SIGNAL,ROLL);
     }
     @Override public BlockState getStateForPlacement(BlockPlaceContext context) {
         return PumpPlacement.align(context,defaultBlockState().setValue(FACING,(this instanceof PortableFluidPumpBlock?context.getHorizontalDirection():context.getNearestLookingDirection()).getOpposite())
@@ -30,22 +31,30 @@ public class VariableFlowPumpBlock extends PumpBlock {
             .setValue(BlockStateProperties.WATERLOGGED,context.getLevel().getFluidState(context.getClickedPos()).is(net.minecraft.world.level.material.Fluids.WATER)));
     }
     @Override public Direction.Axis getRotationAxis(BlockState state) {
-        return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X;
+        return orientedSide(state,Direction.EAST).getAxis();
     }
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return false; }
     @Override public boolean isSmallCog() { return true; }
     public static Direction.Axis gearContactAxis(BlockState state){
-        return state.getValue(FACING).getAxis().isVertical()?Direction.Axis.Z:Direction.Axis.Y;
+        return orientedSide(state,Direction.UP).getAxis();
+    }
+    private static Direction orientedSide(BlockState state,Direction side){
+        for(int i=0;i<state.getValue(ROLL);i++)side=side.getClockWise(Direction.Axis.Z);
+        var front=state.getValue(FACING);
+        if(front.getAxis().isVertical())return front==Direction.UP?side.getCounterClockWise(Direction.Axis.X):side.getClockWise(Direction.Axis.X);
+        int turns=switch(front){case EAST->1;case SOUTH->2;case WEST->3;default->0;};
+        for(int i=0;i<turns;i++)side=side.getClockWise(Direction.Axis.Y);
+        return side;
     }
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace){
         var facing=state.getValue(FACING);
         if(this instanceof PortableFluidPumpBlock)return state.setValue(FACING,facing.getClockWise());
-        return state.setValue(FACING,facing.getAxis()==clickedFace.getAxis()?facing.getOpposite():facing.getClockWise(clickedFace.getAxis()));
+        return facing.getAxis()==clickedFace.getAxis()?state.cycle(ROLL):state.setValue(FACING,facing.getClockWise(clickedFace.getAxis()));
     }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(); }
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){
         super.onPlace(state,level,pos,old,moving);
-        if(!level.isClientSide()&&old.getBlock()==this&&old.getValue(FACING)!=state.getValue(FACING)){
+        if(!level.isClientSide()&&old.getBlock()==this&&(old.getValue(FACING)!=state.getValue(FACING)||old.getValue(ROLL)!=state.getValue(ROLL))){
             for(var side:new Direction[]{old.getValue(FACING),old.getValue(FACING).getOpposite()}){
                 var neighbor=pos.relative(side);
                 com.simibubi.create.content.fluids.FluidPropagator.propagateChangedPipe(level,neighbor,level.getBlockState(neighbor));

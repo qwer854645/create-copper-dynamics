@@ -27,8 +27,8 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
         float angle=(float)Math.toRadians((time*be.getSpeed()*.3f+offset)%360);
         pose.pushPose();pose.translate(.5,.5,.5);
         if(front.getAxis().isVertical())pose.mulPose(Axis.XP.rotationDegrees(front==Direction.UP?90:-90));
-        // Align local +X with the positive world rotation axis, independent of flow facing.
-        if(axis==Direction.Axis.Z)pose.mulPose(Axis.YP.rotationDegrees(-90));
+        if(front.getAxis().isHorizontal())pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
+        pose.mulPose(Axis.ZP.rotationDegrees(-90*state.getValue(VariableFlowPumpBlock.ROLL)));
         pose.mulPose(Axis.XP.rotation(angle));
         pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(COG,state).light(light).overlay(overlay).renderInto(pose,buffers.getBuffer(RenderType.cutoutMipped()));pose.popPose();
@@ -38,6 +38,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
             pose.pushPose();pose.translate(.5,.5,.5);
             if(front.getAxis().isVertical())pose.mulPose(Axis.XP.rotationDegrees(front==Direction.UP?90:-90));
             pose.mulPose(Axis.YP.rotationDegrees(switch(front){case EAST->-90;case SOUTH->180;case WEST->90;default->0;}));
+            pose.mulPose(Axis.ZP.rotationDegrees(-90*state.getValue(VariableFlowPumpBlock.ROLL)));
             if(side<0)pose.mulPose(Axis.YP.rotationDegrees(180));
             pose.translate(-.5,-.5,-.5);
             pose.translate(-1.9/16f,0,0);

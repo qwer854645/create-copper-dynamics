@@ -138,7 +138,9 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
         notifyUpdate();
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
-        super.addToGoggleTooltip(tooltip, sneaking);
+        var nativeTooltip=new java.util.ArrayList<Component>();
+        super.addToGoggleTooltip(nativeTooltip,sneaking);
+        for(var line:nativeTooltip)tooltip.add(fluidArmHint(line));
         CCDTooltip.heading(tooltip, "ccd.gui.goggles.fluid_arm");
         var fluid = FluidPackageItem.contents(state().ccd$held());
         if (!fluid.isEmpty()) CCDTooltip.line(tooltip, "ccd.fluid_arm.cargo", fluid.getHoverName(), CCDTooltip.amount(fluid.getAmount()));
@@ -156,7 +158,10 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
     }
     private static Component fluidArmHint(Component component) {
         var content = component.getContents();
-        var result = content instanceof net.minecraft.network.chat.contents.TranslatableContents translated
+        var result = content instanceof net.minecraft.network.chat.contents.TranslatableContents title
+            && title.getKey().equals("create.hint.mechanical_arm_no_targets.title")
+            ? Component.translatable("ccd.hint.fluid_arm_no_targets.title").withStyle(component.getStyle())
+            : content instanceof net.minecraft.network.chat.contents.TranslatableContents translated
             && translated.getKey().equals("create.hint.mechanical_arm_no_targets")
             ? Component.translatable("ccd.hint.fluid_arm_no_targets").withStyle(component.getStyle())
             : component.copy().plainCopy().withStyle(component.getStyle());

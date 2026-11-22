@@ -1,4 +1,5 @@
 {
+  "ccd.hint.fluid_arm_no_targets.title": "No Fluid Arm Targets",
   "block.ccd.fluid_arm.tooltip.condition3": "When fueling a Blaze Burner",
   "block.ccd.fluid_arm.tooltip.behaviour3": "Select the Burner directly without a Hatch. Accepts _Lava_, _Super Lava_ and other fluid fuels supported by the Burner.",
   "ccd.atomizer.output_filter": "Target Output",
