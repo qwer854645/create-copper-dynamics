@@ -16,7 +16,7 @@ public final class PnPCompat {
             && de.devin.pipesnphysics.PipesNPhysicsConfig.ENABLE_ENGINE.get();
     }
     public static boolean endpoint(BlockEntity be) {
-        return be instanceof BufferPumpBlockEntity || be instanceof OmniPumpBlockEntity
+        return be instanceof BufferPumpBlockEntity
             || be instanceof CreativeDeliveryTankBlockEntity;
     }
     public static int stored(net.minecraft.world.level.Level level,net.minecraft.core.BlockPos pos) {

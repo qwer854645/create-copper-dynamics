@@ -25,7 +25,9 @@ abstract class FlowMeterNetworkMixin {
     @Shadow java.util.Map<BlockPos,java.lang.ref.WeakReference<com.simibubi.create.content.fluids.FluidTransportBehaviour>> cache;
     @WrapOperation(method="tick",at=@At(value="INVOKE",target="Lnet/neoforged/neoforge/fluids/capability/IFluidHandler;fill(Lnet/neoforged/neoforge/fluids/FluidStack;Lnet/neoforged/neoforge/fluids/capability/IFluidHandler$FluidAction;)I"))
     private int ccd$measure(IFluidHandler handler,FluidStack fluid,IFluidHandler.FluidAction action,Operation<Integer> original){
-        if(world.getBlockEntity(start.getConnectedPos()) instanceof dev.ccd.content.CreativeDeliveryTankBlockEntity tank&&tank.worldOutput.getValue()==0){
+        var sourceBlock=world.getBlockEntity(start.getPos());
+        if(!(sourceBlock instanceof dev.ccd.content.CreativeDeliveryTankBlockEntity))sourceBlock=world.getBlockEntity(start.getConnectedPos());
+        if(sourceBlock instanceof dev.ccd.content.CreativeDeliveryTankBlockEntity tank&&tank.worldOutput.getValue()==0){
             for(var target:targets)if(target.getSecond() instanceof com.simibubi.create.content.fluids.OpenEndedPipe){
                 var provider=target.getSecond().provideHandler();
                 if(provider!=null&&provider.getCapability()==handler)return 0;

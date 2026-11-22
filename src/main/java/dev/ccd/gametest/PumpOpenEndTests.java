@@ -14,18 +14,17 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class PumpOpenEndTests {
-    @GameTest(template="empty") public static void creativeModeControlsWorldOutput(GameTestHelper h){
+    @GameTest(template="empty",timeoutTicks=180) public static void creativeModeControlsWorldOutput(GameTestHelper h){
         var pos=new BlockPos(2,2,2);
         h.setBlock(pos,CopperDynamics.CREATIVE_DELIVERY_TANK.get().defaultBlockState().setValue(dev.ccd.content.CreativeDeliveryTankBlock.FACING,Direction.NORTH));
         h.setBlock(pos.north(),net.minecraft.world.level.block.Blocks.AIR);
         var tank=(dev.ccd.content.CreativeDeliveryTankBlockEntity)h.getBlockEntity(pos);
         tank.select(new FluidStack(Fluids.WATER,1000));
-        tank.tick();
-        h.assertTrue(h.getLevel().getFluidState(h.absolutePos(pos.north())).isEmpty(),"Default mode spilled into world");
-        tank.worldOutput.setValue(1);
-        tank.tick();tank.tick();
-        h.assertTrue(h.getLevel().getFluidState(h.absolutePos(pos.north())).is(Fluids.WATER),"World mode did not release water");
-        h.succeed();
+        h.runAfterDelay(50,()->{
+            h.assertTrue(h.getLevel().getFluidState(h.absolutePos(pos.north())).isEmpty(),"Default mode spilled into world");
+            tank.worldOutput.setValue(1);tank.invalidatePressure();
+        });
+        h.runAfterDelay(130,()->{h.assertTrue(h.getLevel().getFluidState(h.absolutePos(pos.north())).is(Fluids.WATER),"World mode did not release water");h.succeed();});
     }
     @GameTest(template="empty") public static void partialBucketSurvivesReloadAndPlacesWater(GameTestHelper h){
         var pos=new BlockPos(2,2,2);h.setBlock(pos,CopperDynamics.BUFFER_PUMP.get().defaultBlockState());

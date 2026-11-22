@@ -13,6 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 abstract class TurbinesMixin {
     @Inject(method="isTurbine",at=@At("HEAD"),cancellable=true)
     private static void ccd$noAutoTurbine(Level level,BlockPos pos,CallbackInfoReturnable<Boolean> cir) {
-        if(PnPCompat.pump(level.getBlockEntity(pos)))cir.setReturnValue(false);
+        if(PnPCompat.pump(level.getBlockEntity(pos))||level.getBlockEntity(pos) instanceof dev.ccd.content.OmniPumpBlockEntity)cir.setReturnValue(false);
     }
 }

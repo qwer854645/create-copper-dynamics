@@ -11,7 +11,6 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 /** Finite buffer supplied externally; rotational power only pumps stored fluid outward. */
 public final class BufferPumpBlockEntity extends PumpBlockEntity {
     public static final int CAPACITY=2000;
-    private final dev.ccd.logistics.PumpOpenEnds openEnds=new dev.ccd.logistics.PumpOpenEnds();
     public final net.neoforged.neoforge.fluids.capability.templates.FluidTank buffer=new net.neoforged.neoforge.fluids.capability.templates.FluidTank(CAPACITY){
         @Override protected void onContentsChanged(){dev.ccd.logistics.FluidSyncBehaviour.changed(BufferPumpBlockEntity.this);}
     };
@@ -34,6 +33,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         // This device owns finite storage and delivers from it directly. Running
         // the native transparent pump transport creates an invalid empty-port lifecycle.
         behaviours.removeIf(behaviour->behaviour instanceof com.simibubi.create.content.fluids.FluidTransportBehaviour);
+        behaviours.add(new dev.ccd.logistics.StoredSourceTransport(this,()->getBlockState().getValue(BufferPumpBlock.FACING),()->handler(getBlockState().getValue(BufferPumpBlock.FACING)),()->isOverStressed()?0f:Math.abs(getSpeed())));
     }
     @Override public boolean isSideAccessible(Direction side){return false;}
     @Override public void updatePipesOnSide(Direction side){if(!dev.ccd.logistics.NativeEndpointPump.UPDATING.get())invalidatePressure();} // Endpoint pressure only.
@@ -44,7 +44,6 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     @Override public void onSpeedChanged(float previous){super.onSpeedChanged(previous);invalidatePressure();}
     @Override public void tick(){
         super.tick();if(level==null||level.isClientSide())return;
-        if(getSpeed()!=0&&!isOverStressed())dev.ccd.logistics.AdjacentFluidTransfer.output(this,getBlockState().getValue(BufferPumpBlock.FACING),buffer,Math.max(1,(int)(Math.abs(getSpeed())/2)),openEnds);
         if(!pressureDirty)return;
         pressureDirty=false;
         var port=getBlockState().getValue(BufferPumpBlock.FACING);
@@ -52,7 +51,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
         dev.ccd.logistics.NativeEndpointPump.changed(level,neighbor);
         new dev.ccd.logistics.NativeEndpointPump(level,worldPosition,getBlockState()).distribute(port,false,isOverStressed()?0:Math.abs(getSpeed()));
     }
-    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));openEnds.write(tag,registries);}
-    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));openEnds.read(tag,registries);}
+    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("Buffer",buffer.writeToNBT(registries,new net.minecraft.nbt.CompoundTag()));}
+    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);buffer.readFromNBT(registries,tag.getCompound("Buffer"));}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){super.addToGoggleTooltip(tooltip,sneaking);dev.ccd.CCDTooltip.fluidContents(tooltip,buffer.isEmpty()?java.util.List.of():java.util.List.of(buffer.getFluid()),CAPACITY);return true;}
 }

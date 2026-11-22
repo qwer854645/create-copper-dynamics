@@ -473,7 +473,7 @@
   "ccd.ponder.omni_pumping.text_1": "万向泵放下时，六个面均为关闭状态。",
   "ccd.ponder.omni_pumping.text_2": "用扳手右键点击一个面，可依次切换输入、输出、应力口和关闭。",
   "ccd.ponder.omni_pumping.text_3": "向应力口接入旋转力，即可从输入面收液并向输出面供液。",
-  "ccd.ponder.omni_pumping.text_4": "所有输出共用输送能力，反转旋转方向不会交换接口模式。",
+  "ccd.ponder.omni_pumping.text_4": "流体由管网分配，万向泵不存液；没有可用输出时不继续抽液，反转旋转方向不交换接口模式。",
   "ccd.ponder.flow_metering.header": "测量管道流量",
   "ccd.ponder.flow_metering.text_1": "将流量计串接在两根流体管道之间。",
   "ccd.ponder.flow_metering.text_2": "指针随实际输送量变化，停止流动时归零。",
@@ -696,5 +696,7 @@
   "ccd.tank_burner.heat.kindled": "燃烧",
   "ccd.tank_burner.heat.seething": "超级燃烧",
   "block.ccd.variable_flow_pump.tooltip.condition2": "使用扳手时",
-  "block.ccd.variable_flow_pump.tooltip.behaviour2": "使用扳手绕_点击面的轴_旋转整个机器。点击管口面可调整齿轮或轴孔方位，点击侧面可改变管口方向。"
+  "block.ccd.variable_flow_pump.tooltip.behaviour2": "使用扳手绕_点击面的轴_旋转整个机器。点击管口面可调整齿轮或轴孔方位，点击侧面可改变管口方向。",
+  "block.ccd.omni_pump.tooltip.condition2": "输出关闭或目标无法接收时",
+  "block.ccd.omni_pump.tooltip.behaviour2": "按原生管网规则停止输送，_不拥有储液缓存_。可直接连接容器，也可连接管道。"
 }

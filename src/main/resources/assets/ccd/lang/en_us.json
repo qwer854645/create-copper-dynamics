@@ -473,7 +473,7 @@
   "ccd.ponder.omni_pumping.text_1": "All six faces of an Omnidirectional Pump start closed",
   "ccd.ponder.omni_pumping.text_2": "R-Click a face with a Wrench to cycle Input, Output, Shaft and Closed",
   "ccd.ponder.omni_pumping.text_3": "Supply rotational power at a Shaft port to draw from inputs and deliver to outputs",
-  "ccd.ponder.omni_pumping.text_4": "All outputs share the pump's transfer rate; reversing rotation does not swap the configured modes",
+  "ccd.ponder.omni_pumping.text_4": "The pipe network distributes fluid without storing it in the pump; unavailable outputs stop extraction, and rotation reversal does not swap port modes.",
   "ccd.ponder.flow_metering.header": "Measuring Fluid Flow",
   "ccd.ponder.flow_metering.text_1": "Install a Flow Meter between two Fluid Pipes",
   "ccd.ponder.flow_metering.text_2": "The needle responds to transferred fluid and returns to zero when flow stops",
@@ -696,5 +696,7 @@
   "ccd.tank_burner.heat.kindled": "Heated",
   "ccd.tank_burner.heat.seething": "Superheated",
   "block.ccd.variable_flow_pump.tooltip.condition2": "When using a Wrench",
-  "block.ccd.variable_flow_pump.tooltip.behaviour2": "Use a Wrench to rotate the entire machine around the _clicked face axis_. Click a pipe end to roll the gear or shaft; click a side to turn the ports."
+  "block.ccd.variable_flow_pump.tooltip.behaviour2": "Use a Wrench to rotate the entire machine around the _clicked face axis_. Click a pipe end to roll the gear or shaft; click a side to turn the ports.",
+  "block.ccd.omni_pump.tooltip.condition2": "When outputs are closed or cannot accept fluid",
+  "block.ccd.omni_pump.tooltip.behaviour2": "Stops transfer using native pipe rules, with _no owned fluid buffer_. Connect containers directly or through pipes."
 }

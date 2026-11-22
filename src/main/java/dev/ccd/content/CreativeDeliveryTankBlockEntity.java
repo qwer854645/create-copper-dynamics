@@ -14,11 +14,11 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
     private FluidStack selected=FluidStack.EMPTY;
     public FluidStack displayFluid(){return selected.copy();}
-    private final dev.ccd.logistics.PumpOpenEnds openEnds=new dev.ccd.logistics.PumpOpenEnds();
     public static final int RANGE=256, RATE=1000000, VISIT_LIMIT=4096;
     public CreativeDeliveryTankBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.CREATIVE_DELIVERY_TANK_BE.get(),pos,state);}
     public com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour worldOutput;
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
+        behaviours.add(new dev.ccd.logistics.StoredSourceTransport(this,()->getBlockState().getValue(CreativeDeliveryTankBlock.FACING),()->handler,()->selected.isEmpty()?0f:RATE*2f));
         behaviours.add(worldOutput=new com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollOptionBehaviour<OutputMode>(OutputMode.class,
             net.minecraft.network.chat.Component.translatable("ccd.creative_delivery.mode"),this,
             new CreativeDeliverySlotTransform()));
@@ -47,15 +47,14 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
     public void invalidatePressure(){pressureDirty=true;}
     @Override public void tick(){
         super.tick();if(level==null||level.isClientSide())return;
-        if(!selected.isEmpty())dev.ccd.logistics.AdjacentFluidTransfer.output(this,getBlockState().getValue(CreativeDeliveryTankBlock.FACING),handler,RATE,worldOutput.getValue()==1?openEnds:null);
         if(!pressureDirty)return;
         pressureDirty=false;
         var side=getBlockState().getValue(CreativeDeliveryTankBlock.FACING);var next=worldPosition.relative(side);
         dev.ccd.logistics.NativeEndpointPump.changed(level,next);
         if(!selected.isEmpty())new dev.ccd.logistics.NativeEndpointPump(level,worldPosition,getBlockState()).distribute(side,false,RATE*2f);
     }
-    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("SelectedFluid",selected.saveOptional(registries));openEnds.write(tag,registries);}
-    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);selected=FluidStack.parseOptional(registries,tag.getCompound("SelectedFluid"));openEnds.read(tag,registries);}
+    @Override protected void write(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.write(tag,registries,packet);tag.put("SelectedFluid",selected.saveOptional(registries));}
+    @Override protected void read(net.minecraft.nbt.CompoundTag tag,net.minecraft.core.HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);selected=FluidStack.parseOptional(registries,tag.getCompound("SelectedFluid"));}
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
         dev.ccd.CCDTooltip.heading(tooltip,"create.gui.goggles.fluid_container");
         if(selected.isEmpty())dev.ccd.CCDTooltip.line(tooltip,"ccd.creative_delivery.empty");

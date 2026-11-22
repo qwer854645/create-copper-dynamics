@@ -24,12 +24,6 @@ abstract class BoundaryColumnMixin {
         if(be instanceof BufferPumpBlockEntity pump) {
             endpoint=true;
             if(node.accessFace()==pump.getBlockState().getValue(BufferPumpBlock.FACING)&&!pump.isOverStressed())rpm=Math.abs(pump.getSpeed());
-        } else if(be instanceof OmniPumpBlockEntity pump) {
-            endpoint=true;
-            if(node.accessFace()!=null&&!pump.isOverStressed()) {
-                int mode=OmniPumpBlock.mode(pump.getBlockState(),node.accessFace());
-                rpm=Math.abs(pump.getSpeed())*(mode==OmniPumpBlock.INPUT?-1:mode==OmniPumpBlock.OUTPUT?1:0);
-            }
         } else if(be instanceof CreativeDeliveryTankBlockEntity) {endpoint=true;rpm=512;}
         // Shift the hydraulic datum and its capacity ceiling together. Finite storage remains
         // finite; only the creative relay is an infinite boundary. Actual volume stays in the cap.

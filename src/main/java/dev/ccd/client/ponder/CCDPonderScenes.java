@@ -369,7 +369,7 @@ public final class CCDPonderScenes {
         text(s,util,B,"R-Click a face with a Wrench to cycle Input, Output, Shaft and Closed");
         s.world().modifyBlock(B,state->state.setValue(OmniPumpBlock.PORTS.get(Direction.SOUTH),OmniPumpBlock.OUTPUT).setValue(OmniPumpBlock.PORTS.get(Direction.UP),OmniPumpBlock.SHAFT),false);
         text(s,util,B,"Supply rotational power at a Shaft port to draw from inputs and deliver to outputs");
-        text(s,util,B,"All outputs share the pump's transfer rate; reversing rotation does not swap the configured modes");s.markAsFinished();
+        text(s,util,B,"The pipe network distributes fluid without storing it in the pump; unavailable outputs stop extraction, and rotation reversal does not swap port modes");s.markAsFinished();
     }
     public static void metering(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"flow_metering","Measuring Fluid Flow");show(s,util,B,CopperDynamics.FLOW_METER.get().getAxisState(Direction.Axis.Z));

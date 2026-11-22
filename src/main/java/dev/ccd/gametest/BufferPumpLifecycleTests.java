@@ -31,7 +31,7 @@ public class BufferPumpLifecycleTests {
         h.setBlock(pos,CopperDynamics.BUFFER_PUMP.get().defaultBlockState());
         h.runAfterDelay(3,()->{
             var pump=(BufferPumpBlockEntity)h.getBlockEntity(pos);
-            h.assertTrue(pump.getBehaviour(FluidTransportBehaviour.TYPE)==null,"Buffer pump retained crashing native transport");
+            h.assertTrue(pump.getBehaviour(FluidTransportBehaviour.TYPE) instanceof dev.ccd.logistics.StoredSourceTransport,"Buffer pump lacks storage-owned native source transport");
             for(var side:Direction.values())pump.updatePipesOnSide(side);
             pump.updatePressureChange();
             var fluid=new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000);

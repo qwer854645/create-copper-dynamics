@@ -29,7 +29,7 @@ public class OmniPumpTests {
                 h.assertTrue(OmniPumpBlock.mode(h.getBlockState(pos),face)==expected,"Incorrect mode cycle");
                 for(var other:Direction.values())if(other!=face)h.assertTrue(OmniPumpBlock.mode(h.getBlockState(pos),other)==0,"Changed another face");
                 var pump=(OmniPumpBlockEntity)h.getBlockEntity(pos);
-                h.assertTrue((pump.handler(face)!=null)==(expected==1||expected==2),"Wrong fluid capability mode");
+                h.assertTrue(pump.getBehaviour(com.simibubi.create.content.fluids.FluidTransportBehaviour.TYPE).canHaveFlowToward(pump.getBlockState(),face)==(expected==1||expected==2),"Wrong fluid capability mode");
                 h.assertTrue(block.hasShaftTowards(h.getLevel(),absolute,h.getBlockState(pos),face)==(expected==3),"Wrong shaft face");
             }
         }
@@ -48,12 +48,14 @@ public class OmniPumpTests {
         });
         h.runAfterDelay(60,()->{
             var sink=(FluidTankBlockEntity)h.getBlockEntity(sinkPos);var source=(FluidTankBlockEntity)h.getBlockEntity(sourcePos);
-            h.assertTrue(sink.getTankInventory().getFluidAmount()>0,"Pump did not transfer through native pipes; buffer="+pump.buffer.getFluidAmount()+" source="+source.getTankInventory().getFluidAmount());
+            h.assertTrue(sink.getTankInventory().getFluidAmount()>0,"Pump did not transfer through native pipes; buffer="+0+" source="+source.getTankInventory().getFluidAmount());
             int pipeContents=dev.ccd.compat.pnp.PnPCompat.active()?dev.ccd.compat.pnp.PnPCompat.stored(h.getLevel(),h.absolutePos(pos.west()))+dev.ccd.compat.pnp.PnPCompat.stored(h.getLevel(),h.absolutePos(pos.east())):0;
-            h.assertTrue(source.getTankInventory().getFluidAmount()+sink.getTankInventory().getFluidAmount()+pump.buffer.getFluidAmount()+pipeContents==(dev.ccd.compat.pnp.PnPCompat.active()?8000:1000),"Fluid was lost or duplicated");
-            pump.setSpeed(0);pump.onSpeedChanged(64);int amount=sink.getTankInventory().getFluidAmount();
-            int stoppedBuffer=pump.buffer.getFluidAmount();
-            h.runAfterDelay(5,()->{h.assertTrue(dev.ccd.compat.pnp.PnPCompat.active()?pump.buffer.getFluidAmount()>=stoppedBuffer:sink.getTankInventory().getFluidAmount()==amount,"Stopped pump still supplies fluid");h.succeed();});
+            h.assertTrue(source.getTankInventory().getFluidAmount()+sink.getTankInventory().getFluidAmount()+0+pipeContents==(dev.ccd.compat.pnp.PnPCompat.active()?8000:1000),"Fluid was lost or duplicated");
+            pump.setSpeed(0);pump.onSpeedChanged(64);
+            h.runAfterDelay(5,()->{
+                int amount=source.getTankInventory().getFluidAmount();
+                h.runAfterDelay(10,()->{h.assertTrue(source.getTankInventory().getFluidAmount()==amount,"Stopped pump still supplies fluid");h.succeed();});
+            });
         });
     }
 }
