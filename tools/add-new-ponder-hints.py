@@ -43,7 +43,7 @@ translations={
 '物品加工需要对应附属；腐化加工还需要铁砧工艺或 L2 敌对'])}
 extra={
 'Use a filled container or Fluid Filter in the filter slot; lit red indicators mean a Redstone signal is pausing the grate':'在过滤槽设置装液容器或流体过滤器；红色指示条亮起表示红石信号正在暂停集液栅',
-'Wrench a side to rotate the Redstone Pump through all six directions; wrench a pipe end to flip its facing':'用扳手点击侧面可将红石泵转向六个方向，点击管口端面可翻转朝向'}
+'Repeatedly wrench any face to cycle all six pipe directions and four shaft orientations':'用扳手连续点击任意一面，循环六个管口方向与四档传动轴方位'}
 paths={loc:root/f'src/main/resources/assets/ccd/lang/{loc}.json' for loc in ['zh_cn','en_us']}
 data={loc:json.loads(p.read_text(encoding='utf-8')) for loc,p in paths.items()}
 for match in re.finditer(r'public static void \w+\(SceneBuilder builder,SceneBuildingUtil util\)\s*\{(.*?)(?=\n    (?:public|private) static|\Z)',source,re.S):

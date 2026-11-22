@@ -37,6 +37,7 @@ public final class RedstoneFluidPumpRenderer extends SafeBlockEntityRenderer<Red
             case DOWN -> pose.mulPose(Axis.XP.rotationDegrees(-90));
             default -> { }
         }
+        pose.mulPose(Axis.ZP.rotationDegrees(-90*state.getValue(RedstoneFluidPumpBlock.ROLL)));
         pose.mulPose(Axis.YP.rotationDegrees(180*be.pointer.getValue(pt)));
         pose.translate(-.5,-.5,-.5);
         CachedBuffers.partial(POINTER,state).light(light).overlay(overlay).renderInto(pose,buffer.getBuffer(RenderType.cutoutMipped()));

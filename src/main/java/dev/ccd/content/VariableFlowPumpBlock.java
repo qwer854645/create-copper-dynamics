@@ -39,17 +39,12 @@ public class VariableFlowPumpBlock extends PumpBlock {
         return orientedSide(state,Direction.UP).getAxis();
     }
     private static Direction orientedSide(BlockState state,Direction side){
-        for(int i=0;i<state.getValue(ROLL);i++)side=side.getClockWise(Direction.Axis.Z);
-        var front=state.getValue(FACING);
-        if(front.getAxis().isVertical())return front==Direction.UP?side.getCounterClockWise(Direction.Axis.X):side.getClockWise(Direction.Axis.X);
-        int turns=switch(front){case EAST->1;case SOUTH->2;case WEST->3;default->0;};
-        for(int i=0;i<turns;i++)side=side.getClockWise(Direction.Axis.Y);
-        return side;
+        return PumpOrientation.side(state,ROLL,side);
     }
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace){
         var facing=state.getValue(FACING);
         if(this instanceof PortableFluidPumpBlock)return state.setValue(FACING,facing.getClockWise());
-        return facing.getAxis()==clickedFace.getAxis()?state.cycle(ROLL):state.setValue(FACING,facing.getClockWise(clickedFace.getAxis()));
+        return PumpOrientation.next(state,ROLL);
     }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(); }
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){

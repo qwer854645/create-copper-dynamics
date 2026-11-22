@@ -461,7 +461,7 @@
   "ccd.ponder.pump_variants.text_1": "转向增压泵在两个相邻管口之间输送流体。",
   "ccd.ponder.pump_variants.text_2": "垂直转向增压泵的传动轴垂直于两个管口所在的平面。",
   "ccd.ponder.pump_variants.text_3": "红石信号会反转红石双向动力泵的输送方向。",
-  "ccd.ponder.pump_variants.text_4": "用扳手点击侧面可将红石泵转向六个方向，点击管口端面可翻转朝向",
+  "ccd.ponder.pump_variants.text_4": "用扳手连续点击任意一面，循环六个管口方向与四档传动轴方位",
   "ccd.ponder.pump_variants.text_5": "双向动力泵随旋转方向反转流体方向。",
   "ccd.ponder.pump_variants.text_6": "调频动力泵根据信号强度调整流量和距离，齿轮从顶部或底部接入。",
   "ccd.ponder.buffered_delivery.header": "输送缓存中的流体",
@@ -636,7 +636,7 @@
   "block.ccd.fluid_atomizer.tooltip.condition3": "更换目标产物过滤条件时",
   "block.ccd.fluid_atomizer.tooltip.behaviour3": "重新计算加工进度。过滤_不切换加工类型_，也不限制生物效果。",
   "block.ccd.redstone_fluid_pump.tooltip.condition2": "使用扳手调整朝向时",
-  "block.ccd.redstone_fluid_pump.tooltip.behaviour2": "点击侧面旋转管口，可朝向_六个方向_；点击管口端面翻转朝向。",
+  "block.ccd.redstone_fluid_pump.tooltip.behaviour2": "使用扳手连续右击任意一面，循环_六个管口方向_及_四档齿轮或轴孔方位_。",
   "block.ccd.smart_collection_grate.tooltip.condition2": "接收红石信号时",
   "block.ccd.smart_collection_grate.tooltip.behaviour2": "红色指示条_亮起_，暂停收集与排液；无信号时指示条变暗。",
   "item.ccd.moss_suspension_bucket.tooltip.condition3": "液体接触可苔化的方块时",
@@ -694,5 +694,7 @@
   "ccd.tank_burner.heat.smouldering": "待燃",
   "ccd.tank_burner.heat.fading": "余热",
   "ccd.tank_burner.heat.kindled": "燃烧",
-  "ccd.tank_burner.heat.seething": "超级燃烧"
+  "ccd.tank_burner.heat.seething": "超级燃烧",
+  "block.ccd.variable_flow_pump.tooltip.condition2": "使用扳手时",
+  "block.ccd.variable_flow_pump.tooltip.behaviour2": "使用扳手连续右击任意一面，循环_六个管口方向_及_四档齿轮或轴孔方位_。"
 }

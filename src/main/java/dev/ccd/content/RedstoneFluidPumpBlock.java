@@ -15,22 +15,20 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.item.context.BlockPlaceContext;
 
 public final class RedstoneFluidPumpBlock extends PumpBlock {
+    public static final net.minecraft.world.level.block.state.properties.IntegerProperty ROLL=net.minecraft.world.level.block.state.properties.IntegerProperty.create("roll",0,3);
     public static final net.minecraft.world.level.block.state.properties.BooleanProperty POWERED=BlockStateProperties.POWERED;
-    public RedstoneFluidPumpBlock(Properties properties) { super(properties);registerDefaultState(defaultBlockState().setValue(POWERED,false)); }
-    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { super.createBlockStateDefinition(builder);builder.add(POWERED); }
+    public RedstoneFluidPumpBlock(Properties properties) { super(properties);registerDefaultState(defaultBlockState().setValue(POWERED,false).setValue(ROLL,0)); }
+    @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> builder) { super.createBlockStateDefinition(builder);builder.add(POWERED,ROLL); }
     @Override public BlockEntityType<? extends PumpBlockEntity> getBlockEntityType() { return CopperDynamics.REDSTONE_FLUID_PUMP_BE.get(); }
-    @Override public Direction.Axis getRotationAxis(BlockState state) { return state.getValue(FACING).getAxis()==Direction.Axis.X?Direction.Axis.Z:Direction.Axis.X; }
+    @Override public Direction.Axis getRotationAxis(BlockState state) { return PumpOrientation.side(state,ROLL,Direction.EAST).getAxis(); }
     @Override public boolean hasShaftTowards(LevelReader level,BlockPos pos,BlockState state,Direction side) { return side.getAxis()==getRotationAxis(state); }
     @Override public boolean isSmallCog() { return false; }
     @Override public BlockState getRotatedBlockState(BlockState state,Direction clickedFace) {
-        Direction facing=state.getValue(FACING);
-        // Clicking an end still reverses flow-facing; a side turns the pipe axis by 90 degrees.
-        return state.setValue(FACING,facing.getAxis()==clickedFace.getAxis()
-            ?facing.getOpposite():facing.getClockWise(clickedFace.getAxis()));
+        return PumpOrientation.next(state,ROLL);
     }
     @Override public void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving) {
         super.onPlace(state,level,pos,old,moving);
-        if(!level.isClientSide()&&old.getBlock()==this&&old.getValue(FACING)!=state.getValue(FACING)) {
+        if(!level.isClientSide()&&old.getBlock()==this&&(old.getValue(FACING)!=state.getValue(FACING)||old.getValue(ROLL)!=state.getValue(ROLL))) {
             for(Direction side:new Direction[]{old.getValue(FACING),old.getValue(FACING).getOpposite()}) {
                 var neighbor=pos.relative(side);
                 com.simibubi.create.content.fluids.FluidPropagator.propagateChangedPipe(level,neighbor,level.getBlockState(neighbor));

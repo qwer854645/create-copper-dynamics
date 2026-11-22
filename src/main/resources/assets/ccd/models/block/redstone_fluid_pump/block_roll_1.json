@@ -1,0 +1,9 @@
+{
+  "parent": "ccd:block/redstone_fluid_pump/block",
+  "transform": {
+    "rotation": {
+      "z": -90
+    },
+    "origin": "center"
+  }
+}
