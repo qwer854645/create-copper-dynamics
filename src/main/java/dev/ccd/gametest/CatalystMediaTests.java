@@ -33,7 +33,7 @@ public class CatalystMediaTests {
         h.succeed();
     }
     @GameTest(template="empty") public static void newMediaMistStrongerAndShorter(GameTestHelper h) {
-        var effects=java.util.Map.of("withering_fluid",MobEffects.WITHER,"conduit_energy_fluid",MobEffects.DIG_SPEED,"moss_suspension",MobEffects.MOVEMENT_SLOWDOWN,"tear_solution",MobEffects.WEAKNESS,"corrupting_fluid",MobEffects.WITHER);
+        var effects=java.util.Map.<String,net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>>of("withering_fluid",MobEffects.WITHER,"conduit_energy_fluid",MobEffects.DIG_SPEED,"moss_suspension",dev.ccd.CopperDynamics.MOSSIFICATION,"tear_solution",MobEffects.WEAKNESS,"corrupting_fluid",MobEffects.WITHER);
         for(var entry:effects.entrySet()) {
             var medium=ProcessingMedia.ALL.stream().filter(m->m.id.equals(entry.getKey())).findFirst().orElseThrow();
             var normal=h.spawn(net.minecraft.world.entity.EntityType.COW,2,2,2);

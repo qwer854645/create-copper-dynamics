@@ -96,7 +96,7 @@ public final class FluidWorldEffects {
                     mistEffect(entity,MobEffects.WATER_BREATHING,100,0,mist);
                     mistEffect(entity,MobEffects.DIG_SPEED,100,0,mist);
                 }
-                case "moss_suspension" -> mistEffect(entity,MobEffects.MOVEMENT_SLOWDOWN,80,0,mist);
+                case "moss_suspension" -> mistEffect(entity,CopperDynamics.MOSSIFICATION,80,0,mist);
                 case "tear_solution" -> {
                     mistEffect(entity,MobEffects.BLINDNESS,60,0,mist);
                     mistEffect(entity,MobEffects.WEAKNESS,80,0,mist);

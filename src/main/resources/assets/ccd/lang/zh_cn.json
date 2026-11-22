@@ -606,7 +606,7 @@
   "item.ccd.moss_suspension_bucket.tooltip.condition1": "安装对应加工附属并装入雾化器时",
   "item.ccd.moss_suspension_bucket.tooltip.behaviour1": "使气流获得_苔化_加工效果。",
   "item.ccd.moss_suspension_bucket.tooltip.condition2": "接触流体或受其气流影响时",
-  "item.ccd.moss_suspension_bucket.tooltip.behaviour2": "施加_缓慢_。雾化后效果_更强、持续更短_。",
+  "item.ccd.moss_suspension_bucket.tooltip.behaviour2": "给予_苔化_：持续期间接触原版苔藓可替换方块时，将其化为苔藓，并按骨粉催生苔藓的规则扩散与生长植被。雾化后持续时间更短。",
   "fluid_type.ccd.tear_solution": "催泪溶液",
   "fluid.ccd.tear_solution": "催泪溶液",
   "fluid.ccd.flowing_tear_solution": "催泪溶液",
@@ -626,5 +626,6 @@
   "item.ccd.corrupting_fluid_bucket.tooltip.condition1": "安装更多触媒及铁砧工艺或 L2 敌对并装入雾化器时",
   "item.ccd.corrupting_fluid_bucket.tooltip.behaviour1": "使气流获得_腐化_加工效果。",
   "item.ccd.corrupting_fluid_bucket.tooltip.condition2": "接触流体或受其气流影响时",
-  "item.ccd.corrupting_fluid_bucket.tooltip.behaviour2": "施加_凋零_和_虚弱_。雾化后效果_更强、持续更短_。"
+  "item.ccd.corrupting_fluid_bucket.tooltip.behaviour2": "施加_凋零_和_虚弱_。雾化后效果_更强、持续更短_。",
+  "effect.ccd.mossification": "苔化"
 }

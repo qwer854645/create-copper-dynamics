@@ -83,6 +83,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 @Mod(CopperDynamics.ID)
 public final class CopperDynamics {
     public static final String ID = "ccd";
+    public static final DeferredRegister<net.minecraft.world.effect.MobEffect> EFFECTS=DeferredRegister.create(Registries.MOB_EFFECT,ID);
+    public static final DeferredHolder<net.minecraft.world.effect.MobEffect,dev.ccd.content.MossificationEffect> MOSSIFICATION=EFFECTS.register("mossification",dev.ccd.content.MossificationEffect::new);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, ID);
     public static final DeferredRegister<net.minecraft.world.level.block.Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, ID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ID);
@@ -413,6 +415,7 @@ public final class CopperDynamics {
         bus.addListener(dev.ccd.filter.FluidFilterPacket::register);
         ARM_POINTS.register(bus);
         FAN_TYPES.register(bus);
+        EFFECTS.register(bus);
         RECIPE_TYPES.register(bus);
         RECIPE_SERIALIZERS.register(bus);
         TABS.register("main", () -> CreativeModeTab.builder()
