@@ -18,6 +18,7 @@ public final class BufferPumpRenderer extends SafeBlockEntityRenderer<BufferPump
     public static void registerModels(){}
     public BufferPumpRenderer(BlockEntityRendererProvider.Context context){}
     @Override protected void renderSafe(BufferPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
+        PumpContainerAttachmentRenderer.render(be,pose,buffers,light,overlay);
         var state=be.getBlockState();var axis=((BufferPumpBlock)state.getBlock()).getRotationAxis(state);
         float time=net.createmod.catnip.animation.AnimationTickHolder.getRenderTime(be.getLevel());
         float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),axis);

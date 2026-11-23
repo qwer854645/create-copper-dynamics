@@ -22,6 +22,7 @@ public final class RedstoneFluidPumpRenderer extends SafeBlockEntityRenderer<Red
     public RedstoneFluidPumpRenderer(BlockEntityRendererProvider.Context context) {}
     @Override protected void renderSafe(RedstoneFluidPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffer,int light,int overlay) {
         var state=be.getBlockState();var facing=state.getValue(RedstoneFluidPumpBlock.FACING);
+        PumpContainerAttachmentRenderer.render(be,pose,buffer,light,overlay);
         var shaftAxis=((RedstoneFluidPumpBlock)state.getBlock()).getRotationAxis(state);
         for(var side:Direction.values()) if(side.getAxis()==shaftAxis) {
             var shaft=CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF,state,side);

@@ -21,6 +21,7 @@ public final class ReciprocatingPumpRenderer extends SafeBlockEntityRenderer<Var
     public ReciprocatingPumpRenderer(BlockEntityRendererProvider.Context context) {}
     @Override protected void renderSafe(VariableFlowPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay) {
         var state=be.getBlockState();
+        PumpContainerAttachmentRenderer.render(be,pose,buffers,light,overlay);
         var axis=((VariableFlowPumpBlock)state.getBlock()).getRotationAxis(state);
         for(var side:Direction.values())if(side.getAxis()==axis)
             KineticBlockEntityRenderer.standardKineticRotationTransform(CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF,state,side),be,light)

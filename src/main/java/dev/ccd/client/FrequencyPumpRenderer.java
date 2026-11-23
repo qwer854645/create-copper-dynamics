@@ -21,6 +21,7 @@ public final class FrequencyPumpRenderer extends SafeBlockEntityRenderer<Variabl
     public FrequencyPumpRenderer(BlockEntityRendererProvider.Context context){}
     @Override protected void renderSafe(VariableFlowPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
         var state=be.getBlockState();var front=state.getValue(VariableFlowPumpBlock.FACING);
+        PumpContainerAttachmentRenderer.render(be,pose,buffers,light,overlay);
         float time=net.createmod.catnip.animation.AnimationTickHolder.getRenderTime(be.getLevel());
         var axis=((VariableFlowPumpBlock)state.getBlock()).getRotationAxis(state);
         float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),axis);

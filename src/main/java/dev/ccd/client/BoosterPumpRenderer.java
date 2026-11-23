@@ -21,6 +21,7 @@ public final class BoosterPumpRenderer extends SafeBlockEntityRenderer<BoosterPu
     @Override protected void renderSafe(BoosterPumpBlockEntity be, float partialTicks, PoseStack pose,
         MultiBufferSource buffers, int light, int overlay) {
         var state = be.getBlockState();
+        PumpContainerAttachmentRenderer.render(be,pose,buffers,light,overlay);
         float time = AnimationTickHolder.getRenderTime(be.getLevel());
         for (Direction face : Direction.values()) {
             float factor = BoosterPumpBlock.shaftModifier(state, face);

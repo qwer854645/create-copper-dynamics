@@ -16,6 +16,7 @@ public final class OmniPumpRenderer extends SafeBlockEntityRenderer<OmniPumpBloc
     public OmniPumpRenderer(BlockEntityRendererProvider.Context context){}
     @Override protected void renderSafe(OmniPumpBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
         var state=be.getBlockState();
+        PumpContainerAttachmentRenderer.render(be,pose,buffers,light,overlay);
         for(var side:Direction.values())if(OmniPumpBlock.mode(state,side)==OmniPumpBlock.SHAFT){
             float offset=KineticBlockEntityRenderer.getRotationOffsetForPosition(be,be.getBlockPos(),side.getAxis());
             float angle=(float)Math.toRadians((net.createmod.catnip.animation.AnimationTickHolder.getRenderTime(be.getLevel())*be.getSpeed()*.3f+offset)%360);

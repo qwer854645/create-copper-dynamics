@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.blockEntity.renderer.SafeBlockEntityRender
 public final class CreativeDeliveryTankRenderer extends SafeBlockEntityRenderer<CreativeDeliveryTankBlockEntity>{
     public CreativeDeliveryTankRenderer(BlockEntityRendererProvider.Context context){}
     @Override protected void renderSafe(CreativeDeliveryTankBlockEntity be,float pt,PoseStack pose,MultiBufferSource buffers,int light,int overlay){
+        PumpContainerAttachmentRenderer.render(be,pose,buffers,light,overlay);
         var fluid=be.displayFluid();if(fluid.isEmpty())return;
         net.createmod.catnip.platform.NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(fluid,
             3/16f,2/16f,3/16f,13/16f,14/16f,13/16f,buffers,pose,light,false,true);

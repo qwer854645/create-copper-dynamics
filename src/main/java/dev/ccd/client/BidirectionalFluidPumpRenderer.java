@@ -17,6 +17,7 @@ public final class BidirectionalFluidPumpRenderer extends SafeBlockEntityRendere
     @Override protected void renderSafe(BidirectionalFluidPumpBlockEntity be, float partialTicks, PoseStack pose,
         MultiBufferSource buffers, int light, int overlay) {
         var state = be.getBlockState();
+        PumpContainerAttachmentRenderer.render(be,pose,buffers,light,overlay);
         var axis = ((BidirectionalFluidPumpBlock) state.getBlock()).getRotationAxis(state);
         for (Direction side : Direction.values()) if (side.getAxis() == axis) {
             var shaft = CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF, state, side);
