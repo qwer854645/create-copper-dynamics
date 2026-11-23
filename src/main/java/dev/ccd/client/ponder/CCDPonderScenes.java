@@ -327,13 +327,22 @@ public final class CCDPonderScenes {
         s.overlay().showFilterSlotInput(util.vector().centerOf(grate),Direction.SOUTH,45);
         s.world().setFilterData(util.select().position(grate),SmartCollectionGrateBlockEntity.class,new ItemStack(Items.WATER_BUCKET));
         text(s,util,grate,"Use a filled container or Fluid Filter in the filter slot; lit red indicators mean a Redstone signal is pausing the grate");
-        s.world().hideSection(util.select().fromTo(B,grate),Direction.UP); s.idle(20);
-        s.world().setBlock(B,CopperDynamics.COPPER_WATER_SUPPLY.get().defaultBlockState(),false);
-        s.world().showSection(util.select().position(B),Direction.DOWN);
+        s.world().modifyBlock(grate,state->state.setValue(SmartCollectionGrateBlock.POWERED,true),true);
+        s.idle(25);s.markAsFinished();
+    }
+    public static void waterSupply(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"water_supply","Supplying Adjacent Containers");
+        show(s,util,B,CopperDynamics.COPPER_WATER_SUPPLY.get().defaultBlockState());
         show(s,util,C,AllBlocks.FLUID_TANK.getDefaultState());
         text(s,util,B,"Water Supply Boxes automatically supply water to adjacent containers on all six sides");
         water(s,C,4000);
-        s.world().setBlock(B,CopperDynamics.COPPER_WATER_BASIN.get().defaultBlockState(),true);
+        s.world().modifyBlock(B,state->state.setValue(CopperWaterSupplyBlock.POWERED,true),true);
+        s.markAsFinished();
+    }
+    public static void waterBasin(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"water_basin","Drawing Unlimited Water");
+        show(s,util,B,CopperDynamics.COPPER_WATER_BASIN.get().defaultBlockState());
+        s.overlay().showControls(util.vector().topOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(Items.BUCKET));
         text(s,util,B,"Copper Water Basins supply handheld containers and pipes, but do not fill adjacent containers automatically"); s.markAsFinished();
     }
     public static void transfer(SceneBuilder builder,SceneBuildingUtil util) {
@@ -415,12 +424,75 @@ public final class CCDPonderScenes {
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick();
         text(s,util,B,"R-Click Portable Pumps to operate them manually; Sneak to reverse manual rotation");s.markAsFinished();
     }
+    public static void turningPump(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"turning_pump","Turning Fluid Flow");
+        var state=CopperDynamics.TURNING_BOOSTER_PUMP.get().defaultBlockState().setValue(TurningBoosterPumpBlock.FACING,Direction.SOUTH);
+        show(s,util,B,state);show(s,util,B.south(),AllBlocks.FLUID_PIPE.get().getAxisState(Direction.Axis.Z));
+        var branch=TurningBoosterPumpBlock.branch(state);show(s,util,B.relative(branch),AllBlocks.FLUID_PIPE.get().getAxisState(branch.getAxis()));
+        s.world().setKineticSpeed(util.select().position(B),32);
+        text(s,util,B,"Transfers fluid between adjacent mouths; the shafts lie in the same plane as the mouths");s.markAsFinished();
+    }
+    public static void verticalTurningPump(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"vertical_turning_pump","Connecting Perpendicular Shafts");
+        show(s,util,B,CopperDynamics.VERTICAL_TURNING_BOOSTER_PUMP.get().defaultBlockState());
+        s.world().setKineticSpeed(util.select().position(B),32);
+        text(s,util,B,"The through-shaft is perpendicular to the plane of the two adjacent pipe mouths");s.markAsFinished();
+    }
+    public static void redstonePump(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"redstone_pump","Reversing Flow with Redstone");
+        show(s,util,B,CopperDynamics.REDSTONE_FLUID_PUMP.get().defaultBlockState().setValue(RedstoneFluidPumpBlock.FACING,Direction.SOUTH));
+        s.world().setKineticSpeed(util.select().position(B),32);
+        text(s,util,B,"Supply rotational power to pump fluid");
+        show(s,util,B.east(),Blocks.REDSTONE_BLOCK.defaultBlockState());
+        s.world().modifyBlock(B,state->state.setValue(RedstoneFluidPumpBlock.POWERED,true),true);
+        text(s,util,B,"A Redstone Signal reverses flow without reversing the drive");s.markAsFinished();
+    }
+    public static void bidirectionalPump(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"bidirectional_pump","Reversing Flow with Rotation");
+        show(s,util,B,CopperDynamics.BIDIRECTIONAL_FLUID_PUMP.get().defaultBlockState());
+        s.world().setKineticSpeed(util.select().position(B),32);
+        text(s,util,B,"The drive direction determines the fluid direction");
+        s.world().setKineticSpeed(util.select().position(B),-32);
+        s.world().modifyBlock(B,state->state.setValue(BidirectionalFluidPumpBlock.REVERSED,true),true);
+        text(s,util,B,"Reverse the rotation to reverse fluid flow");s.markAsFinished();
+    }
+    public static void variablePump(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"variable_pump","Controlling Pump Flow");
+        show(s,util,B,CopperDynamics.VARIABLE_FLOW_PUMP.get().defaultBlockState().setValue(VariableFlowPumpBlock.FACING,Direction.SOUTH));
+        s.world().setKineticSpeed(util.select().position(B),32);
+        text(s,util,B,"Supply rotation through the exposed Cogwheel faces");
+        show(s,util,B.east(),Blocks.REDSTONE_BLOCK.defaultBlockState());
+        s.world().modifyBlock(B,state->state.setValue(VariableFlowPumpBlock.SIGNAL,15),true);
+        text(s,util,B,"Redstone strength controls flow and range; the dial shows signal strength");
+        s.world().setBlock(B.east(),Blocks.AIR.defaultBlockState(),true);
+        s.world().modifyBlock(B,state->state.setValue(VariableFlowPumpBlock.SIGNAL,0),true);
+        text(s,util,B,"With the default settings, no signal stops pumping while the gear can still turn");s.markAsFinished();
+    }
+    public static void portablePump(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"portable_pump","Operating a Portable Pump");
+        show(s,util,B,CopperDynamics.PORTABLE_PUMP.get().defaultBlockState());
+        s.overlay().showControls(util.vector().topOf(B),Pointing.DOWN,45).rightClick();
+        s.world().modifyBlockEntity(B,PortableFluidPumpBlockEntity.class,be->be.setSpeed(32));
+        text(s,util,B,"R-Click to pump manually; Sneak-R-Click to reverse manual rotation");
+        s.world().setKineticSpeed(util.select().position(B),-32);
+        text(s,util,B,"A shaft can also drive the pump continuously");s.markAsFinished();
+    }
     public static void buffering(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"buffered_delivery","Supplying Stored Fluids");
         show(s,util,B,CopperDynamics.BUFFER_PUMP.get().defaultBlockState());
         text(s,util,B,"Buffer Pumps hold 2000 mB supplied by pipes or handheld containers");
         text(s,util,B,"Rotational power delivers stored fluid through the outlet without extracting from other containers");
-        s.world().setBlock(B,CopperDynamics.CREATIVE_DELIVERY_TANK.get().defaultBlockState(),true);
+        show(s,util,B.south(),AllBlocks.FLUID_TANK.getDefaultState());
+        s.world().modifyBlockEntity(B,BufferPumpBlockEntity.class,be->be.buffer.fill(new FluidStack(Fluids.WATER,2000),FluidAction.EXECUTE));
+        s.world().setKineticSpeed(util.select().position(B),32);s.idle(25);
+        s.world().modifyBlockEntity(B,BufferPumpBlockEntity.class,be->be.buffer.drain(1000,FluidAction.EXECUTE));water(s,B.south(),1000);
+        s.markAsFinished();
+    }
+    public static void creativeSupply(SceneBuilder builder,SceneBuildingUtil util){
+        var s=begin(builder,"creative_supply","Supplying Unlimited Fluid");
+        show(s,util,B,CopperDynamics.CREATIVE_DELIVERY_TANK.get().defaultBlockState().setValue(CreativeDeliveryTankBlock.FACING,Direction.SOUTH));
+        s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(Items.WATER_BUCKET));
+        s.world().modifyBlockEntity(B,CreativeDeliveryTankBlockEntity.class,be->be.select(new FluidStack(Fluids.WATER,1000)));
         text(s,util,B,"R-Click with a filled container to select the fluid supplied by a Creative Delivery Tank");
         text(s,util,B,"Use a Wrench to rotate the outlet; upper side controls switch between container delivery and world output");s.markAsFinished();
     }
@@ -432,7 +504,11 @@ public final class CCDPonderScenes {
         s.world().modifyBlock(B,state->state.setValue(OmniPumpBlock.PORTS.get(Direction.NORTH),OmniPumpBlock.INPUT),false);
         text(s,util,B,"R-Click a face with a Wrench to cycle Input, Output, Shaft and Closed");
         s.world().modifyBlock(B,state->state.setValue(OmniPumpBlock.PORTS.get(Direction.SOUTH),OmniPumpBlock.OUTPUT).setValue(OmniPumpBlock.PORTS.get(Direction.UP),OmniPumpBlock.SHAFT),false);
+        show(s,util,B.north(),AllBlocks.FLUID_TANK.getDefaultState());water(s,B.north(),4000);
+        show(s,util,B.south(),AllBlocks.FLUID_TANK.getDefaultState());
+        s.world().setKineticSpeed(util.select().position(B),32);
         text(s,util,B,"Supply rotational power at a Shaft port to draw from inputs and deliver to outputs");
+        water(s,B.north(),3000);water(s,B.south(),1000);
         text(s,util,B,"The pipe network distributes fluid without storing it in the pump; unavailable outputs stop extraction, and rotation reversal does not swap port modes");s.markAsFinished();
     }
     public static void metering(SceneBuilder builder,SceneBuildingUtil util){
