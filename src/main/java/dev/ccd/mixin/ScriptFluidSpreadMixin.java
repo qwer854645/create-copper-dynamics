@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 abstract class ScriptFluidSpreadMixin {
     @Inject(method="spreadTo",at=@At("HEAD"),cancellable=true)
     private void ccd$scriptDownward(LevelAccessor level,BlockPos pos,BlockState state,Direction direction,FluidState incoming,CallbackInfo ci){
+        if(FluidWorldScripts.cancels(level,pos.relative(direction.getOpposite()),pos,incoming)){ci.cancel();return;}
         if(FluidWorldScripts.downward(level,pos,direction,incoming))ci.cancel();
     }
 }

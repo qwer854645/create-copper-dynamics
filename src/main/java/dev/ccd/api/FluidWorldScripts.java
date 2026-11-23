@@ -25,6 +25,37 @@ public final class FluidWorldScripts {
     private static void rebuildRules(){orderedRules=RULES.values().stream().sorted(java.util.Comparator.comparing(Rule::id)).toList();}
     private static void rebuildBlockRules(){orderedBlockRules=BLOCK_RULES.values().stream().sorted(java.util.Comparator.comparing(BlockRule::id)).toList();}
     private static final ThreadLocal<Boolean> APPLYING=ThreadLocal.withInitial(()->false);
+    private record Cancellation(String first,String target,boolean block,String mode) {}
+    private static volatile java.util.Map<String,Cancellation> cancellations=java.util.Map.of();
+    /** Symmetric fluid pair; source/flowing mode applies to the fluid being evaluated. */
+    public static synchronized void cancelInteraction(String id,String first,String second){
+        fluid(first);fluid(second);putCancellation(id,new Cancellation(first,second,false,"both"));
+    }
+    /** Directional fluid/block cancellation; target accepts a block ID or #block tag. */
+    public static synchronized void cancelBlockInteraction(String id,String fluidId,String target,String mode){
+        fluid(fluidId);
+        if(!java.util.Set.of("both","source","flowing").contains(mode))throw new IllegalArgumentException("Unknown fluid contact mode: "+mode);
+        if(target.startsWith("#"))ResourceLocation.parse(target.substring(1));else if(block(target)==null)throw new IllegalArgumentException("A contact target is required");
+        putCancellation(id,new Cancellation(fluidId,target,true,mode));
+    }
+    private static void putCancellation(String id,Cancellation rule){
+        var next=new java.util.HashMap<>(cancellations);next.put(ResourceLocation.parse(id).toString(),rule);cancellations=java.util.Map.copyOf(next);
+    }
+    public static boolean cancels(LevelAccessor level,BlockPos origin,BlockPos target,FluidState incoming){
+        if(cancellations.isEmpty()||incoming.isEmpty()||!level.hasChunkAt(target))return false;
+        for(var rule:cancellations.values()){
+            boolean first=fluid(rule.first).isSame(incoming.getType());
+            if(rule.block){
+                if(!first||rule.mode.equals("source")&&!incoming.isSource()||rule.mode.equals("flowing")&&incoming.isSource())continue;
+                var state=level.getBlockState(target);
+                if(rule.target.startsWith("#")?state.is(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK,ResourceLocation.parse(rule.target.substring(1)))):state.is(block(rule.target).getBlock()))return true;
+            }else{
+                var other=level.getFluidState(target).getType();
+                if(first&&fluid(rule.target).isSame(other)||fluid(rule.target).isSame(incoming.getType())&&fluid(rule.first).isSame(other))return true;
+            }
+        }
+        return false;
+    }
     private static net.minecraft.world.level.material.Fluid fluid(String id){
         var key=ResourceLocation.parse(id);if(!BuiltInRegistries.FLUID.containsKey(key))throw new IllegalArgumentException("Unknown fluid: "+id);
         var fluid=BuiltInRegistries.FLUID.get(key);if(fluid==net.minecraft.world.level.material.Fluids.EMPTY)throw new IllegalArgumentException("Empty fluid cannot interact");return fluid;
@@ -57,8 +88,8 @@ public final class FluidWorldScripts {
         BLOCK_RULES.put(key,new BlockRule(key,first,targetBlock,tag,mode,a,b));
         rebuildBlockRules();
     }
-    public static synchronized void remove(String id){var key=ResourceLocation.parse(id).toString();RULES.remove(key);BLOCK_RULES.remove(key);rebuildRules();rebuildBlockRules();}
-    public static synchronized void clear(){RULES.clear();BLOCK_RULES.clear();orderedRules=java.util.List.of();orderedBlockRules=java.util.List.of();}
+    public static synchronized void remove(String id){var key=ResourceLocation.parse(id).toString();RULES.remove(key);BLOCK_RULES.remove(key);var next=new java.util.HashMap<>(cancellations);next.remove(key);cancellations=java.util.Map.copyOf(next);rebuildRules();rebuildBlockRules();}
+    public static synchronized void clear(){RULES.clear();BLOCK_RULES.clear();orderedRules=java.util.List.of();orderedBlockRules=java.util.List.of();cancellations=java.util.Map.of();}
     public static boolean blockContact(net.minecraft.world.level.Level level,BlockPos pos){
         if(level.isClientSide()||BLOCK_RULES.isEmpty()||APPLYING.get())return false;
         var fluidState=level.getFluidState(pos);if(fluidState.isEmpty())return false;
@@ -67,6 +98,7 @@ public final class FluidWorldScripts {
                 ||rule.mode.equals("flowing")&&fluidState.isSource())continue;
             for(var side:Direction.values()){
                 var target=pos.relative(side);if(!level.hasChunkAt(target)||!rule.matches(level.getBlockState(target)))continue;
+                if(cancels(level,pos,target,fluidState))continue;
                 // Resolve event-adjusted results before either write. Suppress recursive rule
                 // execution while neighbour updates observe a two-position transformation.
                 APPLYING.set(true);
@@ -95,6 +127,7 @@ public final class FluidWorldScripts {
             for(var direction:Direction.values()){
                 if(direction==Direction.DOWN)continue;
                 var other=pos.relative(direction);if(!level.hasChunkAt(other))continue;
+                if(cancels(level,pos,other,state))continue;
                 if(rule.second.isSame(level.getFluidState(other).getType())){replace(level,pos,pos,result);return true;}
             }
         }
