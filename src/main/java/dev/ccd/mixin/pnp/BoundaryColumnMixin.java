@@ -21,6 +21,7 @@ abstract class BoundaryColumnMixin {
     private static void ccd$pressure(Level level,Node node,CallbackInfoReturnable<BoundaryColumn> cir) {
         var column=cir.getReturnValue();if(column==null)return;
         var be=level.getBlockEntity(node.pos());double rpm=0;boolean endpoint=false;
+        if(be!=null&&!dev.ccd.CCDFeatures.enabled(be.getBlockState()))return;
         if(be instanceof BufferPumpBlockEntity pump) {
             endpoint=true;
             if(node.accessFace()==pump.getBlockState().getValue(BufferPumpBlock.FACING)&&!pump.isOverStressed())rpm=Math.abs(pump.getSpeed());

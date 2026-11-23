@@ -1,4 +1,4 @@
 {
   "replace": false,
-  "values": ["ccd:buffer_pump"]
+  "values": ["ccd:buffer_pump", "ccd:smart_fluid_tank", "ccd:horizontal_smart_fluid_tank", "ccd:copper_collection_grate", "ccd:smart_collection_grate", "ccd:fluid_atomizer", "ccd:tank_blaze_burner"]
 }

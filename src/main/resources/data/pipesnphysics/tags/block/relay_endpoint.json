@@ -1,4 +1,4 @@
 {
   "replace": false,
-  "values": ["ccd:creative_delivery_tank"]
+  "values": ["ccd:creative_delivery_fluid_tank", "ccd:copper_water_basin", "ccd:copper_water_supply"]
 }
