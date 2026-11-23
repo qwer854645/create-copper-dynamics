@@ -495,10 +495,10 @@
   "ccd.ponder.fluid_media.text_2": "可选加工流体需要安装对应附属，才能提供相应的气流加工类型。",
   "ccd.ponder.fluid_media.text_3": "超级熔岩也可供给烈焰人燃烧室，每 1000 mB 提供 160 秒超级燃烧。",
   "ccd.ponder.fluid_ordering.header": "监控与订购流体",
-  "ccd.ponder.fluid_ordering.text_1": "流体工厂仪表监控流体库存，并通过物流网络请求补足数量。",
-  "ccd.ponder.fluid_ordering.text_2": "使用已调频的存量转信器选择网络，再用装液容器选择流体。",
-  "ccd.ponder.fluid_ordering.text_3": "目标数量以 mB 设置，设为零时仅监控库存。",
-  "ccd.ponder.fluid_ordering.text_4": "流体识别标记表示订单中的数量，实际流体通过铜包裹运输。",
+  "ccd.ponder.fluid_ordering.text_1": "手持流体工厂仪表右键点击存量转信器，选择物流网络",
+  "ccd.ponder.fluid_ordering.text_2": "将仪表装在收货端流体打包机上，维持后方容器的流体存量",
+  "ccd.ponder.fluid_ordering.text_3": "手持装液容器选择流体，并以 mB 设置目标数量",
+  "ccd.ponder.fluid_ordering.text_4": "补货以铜包裹送达，将选定流体补入容器",
   "item.ccd.copper_bucket.tooltip.condition2": "手持超级熔岩时",
   "item.ccd.copper_bucket.tooltip.behaviour2": "持续手持会逐渐_烫伤_，放下后逐渐恢复。",
   "item.ccd.brass_bucket.tooltip.condition2": "手持超级熔岩时",
@@ -845,5 +845,6 @@
   "ccd.goggles.signal": "红石信号强度：",
   "ccd.goggles.range": "单侧输送距离：",
   "ccd.unit.flow": " mB/t",
-  "ccd.unit.blocks": " 格"
+  "ccd.unit.blocks": " 格",
+  "ccd.ponder.fluid_ordering.text_5": "目标设为零时，只监控存量，不请求补货"
 }

@@ -2,6 +2,7 @@ package dev.ccd.client.ponder;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.logistics.packager.PackagerBlock;
+import com.simibubi.create.content.logistics.packager.PackagerBlockEntity;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import dev.ccd.CopperDynamics;
 import dev.ccd.content.*;
@@ -318,11 +319,47 @@ public final class CCDPonderScenes {
     }
     public static void ordering(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"fluid_ordering","Monitoring and Ordering Fluids");
-        show(s,util,B,AllBlocks.FLUID_TANK.getDefaultState());water(s,B,4000);
-        text(s,util,B,"Fluid Factory Gauges monitor fluid stock and request missing quantities through a logistics network");
-        text(s,util,B,"Use a linked Stock Link to choose the network, then select a fluid with a filled container");
-        text(s,util,B,"Set the target amount in mB; a target of zero only monitors stock");
-        text(s,util,B,"Fluid Stock Tokens represent quantities in orders; actual fluids travel in Copper Packages");s.markAsFinished();
+        var tank=new BlockPos(2,1,1);var packager=new BlockPos(2,1,2);
+        var gauge=packager.south();var link=packager.above();
+        var network=java.util.UUID.fromString("ccd00000-0000-0000-0000-000000000001");
+        show(s,util,tank,AllBlocks.FLUID_TANK.getDefaultState());water(s,tank,1000);
+        show(s,util,packager,CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING,Direction.SOUTH));
+        show(s,util,link,AllBlocks.STOCK_LINK.getDefaultState()
+            .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.ATTACH_FACE,
+                net.minecraft.world.level.block.state.properties.AttachFace.FLOOR));
+        s.overlay().showControls(util.vector().topOf(link),Pointing.DOWN,50).rightClick()
+            .withItem(new ItemStack(CopperDynamics.FLUID_GAUGE_ITEM.get()));
+        text(s,util,link,"Use a Fluid Factory Gauge on a Stock Link to select its logistics network");
+        show(s,util,gauge,CopperDynamics.FLUID_GAUGE.get().defaultBlockState()
+            .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.ATTACH_FACE,
+                net.minecraft.world.level.block.state.properties.AttachFace.WALL)
+            .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING,Direction.SOUTH));
+        s.world().modifyBlockEntity(gauge,FluidGaugeBlockEntity.class,be->{
+            be.addPanel(com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot.TOP_LEFT,network);
+            be.restocker=true;
+        });
+        text(s,util,gauge,"Place the Gauge on a receiving Fluid Packager to maintain stock in its rear container");
+        s.overlay().showControls(util.vector().blockSurface(gauge,Direction.SOUTH),Pointing.RIGHT,50)
+            .rightClick().withItem(new ItemStack(Items.WATER_BUCKET));
+        s.world().modifyBlockEntity(gauge,FluidGaugeBlockEntity.class,be->{
+            var panel=be.panels.get(com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot.TOP_LEFT);
+            panel.setFilter(new ItemStack(Items.WATER_BUCKET));panel.count=4000;panel.upTo=true;
+        });
+        text(s,util,gauge,"Select a fluid with a filled container and set the target amount in mB");
+        s.world().modifyBlockEntity(packager,FluidPackagerBlockEntity.class,be->{
+            be.previouslyUnwrapped=FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,3000));
+            be.animationInward=true;be.animationTicks=PackagerBlockEntity.CYCLE;
+        });
+        water(s,tank,4000);
+        s.world().modifyBlockEntity(gauge,FluidGaugeBlockEntity.class,be->{
+            be.panels.get(com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot.TOP_LEFT).satisfied=true;
+        });
+        text(s,util,tank,"Deliveries arrive as Copper Packages and replenish the selected fluid");
+        s.world().modifyBlockEntity(gauge,FluidGaugeBlockEntity.class,be->{
+            be.panels.get(com.simibubi.create.content.logistics.factoryBoard.FactoryPanelBlock.PanelSlot.TOP_LEFT).count=0;
+        });
+        text(s,util,gauge,"Set the target to zero to monitor stock without requesting deliveries");
+        s.markAsFinished();
     }
     public static void pumpVariants(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"pump_variants","Choosing Fluid Pump Connections");

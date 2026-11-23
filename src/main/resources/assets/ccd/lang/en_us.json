@@ -495,10 +495,10 @@
   "ccd.ponder.fluid_media.text_2": "Optional processing fluids require the matching addon to provide their fan-processing type",
   "ccd.ponder.fluid_media.text_3": "Super Lava can also fuel Blaze Burners, providing 160 seconds of Superheating per 1000 mB",
   "ccd.ponder.fluid_ordering.header": "Monitoring and Ordering Fluids",
-  "ccd.ponder.fluid_ordering.text_1": "Fluid Factory Gauges monitor fluid stock and request missing quantities through a logistics network",
-  "ccd.ponder.fluid_ordering.text_2": "Use a linked Stock Link to choose the network, then select a fluid with a filled container",
-  "ccd.ponder.fluid_ordering.text_3": "Set the target amount in mB; a target of zero only monitors stock",
-  "ccd.ponder.fluid_ordering.text_4": "Fluid Stock Tokens represent quantities in orders; actual fluids travel in Copper Packages",
+  "ccd.ponder.fluid_ordering.text_1": "Use a Fluid Factory Gauge on a Stock Link to select its logistics network",
+  "ccd.ponder.fluid_ordering.text_2": "Place the Gauge on a receiving Fluid Packager to maintain stock in its rear container",
+  "ccd.ponder.fluid_ordering.text_3": "Select a fluid with a filled container and set the target amount in mB",
+  "ccd.ponder.fluid_ordering.text_4": "Deliveries arrive as Copper Packages and replenish the selected fluid",
   "item.ccd.copper_bucket.tooltip.condition2": "When holding Super Lava",
   "item.ccd.copper_bucket.tooltip.behaviour2": "Prolonged exposure causes _scalding_. Put it away to cool down.",
   "item.ccd.brass_bucket.tooltip.condition2": "When holding Super Lava",
@@ -845,5 +845,6 @@
   "ccd.goggles.signal": "Redstone Signal Strength:",
   "ccd.goggles.range": "Range per Side:",
   "ccd.unit.flow": " mB/t",
-  "ccd.unit.blocks": " blocks"
+  "ccd.unit.blocks": " blocks",
+  "ccd.ponder.fluid_ordering.text_5": "Set the target to zero to monitor stock without requesting deliveries"
 }
