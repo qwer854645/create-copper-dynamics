@@ -37,6 +37,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     private FluidStack filter = FluidStack.EMPTY;
     private FluidStack recovery = FluidStack.EMPTY;
     private ItemStack compositeRecovery = ItemStack.EMPTY;
+    private final java.util.List<PackagingRequest> pendingRequests = new java.util.ArrayList<>();
     private String status = "ready";
     private InventorySummary fluidSummary;
     private final dev.ccd.logistics.AdjacentFluidCapability fluidEndpoint=new dev.ccd.logistics.AdjacentFluidCapability(this);
@@ -106,6 +107,8 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
 
     @Override public void tick() {
         super.tick();
+        if (level != null && !level.isClientSide() && !pendingRequests.isEmpty() && !hasRecovery())
+            packageNativeRequest(pendingRequests);
         if (level != null && !level.isClientSide() && heldBox.isEmpty() && animationTicks == 0
             && !hasRecovery() && status.equals("output")) status("ready");
     }
@@ -160,7 +163,12 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
 
     @Override public void attemptToSend(@Nullable List<PackagingRequest> requests) {
         if (level == null || level.isClientSide()) return;
-        if (requests != null) { packageNativeRequest(requests); return; }
+        if (requests != null) {
+            pendingRequests.addAll(requests);
+            requests.clear();
+            notifyUpdate();
+            return;
+        }
         if (!heldBox.isEmpty() || animationTicks != 0 || buttonCooldown > 0) return;
         if (hasRecovery()) { status("recovery"); return; }
         IFluidHandler source = targetFluidHandler();
@@ -196,12 +204,13 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         PackagingRequest request = requests.getFirst();
         FluidStack fluid = FluidStockItem.fluid(request.item());
         var source = targetFluidHandler();
-        if (source == null || fluid.isEmpty() || request.getCount() <= 0) { requests.removeFirst(); return; }
+        if (fluid.isEmpty() || request.getCount() <= 0) { requests.removeFirst(); notifyUpdate(); return; }
+        if (source == null) { status("no_container"); return; }
         int limit = Math.min(FluidPackageItem.CAPACITY, request.getCount());
         FluidStack planned = FluidTransfers.planDrain(source, fluid, limit, false);
-        if (planned.isEmpty()) { requests.removeFirst(); return; }
+        if (planned.isEmpty()) { status("no_fluid"); return; }
         FluidStack actual = source.drain(planned.copy(), FluidAction.EXECUTE);
-        if (actual.isEmpty()) { requests.removeFirst(); return; }
+        if (actual.isEmpty()) { status("no_fluid"); return; }
         if (!FluidStack.isSameFluidSameComponents(actual, fluid) || actual.getAmount() > limit) {
             recovery = actual.copy(); status("recovery"); notifyUpdate(); return;
         }
@@ -322,6 +331,19 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         filter = FluidStack.parseOptional(registries, tag.getCompound("FluidFilter"));
         recovery = FluidStack.parseOptional(registries, tag.getCompound("RecoveryFluid"));
         compositeRecovery = ItemStack.parseOptional(registries, tag.getCompound("CompositeRecovery"));
+        if (!clientPacket) {
+            pendingRequests.clear();
+            var pending = tag.getList("PendingFluidRequests", net.minecraft.nbt.Tag.TAG_COMPOUND);
+            for (int i = 0; i < pending.size(); i++) {
+                var entry = pending.getCompound(i);
+                var context = CatnipCodecUtils.decode(com.simibubi.create.content.logistics.stockTicker.PackageOrderWithCrafts.CODEC,
+                    registries, entry.get("Context")).orElse(com.simibubi.create.content.logistics.stockTicker.PackageOrderWithCrafts.empty());
+                pendingRequests.add(PackagingRequest.create(ItemStack.parseOptional(registries, entry.getCompound("Item")),
+                    entry.getInt("Count"), entry.getString("Address"), entry.getInt("Link"),
+                    new org.apache.commons.lang3.mutable.MutableBoolean(entry.getBoolean("FinalLink")),
+                    entry.getInt("Counter"), entry.getInt("Order"), context));
+            }
+        }
         status = tag.contains("FluidStatus") ? tag.getString("FluidStatus") : "ready";
         // Old saves may have been waiting for the removed exact-amount setting.
         if (status.equals("not_enough")) status = "ready";
@@ -333,6 +355,20 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         tag.put("FluidFilter", filter.saveOptional(registries));
         tag.put("RecoveryFluid", recovery.saveOptional(registries));
         tag.put("CompositeRecovery", compositeRecovery.saveOptional(registries));
+        if (!clientPacket) {
+            var pending = new net.minecraft.nbt.ListTag();
+            for (var request : pendingRequests) {
+                var entry = new CompoundTag();
+                entry.put("Item", request.item().saveOptional(registries));
+                entry.putInt("Count", request.getCount()); entry.putString("Address", request.address());
+                entry.putInt("Link", request.linkIndex()); entry.putBoolean("FinalLink", request.finalLink().booleanValue());
+                entry.putInt("Counter", request.packageCounter().intValue()); entry.putInt("Order", request.orderId());
+                entry.put("Context", CatnipCodecUtils.encode(com.simibubi.create.content.logistics.stockTicker.PackageOrderWithCrafts.CODEC,
+                    registries, request.context() == null ? com.simibubi.create.content.logistics.stockTicker.PackageOrderWithCrafts.empty() : request.context()).orElseThrow());
+                pending.add(entry);
+            }
+            tag.put("PendingFluidRequests", pending);
+        }
         tag.putString("FluidStatus", status);
         if (!clientPacket && fluidSummary != null)
             tag.put("FluidSummary", CatnipCodecUtils.encode(InventorySummary.CODEC, registries, fluidSummary).orElseThrow());
@@ -357,6 +393,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
     @Override public void invalidate(){super.invalidate();fluidEndpoint.clear();}
     @Override public void clearContent() {
+        pendingRequests.clear();
         compositeRecovery = ItemStack.EMPTY;
         recovery = FluidStack.EMPTY;
         super.clearContent();
