@@ -47,7 +47,8 @@ public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
         super.addToGoggleTooltip(tooltip,sneaking);
         dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.pumping");
         dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.flow",dev.ccd.CCDTooltip.number(targetFlow()));
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.signal",dev.ccd.CCDTooltip.number(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)));
+        if (!(this instanceof PortableFluidPumpBlockEntity))
+            dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.signal",dev.ccd.CCDTooltip.number(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)));
         dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.range",dev.ccd.CCDTooltip.number(targetRange()));
         return true;
     }

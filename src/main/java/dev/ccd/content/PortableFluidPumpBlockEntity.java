@@ -72,9 +72,7 @@ public final class PortableFluidPumpBlockEntity extends VariableFlowPumpBlockEnt
         if(packet) { manualTicks=tag.getInt("ManualTicks");backwards=tag.getBoolean("ManualBackwards"); }
     }
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking) {
-        dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.pumping");
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.flow",dev.ccd.CCDTooltip.number(targetFlow()));
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.range",dev.ccd.CCDTooltip.number(targetRange()));
+        super.addToGoggleTooltip(tooltip,sneaking);
         return true;
     }
 }

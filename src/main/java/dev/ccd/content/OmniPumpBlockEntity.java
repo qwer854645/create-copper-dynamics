@@ -42,6 +42,8 @@ public final class OmniPumpBlockEntity extends KineticBlockEntity implements com
     }
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking){
         super.addToGoggleTooltip(tooltip,sneaking);dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.connections");
+        if(!hasPorts(OmniPumpBlock.INPUT)&&!hasPorts(OmniPumpBlock.OUTPUT)&&!hasPorts(OmniPumpBlock.SHAFT))
+            dev.ccd.CCDTooltip.line(tooltip,"ccd.goggles.no_connections");
         for(var side:Direction.values())if(OmniPumpBlock.mode(getBlockState(),side)!=OmniPumpBlock.CLOSED)
             dev.ccd.CCDTooltip.line(tooltip,"ccd.omni_pump.face",net.minecraft.network.chat.Component.translatable("ccd.direction."+side.getName()),net.minecraft.network.chat.Component.translatable("ccd.omni_pump.mode."+OmniPumpBlock.mode(getBlockState(),side)));
         return true;
