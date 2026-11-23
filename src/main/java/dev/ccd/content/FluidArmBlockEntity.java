@@ -57,7 +57,6 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
                     var offset=super.getLocalOffset(world,pos,state);
                     return state.getValue(com.simibubi.create.content.kinetics.mechanicalArm.ArmBlock.CEILING)?new net.minecraft.world.phys.Vec3(offset.x,13/16d,offset.z):offset;
                 }
-                @Override public float getScale(){return .25f;}
                 @Override protected boolean isSideActive(BlockState state,Direction side){return side.getAxis()==Direction.Axis.X;}
             }){
                 @Override public boolean acceptsValueSettings(){return true;}
