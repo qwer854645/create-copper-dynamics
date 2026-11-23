@@ -86,6 +86,7 @@ public final class FluidTransmitterBlockEntity extends SmartBlockEntity implemen
         return null;
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if (level == null || level.isClientSide() || paused() || transferring || isRemoved()) return;
         BlockPos ahead = worldPosition.relative(front());

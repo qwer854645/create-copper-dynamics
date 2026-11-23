@@ -23,5 +23,11 @@
   "result": {
     "id": "ccd:fluid_packager",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "fluid_packager"
+    }
+  ]
 }

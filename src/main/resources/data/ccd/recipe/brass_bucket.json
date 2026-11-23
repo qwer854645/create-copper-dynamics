@@ -17,5 +17,15 @@
   "result": {
     "id": "ccd:brass_bucket",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "brass_bucket"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "copper_bucket"
+    }
+  ]
 }

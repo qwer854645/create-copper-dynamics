@@ -29,6 +29,7 @@ public final class PnPCompat {
             && !endpoint(be);
     }
     public static double strength(PumpBlockEntity pump) {
+        if(!dev.ccd.CCDFeatures.enabled(pump.getBlockState()))return 0;
         if (pump instanceof VariableFlowPumpBlockEntity variable) return variable.flowPressure();
         return pump.isOverStressed() ? 0 : Math.abs(pump.getSpeed());
     }

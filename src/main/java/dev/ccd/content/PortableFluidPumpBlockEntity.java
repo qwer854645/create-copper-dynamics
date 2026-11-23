@@ -60,6 +60,7 @@ public final class PortableFluidPumpBlockEntity extends VariableFlowPumpBlockEnt
         if(changed)updatePressureChange();
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if(manualTicks>0&&--manualTicks==0&&level!=null&&!level.isClientSide()) { updateHandRotation();updatePressureChange(); }
     }

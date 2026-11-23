@@ -26,5 +26,11 @@
   "result": {
     "id": "ccd:copper_collection_grate",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "copper_collection_grate"
+    }
+  ]
 }

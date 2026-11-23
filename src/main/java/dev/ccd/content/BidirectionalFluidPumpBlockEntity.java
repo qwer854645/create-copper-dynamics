@@ -7,6 +7,10 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** Native pressure magnitude and range; signed shaft speed selects the pull/push roles. */
 public final class BidirectionalFluidPumpBlockEntity extends PumpBlockEntity {
+    @Override protected void distributePressureTo(net.minecraft.core.Direction side) {
+        if(dev.ccd.CCDFeatures.enabled(getBlockState()))super.distributePressureTo(side);
+    }
+
     public BidirectionalFluidPumpBlockEntity(BlockPos pos, BlockState state) {
         super(CopperDynamics.BIDIRECTIONAL_FLUID_PUMP_BE.get(), pos, state);
     }
@@ -25,6 +29,7 @@ public final class BidirectionalFluidPumpBlockEntity extends PumpBlockEntity {
         if (level != null && (!level.isClientSide() || isVirtual())) updatePressureChange();
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if (level == null || level.isClientSide() || getSpeed() == 0 || isOverStressed()) return;
         boolean reversed = getSpeed() < 0;

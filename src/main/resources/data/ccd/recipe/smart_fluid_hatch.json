@@ -18,5 +18,15 @@
   "result": {
     "id": "ccd:smart_fluid_hatch",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "fluid_hatch"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "smart_fluid_hatch"
+    }
+  ]
 }

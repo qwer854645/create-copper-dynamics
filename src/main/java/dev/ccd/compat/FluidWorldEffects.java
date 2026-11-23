@@ -59,6 +59,8 @@ public final class FluidWorldEffects {
         effect(entity,type,mist?Math.max(20,duration/2):duration,amplifier+(mist&&scales?2:0));
     }
     private static void apply(LivingEntity entity,FluidType fluid,boolean submerged,boolean mist){
+        var id=net.neoforged.neoforge.registries.NeoForgeRegistries.FLUID_TYPES.getKey(fluid);
+        if(id!=null&&!dev.ccd.CCDFeatures.enabled(id))return;
         if(entity.level().isClientSide()||!entity.isAlive()||entity.isSpectator()
             ||entity instanceof Player player&&player.isCreative())return;
         String stamp="ccdFluidEffect/"+fluid.getDescriptionId()+(mist?"/mist":"");

@@ -18,5 +18,15 @@
   "result": {
     "id": "ccd:three_way_valve",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "redstone_fluid_valve"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "three_way_valve"
+    }
+  ]
 }

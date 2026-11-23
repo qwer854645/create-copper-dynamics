@@ -29,6 +29,7 @@ public final class FluidFilterRules {
         var tag = new CompoundTag(); tag.putString("kind", kind); tag.putString("value", value); return tag;
     }
     public static boolean matches(CompoundTag settings, boolean attributes, Level level, FluidStack fluid) {
+        if(!dev.ccd.CCDFeatures.enabled(attributes?"fluid_attribute_filter":"fluid_filter"))return false;
         if (fluid.isEmpty()) return false;
         var entries = settings.getList("entries", Tag.TAG_COMPOUND);
         boolean all = settings.getBoolean("all"), result = all;

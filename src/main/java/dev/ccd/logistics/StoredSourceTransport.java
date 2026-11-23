@@ -42,6 +42,7 @@ public final class StoredSourceTransport extends FluidTransportBehaviour {
             &&com.simibubi.create.content.fluids.FluidPropagator.getPipe(level,pos)==null;
     }
     @Override public void tick(){
+        if(!dev.ccd.CCDFeatures.enabled(blockEntity.getBlockState()))return;
         if(dev.ccd.compat.pnp.PnPCompat.active()&&!directNative())return;
         configure();float speed=pressure.get();
         if(speed!=lastPressure)for(var entry:interfaces.entrySet()){

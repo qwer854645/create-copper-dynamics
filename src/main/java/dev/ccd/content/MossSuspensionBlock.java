@@ -22,6 +22,7 @@ public final class MossSuspensionBlock extends LiquidBlock {
         if(!level.isClientSide())level.scheduleTick(pos,this,1);
     }
     @Override protected void tick(BlockState state,ServerLevel level,BlockPos pos,RandomSource random){
+        if(!dev.ccd.CCDFeatures.enabled(state))return;
         for(var side:Direction.values())MossificationEffect.spreadAt(level,pos.relative(side));
     }
 }

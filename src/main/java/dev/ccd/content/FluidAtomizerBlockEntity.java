@@ -99,6 +99,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
         return processingContext + ":" + index + ":" + filterRevision;
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         if (level != null && !level.isClientSide()) prepareMist();
         super.tick();
         if (level != null && level.isClientSide() && mistActive && level.getGameTime() % 5 == 0 && airCurrent.maxDistance > .25f) {

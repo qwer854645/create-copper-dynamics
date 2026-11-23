@@ -24,6 +24,10 @@
     {
       "type": "neoforge:mod_loaded",
       "modid": "createnuclear"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "enriching_reagent"
     }
   ],
   "heat_requirement": "heated"

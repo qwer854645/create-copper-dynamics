@@ -46,6 +46,7 @@ public final class FluidArmPoint extends ArmInteractionPoint {
     }
     /** Hatches are arm/handheld interfaces, not pipe or machine forwarding capabilities. */
     @Nullable public static IFluidHandler interactionHandler(Level level, BlockPos pos, Direction face) {
+        if(!dev.ccd.CCDFeatures.enabled(level.getBlockState(pos)))return null;
         if (!level.hasChunkAt(pos)) return null;
         if (level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch) return hatch.interactionHandler(face);
         var handler=level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face);

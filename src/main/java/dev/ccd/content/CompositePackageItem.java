@@ -72,6 +72,7 @@ public final class CompositePackageItem extends PackageItem {
             lines.add(Component.translatable("ccd.composite.invalid").withStyle(ChatFormatting.RED));
     }
     @Override public InteractionResultHolder<ItemStack> open(Level level, Player player, InteractionHand hand) {
+        if(!dev.ccd.CCDFeatures.enabled("composite_package"))return InteractionResultHolder.fail(player.getItemInHand(hand));
         ItemStack box = player.getItemInHand(hand);
         if (!isValid(box)) return InteractionResultHolder.fail(box);
         if (level.isClientSide()) return InteractionResultHolder.success(box);

@@ -55,6 +55,7 @@ public final class FluidArmItem extends ArmItem {
         return result;
     }
     @Override public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        if(!dev.ccd.CCDFeatures.enabled("fluid_arm"))return InteractionResult.FAIL;
         Player player = context.getPlayer();
         if (player == null || player.isSpectator()) return InteractionResult.PASS;
         Level level = context.getLevel();

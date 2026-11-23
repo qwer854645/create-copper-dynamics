@@ -15,5 +15,11 @@
   "result": {
     "id": "ccd:bidirectional_fluid_pump",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "bidirectional_fluid_pump"
+    }
+  ]
 }

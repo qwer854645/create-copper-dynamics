@@ -15,6 +15,7 @@ public final class SuperLavaScalding {
     private static final String EXPOSURE="ccdSuperLavaExposure";
     private SuperLavaScalding(){}
     public static boolean hot(ItemStack stack){
+        if(!dev.ccd.CCDFeatures.enabled("seething_reagent"))return false;
         var lava=ProcessingMedia.ALL.getFirst();
         if(stack.is(lava.bucket.get()))return true;
         if(!(stack.getItem() instanceof CopperBucketItem))return false;

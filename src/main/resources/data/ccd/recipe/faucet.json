@@ -19,5 +19,11 @@
   "result": {
     "id": "ccd:faucet",
     "count": 2
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "faucet"
+    }
+  ]
 }

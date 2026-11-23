@@ -20,5 +20,11 @@
       "amount": 1000
     }
   ],
-  "processing_time": 100
+  "processing_time": 100,
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "powder_snow"
+    }
+  ]
 }

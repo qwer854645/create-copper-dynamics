@@ -69,6 +69,7 @@ public class FaucetBlockEntity extends SmartBlockEntity implements IHaveGoggleIn
         if (level != null) FaucetBlock.updateSignal(level, worldPosition);
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if (flowTicks>0) flowTicks--;
         if (!(level instanceof ServerLevel) || transferring || isRemoved()) return;

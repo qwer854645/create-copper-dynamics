@@ -52,6 +52,7 @@ public final class SmartFaucetBlockEntity extends FaucetBlockEntity {
     @Override protected boolean acceptsFluid(FluidStack fluid) { return filtering.test(fluid); }
     @Override protected boolean allowContainerTransfer() { return processing.get() == null; }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         if (level != null && (!enabled() || level.getGameTime() - lastSeen > 1)) resetProcessing();
         super.tick();
     }

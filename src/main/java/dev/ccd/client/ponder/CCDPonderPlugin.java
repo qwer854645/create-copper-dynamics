@@ -34,6 +34,6 @@ public final class CCDPonderPlugin implements PonderPlugin {
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("ccd",path); }
     private static void scene(PonderSceneRegistrationHelper<ResourceLocation> helper,String template,
         net.createmod.ponder.api.scene.PonderStoryBoard storyboard,String... items) {
-        for(String item:items) helper.addStoryBoard(id(item),template,storyboard);
+        for(String item:items) if(dev.ccd.CCDFeatures.enabled(item))helper.addStoryBoard(id(item),template,storyboard);
     }
 }

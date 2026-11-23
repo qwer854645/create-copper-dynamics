@@ -21,6 +21,7 @@ public final class RedstoneFluidValveBlockEntity extends FluidValveBlockEntity {
         if (level != null) RedstoneFluidValveBlock.updateSignal(level, worldPosition);
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         drivePointer();
         super.tick();
     }

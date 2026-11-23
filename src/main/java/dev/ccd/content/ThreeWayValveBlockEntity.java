@@ -24,6 +24,7 @@ public final class ThreeWayValveBlockEntity extends SmartBlockEntity implements 
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         behaviours.add(new FluidTransportBehaviour(this) {
             @Override public boolean canHaveFlowToward(BlockState state, Direction side) {
+                if(!dev.ccd.CCDFeatures.enabled(state))return false;
                 return ThreeWayValveBlock.open(state, side);
             }
             @Override public boolean canPullFluidFrom(FluidStack fluid, BlockState state, Direction side) {
@@ -41,6 +42,7 @@ public final class ThreeWayValveBlockEntity extends SmartBlockEntity implements 
         }
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if(level!=null && (level.isClientSide() || isVirtual())) {
             dial.chase(getBlockState().getValue(ThreeWayValveBlock.POWERED)?1:0,.25,

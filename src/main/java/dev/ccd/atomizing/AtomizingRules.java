@@ -28,7 +28,7 @@ public final class AtomizingRules {
     public static long revision() { return REVISION.get(); }
     public static void invalidate() { REVISION.incrementAndGet(); }
     public static synchronized Selection select(Level level, FluidStack fluid) {
-        if (fluid.isEmpty()) return null;
+        if (fluid.isEmpty() || !dev.ccd.CCDFeatures.enabled(fluid.getFluid())) return null;
         var manager = level.getRecipeManager();
         Cached cached = CACHES.get(manager);
         if (cached == null || cached.revision != revision()) {

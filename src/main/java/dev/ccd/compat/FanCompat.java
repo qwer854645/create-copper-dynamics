@@ -67,6 +67,7 @@ public final class FanCompat {
         return fluid.getFluid().builtInRegistryHolder().is(TagKey.create(Registries.FLUID,ResourceLocation.fromNamespaceAndPath(mod,tag)));
     }
     public static FanProcessingType select(FluidStack fluid) {
+        if(!dev.ccd.CCDFeatures.enabled(fluid.getFluid()))return null;
         if(fluid.getFluid().getFluidType()==CCDFluids.POWDER_SNOW_TYPE.get()) return freezing();
         for(var rule:RULES) if(tagged(fluid,rule.mod(),rule.fluidTag())) {
             var type=find(rule.mod(),rule.type()); if(type!=null) return type;

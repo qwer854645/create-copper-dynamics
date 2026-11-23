@@ -15,6 +15,7 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class CatalystMediaTests {
     @GameTest(template="empty") public static void smokingFluidUsesNativeRecipes(GameTestHelper h) {
+        if(!dev.ccd.CCDFeatures.enabled("smoking_fluid")){h.succeed();return;}
         var medium=ProcessingMedia.ALL.stream().filter(m->m.id.equals("smoking_fluid")).findFirst().orElseThrow();
         var smoking=com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.SMOKING;
         for(var fluid:java.util.List.of(medium.source.get(),medium.flowing.get())) {

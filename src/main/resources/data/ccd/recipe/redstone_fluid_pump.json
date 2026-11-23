@@ -15,5 +15,15 @@
   "result": {
     "id": "ccd:redstone_fluid_pump",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "bidirectional_fluid_pump"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "redstone_fluid_pump"
+    }
+  ]
 }

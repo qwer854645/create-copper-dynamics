@@ -41,4 +41,8 @@ public final class FluidGaugeBlockEntity extends FactoryPanelBlockEntity {
         if (level != null && !level.isClientSide() && activePanels() > 1)
             Block.popResource(level, worldPosition, new net.minecraft.world.item.ItemStack(CopperDynamics.FLUID_GAUGE_ITEM.get(), activePanels() - 1));
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

@@ -31,5 +31,15 @@
   "result": {
     "id": "ccd:copper_water_supply",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "copper_water_basin"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "copper_water_supply"
+    }
+  ]
 }

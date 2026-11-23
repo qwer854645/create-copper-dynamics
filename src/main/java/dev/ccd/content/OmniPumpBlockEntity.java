@@ -11,18 +11,19 @@ import net.minecraft.world.level.block.state.BlockState;
 public final class OmniPumpBlockEntity extends KineticBlockEntity implements com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation {
     private boolean pressureDirty=true;
     public OmniPumpBlockEntity(BlockPos pos,BlockState state){super(CopperDynamics.OMNI_PUMP_BE.get(),pos,state);}
-    public boolean powered(){return getSpeed()!=0&&!isOverStressed();}
+    public boolean powered(){return dev.ccd.CCDFeatures.enabled(getBlockState())&&getSpeed()!=0&&!isOverStressed();}
     public boolean hasPorts(int mode){for(var side:Direction.values())if(OmniPumpBlock.mode(getBlockState(),side)==mode)return true;return false;}
     @Override public void addBehaviours(java.util.List<com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour> behaviours){
         super.addBehaviours(behaviours);
         behaviours.add(new FluidTransportBehaviour(this){
-            public boolean canHaveFlowToward(BlockState state,Direction side){int mode=OmniPumpBlock.mode(state,side);return mode==OmniPumpBlock.INPUT||mode==OmniPumpBlock.OUTPUT;}
+            public boolean canHaveFlowToward(BlockState state,Direction side){if(!dev.ccd.CCDFeatures.enabled(state))return false;int mode=OmniPumpBlock.mode(state,side);return mode==OmniPumpBlock.INPUT||mode==OmniPumpBlock.OUTPUT;}
             @Override public boolean canPullFluidFrom(net.neoforged.neoforge.fluids.FluidStack fluid,BlockState state,Direction side){return powered()&&hasPorts(OmniPumpBlock.OUTPUT)&&OmniPumpBlock.mode(state,side)==OmniPumpBlock.INPUT;}
         });
     }
     public void invalidatePressure(){pressureDirty=true;}
     @Override public void onSpeedChanged(float previous){super.onSpeedChanged(previous);invalidatePressure();}
     @Override public void tick(){
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();if(level==null||level.isClientSide())return;
         if(!pressureDirty)return;
         pressureDirty=false;

@@ -21,12 +21,13 @@ public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
     protected double strokePhaseStep() { return Math.abs(pumpingSpeed())/1200.0; }
     public int targetFlow() { return CCDConfig.variableFlow(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)); }
     public int targetRange() { return CCDConfig.variableRange(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)); }
-    public float flowPressure() { return pumpingSpeed()==0||isOverStressed()||targetRange()==0?0:targetFlow()*2f; }
+    public float flowPressure() { return !dev.ccd.CCDFeatures.enabled(getBlockState())||pumpingSpeed()==0||isOverStressed()||targetRange()==0?0:targetFlow()*2f; }
     @Override protected void distributePressureTo(net.minecraft.core.Direction side) {
         if(flowPressure()>0)super.distributePressureTo(side);
     }
     @Override public void initialize() { super.initialize();if(level!=null&&!level.isClientSide())updatePressureChange(); }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if(level!=null&&(level.isClientSide()||isVirtual())){
             float target=getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)/15f;

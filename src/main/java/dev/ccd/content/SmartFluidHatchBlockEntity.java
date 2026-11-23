@@ -50,4 +50,8 @@ public final class SmartFluidHatchBlockEntity extends FluidHatchBlockEntity {
         }
         return FluidStack.EMPTY;
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

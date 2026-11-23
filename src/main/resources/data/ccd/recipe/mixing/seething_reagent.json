@@ -20,5 +20,11 @@
     }
   ],
   "processing_time": 400,
-  "heat_requirement": "superheated"
+  "heat_requirement": "superheated",
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "seething_reagent"
+    }
+  ]
 }

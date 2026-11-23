@@ -20,7 +20,7 @@ public final class QuicksandTests {
     @GameTest(template="empty")
     public static void browserVisibilityMatchesOptionalMedia(GameTestHelper h) {
         for(var medium:dev.ccd.compat.ProcessingMedia.ALL) {
-            boolean hidden=!medium.visible();
+            boolean hidden=!medium.visible()||!dev.ccd.CCDFeatures.enabled(medium.id);
             h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.bucket.get())==hidden,"Bucket key visibility wrong");
             h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.source.get())==hidden,"Source visibility wrong");
             h.assertTrue(dev.ccd.compat.BrowserVisibility.hidden(medium.flowing.get())==hidden,"Flowing visibility wrong");
@@ -37,7 +37,7 @@ public final class QuicksandTests {
             var handler=bucket.getCapability(net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.ITEM);
             h.assertTrue(handler!=null && handler.getFluidInTank(0).getFluid()==medium.source.get(),"Reagent bucket has wrong fluid: "+medium.id);
             var recipe=h.getLevel().getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ccd","mixing/"+medium.id));
-            h.assertTrue(recipe.isPresent()==medium.available(),"Reagent recipe visibility differs from optional mod: "+medium.id);
+            h.assertTrue(recipe.isPresent()==(medium.available()&&dev.ccd.CCDFeatures.enabled(medium.id)),"Reagent recipe visibility differs from optional mod/config: "+medium.id);
         }
         h.succeed();
     }

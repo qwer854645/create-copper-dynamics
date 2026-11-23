@@ -26,6 +26,7 @@ public final class SuperLavaFuel implements IFluidHandler {
         return !item.isEmpty()&&((BlazeBurnerFuelInvoker)burner).ccd$tryFuel(item,false,true);
     }
     @Override public int fill(FluidStack fluid,FluidAction action){
+        if(!dev.ccd.CCDFeatures.enabled(fluid.getFluid()))return 0;
         if(burner.isRemoved()||!isFluidValid(0,fluid))return 0;
         var fuel=(BlazeBurnerFuelInvoker)burner;
         var item=fuelItem(fluid);

@@ -37,7 +37,7 @@ public final class FluidInventoryBehaviour extends InvManipulationBehaviour {
         super(packager, InterfaceProvider.oppositeOfBlockFacing());
         this.packager = packager;
     }
-    @Override public boolean hasInventory() { return packager.targetFluidHandler() != null; }
+    @Override public boolean hasInventory() { return dev.ccd.CCDFeatures.enabled(packager.getBlockState()) && packager.targetFluidHandler() != null; }
     @Override public IItemHandler getInventory() { return hasInventory() ? view : null; }
     @Override public void findNewCapability() {} // Do not query an unrelated item inventory.
     @Override public IdentifiedInventory getIdentifiedInventory() {

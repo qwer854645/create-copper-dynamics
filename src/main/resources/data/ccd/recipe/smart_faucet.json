@@ -18,5 +18,15 @@
   "result": {
     "id": "ccd:smart_faucet",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "faucet"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "smart_faucet"
+    }
+  ]
 }

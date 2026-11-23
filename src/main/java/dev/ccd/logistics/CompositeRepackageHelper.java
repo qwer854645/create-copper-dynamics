@@ -32,6 +32,7 @@ public final class CompositeRepackageHelper extends PackageRepackageHelper {
     @Override public void clear() { super.clear(); prepared.clear(); blocked.clear(); }
 
     @Override public int addPackageFragment(ItemStack box) {
+        if(!dev.ccd.CCDFeatures.enabled("fluid_repackager")||!dev.ccd.CCDFeatures.enabled("composite_package"))return -1;
         int order = PackageItem.getOrderId(box);
         if (order == -1 || blocked.contains(order)) return -1;
         int completed = super.addPackageFragment(box);

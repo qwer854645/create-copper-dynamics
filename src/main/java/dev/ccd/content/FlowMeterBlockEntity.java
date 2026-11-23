@@ -25,12 +25,14 @@ public final class FlowMeterBlockEntity extends FluidPipeBlockEntity implements 
         }
     }
     public void recordTransfer(int amount){
+        if(!dev.ccd.CCDFeatures.enabled(getBlockState()))return;
         if(level==null||level.isClientSide()||amount<=0)return;
         long tick=level.getGameTime();
         if(sampleTick!=tick){previousSampleTick=sampleTick;previousAccumulated=accumulated;sampleTick=tick;accumulated=0;}
         accumulated=(int)Math.min(Integer.MAX_VALUE,(long)accumulated+amount);
     }
     @Override public void tick(){
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();if(level==null)return;
         if(level.isClientSide()){
             previousDial=dial;

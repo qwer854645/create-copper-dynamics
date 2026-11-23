@@ -69,4 +69,8 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
         }
         return true;
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

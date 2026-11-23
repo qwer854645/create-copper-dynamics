@@ -1,11 +1,30 @@
 {
   "type": "create:mixing",
   "ingredients": [
-    {"type": "neoforge:single", "fluid": "minecraft:water", "amount": 1000},
-    {"item": "minecraft:charcoal"},
-    {"item": "minecraft:dried_kelp"}
+    {
+      "type": "neoforge:single",
+      "fluid": "minecraft:water",
+      "amount": 1000
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "item": "minecraft:dried_kelp"
+    }
   ],
-  "results": [{"id": "ccd:smoking_fluid", "amount": 1000}],
+  "results": [
+    {
+      "id": "ccd:smoking_fluid",
+      "amount": 1000
+    }
+  ],
   "processing_time": 200,
-  "heat_requirement": "heated"
+  "heat_requirement": "heated",
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "smoking_fluid"
+    }
+  ]
 }

@@ -52,6 +52,7 @@ public final class CopperWaterSupplyBlockEntity extends CopperWaterBasinBlockEnt
         cacheOrigin = null;
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if (!(level instanceof ServerLevel server) || isRemoved() || getBlockState().getValue(CopperWaterSupplyBlock.POWERED)) return;
         int rate = CCDConfig.WATER_SUPPLY_RATE.get();

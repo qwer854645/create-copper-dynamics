@@ -131,4 +131,8 @@ public class FluidHatchBlockEntity extends ItemHatchBlockEntity implements IHave
             return amount <= 0 ? FluidStack.EMPTY : access(side, target -> drainAllowed(target, amount, action), FluidStack.EMPTY);
         }
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

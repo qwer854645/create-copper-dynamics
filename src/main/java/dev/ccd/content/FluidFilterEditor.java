@@ -10,6 +10,7 @@ public final class FluidFilterEditor {
     private FluidFilterEditor(){}
     public static int position(CompoundTag entry,int legacyIndex){return entry.contains("slot")?entry.getInt("slot"):legacyIndex;}
     public static boolean apply(CompoundTag data,boolean attributes,HolderLookup.Provider registries,int operation,int slot,FluidStack sample,int choice){
+        if(!dev.ccd.CCDFeatures.enabled(attributes?"fluid_attribute_filter":"fluid_filter"))return false;
         var entries=data.getList("entries",Tag.TAG_COMPOUND).copy();
         if(operation==0||operation==6){
             if(slot<0||slot>=FluidFilterRules.SLOTS||sample.isEmpty())return false;

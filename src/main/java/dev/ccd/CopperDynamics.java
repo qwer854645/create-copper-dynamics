@@ -407,6 +407,13 @@ public final class CopperDynamics {
     public CopperDynamics(IEventBus bus, ModContainer container) {
         dev.ccd.content.MetalPackages.register();
         container.registerConfig(ModConfig.Type.SERVER, CCDConfig.SPEC);
+        container.registerConfig(ModConfig.Type.COMMON, CCDFeatures.SPEC, "ccd-content.toml");
+        var conditions = net.neoforged.neoforge.registries.DeferredRegister.create(
+            net.neoforged.neoforge.registries.NeoForgeRegistries.CONDITION_SERIALIZERS, ID);
+        conditions.register("content_enabled", () -> FeatureEnabledCondition.CODEC);
+        conditions.register(bus);
+        bus.addListener(CCDFeatureEvents::creativeContents);
+        bus.addListener(CCDFeatureSync::register);
         CCDFluids.register(bus);
         dev.ccd.compat.ProcessingMedia.register(bus);
         CatnipServices.PLATFORM.executeOnClientOnly(() -> CCDClient::init);
@@ -504,32 +511,32 @@ public final class CopperDynamics {
     }
 
     private void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,TANK_BURNER_BE.get(),(be,side)->be.tank);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,TANK_BURNER_BE.get(),(be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.tank : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,com.simibubi.create.AllBlockEntityTypes.HEATER.get(),(be,side)->new dev.ccd.compat.SuperLavaFuel(be));
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,BUFFER_PUMP_BE.get(),(be,side)->be.handler(side));
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,CREATIVE_DELIVERY_TANK_BE.get(),(be,side)->side==null||side==be.getBlockState().getValue(dev.ccd.content.CreativeDeliveryTankBlock.FACING)?be.handler:null);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HORIZONTAL_SMART_TANK_BE.get(), (be,side)->be.inventory);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ACCESS_PORT_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_BRIDGE_BE.get(), dev.ccd.content.FluidAccessBlockEntity::handler);
-        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ATOMIZER_BE.get(), FluidAtomizerBlockEntity::fluidHandler);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,BUFFER_PUMP_BE.get(),(be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.handler(side) : null);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,CREATIVE_DELIVERY_TANK_BE.get(),(be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? side==null||side==be.getBlockState().getValue(dev.ccd.content.CreativeDeliveryTankBlock.FACING)?be.handler:null : null);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, HORIZONTAL_SMART_TANK_BE.get(), (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.inventory : null);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ACCESS_PORT_BE.get(), (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.handler(side) : null);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_BRIDGE_BE.get(), (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.handler(side) : null);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, FLUID_ATOMIZER_BE.get(), (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.fluidHandler(side) : null);
         event.registerItem(Capabilities.FluidHandler.ITEM,
-            (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.CAPACITY), COPPER_BUCKET.get());
+            (stack, context) -> CCDFeatures.enabled("copper_bucket") ? new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.CAPACITY) : null, COPPER_BUCKET.get());
         event.registerItem(Capabilities.FluidHandler.ITEM,
-            (stack, context) -> new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.BRASS_CAPACITY), BRASS_BUCKET.get());
+            (stack, context) -> CCDFeatures.enabled("brass_bucket") ? new FluidHandlerItemStack(COPPER_BUCKET_FLUID, stack, CopperBucketItem.BRASS_CAPACITY) : null, BRASS_BUCKET.get());
         // Use the native handler so frogports also recognize the direct packager path.
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, FLUID_PACKAGER_BE.get(),
-            (be, side) -> be.inventory);
+            (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.inventory : null);
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, FLUID_REPACKAGER_BE.get(),
-            (be, side) -> be.inventory);
+            (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.inventory : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SMART_FLUID_TANK_BE.get(),
-            (be, side) -> be.inventory);
+            (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.inventory : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COPPER_WATER_BASIN_BE.get(),
-            (be, side) -> be.getTankInventory());
+            (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.getTankInventory() : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COPPER_WATER_SUPPLY_BE.get(),
-            (be, side) -> be.getTankInventory());
+            (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.getTankInventory() : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, COPPER_COLLECTION_GRATE_BE.get(),
-            (be, side) -> be.tankBehaviour().getCapability());
+            (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.tankBehaviour().getCapability() : null);
         event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, SMART_COLLECTION_GRATE_BE.get(),
-            (be, side) -> be.tankBehaviour().getCapability());
+            (be, side) -> dev.ccd.CCDFeatures.enabled(be.getBlockState()) ? be.tankBehaviour().getCapability() : null);
     }
 }

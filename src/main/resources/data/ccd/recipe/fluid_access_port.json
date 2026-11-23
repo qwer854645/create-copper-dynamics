@@ -17,5 +17,11 @@
   "result": {
     "id": "ccd:fluid_access_port",
     "count": 2
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "fluid_access_port"
+    }
+  ]
 }

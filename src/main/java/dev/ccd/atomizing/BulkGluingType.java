@@ -46,7 +46,7 @@ public final class BulkGluingType implements FanProcessingType {
         }
         return ItemStack.EMPTY;
     }
-    @Override public boolean isValidAt(Level level,net.minecraft.core.BlockPos pos){return level.getFluidState(pos).getFluidType()==dev.ccd.CCDFluids.SLIME_TYPE.get();}
+    @Override public boolean isValidAt(Level level,net.minecraft.core.BlockPos pos){return dev.ccd.CCDFeatures.enabled("slime")&&level.getFluidState(pos).getFluidType()==dev.ccd.CCDFluids.SLIME_TYPE.get();}
     @Override public int getPriority(){return 450;}
     @Override public boolean canProcess(ItemStack stack,Level level){return !result(stack,level).isEmpty();}
     @Override public List<ItemStack> process(ItemStack stack,Level level){

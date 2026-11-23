@@ -20,5 +20,11 @@
     }
   ],
   "processing_time": 200,
-  "heat_requirement": "heated"
+  "heat_requirement": "heated",
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "haunting"
+    }
+  ]
 }

@@ -27,7 +27,7 @@ public final class SandblastingType implements FanProcessingType {
             && net.minecraft.core.registries.BuiltInRegistries.BLOCK.getKey(level.getBlockState(pos).getBlock())
                 .equals(dev.ccd.compat.ConnectedQuicksandInteraction.SANDING)) return true;
         var state=level.getFluidState(pos);
-        return !state.isEmpty() && state.getType().getFluidType()==CCDFluids.QUICKSAND_TYPE.get();
+        return dev.ccd.CCDFeatures.enabled("quicksand") && !state.isEmpty() && state.getType().getFluidType()==CCDFluids.QUICKSAND_TYPE.get();
     }
     @Override public int getPriority() { return 450; }
     @Override public boolean canProcess(ItemStack stack,Level level) {

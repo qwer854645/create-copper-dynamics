@@ -99,6 +99,7 @@ public class SmartFluidTankBlockEntity extends FluidTankBlockEntity {
         splitPrepared = true;
     }
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if (level == null || level.isClientSide()) return;
         if (fluidUpdatePending && isController()) {

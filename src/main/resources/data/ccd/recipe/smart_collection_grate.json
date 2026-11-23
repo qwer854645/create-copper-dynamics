@@ -18,5 +18,15 @@
   "result": {
     "id": "ccd:smart_collection_grate",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "copper_collection_grate"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "smart_collection_grate"
+    }
+  ]
 }

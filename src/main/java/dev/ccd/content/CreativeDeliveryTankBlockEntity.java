@@ -46,6 +46,7 @@ public final class CreativeDeliveryTankBlockEntity extends SmartBlockEntity impl
     private boolean pressureDirty=true;
     public void invalidatePressure(){pressureDirty=true;}
     @Override public void tick(){
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();if(level==null||level.isClientSide())return;
         if(!pressureDirty)return;
         pressureDirty=false;

@@ -35,6 +35,7 @@ public final class NativeEndpointPump extends PumpBlockEntity {
     @Override protected boolean isFront(Direction side){return side==port;}
     @Override public boolean isPullingOnSide(boolean front){return pulling;}
     public void distribute(Direction side,boolean input,float pressure){
+        if(!dev.ccd.CCDFeatures.enabled(getBlockState()))return;
         if(dev.ccd.compat.pnp.PnPCompat.active())return;
         this.port=side;this.pulling=input;this.pressure=pressure;
         if(pressure>0){

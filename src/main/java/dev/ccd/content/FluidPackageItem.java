@@ -86,6 +86,7 @@ public class FluidPackageItem extends PackageItem {
 
     @Override
     public InteractionResultHolder<ItemStack> open(Level level, Player player, InteractionHand hand) {
+        if(!dev.ccd.CCDFeatures.enabled("fluid_package"))return InteractionResultHolder.fail(player.getItemInHand(hand));
         if(dev.ccd.compat.HandheldPackageOpening.applies(player)) {
             dev.ccd.compat.HandheldPackageOpening.unpack(player);
             return InteractionResultHolder.success(player.getItemInHand(hand));

@@ -74,7 +74,7 @@ public final class CCDFluids {
             event.register(Blocks.POWDER_SNOW_CAULDRON, POWDER_SNOW.get(), FluidType.BUCKET_VOLUME, LayeredCauldronBlock.LEVEL);
     }
     @SubscribeEvent public static void capabilities(RegisterCapabilitiesEvent event) {
-        event.registerItem(Capabilities.FluidHandler.ITEM, (stack, context) -> new SnowBucketWrapper(stack), Items.POWDER_SNOW_BUCKET);
+        event.registerItem(Capabilities.FluidHandler.ITEM, (stack, context) -> CCDFeatures.enabled("powder_snow") ? new SnowBucketWrapper(stack) : null, Items.POWDER_SNOW_BUCKET);
     }
     /** The snow bucket is a SolidBucketItem, so the normal BucketItem wrapper cannot read its contents. */
     private static final class SnowBucketWrapper extends FluidBucketWrapper {

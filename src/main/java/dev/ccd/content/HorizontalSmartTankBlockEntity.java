@@ -51,4 +51,8 @@ public final class HorizontalSmartTankBlockEntity extends SmartFluidTankBlockEnt
     @Override protected AABB createRenderBoundingBox() {
         return new AABB(worldPosition).expandTowards(getMainConnectionAxis()==Direction.Axis.X?height-1:width-1,width-1,getMainConnectionAxis()==Direction.Axis.Z?height-1:width-1);
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

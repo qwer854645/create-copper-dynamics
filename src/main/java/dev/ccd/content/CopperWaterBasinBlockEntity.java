@@ -66,4 +66,8 @@ public class CopperWaterBasinBlockEntity extends FluidTankBlockEntity {
         }
         // fill and both drain overloads deliberately use Create's unchanged creative-tank implementation.
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

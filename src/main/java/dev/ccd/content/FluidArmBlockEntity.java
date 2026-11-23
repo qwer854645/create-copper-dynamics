@@ -176,4 +176,8 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
         if (redstoneLocked) return "redstone";
         return state().ccd$phase() == Phase.MOVE_TO_INPUT ? "collecting" : "waiting_input";
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

@@ -11,5 +11,11 @@
       "amount": 250
     }
   ],
-  "processing_time": 100
+  "processing_time": 100,
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "slime"
+    }
+  ]
 }

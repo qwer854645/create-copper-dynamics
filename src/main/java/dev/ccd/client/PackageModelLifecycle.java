@@ -10,6 +10,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 @EventBusSubscriber(modid = CopperDynamics.ID, value = Dist.CLIENT)
 public final class PackageModelLifecycle {
     @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) {
+        dev.ccd.CCDFeatures.remote(java.util.Map.of());
         FluidCanisterModel.clearWorldVariants();
         BrassBoxModel.clearWorldVariants();
     }

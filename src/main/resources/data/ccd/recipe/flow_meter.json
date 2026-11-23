@@ -15,5 +15,11 @@
   "result": {
     "id": "ccd:flow_meter",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "flow_meter"
+    }
+  ]
 }

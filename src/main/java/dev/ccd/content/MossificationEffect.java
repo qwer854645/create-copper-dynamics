@@ -28,6 +28,7 @@ public final class MossificationEffect extends MobEffect {
         return true;
     }
     public static void spreadAt(ServerLevel level,BlockPos pos){
+            if(!dev.ccd.CCDFeatures.enabled("moss_suspension"))return;
             if(!level.hasChunkAt(pos)||!level.getBlockState(pos).is(BlockTags.MOSS_REPLACEABLE))return;
             level.setBlockAndUpdate(pos,Blocks.MOSS_BLOCK.defaultBlockState());
             if(level.isEmptyBlock(pos.above())){

@@ -17,5 +17,11 @@
   "result": {
     "id": "ccd:tank_blaze_burner",
     "count": 1
-  }
+  },
+  "neoforge:conditions": [
+    {
+      "type": "ccd:content_enabled",
+      "feature": "tank_blaze_burner"
+    }
+  ]
 }

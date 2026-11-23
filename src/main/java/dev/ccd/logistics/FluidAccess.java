@@ -29,6 +29,7 @@ public final class FluidAccess {
     }
     private static List<Source> resolve(Level level, BlockPos pos, Direction side, Set<BlockPos> visited, int depth) {
         if (level == null || depth > 16 || !level.hasChunkAt(pos) || !visited.add(pos)) return List.of();
+        if (!dev.ccd.CCDFeatures.enabled(level.getBlockState(pos))) return List.of();
         var entity = level.getBlockEntity(pos);
         if (entity instanceof FluidAccessBlockEntity access) {
             if (depth != 0 || level.hasNeighborSignal(pos)) return List.of();

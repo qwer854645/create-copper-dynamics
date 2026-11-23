@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 
 /** Fluid catalyst for Create's live haunting recipes, including datapack additions. */
 public final class FluidHauntingType implements FanProcessingType {
-    @Override public boolean isValidAt(Level level,BlockPos pos){return level.getFluidState(pos).getFluidType()==dev.ccd.CCDFluids.HAUNTING_TYPE.get();}
+    @Override public boolean isValidAt(Level level,BlockPos pos){return dev.ccd.CCDFeatures.enabled("haunting")&&level.getFluidState(pos).getFluidType()==dev.ccd.CCDFluids.HAUNTING_TYPE.get();}
     @Override public int getPriority(){return AllFanProcessingTypes.HAUNTING.getPriority();}
     @Override public boolean canProcess(ItemStack stack,Level level){return AllFanProcessingTypes.HAUNTING.canProcess(stack,level);}
     @Override public java.util.List<ItemStack> process(ItemStack stack,Level level){return AllFanProcessingTypes.HAUNTING.process(stack,level);}

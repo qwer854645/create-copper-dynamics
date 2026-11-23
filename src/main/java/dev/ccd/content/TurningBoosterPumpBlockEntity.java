@@ -13,4 +13,8 @@ public final class TurningBoosterPumpBlockEntity extends BoosterPumpBlockEntity 
     @Override public boolean isPullingOnSide(boolean front) {
         return super.isPullingOnSide(front) ^ getBlockState().getValue(TurningBoosterPumpBlock.REVERSED);
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

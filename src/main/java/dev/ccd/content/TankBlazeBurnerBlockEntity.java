@@ -32,6 +32,7 @@ public final class TankBlazeBurnerBlockEntity extends BlazeBurnerBlockEntity imp
         behaviours.add(storage);tank=storage.getPrimaryHandler();tank.setValidator(this::acceptsFuel);
     }
     @Override public void tick(){
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if(level!=null&&!level.isClientSide()&&!tank.isEmpty()){
             var fuel=dev.ccd.compat.LiquidFuelCompat.find(tank.getFluid().getFluid());

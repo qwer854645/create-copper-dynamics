@@ -42,6 +42,7 @@ public final class BufferPumpBlockEntity extends PumpBlockEntity {
     public void invalidatePressure(){pressureDirty=true;}
     @Override public void onSpeedChanged(float previous){super.onSpeedChanged(previous);invalidatePressure();}
     @Override public void tick(){
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();if(level==null||level.isClientSide())return;
         if(!pressureDirty)return;
         pressureDirty=false;

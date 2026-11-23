@@ -42,6 +42,18 @@
           "modid": "l2hostility"
         }
       ]
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "corrupting_fluid"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "sculk_suspension"
+    },
+    {
+      "type": "ccd:content_enabled",
+      "feature": "withering_fluid"
     }
   ],
   "heat_requirement": "heated"

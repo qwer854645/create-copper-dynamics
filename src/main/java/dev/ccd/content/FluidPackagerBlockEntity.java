@@ -52,6 +52,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public InventorySummary getAvailableItems() {
+        if(!dev.ccd.CCDFeatures.enabled(getBlockState())||!dev.ccd.CCDFeatures.enabled("fluid_package"))return new InventorySummary();
         var scoped = dev.ccd.logistics.FluidStockScope.summarize(this);
         if (scoped != null) return scoped;
         InventorySummary next = new InventorySummary();
@@ -106,6 +107,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
         if (level != null && !level.isClientSide() && heldBox.isEmpty() && animationTicks == 0
             && !hasRecovery() && status.equals("output")) status("ready");
@@ -161,6 +163,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public void attemptToSend(@Nullable List<PackagingRequest> requests) {
+        if(!dev.ccd.CCDFeatures.enabled(getBlockState()) || !dev.ccd.CCDFeatures.enabled("fluid_package"))return;
         if (level == null || level.isClientSide()) return;
         if (requests != null) { packageNativeRequest(requests); return; }
         if (!heldBox.isEmpty() || animationTicks != 0 || buttonCooldown > 0) return;
@@ -234,10 +237,12 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public boolean unwrapBox(ItemStack box, boolean simulate) {
+        if(!dev.ccd.CCDFeatures.enabled(getBlockState()) || !dev.ccd.CCDFeatures.enabled(box.getItem()))return false;
         if (level == null || level.isClientSide() || animationTicks != 0 || !heldBox.isEmpty()
             || hasRecovery()) return false;
         if (CompositePackageItem.isComposite(box)) {
             if (!CompositePackageItem.isValid(box)) return false;
+            if(!dev.ccd.CCDFeatures.enabled("fluid_package") && !CompositePackageItem.fluids(box).isEmpty())return false;
             if (simulate) return deliverComposite(box, true).isEmpty();
             compositeRecovery = deliverComposite(box, false);
             previouslyUnwrapped = box.copyWithCount(1);

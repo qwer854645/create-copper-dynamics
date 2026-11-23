@@ -22,6 +22,10 @@ import net.neoforged.api.distmarker.Dist;
  * RequestPromiseQueue and request distribution. Only units and filter conversion differ. */
 public final class FluidGaugeBehaviour extends FactoryPanelBehaviour {
     public FluidGaugeBehaviour(FluidGaugeBlockEntity be, PanelSlot slot) { super(be, slot); }
+    @Override public void tick() {
+        if(!dev.ccd.CCDFeatures.enabled(blockEntity.getBlockState()))return;
+        super.tick();
+    }
 
     @Override public boolean setFilter(ItemStack stack) {
         if (stack.isEmpty()) return super.setFilter(stack);

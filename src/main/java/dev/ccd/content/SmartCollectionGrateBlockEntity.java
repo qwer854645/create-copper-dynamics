@@ -56,4 +56,8 @@ public final class SmartCollectionGrateBlockEntity extends CopperCollectionGrate
             automaticEnabled() ? "ccd.smart_collection_grate.active" : "ccd.smart_collection_grate.paused");
         return true;
     }
+    @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
+        super.tick();
+    }
 }

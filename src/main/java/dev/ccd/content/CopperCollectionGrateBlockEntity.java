@@ -52,6 +52,7 @@ public class CopperCollectionGrateBlockEntity extends SmartBlockEntity implement
         inventory().setValidator(this::acceptsFluid);
         behaviours.add(drainer = new FluidDrainingBehaviour(this) {
             @Override public void tick() {
+        if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
                 // Preserve Create's incremental search budget, but run it only on scheduled work ticks with room available.
                 if (workTick() && canCollectArea() && worldPosition.above().equals(sourcePos)
                     && sourceFluid.isSame(FluidHelper.convertToStill(level.getFluidState(worldPosition.above()).getType()))) super.tick();
