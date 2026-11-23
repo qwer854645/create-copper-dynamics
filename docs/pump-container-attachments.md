@@ -4,4 +4,4 @@
 
 只改变世界模型附件显示，不改变能力注册、压力、输送、物品模型或手持交互。附件由运行时相邻能力决定，示意预览只将原生north连接片与调频泵组合，不能替代所有设备实际相邻时的视觉验收。部分CCD管口伸出方块边界，原生连接片位置与现有模型是否相交还需要客户端观察。
 
-按美术任务约定，本次未构建／测试／启动客户端。静态预览在outputs/pump-container-attachment/preview.png；JAR未更新。
+再次检查后，附件选择改为调用实际 FluidTransportBehaviour.getRenderedRimAttachment，且先判断邻居区块加载；不再自行重写能力判断。仍只绘制返回DRAIN时的原生DRAIN部件，现有模型提供连接筒。Java编译通过，未启动客户端。静态预览在outputs/pump-container-attachment/preview.png；JAR未更新。
