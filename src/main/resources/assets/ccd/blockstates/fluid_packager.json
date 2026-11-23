@@ -31,12 +31,10 @@
       "y": 90
     },
     "facing=up,powered=false": {
-      "model": "ccd:block/fluid_packager_vertical",
-      "x": 180
+      "model": "ccd:block/fluid_packager_vertical"
     },
     "facing=up,powered=true": {
-      "model": "ccd:block/fluid_packager_vertical_powered",
-      "x": 180
+      "model": "ccd:block/fluid_packager_vertical_powered"
     },
     "facing=down,powered=false": {
       "model": "ccd:block/fluid_packager_vertical"
