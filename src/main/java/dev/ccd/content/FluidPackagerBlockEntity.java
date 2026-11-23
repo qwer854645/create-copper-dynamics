@@ -381,6 +381,15 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
             "ccd.status." + status);
         if (!filter.isEmpty()) CCDTooltip.line(tooltip, "ccd.packager.filter_set", filter.getHoverName());
         if (!recovery.isEmpty()) CCDTooltip.line(tooltip, "ccd.packager.recovery_amount", recovery.getHoverName(), CCDTooltip.amount(recovery.getAmount()));
+        if (!compositeRecovery.isEmpty()) {
+            var items=PackageItem.getContents(compositeRecovery);
+            for(int slot=0;slot<items.getSlots();slot++) {
+                var item=items.getStackInSlot(slot);
+                if(!item.isEmpty())CCDTooltip.line(tooltip,"ccd.packager.recovery_items",item.getHoverName(),CCDTooltip.number(item.getCount()));
+            }
+            for(var fluid:CompositePackageItem.fluids(compositeRecovery))
+                CCDTooltip.line(tooltip,"ccd.packager.recovery_amount",fluid.getHoverName(),CCDTooltip.amount(fluid.getAmount()));
+        }
         return true;
     }
 }

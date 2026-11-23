@@ -57,7 +57,14 @@ public final class FluidFilterScreen extends AbstractSimiContainerScreen<FluidFi
         indicators();
     }
     private net.minecraft.nbt.ListTag entries(){return settings.getList("entries",Tag.TAG_COMPOUND);}
-    private Component describe(CompoundTag entry){return Component.translatable("ccd.filter.attribute."+entry.getString("kind"),entry.getString("value"));}
+    private Component describe(CompoundTag entry){
+        String kind=entry.getString("kind"),value=entry.getString("value");
+        Object label=value;
+        if(java.util.Set.of("temperature","density","light").contains(kind))label=Component.translatable("ccd.filter.value."+value);
+        else if(kind.equals("mod"))label=net.neoforged.fml.ModList.get().getModContainerById(value)
+            .map(container->container.getModInfo().getDisplayName()).orElse(value);
+        return Component.translatable("ccd.filter.attribute."+kind,label);
+    }
     private CompoundTag entryAt(int slot){
         var entries=entries();for(int i=0;i<entries.size();i++)if(FluidFilterEditor.position(entries.getCompound(i),i)==slot)return entries.getCompound(i);
         return new CompoundTag();
