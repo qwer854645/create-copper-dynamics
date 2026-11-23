@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {"layer0": "ccd:item/smoking_fluid_bucket"}
+}

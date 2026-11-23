@@ -14,6 +14,22 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class CatalystMediaTests {
+    @GameTest(template="empty") public static void smokingFluidUsesNativeRecipes(GameTestHelper h) {
+        var medium=ProcessingMedia.ALL.stream().filter(m->m.id.equals("smoking_fluid")).findFirst().orElseThrow();
+        var smoking=com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.SMOKING;
+        for(var fluid:java.util.List.of(medium.source.get(),medium.flowing.get())) {
+            var selected=AtomizingRules.select(h.getLevel(),new FluidStack(fluid,1000));
+            h.assertTrue(selected!=null&&selected.type()==smoking,"Atomizer did not select native smoking");
+        }
+        var pos=new BlockPos(2,2,2);h.setBlock(pos,medium.block.get());
+        h.assertTrue(com.simibubi.create.content.kinetics.fan.processing.FanProcessingType.getAt(h.getLevel(),h.absolutePos(pos))==smoking,"World fluid did not enable native smoking");
+        var input=new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.BEEF,3);
+        var output=smoking.process(input.copy(),h.getLevel());
+        h.assertTrue(output!=null&&output.stream().filter(s->s.is(net.minecraft.world.item.Items.COOKED_BEEF)).mapToInt(net.minecraft.world.item.ItemStack::getCount).sum()==3,"Native smoking recipe changed");
+        h.assertTrue(medium.available(),"Base medium incorrectly requires optional mod");
+        h.assertTrue(h.getLevel().getRecipeManager().getRecipes().stream().anyMatch(r->r.id().toString().equals("ccd:mixing/smoking_fluid")),"Missing production recipe");
+        h.succeed();
+    }
     @GameTest(template="empty") public static void newMediaTagsAndProcessing(GameTestHelper h) {
         var mappings=java.util.Map.of("withering_fluid","withering","conduit_energy_fluid","tidal","moss_suspension","mossify","tear_solution","tear","corrupting_fluid","corrupted");
         var pos=new BlockPos(2,2,2);

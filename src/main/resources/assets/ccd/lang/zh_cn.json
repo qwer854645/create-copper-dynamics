@@ -698,5 +698,11 @@
   "block.ccd.variable_flow_pump.tooltip.condition2": "使用扳手时",
   "block.ccd.variable_flow_pump.tooltip.behaviour2": "使用扳手绕_点击面的轴_旋转整个机器。点击管口面可调整齿轮或轴孔方位，点击侧面可改变管口方向。",
   "block.ccd.omni_pump.tooltip.condition2": "输出关闭或目标无法接收时",
-  "block.ccd.omni_pump.tooltip.behaviour2": "按原生管网规则停止输送，_不拥有储液缓存_。可直接连接容器，也可连接管道。"
+  "block.ccd.omni_pump.tooltip.behaviour2": "按原生管网规则停止输送，_不拥有储液缓存_。可直接连接容器，也可连接管道。",
+  "fluid_type.ccd.smoking_fluid": "熏烤液",
+  "fluid.ccd.smoking_fluid": "熏烤液",
+  "fluid.ccd.flowing_smoking_fluid": "熏烤液",
+  "block.ccd.smoking_fluid": "熏烤液",
+  "item.ccd.smoking_fluid_bucket": "熏烤液桶",
+  "item.ccd.smoking_fluid_bucket.tooltip.summary": "使气流执行原生_烟熏配方_，也可作为_流体雾化器_的加工介质。"
 }

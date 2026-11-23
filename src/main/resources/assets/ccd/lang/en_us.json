@@ -698,5 +698,11 @@
   "block.ccd.variable_flow_pump.tooltip.condition2": "When using a Wrench",
   "block.ccd.variable_flow_pump.tooltip.behaviour2": "Use a Wrench to rotate the entire machine around the _clicked face axis_. Click a pipe end to roll the gear or shaft; click a side to turn the ports.",
   "block.ccd.omni_pump.tooltip.condition2": "When outputs are closed or cannot accept fluid",
-  "block.ccd.omni_pump.tooltip.behaviour2": "Stops transfer using native pipe rules, with _no owned fluid buffer_. Connect containers directly or through pipes."
+  "block.ccd.omni_pump.tooltip.behaviour2": "Stops transfer using native pipe rules, with _no owned fluid buffer_. Connect containers directly or through pipes.",
+  "fluid_type.ccd.smoking_fluid": "Smoking Fluid",
+  "fluid.ccd.smoking_fluid": "Smoking Fluid",
+  "fluid.ccd.flowing_smoking_fluid": "Smoking Fluid",
+  "block.ccd.smoking_fluid": "Smoking Fluid",
+  "item.ccd.smoking_fluid_bucket": "Smoking Fluid Bucket",
+  "item.ccd.smoking_fluid_bucket.tooltip.summary": "Enables native _Smoking Recipes_ in air currents and acts as a processing medium for the _Fluid Atomizer_."
 }

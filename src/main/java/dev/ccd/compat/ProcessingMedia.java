@@ -55,7 +55,7 @@ public final class ProcessingMedia {
         private BaseFlowingFluid.Properties properties() { return new BaseFlowingFluid.Properties(type,source,flowing).block(block).bucket(bucket).tickRate(10); }
         public boolean available() {
             var mods=net.neoforged.fml.ModList.get();
-            return id.equals("seething_reagent") || mods.isLoaded(requiredMod(id))
+            return id.equals("smoking_fluid") || id.equals("seething_reagent") || mods.isLoaded(requiredMod(id))
                 && (!id.equals("corrupting_fluid") || mods.isLoaded("anvilcraft") || mods.isLoaded("l2hostility"));
         }
         // Temporary preview, independent of whether the optional processing recipe is available.
@@ -81,7 +81,8 @@ public final class ProcessingMedia {
         new Medium("conduit_energy_fluid",0xff46cabb,300),
         new Medium("moss_suspension",0xff668b36,300),
         new Medium("tear_solution",0xff985de0,300),
-        new Medium("corrupting_fluid",0xff8d294e,300)
+        new Medium("corrupting_fluid",0xff8d294e,300),
+        new Medium("smoking_fluid",0xff9b7049,350)
     );
     public static void register(IEventBus bus) { TYPES.register(bus); FLUIDS.register(bus); }
 }
