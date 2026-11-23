@@ -13,6 +13,10 @@ public final class AtomizerRenderer extends EncasedFanRenderer {
     @Override protected void renderSafe(EncasedFanBlockEntity entity,float pt,PoseStack pose,MultiBufferSource buffer,int light,int overlay) {
         super.renderSafe(entity,pt,pose,buffer,light,overlay);
         if(!(entity instanceof FluidAtomizerBlockEntity atomizer)) return;
+        // EncasedFanRenderer does not inherit SmartBlockEntityRenderer's behaviour
+        // rendering, and its rotor path returns early when Flywheel is active.
+        com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer
+            .renderOnBlockEntity(atomizer,pt,pose,buffer,light,overlay);
         var fluid=atomizer.displayFluid(); if(fluid.isEmpty()) return;
         var facing=entity.getBlockState().getValue(FluidAtomizerBlock.FACING);
         float x=.14f,X=.86f,y=.14f,Y=.86f,z=.14f,Z=.86f;
