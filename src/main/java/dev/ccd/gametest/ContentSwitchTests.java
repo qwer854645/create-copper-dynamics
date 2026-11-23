@@ -33,7 +33,7 @@ public class ContentSwitchTests {
     @GameTest(template="empty") public static void defaultFeatureMappings(GameTestHelper h) {
         h.assertTrue(!CCDFeatures.REBIRTH_NAME.getDefault(),"Easter egg must be off by default");
         h.assertTrue(CCDFeatures.CONTENT.size()==55,"Content switch coverage changed");
-        for(var entry:CCDFeatures.CONTENT.entrySet())h.assertTrue(entry.getValue().getDefault(),"Default must be enabled: "+entry.getKey());
+        for(var entry:CCDFeatures.CONTENT.entrySet())h.assertTrue(entry.getValue().getDefault()==!CCDFeatures.DEFAULT_DISABLED.contains(entry.getKey()),"Incorrect content default: "+entry.getKey());
         h.assertTrue(CCDFeatures.feature("flowing_smoking_fluid").equals("smoking_fluid"),"Flowing identity mismatch");
         h.assertTrue(CCDFeatures.feature("brass_package_10x8").equals("composite_package"),"Package variant mismatch");
         h.succeed();

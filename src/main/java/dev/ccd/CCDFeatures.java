@@ -10,13 +10,16 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 public final class CCDFeatures {
     private CCDFeatures() {}
     public static final Map<String, ModConfigSpec.BooleanValue> CONTENT = new LinkedHashMap<>();
+    public static final java.util.Set<String> DEFAULT_DISABLED = java.util.Set.of(
+        "turning_booster_pump", "vertical_turning_booster_pump", "omni_pump", "buffer_pump",
+        "portable_fluid_pump", "variable_flow_pump", "flow_meter");
     private static volatile Map<String, Boolean> remote = Map.of();
     public static void remote(Map<String, Boolean> settings) { remote = Map.copyOf(settings); }
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue REBIRTH_NAME;
     static {
         var builder = new ModConfigSpec.Builder();
-        builder.comment("Independent content switches. All content is enabled by default.",
+        builder.comment("Independent content switches. Advanced pump variants and the flow meter are disabled by default; other content is enabled.",
             "Restart the game/server after editing. Multiplayer uses the server's content settings.",
             "Disabled content keeps its registry IDs and saved contents; acquisition and normal operation stop.",
             "CCD acquisition/conversion recipes require every referenced content setting to be enabled.",
@@ -49,7 +52,7 @@ public final class CCDFeatures {
     private static void section(ModConfigSpec.Builder builder,String name,String comment,String[] ids){
         builder.comment(comment).translation("ccd.configuration.contentSection."+name).push(name);
         for(String id:ids)CONTENT.put(id,builder.comment(description(id))
-            .translation("ccd.configuration.content."+id).gameRestart().define(id,true));
+            .translation("ccd.configuration.content."+id).gameRestart().define(id,!DEFAULT_DISABLED.contains(id)));
         builder.pop();
     }
     private static String description(String id){
