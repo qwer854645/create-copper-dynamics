@@ -115,7 +115,7 @@
   "ccd.composite.invalid": "包裹内容数据无效",
   "ccd.composite.fluid_line": "%s：%s",
   "block.ccd.copper_water_basin": "铜水槽",
-  "ccd.water_basin.infinite": "无限清水",
+  "ccd.water_basin.infinite": "无限供水",
   "ccd.water_basin.disposal": "输入流体将被销毁",
   "block.ccd.copper_water_supply": "潮涌箱",
   "ccd.water_supply.active": "供水中",

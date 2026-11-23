@@ -115,7 +115,7 @@
   "ccd.composite.invalid": "Invalid package contents",
   "ccd.composite.fluid_line": "%s: %s",
   "block.ccd.copper_water_basin": "Copper Water Basin",
-  "ccd.water_basin.infinite": "Infinite water",
+  "ccd.water_basin.infinite": "Infinite Water Supply",
   "ccd.water_basin.disposal": "Incoming fluid is discarded",
   "block.ccd.copper_water_supply": "Conduit Box",
   "ccd.water_supply.active": "Supplying Water",
