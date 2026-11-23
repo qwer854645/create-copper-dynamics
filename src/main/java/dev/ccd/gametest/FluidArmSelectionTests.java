@@ -16,6 +16,19 @@ import net.neoforged.neoforge.gametest.*;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class FluidArmSelectionTests {
+    @GameTest(template="empty") public static void destructionReturnsHeldFluid(GameTestHelper h) {
+        var pos=new BlockPos(2,1,2);
+        h.setBlock(pos,CopperDynamics.FLUID_ARM.get());
+        var arm=(dev.ccd.content.FluidArmBlockEntity)h.getBlockEntity(pos);
+        ((dev.ccd.mixin.FluidArmAccessor)(Object)arm).ccd$held(dev.ccd.content.FluidArmCargoItem.containing(
+            new net.neoforged.neoforge.fluids.FluidStack(net.minecraft.world.level.material.Fluids.WATER,1000)));
+        h.setBlock(pos,net.minecraft.world.level.block.Blocks.AIR);
+        var drops=h.getLevel().getEntitiesOfClass(com.simibubi.create.content.logistics.box.PackageEntity.class,
+            new net.minecraft.world.phys.AABB(h.absolutePos(pos)).inflate(2));
+        h.assertTrue(drops.stream().mapToInt(e->dev.ccd.content.FluidPackageItem.contents(e.box).getAmount()).sum()==1000,"Held fluid lost on destruction");
+        h.assertTrue(drops.stream().noneMatch(e->e.box.getItem() instanceof dev.ccd.content.FluidArmCargoItem),"Internal cargo escaped");
+        h.succeed();
+    }
     @GameTest(template="empty") public static void rightClickCyclesLeftClickRemoves(GameTestHelper h) {
         var pos=new BlockPos(2,1,2);
         h.setBlock(pos.north(),CopperDynamics.SMART_FLUID_TANK.get());
