@@ -92,10 +92,23 @@ public final class CCDPonderScenes {
     }
     public static void repackaging(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"fluid_repackaging","Repacking Fluid Orders");
-        show(s,util,B,CopperDynamics.FLUID_REPACKAGER.get().defaultBlockState());
+        show(s,util,B,CopperDynamics.FLUID_REPACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING,Direction.SOUTH));
+        var inventory=B.north();show(s,util,inventory,Blocks.BARREL.defaultBlockState());
+        var items=new net.neoforged.neoforge.items.ItemStackHandler(9);
+        items.setStackInSlot(0,new ItemStack(Items.IRON_INGOT,4));
+        var itemBox=com.simibubi.create.content.logistics.box.PackageItem.containing(items);
+        var fluidBox=FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,1000));
+        com.simibubi.create.content.logistics.box.PackageItem.setOrder(itemBox,42,0,true,0,false,null);
+        com.simibubi.create.content.logistics.box.PackageItem.setOrder(fluidBox,42,0,true,1,true,null);
+        for(var box:java.util.List.of(itemBox,fluidBox))com.simibubi.create.content.logistics.box.PackageItem.addAddress(box,"Workshop");
+        s.world().modifyBlockEntity(inventory,net.minecraft.world.level.block.entity.BarrelBlockEntity.class,be->{be.setItem(0,itemBox.copy());be.setItem(1,fluidBox.copy());});
         var depot=B.south();show(s,util,depot,AllBlocks.DEPOT.getDefaultState());
         s.world().createItemOnBeltLike(depot,Direction.NORTH,FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,1000)));
         text(s,util,depot,"Fluid orders travel in Copper Packages; item packages can travel alongside them");
+        var output=CompositePackageItem.containing(items,java.util.List.of(new FluidStack(Fluids.WATER,1000)));
+        com.simibubi.create.content.logistics.box.PackageItem.addAddress(output,"Workshop");
+        s.world().modifyBlockEntity(inventory,net.minecraft.world.level.block.entity.BarrelBlockEntity.class,be->be.clearContent());
+        s.world().modifyBlockEntity(B,PackagerBlockEntity.class,be->{be.heldBox=output.copy();be.animationInward=false;be.animationTicks=PackagerBlockEntity.CYCLE;});
         text(s,util,B,"The Fluid Repackager combines items and fluids belonging to the same order into Brass Packages");
         text(s,util,B,"Preserve the logistics order and address information when routing packages to the Repackager");
         text(s,util,B,"Collect all packages of the same order in the item container behind the Repackager");s.markAsFinished();
