@@ -1,7 +1,6 @@
 package dev.ccd.client.ponder;
 
 import dev.ccd.CopperDynamics;
-import dev.ccd.content.MetalPackages;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
@@ -10,20 +9,15 @@ public final class CCDPonderPlugin implements PonderPlugin {
     @Override public String getModId() { return CopperDynamics.ID; }
     @Override public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         scene(helper,"tanks",CCDPonderScenes::tankBurner,"tank_blaze_burner");
-        scene(helper,"packaging",CCDPonderScenes::packaging,"fluid_packager","fluid_repackager","fluid_package","composite_package");
-        scene(helper,"hatches",CCDPonderScenes::hatches,"fluid_hatch","smart_fluid_hatch","fluid_arm");
+        scene(helper,"packaging",CCDPonderScenes::packaging,"fluid_packager");
+        scene(helper,"hatches",CCDPonderScenes::hatches,"fluid_hatch","smart_fluid_hatch");
         scene(helper,"access",CCDPonderScenes::access,"fluid_access_port","fluid_bridge");
         scene(helper,"tanks",CCDPonderScenes::tanks,"smart_fluid_tank","horizontal_smart_fluid_tank");
         scene(helper,"faucets",CCDPonderScenes::faucets,"faucet","smart_faucet");
         scene(helper,"atomizing",CCDPonderScenes::atomizing,"fluid_atomizer");
         scene(helper,"atomizing",CCDPonderScenes::outputFiltering,"fluid_atomizer");
-        scene(helper,"atomizing",CCDPonderScenes::mossification,"moss_suspension_bucket");
-        helper.addStoryBoard(ResourceLocation.withDefaultNamespace("powder_snow_bucket"),"atomizing",CCDPonderScenes::powderSnow);
         scene(helper,"hatches",CCDPonderScenes::fluidArm,"fluid_arm");
-        scene(helper,"packaging",CCDPonderScenes::repackaging,"fluid_repackager","composite_package");
-        scene(helper,"atomizing",CCDPonderScenes::exposure,"withering_fluid_bucket","conduit_energy_fluid_bucket","tear_solution_bucket","corrupting_fluid_bucket","purifying_solution_bucket");
-        scene(helper,"atomizing",CCDPonderScenes::gluing,"slime_bucket");
-        scene(helper,"atomizing",CCDPonderScenes::haunting,"haunting_bucket");
+        scene(helper,"packaging",CCDPonderScenes::repackaging,"fluid_repackager");
         scene(helper,"valves",CCDPonderScenes::valves,"three_way_valve");
         scene(helper,"collection",CCDPonderScenes::collection,"copper_collection_grate","smart_collection_grate","copper_water_basin","copper_water_supply");
         scene(helper,"transfer",CCDPonderScenes::transfer,"fluid_transmitter");
@@ -35,11 +29,7 @@ public final class CCDPonderPlugin implements PonderPlugin {
         scene(helper,"valves",CCDPonderScenes::redstoneValve,"redstone_fluid_valve");
         scene(helper,"tanks",CCDPonderScenes::filtering,"fluid_filter","fluid_attribute_filter");
         scene(helper,"collection",CCDPonderScenes::buckets,"copper_bucket","brass_bucket");
-        scene(helper,"atomizing",CCDPonderScenes::media,"quicksand_bucket","seething_reagent_bucket","enriching_reagent_bucket","soul_stripping_reagent_bucket","explosive_slurry_bucket","resonant_solution_bucket","sculk_suspension_bucket","purifying_solution_bucket","withering_fluid_bucket","conduit_energy_fluid_bucket","moss_suspension_bucket","tear_solution_bucket","corrupting_fluid_bucket");
-        scene(helper,"packaging",CCDPonderScenes::packaging,"fluid_arm_cargo");
-        scene(helper,"packaging",CCDPonderScenes::ordering,"fluid_stock","fluid_gauge");
-        for(var variant:MetalPackages.VARIANTS)
-            helper.addStoryBoard(id(variant.id()),"packaging",CCDPonderScenes::packaging);
+        scene(helper,"packaging",CCDPonderScenes::ordering,"fluid_gauge");
     }
     private static ResourceLocation id(String path) { return ResourceLocation.fromNamespaceAndPath("ccd",path); }
     private static void scene(PonderSceneRegistrationHelper<ResourceLocation> helper,String template,

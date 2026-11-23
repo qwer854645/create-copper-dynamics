@@ -27,7 +27,7 @@ public final class CCDPonderScenes {
         show(s,util,A,AllBlocks.FLUID_PIPE.getDefaultState());
         text(s,util,B,"The lower tank stores 4000 mB of one liquid fuel supplied by pipes or Fluid Arms");
         s.world().modifyBlockEntity(B,TankBlazeBurnerBlockEntity.class,be->be.tank.fill(new FluidStack(Fluids.LAVA,2000),FluidAction.EXECUTE));
-        text(s,util,B,"Every 1000 mB is burned as its corresponding bucket fuel, using native heating rules");
+        text(s,util,B,"Normally burns 1000 mB as bucket fuel; Liquid Fuel recipes use their own consumption and burn time");
         text(s,util,B,"Fluid Arms may select the Burner directly without a Fluid Hatch; solid fuels still work normally");s.markAsFinished();
     }
     public static void outputFiltering(SceneBuilder builder,SceneBuildingUtil util){
@@ -86,7 +86,7 @@ public final class CCDPonderScenes {
         text(s,util,output,"R-Click a Fluid Hatch to select an input; click it again to switch between input and output");
         s.world().setKineticSpeed(util.select().position(B.south(2)),32);
         water(s,A,2000);water(s,C,1000);
-        text(s,util,B.south(2),"Place the configured Arm and supply rotation to move real fluid between its selected endpoints");
+        text(s,util,B.south(2),"Place the configured Arm and supply rotational power to transfer fluid between the selected locations");
         text(s,util,C,"Fluid Hatches can provide controlled access to the containers behind them");s.markAsFinished();
     }
     public static void repackaging(SceneBuilder builder,SceneBuildingUtil util){
@@ -97,7 +97,7 @@ public final class CCDPonderScenes {
         text(s,util,depot,"Fluid orders travel in Copper Packages; item packages can travel alongside them");
         text(s,util,B,"The Fluid Repackager combines items and fluids belonging to the same order into Brass Packages");
         text(s,util,B,"Preserve the logistics order and address information when routing packages to the Repackager");
-        text(s,util,B,"Repacking combines package contents; it does not create extra fluid");s.markAsFinished();
+        text(s,util,B,"Collect all packages of the same order in the item container behind the Repackager");s.markAsFinished();
     }
     public static void exposure(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"fluid_exposure","Processing Media and Living Creatures");
@@ -150,13 +150,13 @@ public final class CCDPonderScenes {
         s.overlay().showOutline(PonderPalette.BLUE,"source",util.select().position(A),45);
         text(s,util,B,"Given redstone power, it will pack fluids from the container into a package");
         s.world().modifyBlockEntity(B,FluidPackagerBlockEntity.class,be->{be.heldBox=FluidPackageItem.containingFluid(new FluidStack(Fluids.WATER,4000));}); water(s,A,0);
-        text(s,util,B,"These can be picked up and transported like any other item");
+        text(s,util,B,"Copper Packages can travel on Belts and package logistics");
         s.world().modifyBlockEntity(B,FluidPackagerBlockEntity.class,be->{be.heldBox=ItemStack.EMPTY;}); water(s,A,4000);
         text(s,util,A,"Packages inserted will be destroyed, unpacking the fluids into the container");
         s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(Items.WATER_BUCKET));
         text(s,util,B,"R-Click with a filled container to filter Redstone-triggered packaging");
-        show(s,util,C,CopperDynamics.FLUID_REPACKAGER.get().defaultBlockState());
-        text(s,util,C,"A Fluid Repackager combines items and fluids from the same order into Brass Packages"); s.markAsFinished();
+        s.world().setBlock(A,net.minecraft.world.level.block.Blocks.BARREL.defaultBlockState(),true);
+        text(s,util,B,"Brass Packages deposit their items into the rear item container and output their fluids in Copper Packages"); s.markAsFinished();
     }
     public static void hatches(SceneBuilder builder,SceneBuildingUtil util) {
         var s=begin(builder,"fluid_hatches","Accessing Fluids using Fluid Hatches");
@@ -169,16 +169,7 @@ public final class CCDPonderScenes {
         s.overlay().showFilterSlotInput(util.vector().centerOf(B),Direction.EAST,45);
         text(s,util,B,"Smart Fluid Hatches can restrict which fluids may pass");
         s.world().setFilterData(util.select().position(B),SmartFluidHatchBlockEntity.class,new ItemStack(Items.WATER_BUCKET));
-        var arm=new BlockPos(2,1,4);
-        show(s,util,arm,CopperDynamics.FLUID_ARM.get().defaultBlockState());
-        s.overlay().showControls(util.vector().centerOf(B),Pointing.DOWN,45).rightClick().withItem(new ItemStack(CopperDynamics.FLUID_ARM_ITEM.get()));
-        text(s,util,B,"Mechanical Fluid Arms have to be assigned their in- and outputs before they are placed");
-        var output=new BlockPos(4,1,3); var hatch=output.south();
-        show(s,util,output,AllBlocks.FLUID_TANK.getDefaultState());
-        show(s,util,hatch,CopperDynamics.FLUID_HATCH.get().defaultBlockState().setValue(FluidHatchBlock.FACING,Direction.NORTH));
-        s.overlay().showOutline(PonderPalette.BLUE,"input",util.select().position(B),60);
-        s.overlay().showOutline(PonderPalette.GREEN,"output",util.select().position(hatch),60);
-        text(s,util,arm,"Supply rotational power to move fluids between the selected locations"); s.markAsFinished();
+        s.markAsFinished();
     }
     public static void access(SceneBuilder builder,SceneBuildingUtil util) {
         var s=begin(builder,"fluid_access","Extending Fluid Container Connections");
