@@ -204,6 +204,33 @@ public final class FluidPackagingTests {
     }
 
     @GameTest(template = "empty")
+    public static void compositeFluidUnloadsAndMissingItemsAreRetained(GameTestHelper h) {
+        BlockPos machine = new BlockPos(2, 1, 2);
+        h.setBlock(machine.north(), AllBlocks.FLUID_TANK.getDefaultState());
+        h.setBlock(machine, CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING, Direction.SOUTH));
+        h.runAfterDelay(3, () -> {
+            var be = (FluidPackagerBlockEntity) h.getBlockEntity(machine);
+            var items = new net.neoforged.neoforge.items.ItemStackHandler(PackageItem.SLOTS);
+            var fluidOnly = dev.ccd.content.CompositePackageItem.containing(items, java.util.List.of(water(1500)));
+            check(h, be.unwrapBox(fluidOnly, true), "Repacked fluid should fit Create tank");
+            check(h, be.unwrapBox(fluidOnly, false), "Repacked fluid rejected");
+            check(h, be.targetFluidHandler().getFluidInTank(0).getAmount() == 1500, "Composite fluid lost");
+            be.animationTicks = 0;
+            items.setStackInSlot(0, new ItemStack(net.minecraft.world.item.Items.IRON_INGOT, 3));
+            var mixed = dev.ccd.content.CompositePackageItem.containing(items, java.util.List.of(water(500)));
+            check(h, !be.unwrapBox(mixed, true), "Tank without item interface must reject mixed preflight");
+            check(h, be.unwrapBox(mixed, false), "Execution must retain cargo after target changes");
+            check(h, PackageItem.getContents(be.getCompositeRecovery()).getStackInSlot(0).getCount() == 3, "Item remainder lost");
+            check(h, be.targetFluidHandler().getFluidInTank(0).getAmount() == 2000, "Fluid remainder incorrect");
+            var saved = be.saveWithFullMetadata(h.getLevel().registryAccess());
+            var restored = new FluidPackagerBlockEntity(h.absolutePos(machine), be.getBlockState());
+            restored.loadWithComponents(saved, h.getLevel().registryAccess());
+            check(h, PackageItem.getContents(restored.getCompositeRecovery()).getStackInSlot(0).getCount() == 3, "Recovery items not saved");
+            h.succeed();
+        });
+    }
+
+    @GameTest(template = "empty")
     public static void breakingPackagerReturnsRecovery(GameTestHelper h) {
         BlockPos machine = new BlockPos(2, 1, 2);
         h.setBlock(machine, CopperDynamics.FLUID_PACKAGER.get().defaultBlockState());

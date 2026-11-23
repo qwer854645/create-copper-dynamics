@@ -36,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 public final class FluidPackagerBlockEntity extends PackagerBlockEntity implements IHaveGoggleInformation {
     private FluidStack filter = FluidStack.EMPTY;
     private FluidStack recovery = FluidStack.EMPTY;
+    private ItemStack compositeRecovery = ItemStack.EMPTY;
     private String status = "ready";
     private InventorySummary fluidSummary;
     private final dev.ccd.logistics.AdjacentFluidCapability fluidEndpoint=new dev.ccd.logistics.AdjacentFluidCapability(this);
@@ -106,7 +107,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     @Override public void tick() {
         super.tick();
         if (level != null && !level.isClientSide() && heldBox.isEmpty() && animationTicks == 0
-            && recovery.isEmpty() && status.equals("output")) status("ready");
+            && !hasRecovery() && status.equals("output")) status("ready");
     }
 
     public void setFilter(FluidStack sample) {
@@ -116,6 +117,8 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
     public FluidStack getFilter() { return filter.copy(); }
     public FluidStack getRecovery() { return recovery.copy(); }
+    public ItemStack getCompositeRecovery() { return compositeRecovery.copy(); }
+    private boolean hasRecovery() { return !recovery.isEmpty() || !compositeRecovery.isEmpty(); }
     public String getStatus() { return status; }
     private void status(String next) {
         if (next.equals(status)) return;
@@ -136,6 +139,12 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
 
     @Override public void lazyTick() {
         if (level == null || level.isClientSide()) return;
+        if (!compositeRecovery.isEmpty()) {
+            compositeRecovery = deliverComposite(compositeRecovery, false);
+            status(hasRecovery() ? "recovery" : "ready");
+            notifyUpdate();
+            return;
+        }
         if (!recovery.isEmpty()) {
             IFluidHandler target = targetFluidHandler();
             if (target != null) {
@@ -153,7 +162,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         if (level == null || level.isClientSide()) return;
         if (requests != null) { packageNativeRequest(requests); return; }
         if (!heldBox.isEmpty() || animationTicks != 0 || buttonCooldown > 0) return;
-        if (!recovery.isEmpty()) { status("recovery"); return; }
+        if (hasRecovery()) { status("recovery"); return; }
         IFluidHandler source = targetFluidHandler();
         if (source == null) { status("no_container"); return; }
         FluidStack planned = FluidTransfers.planDrain(source, filter, FluidPackageItem.CAPACITY, false);
@@ -183,7 +192,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
      * Withdraw now and reuse its serialized outgoing-package queue, so pending cargo
      * cannot also remain advertised as free fluid stock. */
     private void packageNativeRequest(List<PackagingRequest> requests) {
-        if (requests.isEmpty() || !recovery.isEmpty()) return;
+        if (requests.isEmpty() || hasRecovery()) return;
         PackagingRequest request = requests.getFirst();
         FluidStack fluid = FluidStockItem.fluid(request.item());
         var source = targetFluidHandler();
@@ -224,7 +233,20 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
 
     @Override public boolean unwrapBox(ItemStack box, boolean simulate) {
         if (level == null || level.isClientSide() || animationTicks != 0 || !heldBox.isEmpty()
-            || !recovery.isEmpty() || !FluidPackageItem.isValid(box)) return false;
+            || hasRecovery()) return false;
+        if (CompositePackageItem.isComposite(box)) {
+            if (!CompositePackageItem.isValid(box)) return false;
+            if (simulate) return deliverComposite(box, true).isEmpty();
+            compositeRecovery = deliverComposite(box, false);
+            previouslyUnwrapped = box.copyWithCount(1);
+            animationInward = true;
+            animationTicks = CYCLE;
+            computerBehaviour.prepareComputerEvent(new PackageEvent(box, "package_received"));
+            status(hasRecovery() ? "recovery" : "ready");
+            notifyUpdate();
+            return true;
+        }
+        if (!FluidPackageItem.isValid(box)) return false;
         FluidStack fluid = FluidPackageItem.contents(box);
         IFluidHandler target = targetFluidHandler();
         if (simulate) return target != null && FluidTransfers.canFillAll(target, fluid);
@@ -241,10 +263,65 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         return true;
     }
 
+    /** Execute takes ownership of every remainder; generic capabilities cannot reserve space. */
+    private ItemStack deliverComposite(ItemStack box, boolean simulate) {
+        var remainingItems = new net.neoforged.neoforge.items.ItemStackHandler(PackageItem.SLOTS);
+        var items = PackageItem.getContents(box);
+        Direction facing = getBlockState().getValue(PackagerBlock.FACING);
+        var targetItems = level.hasChunkAt(targetFluidPos())
+            ? level.getCapability(Capabilities.ItemHandler.BLOCK, targetFluidPos(), facing) : null;
+        // Use a shadow inventory so multiple item stacks cannot claim the same free slot.
+        if (simulate && targetItems != null) {
+            final var original = targetItems;
+            var shadow = new net.neoforged.neoforge.items.ItemStackHandler(targetItems.getSlots()) {
+                @Override public int getSlotLimit(int slot) { return original.getSlotLimit(slot); }
+                @Override public boolean isItemValid(int slot, ItemStack stack) { return original.isItemValid(slot, stack); }
+            };
+            for (int slot = 0; slot < shadow.getSlots(); slot++) shadow.setStackInSlot(slot, targetItems.getStackInSlot(slot).copy());
+            for (int slot = 0; slot < items.getSlots(); slot++) {
+                var item = items.getStackInSlot(slot);
+                if (!net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(targetItems, item.copy(), true).isEmpty()) return box.copy();
+                if (!net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(shadow, item.copy(), false).isEmpty()) return box.copy();
+            }
+        }
+        boolean hasItems = false;
+        for (int slot = 0; slot < items.getSlots(); slot++) {
+            ItemStack item = items.getStackInSlot(slot).copy();
+            ItemStack rest = targetItems == null ? item : simulate ? ItemStack.EMPTY
+                : net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(targetItems, item, false);
+            remainingItems.setStackInSlot(slot, rest);
+            hasItems |= !rest.isEmpty();
+        }
+        var target = targetFluidHandler();
+        FluidStack[] reserved = target == null ? new FluidStack[0] : new FluidStack[target.getTanks()];
+        for (int tank = 0; tank < reserved.length; tank++) reserved[tank] = target.getFluidInTank(tank).copy();
+        var fluids = new java.util.ArrayList<FluidStack>();
+        for (FluidStack fluid : CompositePackageItem.fluids(box)) {
+            if (simulate && target != null) {
+                int needed = fluid.getAmount();
+                for (int tank = 0; tank < reserved.length && needed > 0; tank++) {
+                    var stored = reserved[tank];
+                    if (!target.isFluidValid(tank, fluid) || !stored.isEmpty()
+                        && !FluidStack.isSameFluidSameComponents(stored, fluid)) continue;
+                    int amount = Math.min(needed, Math.max(0, target.getTankCapacity(tank) - stored.getAmount()));
+                    if (amount > 0) reserved[tank] = fluid.copyWithAmount(stored.getAmount() + amount);
+                    needed -= amount;
+                }
+                if (needed > 0) return box.copy();
+            }
+            FluidStack rest = target == null ? fluid : simulate
+                ? (FluidTransfers.canFillAll(target, fluid) ? FluidStack.EMPTY : fluid)
+                : FluidTransfers.fillAndKeepRemainder(target, fluid);
+            if (!rest.isEmpty()) fluids.add(rest);
+        }
+        return !hasItems && fluids.isEmpty() ? ItemStack.EMPTY : CompositePackageItem.containing(remainingItems, fluids);
+    }
+
     @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.read(tag, registries, clientPacket);
         filter = FluidStack.parseOptional(registries, tag.getCompound("FluidFilter"));
         recovery = FluidStack.parseOptional(registries, tag.getCompound("RecoveryFluid"));
+        compositeRecovery = ItemStack.parseOptional(registries, tag.getCompound("CompositeRecovery"));
         status = tag.contains("FluidStatus") ? tag.getString("FluidStatus") : "ready";
         // Old saves may have been waiting for the removed exact-amount setting.
         if (status.equals("not_enough")) status = "ready";
@@ -255,12 +332,16 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         super.write(tag, registries, clientPacket);
         tag.put("FluidFilter", filter.saveOptional(registries));
         tag.put("RecoveryFluid", recovery.saveOptional(registries));
+        tag.put("CompositeRecovery", compositeRecovery.saveOptional(registries));
         tag.putString("FluidStatus", status);
         if (!clientPacket && fluidSummary != null)
             tag.put("FluidSummary", CatnipCodecUtils.encode(InventorySummary.CODEC, registries, fluidSummary).orElseThrow());
     }
 
     @Override public void destroy() {
+        if (level != null && !level.isClientSide() && !compositeRecovery.isEmpty())
+            net.minecraft.world.level.block.Block.popResource(level, worldPosition, compositeRecovery.copy());
+        compositeRecovery = ItemStack.EMPTY;
         if (level != null && !level.isClientSide() && !recovery.isEmpty()) {
             FluidStack remaining = recovery;
             recovery = FluidStack.EMPTY;
@@ -276,6 +357,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
     @Override public void invalidate(){super.invalidate();fluidEndpoint.clear();}
     @Override public void clearContent() {
+        compositeRecovery = ItemStack.EMPTY;
         recovery = FluidStack.EMPTY;
         super.clearContent();
     }
