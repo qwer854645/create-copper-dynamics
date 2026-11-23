@@ -16,6 +16,9 @@ public final class PortableFluidPumpBlock extends VariableFlowPumpBlock {
     }
     @Override public net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){
         float stroke=level.getBlockEntity(pos) instanceof PortableFluidPumpBlockEntity pump?pump.stroke:0;
+        return orientedStrokeShape(state,stroke);
+    }
+    private static net.minecraft.world.phys.shapes.VoxelShape orientedStrokeShape(BlockState state,float stroke){
         var local=strokeShape(stroke);
         net.minecraft.world.phys.shapes.VoxelShape result=net.minecraft.world.phys.shapes.Shapes.empty();
         for(var box:local.toAabbs()){
@@ -35,7 +38,7 @@ public final class PortableFluidPumpBlock extends VariableFlowPumpBlock {
         double top=15-2.2*net.minecraft.util.Mth.clamp(stroke,0,1);
         return net.minecraft.world.phys.shapes.Shapes.or(box(1,0,1,15,2,15),box(2,2,2,14,top,14));
     }
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){return getShape(state,level,pos,context);}
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){return orientedStrokeShape(state,0);}
     @Override public net.minecraft.world.phys.shapes.VoxelShape getInteractionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos){return getShape(state,level,pos,net.minecraft.world.phys.shapes.CollisionContext.empty());}
     @Override public BlockState getRotatedBlockState(BlockState state,net.minecraft.core.Direction clickedFace) {
         return PumpOrientation.rotate(state,ROLL,clickedFace);
