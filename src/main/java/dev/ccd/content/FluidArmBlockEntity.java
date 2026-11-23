@@ -163,7 +163,7 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
         var content = component.getContents();
         var result = content instanceof net.minecraft.network.chat.contents.TranslatableContents title
             && title.getKey().equals("create.hint.mechanical_arm_no_targets.title")
-            ? Component.translatable("ccd.hint.fluid_arm_no_targets.title").withStyle(component.getStyle())
+            ? component.copy().plainCopy().withStyle(component.getStyle())
             : content instanceof net.minecraft.network.chat.contents.TranslatableContents translated
             && translated.getKey().equals("create.hint.mechanical_arm_no_targets")
             ? Component.translatable("ccd.hint.fluid_arm_no_targets").withStyle(component.getStyle())

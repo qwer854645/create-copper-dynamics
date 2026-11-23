@@ -385,7 +385,7 @@
   "block.ccd.fluid_atomizer.tooltip.behaviour1": "对气流中的生物施加_强化药水效果_，等级提升一级，时长为原来的四分之一，最长 30 秒。",
   "block.ccd.three_way_valve.tooltip.control1": "使用扳手右键点击时",
   "block.ccd.three_way_valve.tooltip.action1": "调整支路朝向或旋转阀体。",
-  "ccd.hint.fluid_arm_no_targets": "动力移液臂未设置取液点或注液点",
+  "ccd.hint.fluid_arm_no_targets": "看起来这个_动力移液臂_没有被分配任何_目标_。_手持动力移液臂_，_右击_流体舱口正面选取取液点，再次右击切换为注液点。右击已放置的移液臂以应用目标。",
   "item.ccd.brass_bucket.tooltip.summary": "比铜桶容量更大的_黄铜桶_。",
   "item.ccd.brass_bucket.tooltip.condition1": "在世界中取放流体时",
   "item.ccd.brass_bucket.tooltip.behaviour1": "每次取放_1000 mB_，只能收取流体源。",
