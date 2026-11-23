@@ -58,11 +58,10 @@ public final class PortableFluidPumpBlockEntity extends VariableFlowPumpBlockEnt
         manualTicks=10;backwards=reverse;
         updateHandRotation();
         if(changed)updatePressureChange();
-        sendData();
     }
     @Override public void tick() {
         super.tick();
-        if(manualTicks>0&&--manualTicks==0&&level!=null&&!level.isClientSide()) { updateHandRotation();updatePressureChange();sendData(); }
+        if(manualTicks>0&&--manualTicks==0&&level!=null&&!level.isClientSide()) { updateHandRotation();updatePressureChange(); }
     }
     @Override protected void write(CompoundTag tag,HolderLookup.Provider registries,boolean packet) {
         super.write(tag,registries,packet);

@@ -14,5 +14,5 @@ public final class AtomizerLifecycle {
         event.addListener((ResourceManagerReloadListener)dev.ccd.api.FluidProcessingMappings::reload);
         event.addListener((ResourceManagerReloadListener) resources -> AtomizingRules.invalidate());
     }
-    @SubscribeEvent public static void stop(ServerStoppedEvent event) { AtomizerScripts.clear(); dev.ccd.api.FluidWorldScripts.clear(); dev.ccd.api.FluidProcessingMappings.clearScripts(); }
+    @SubscribeEvent public static void stop(ServerStoppedEvent event) { AtomizerScripts.clear(); dev.ccd.api.FluidWorldScripts.clear(); dev.ccd.api.FluidProcessingMappings.clearWorld(); }
 }

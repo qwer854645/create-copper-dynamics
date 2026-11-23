@@ -141,9 +141,10 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     @Override public void lazyTick() {
         if (level == null || level.isClientSide()) return;
         if (!compositeRecovery.isEmpty()) {
+            ItemStack before=compositeRecovery.copy();
             compositeRecovery = deliverComposite(compositeRecovery, false);
             status(hasRecovery() ? "recovery" : "ready");
-            notifyUpdate();
+            if(!ItemStack.matches(before,compositeRecovery))notifyUpdate();
             return;
         }
         if (!recovery.isEmpty()) {

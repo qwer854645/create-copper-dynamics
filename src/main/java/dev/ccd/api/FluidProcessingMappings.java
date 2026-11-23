@@ -32,6 +32,7 @@ public final class FluidProcessingMappings {
     public static synchronized void script(String id,String fluid,String type,int priority){var m=mapping(id,fluid,type,priority);SCRIPTS.put(m.id(),m);rebuild();}
     public static synchronized void removeScript(String id){SCRIPTS.remove(ResourceLocation.parse(id));rebuild();}
     public static synchronized void clearScripts(){SCRIPTS.clear();rebuild();}
+    public static synchronized void clearWorld(){SCRIPTS.clear();data=List.of();rebuild();}
     public static synchronized void reload(ResourceManager resources){
         var next=new ArrayList<Mapping>();
         resources.listResources("ccd/fluid_processing",p->p.getPath().endsWith(".json")).entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry->{
