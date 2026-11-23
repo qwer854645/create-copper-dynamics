@@ -134,6 +134,13 @@ public final class BrassBoxModel extends BakedModelWrapper<BakedModel> {
     public static void rebuildTransportVariants() {
         if (!SHELLS.isEmpty()) for (var entry : KEYS.entrySet()) create(entry.getKey(), entry.getValue());
     }
+    public static void clearWorldVariants() {
+        for (var key : KEYS.values()) {
+            AllPartialModels.PACKAGES.remove(key);
+            AllPartialModels.PACKAGE_RIGGING.remove(key);
+        }
+        KEYS.clear(); VARIANTS.clear();
+    }
 
     public static ResourceLocation transportKey(ItemStack stack) {
         var item=net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());

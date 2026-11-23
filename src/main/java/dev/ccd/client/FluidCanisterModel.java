@@ -102,6 +102,13 @@ public final class FluidCanisterModel extends BakedModelWrapper<BakedModel> {
         if (SHELLS.isEmpty()) return;
         for (var entry : KEYS.entrySet()) create(entry.getKey(), entry.getValue());
     }
+    public static void clearWorldVariants() {
+        for (var key : KEYS.values()) {
+            AllPartialModels.PACKAGES.remove(key);
+            AllPartialModels.PACKAGE_RIGGING.remove(key);
+        }
+        KEYS.clear(); VARIANTS.clear();
+    }
 
     public static ResourceLocation transportKey(ItemStack stack, net.minecraft.world.item.Item nativeItem) {
         if (dev.ccd.content.CompositePackageItem.isComposite(stack)) return BrassBoxModel.transportKey(stack);
