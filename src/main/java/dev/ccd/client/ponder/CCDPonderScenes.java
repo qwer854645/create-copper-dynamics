@@ -414,9 +414,15 @@ public final class CCDPonderScenes {
     }
     public static void metering(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"flow_metering","Measuring Fluid Flow");show(s,util,B,CopperDynamics.FLOW_METER.get().getAxisState(Direction.Axis.Z));
+        for(var pos:java.util.List.of(B.north(),B.south()))show(s,util,pos,AllBlocks.FLUID_PIPE.get().getAxisState(Direction.Axis.Z));
         text(s,util,B,"Install a Flow Meter between two Fluid Pipes");
+        s.world().modifyBlockEntity(B,FlowMeterBlockEntity.class,be->be.flowRate=500);
         text(s,util,B,"The needle responds to transferred fluid and returns to zero when flow stops");
+        s.idle(20);s.world().modifyBlockEntity(B,FlowMeterBlockEntity.class,be->be.flowRate=0);
         text(s,util,B,"Engineer’s Goggles display the current flow in mB per tick");
+        s.overlay().showControls(util.vector().blockSurface(B,Direction.EAST),Pointing.DOWN,45).rightClick().withItem(com.simibubi.create.AllItems.WRENCH.asStack());
+        s.world().modifyBlock(B,state->state.setValue(FlowMeterBlock.FACING,Direction.WEST),true);
+        s.rotateCameraY(180);
         text(s,util,B,"Use a Wrench to change the dial orientation");s.markAsFinished();
     }
     public static void redstoneValve(SceneBuilder builder,SceneBuildingUtil util){
