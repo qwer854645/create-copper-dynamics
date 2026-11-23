@@ -275,7 +275,7 @@ public final class CCDPonderScenes {
         text(s,util,B,"Mechanical Pumps still determine the direction of flow"); s.markAsFinished();
     }
     public static void collection(SceneBuilder builder,SceneBuildingUtil util) {
-        var s=begin(builder,"fluid_collection","Collecting Fluids and Supplying Water");
+        var s=begin(builder,"fluid_collection","Collecting Fluids");
         show(s,util,B,AllBlocks.FLUID_TANK.getDefaultState());
         var grate=B.above();
         show(s,util,grate,CopperDynamics.COPPER_COLLECTION_GRATE.get().defaultBlockState());
@@ -289,6 +289,7 @@ public final class CCDPonderScenes {
         s.world().setFilterData(util.select().position(grate),SmartCollectionGrateBlockEntity.class,new ItemStack(Items.WATER_BUCKET));
         text(s,util,grate,"Use a filled container or Fluid Filter in the filter slot; lit red indicators mean a Redstone signal is pausing the grate");
         s.world().modifyBlock(grate,state->state.setValue(SmartCollectionGrateBlock.POWERED,true),true);
+        show(s,util,grate.east(),Blocks.REDSTONE_BLOCK.defaultBlockState());
         s.idle(25);s.markAsFinished();
     }
     public static void waterSupply(SceneBuilder builder,SceneBuildingUtil util){
