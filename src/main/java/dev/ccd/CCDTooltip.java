@@ -10,22 +10,20 @@ import net.minecraft.network.chat.MutableComponent;
 public final class CCDTooltip {
     private CCDTooltip() {}
     public static void heading(List<Component> tooltip, String key) {
-        if (!tooltip.isEmpty()) tooltip.add(Component.empty());
+        if (!tooltip.isEmpty()&&!tooltip.getLast().getString().isEmpty()) tooltip.add(Component.empty());
         CreateLang.builder().add(Component.translatable(key)).forGoggles(tooltip);
     }
     /** Match Create's fluid container title, fluid-name rows and quantity colours.
      * Multi-fluid storage has one shared capacity, shown once rather than per fluid. */
     public static void fluidContents(List<Component> tooltip,
         List<net.neoforged.neoforge.fluids.FluidStack> fluids, long capacity) {
-        heading(tooltip, "create.gui.goggles.fluid_container");
-        if (fluids.size() == 1) {
-            var fluid = fluids.getFirst();
-            CreateLang.fluidName(fluid).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
-            CreateLang.builder().add(amount(fluid.getAmount())).text(ChatFormatting.GRAY, " / ")
-                .add(CreateLang.number(capacity).translate("generic.unit.millibuckets")
-                    .style(ChatFormatting.DARK_GRAY)).forGoggles(tooltip, 1);
+        if (fluids.size() <= 1 && capacity <= Integer.MAX_VALUE) {
+            var tank=new net.neoforged.neoforge.fluids.capability.templates.FluidTank((int)capacity);
+            if(!fluids.isEmpty())tank.setFluid(fluids.getFirst().copy());
+            containerContents(tooltip,false,tank);
             return;
         }
+        heading(tooltip, "create.gui.goggles.fluid_container");
         for (var fluid : fluids) {
             CreateLang.fluidName(fluid).style(ChatFormatting.GRAY).forGoggles(tooltip, 1);
             CreateLang.builder().add(amount(fluid.getAmount())).forGoggles(tooltip, 1);
@@ -43,12 +41,22 @@ public final class CCDTooltip {
             fluidContents(tooltip, view.fluids(), view.capacity());
             return true;
         }
-        if (!tooltip.isEmpty()) tooltip.add(Component.empty());
-        return new com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation() {}
-            .containedFluidTooltip(tooltip, sneaking, handler);
+        var nativeLines=new java.util.ArrayList<Component>();
+        boolean shown=new com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation() {}
+            .containedFluidTooltip(nativeLines, sneaking, handler);
+        if(!nativeLines.isEmpty()){
+            if(!tooltip.isEmpty()&&!tooltip.getLast().getString().isEmpty())tooltip.add(Component.empty());
+            tooltip.addAll(nativeLines);
+        }
+        return shown;
     }
     public static void line(List<Component> tooltip, String key, Object... args) {
         line(tooltip, ChatFormatting.GRAY, key, args);
+    }
+    /** Like native kinetic statistics: label at the section level, value indented once. */
+    public static void stat(List<Component> tooltip,String label,Component value){
+        CreateLang.builder().add(Component.translatable(label)).style(ChatFormatting.GRAY).forGoggles(tooltip);
+        CreateLang.builder().add(value).forGoggles(tooltip,1);
     }
     public static void line(List<Component> tooltip, ChatFormatting color, String key, Object... args) {
         CreateLang.builder().add(Component.translatable(key, args)).style(color).forGoggles(tooltip, 1);

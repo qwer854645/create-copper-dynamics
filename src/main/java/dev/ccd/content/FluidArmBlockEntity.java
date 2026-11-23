@@ -143,10 +143,13 @@ public final class FluidArmBlockEntity extends ArmBlockEntity {
         for(var line:nativeTooltip)tooltip.add(fluidArmHint(line));
         CCDTooltip.heading(tooltip, "ccd.gui.goggles.fluid_arm");
         var fluid = FluidPackageItem.contents(state().ccd$held());
-        if (!fluid.isEmpty()) CCDTooltip.line(tooltip, "ccd.fluid_arm.cargo", fluid.getHoverName(), CCDTooltip.amount(fluid.getAmount()));
+        if (!fluid.isEmpty()) {
+            com.simibubi.create.foundation.utility.CreateLang.fluidName(fluid).style(ChatFormatting.GRAY).forGoggles(tooltip,1);
+            com.simibubi.create.foundation.utility.CreateLang.builder().add(CCDTooltip.amount(fluid.getAmount())).forGoggles(tooltip,1);
+        }
         String status = workStatus();
         CCDTooltip.line(tooltip, status.equals("redstone") ? ChatFormatting.YELLOW : ChatFormatting.GRAY,
-            "ccd.fluid_arm.status", Component.translatable("ccd.fluid_arm.status." + status));
+            "ccd.fluid_arm.status." + status);
         return true;
     }
     @Override public boolean addToTooltip(List<Component> tooltip, boolean sneaking) {

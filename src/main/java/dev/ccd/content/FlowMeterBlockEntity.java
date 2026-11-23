@@ -48,6 +48,7 @@ public final class FlowMeterBlockEntity extends FluidPipeBlockEntity implements 
     @Override protected void read(CompoundTag tag,HolderLookup.Provider registries,boolean packet){super.read(tag,registries,packet);if(packet)flowRate=tag.getInt("FlowRate");}
     @Override public boolean addToGoggleTooltip(java.util.List<Component> tooltip,boolean sneaking){
         dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.flow");
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.flow_meter.rate",dev.ccd.CCDTooltip.number(flowRate));return true;
+        com.simibubi.create.foundation.utility.CreateLang.builder().add(dev.ccd.CCDTooltip.number(flowRate))
+            .add(Component.translatable("ccd.unit.flow").withStyle(net.minecraft.ChatFormatting.AQUA)).forGoggles(tooltip,1);return true;
     }
 }

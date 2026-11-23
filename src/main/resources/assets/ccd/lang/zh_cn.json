@@ -24,8 +24,8 @@
   "item.ccd.slime_bucket.tooltip.summary": "用于_批量粘接_的流体。",
   "item.ccd.slime_bucket.tooltip.condition1": "鼓风机吹过流体或装入雾化器时",
   "item.ccd.slime_bucket.tooltip.behaviour1": "将物品加工为其与_粘液球_合成的产物，无需额外提供粘液球。",
-  "ccd.goggles.pumping": "泵送状态：",
-  "ccd.goggles.flow": "流体流量：",
+  "ccd.goggles.pumping": "泵送信息：",
+  "ccd.goggles.flow": "流量：",
   "ccd.goggles.connections": "接口配置：",
   "ccd.goggles.no_connections": "未设置接口",
   "ccd.goggles.output_mode": "输出模式：%s",
@@ -840,5 +840,10 @@
   "ccd.configuration.rebirthName": "彩蛋：中文模组名称",
   "ccd.configuration.rebirthName.tooltip": "默认关闭。开启后，中文界面的模组创造栏名称显示为“流体的结合：重生（泵不住了）”。不改变玩法和注册名称，重启游戏后生效。",
   "ccd.configuration.atomizer.consumptionMultiplier": "流体消耗倍率",
-  "ccd.configuration.atomizer.consumptionMultiplier.tooltip": "作用于所有雾化流体，包括自定义配方。0 不消耗，但仍需装入对应流体；1 使用基础或配方耗量。正数耗量向上取整。重新进入世界后生效。"
+  "ccd.configuration.atomizer.consumptionMultiplier.tooltip": "作用于所有雾化流体，包括自定义配方。0 不消耗，但仍需装入对应流体；1 使用基础或配方耗量。正数耗量向上取整。重新进入世界后生效。",
+  "ccd.goggles.target_flow": "目标流量：",
+  "ccd.goggles.signal": "红石信号强度：",
+  "ccd.goggles.range": "单侧输送距离：",
+  "ccd.unit.flow": " mB/t",
+  "ccd.unit.blocks": " 格"
 }

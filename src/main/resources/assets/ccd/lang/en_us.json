@@ -25,7 +25,7 @@
   "item.ccd.slime_bucket.tooltip.condition1": "When blown through by a fan or used in an Atomizer",
   "item.ccd.slime_bucket.tooltip.behaviour1": "Processes items into their crafting result with a _Slimeball_, without supplying additional Slimeballs.",
   "ccd.goggles.pumping": "Pumping Stats:",
-  "ccd.goggles.flow": "Fluid Flow:",
+  "ccd.goggles.flow": "Flow Rate:",
   "ccd.goggles.connections": "Port Configuration:",
   "ccd.goggles.no_connections": "No connections configured",
   "ccd.goggles.output_mode": "Output Mode: %s",
@@ -840,5 +840,10 @@
   "ccd.configuration.rebirthName": "Easter Egg: Chinese Mod Title",
   "ccd.configuration.rebirthName.tooltip": "Off by default. Changes the mod creative-tab title in Chinese to the alternate title. Gameplay and registry names are unchanged. Restart the game to apply.",
   "ccd.configuration.atomizer.consumptionMultiplier": "Fluid Consumption Multiplier",
-  "ccd.configuration.atomizer.consumptionMultiplier.tooltip": "Scales all atomizer costs, including custom recipes. 0 consumes nothing but still requires matching fluid; 1 uses the base or recipe cost. Positive amounts round up. Reopen the world to apply."
+  "ccd.configuration.atomizer.consumptionMultiplier.tooltip": "Scales all atomizer costs, including custom recipes. 0 consumes nothing but still requires matching fluid; 1 uses the base or recipe cost. Positive amounts round up. Reopen the world to apply.",
+  "ccd.goggles.target_flow": "Target Flow Rate:",
+  "ccd.goggles.signal": "Redstone Signal Strength:",
+  "ccd.goggles.range": "Range per Side:",
+  "ccd.unit.flow": " mB/t",
+  "ccd.unit.blocks": " blocks"
 }

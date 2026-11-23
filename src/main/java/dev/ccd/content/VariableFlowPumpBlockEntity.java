@@ -47,10 +47,10 @@ public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
     @Override public boolean addToGoggleTooltip(java.util.List<net.minecraft.network.chat.Component> tooltip,boolean sneaking) {
         super.addToGoggleTooltip(tooltip,sneaking);
         dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.pumping");
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.flow",dev.ccd.CCDTooltip.number(targetFlow()));
+        dev.ccd.CCDTooltip.stat(tooltip,"ccd.goggles.target_flow",dev.ccd.CCDTooltip.number(targetFlow()).append(net.minecraft.network.chat.Component.translatable("ccd.unit.flow")));
         if (!(this instanceof PortableFluidPumpBlockEntity))
-            dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.signal",dev.ccd.CCDTooltip.number(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)));
-        dev.ccd.CCDTooltip.line(tooltip,"ccd.variable_flow.range",dev.ccd.CCDTooltip.number(targetRange()));
+            dev.ccd.CCDTooltip.stat(tooltip,"ccd.goggles.signal",dev.ccd.CCDTooltip.number(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)).append(net.minecraft.network.chat.Component.literal(" / 15").withStyle(net.minecraft.ChatFormatting.DARK_GRAY)));
+        dev.ccd.CCDTooltip.stat(tooltip,"ccd.goggles.range",dev.ccd.CCDTooltip.number(targetRange()).append(net.minecraft.network.chat.Component.translatable("ccd.unit.blocks")));
         return true;
     }
 }

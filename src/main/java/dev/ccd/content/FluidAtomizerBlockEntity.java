@@ -201,7 +201,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip, boolean sneaking) {
         super.addToGoggleTooltip(tooltip, sneaking);
-        containedFluidTooltip(tooltip, sneaking, tank.getCapability());
+        CCDTooltip.containerContents(tooltip, sneaking, tank.getCapability());
         CCDTooltip.heading(tooltip, "ccd.gui.goggles.atomizer");
         CCDTooltip.line(tooltip, mistActive ? ChatFormatting.AQUA : ChatFormatting.GRAY,
             mistActive ? "ccd.atomizer.active" : "ccd.atomizer.idle");
