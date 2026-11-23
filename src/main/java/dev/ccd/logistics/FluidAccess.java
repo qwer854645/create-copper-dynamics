@@ -66,7 +66,7 @@ public final class FluidAccess {
             private List<Source> sources() { return supplier.get(); }
             private Source slot(List<Source> sources, int tank) {
                 if (tank < 0) return null;
-                for (var source : sources) { if (tank < source.handler().getTanks()) return source; tank -= source.handler().getTanks(); }
+                for (var source : sources) { int slots=source.handler().getTanks(); if (tank < slots) return source; tank -= slots; }
                 return null;
             }
             private int local(List<Source> sources, Source target, int tank) {

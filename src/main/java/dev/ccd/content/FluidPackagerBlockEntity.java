@@ -55,10 +55,11 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         var scoped = dev.ccd.logistics.FluidStockScope.summarize(this);
         if (scoped != null) return scoped;
         InventorySummary next = new InventorySummary();
-        var handler = targetFluidHandler();
-        if (handler != null) for (int tank = 0; tank < handler.getTanks(); tank++) {
-            FluidStack fluid = handler.getFluidInTank(tank).copy();
-            if (fluid.isEmpty()) continue;
+        var sources = level == null ? java.util.List.<dev.ccd.logistics.FluidAccess.Source>of()
+            : dev.ccd.logistics.FluidAccess.resolve(level, targetFluidPos(), getBlockState().getValue(PackagerBlock.FACING));
+        for (var source : sources) for (int tank = 0, tanks = source.handler().getTanks(); tank < tanks; tank++) {
+            FluidStack fluid = source.handler().getFluidInTank(tank).copy();
+            if (fluid.isEmpty() || !source.filter().test(fluid)) continue;
             ItemStack identity = FluidStockItem.of(fluid);
             int existing = next.getCountOf(identity);
             next.add(identity, Math.max(0, Math.min(fluid.getAmount(), BigItemStack.INF - existing)));

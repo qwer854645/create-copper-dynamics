@@ -51,8 +51,10 @@ public final class FluidAccessBlockEntity extends SmartBlockEntity implements IH
     }
     @Override public boolean addToGoggleTooltip(List<Component> tooltip,boolean sneaking) {
         var fluids = new java.util.ArrayList<FluidStack>();
-        for (int i=0;i<handler.getTanks();i++) {
-            var fluid=handler.getFluidInTank(i);
+        var snapshot=sources();
+        for (var source:snapshot) for (int i=0, tanks=source.handler().getTanks();i<tanks;i++) {
+            var fluid=source.handler().getFluidInTank(i);
+            if(!source.filter().test(fluid))continue;
             if (fluid.isEmpty()) continue;
             var existing=fluids.stream().filter(f->FluidStack.isSameFluidSameComponents(f,fluid)).findFirst();
             if(existing.isPresent()) existing.get().setAmount((int)Math.min(Integer.MAX_VALUE,(long)existing.get().getAmount()+fluid.getAmount()));
