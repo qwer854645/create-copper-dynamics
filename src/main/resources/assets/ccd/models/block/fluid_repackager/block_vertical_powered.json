@@ -1,5 +1,6 @@
 {
-  "parent": "create:block/repackager/block_vertical_powered",
-  "render_type": "minecraft:cutout_mipped",
-  "ambientocclusion": false
+  "parent": "ccd:block/fluid_repackager/block_vertical",
+  "textures": {
+    "5": "ccd:block/fluid_packager/packager_vertical_powered"
+  }
 }

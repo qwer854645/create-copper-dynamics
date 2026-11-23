@@ -1,5 +1,12 @@
 {
   "parent": "create:block/repackager/block_vertical",
   "render_type": "minecraft:cutout_mipped",
-  "ambientocclusion": false
+  "ambientocclusion": false,
+  "textures": {
+    "0": "create:block/packager_frame",
+    "1": "ccd:block/fluid_packager/packager_details",
+    "2": "ccd:block/fluid_packager/packager_horizontal_unpowered",
+    "5": "ccd:block/fluid_packager/packager_vertical_unpowered",
+    "particle": "ccd:block/fluid_packager/packager_particle"
+  }
 }

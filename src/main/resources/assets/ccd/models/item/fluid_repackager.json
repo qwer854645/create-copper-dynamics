@@ -3,11 +3,10 @@
   "parent": "block/block",
   "textures": {
     "0": "create:block/packager_frame",
-    "1": "create:block/packager_details",
-    "2": "create:block/packager_horizontal_unpowered",
+    "1": "ccd:block/fluid_packager/packager_details",
+    "2": "ccd:block/fluid_packager/packager_horizontal_unpowered",
     "3": "create:block/packager_iris_closed",
-    "particle": "create:block/repackager_particle",
-    "copper_floor": "create:block/copper_casing"
+    "particle": "ccd:block/fluid_packager/packager_particle"
   },
   "elements": [
     {
@@ -434,12 +433,12 @@
         },
         "up": {
           "uv": [
-            0,
-            0,
-            16,
-            16
+            9,
+            9,
+            15,
+            15
           ],
-          "texture": "#copper_floor"
+          "texture": "#2"
         },
         "down": {
           "uv": [
@@ -476,12 +475,12 @@
       "faces": {
         "up": {
           "uv": [
-            0,
-            0,
+            8,
+            8,
             16,
             16
           ],
-          "texture": "#copper_floor"
+          "texture": "#2"
         }
       }
     },
