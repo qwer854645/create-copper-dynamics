@@ -426,7 +426,6 @@ public final class CopperDynamics {
             .icon(() -> new ItemStack(FLUID_PACKAGER_ITEM.get()))
             .displayItems((parameters, output) -> {
                 // Screenshot order: left to right, then top to bottom (nine columns).
-                output.accept(FLOW_METER_ITEM.get());
                 output.accept(TANK_BURNER_ITEM.get());
                 output.accept(BOOSTER_PUMP_ITEM.get());
                 output.accept(TURNING_BOOSTER_PUMP_ITEM.get());
@@ -454,6 +453,7 @@ public final class CopperDynamics {
                 output.accept(FLUID_ATOMIZER_ITEM.get());
                 output.accept(COPPER_WATER_BASIN_ITEM.get());
                 output.accept(COPPER_WATER_SUPPLY_ITEM.get());
+                output.accept(FLOW_METER_ITEM.get());
                 output.accept(FLUID_ARM_ITEM.get());
                 output.accept(FLUID_PACKAGER_ITEM.get());
                 output.accept(FLUID_REPACKAGER_ITEM.get());

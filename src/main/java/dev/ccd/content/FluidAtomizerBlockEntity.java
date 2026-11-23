@@ -56,6 +56,10 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
         behaviours.add(outputFilter = new com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour(this,
             new com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform.Sided() {
                 @Override protected Vec3 getSouthLocation() { return new Vec3(.5,.5,1.01); }
+                @Override public Vec3 getLocalOffset(net.minecraft.world.level.LevelAccessor level, BlockPos pos, BlockState state) {
+                    return super.getLocalOffset(level,pos,state).add(Vec3.atLowerCornerOf(
+                        state.getValue(FluidAtomizerBlock.FACING).getOpposite().getNormal()).scale(4 / 16d));
+                }
                 @Override protected boolean isSideActive(BlockState state,Direction side) {
                     return side.getAxis()!=state.getValue(FluidAtomizerBlock.FACING).getAxis();
                 }
