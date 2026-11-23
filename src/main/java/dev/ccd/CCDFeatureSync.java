@@ -35,6 +35,7 @@ public record CCDFeatureSync(Map<String,Boolean> settings) implements CustomPack
         if(event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player){
             var values=new LinkedHashMap<String,Boolean>();
             CCDFeatures.CONTENT.forEach((key,value)->values.put(key,value.get()));
+            CCDFeatures.COMPAT_FLUID_MODES.forEach((key,value)->values.put(key,CCDFeatures.enabled(key)));
             PacketDistributor.sendToPlayer(player,new CCDFeatureSync(values));
         }
     }

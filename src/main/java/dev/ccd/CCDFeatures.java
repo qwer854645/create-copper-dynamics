@@ -11,10 +11,15 @@ public final class CCDFeatures {
     private CCDFeatures() {}
     public static final Map<String, ModConfigSpec.BooleanValue> CONTENT = new LinkedHashMap<>();
     public static final java.util.Set<String> DEFAULT_DISABLED = java.util.Set.of(
-        "turning_booster_pump", "vertical_turning_booster_pump", "omni_pump", "buffer_pump",
+        "turning_booster_pump", "vertical_turning_booster_pump", "buffer_pump",
         "portable_fluid_pump", "variable_flow_pump", "flow_meter", "base_fluids",
         "nuclear_fluids", "nether_industry_fluids", "more_catalysts_fluids");
     private static volatile Map<String, Boolean> remote = Map.of();
+    public enum CompatFluidMode { AUTO, ENABLED, DISABLED }
+    public static final Map<String,ModConfigSpec.EnumValue<CompatFluidMode>> COMPAT_FLUID_MODES=new LinkedHashMap<>();
+    public static final Map<String,String> COMPAT_FLUID_MODS=Map.of(
+        "nuclear_fluids","createnuclear","nether_industry_fluids","createnetherindustry",
+        "more_catalysts_fluids","create_more_catalysts");
     public static void remote(Map<String, Boolean> settings) { remote = Map.copyOf(settings); }
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue REBIRTH_NAME;
@@ -29,7 +34,8 @@ public final class CCDFeatures {
         Map.entry("corrupting_fluid","more_catalysts_fluids"));
     static {
         var builder = new ModConfigSpec.Builder();
-        builder.comment("Advanced pump variants, the flow meter and grouped fluid categories are disabled by default.",
+        builder.comment("Selected advanced pump variants, the flow meter and base processing fluids are disabled by default. The omnidirectional pump is enabled.",
+            "Addon fluid categories default to AUTO: enabled when their processing addon is loaded.",
             "Super Lava, Powder Snow fluid support and Quicksand have separate switches enabled by default. Other devices remain enabled.",
             "Restart the game/server after editing. Multiplayer uses the server's content settings.",
             "Disabled content keeps its registry IDs and saved contents; acquisition and normal operation stop.",
@@ -60,8 +66,14 @@ public final class CCDFeatures {
     }
     private static void section(ModConfigSpec.Builder builder,String name,String comment,String[] ids){
         builder.comment(comment).translation("ccd.configuration.contentSection."+name).push(name);
-        for(String id:ids)CONTENT.put(id,builder.comment(description(id))
-            .translation("ccd.configuration.content."+id).gameRestart().define(id,!DEFAULT_DISABLED.contains(id)));
+        for(String id:ids){
+            if(COMPAT_FLUID_MODS.containsKey(id)){
+                COMPAT_FLUID_MODES.put(id,builder.comment(description(id),
+                    "AUTO: enable when "+COMPAT_FLUID_MODS.get(id)+" is loaded. ENABLED/DISABLED: explicit override.")
+                    .translation("ccd.configuration.content."+id).gameRestart().defineEnum(id,CompatFluidMode.AUTO));
+            }else CONTENT.put(id,builder.comment(description(id))
+                .translation("ccd.configuration.content."+id).gameRestart().define(id,!DEFAULT_DISABLED.contains(id)));
+        }
         builder.pop();
     }
     private static String description(String id){
@@ -108,6 +120,13 @@ public final class CCDFeatures {
         String key=feature(path);
         Boolean synced=remote.get(key);
         if(synced!=null)return synced;
+        var mode=COMPAT_FLUID_MODES.get(key);
+        if(mode!=null){
+            CompatFluidMode selected;
+            try{selected=mode.get();}catch(IllegalStateException beforeConfigLoad){selected=CompatFluidMode.AUTO;}
+            return selected==CompatFluidMode.ENABLED || selected==CompatFluidMode.AUTO
+                && net.neoforged.fml.ModList.get().isLoaded(COMPAT_FLUID_MODS.get(key));
+        }
         var value = CONTENT.get(key);
         if(value == null)return true;
         try { return value.get(); }

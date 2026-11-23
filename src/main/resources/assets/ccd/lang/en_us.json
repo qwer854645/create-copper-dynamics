@@ -811,10 +811,10 @@
   "ccd.configuration.content.base_fluids": "Base Processing Fluids",
   "ccd.configuration.content.base_fluids.tooltip": "Off by default. Slime Fluid, Soul Fluid and Smoking Fluid, including their buckets and effects.",
   "ccd.configuration.content.nuclear_fluids": "Create Nuclear Media",
-  "ccd.configuration.content.nuclear_fluids.tooltip": "Off by default. Enriching Reagent, its bucket and radiation effects. Processing requires Create Nuclear.",
+  "ccd.configuration.content.nuclear_fluids.tooltip": "Default AUTO enables this category when its processing addon is loaded. ENABLED and DISABLED override detection. Enriching Reagent, its bucket and radiation effects. Processing requires Create Nuclear.",
   "ccd.configuration.content.nether_industry_fluids": "Create Nether Industry Media",
-  "ccd.configuration.content.nether_industry_fluids.tooltip": "Off by default. Soul Stripping Reagent, its bucket and exposure effects. Processing requires Create Nether Industry.",
+  "ccd.configuration.content.nether_industry_fluids.tooltip": "Default AUTO enables this category when its processing addon is loaded. ENABLED and DISABLED override detection. Soul Stripping Reagent, its bucket and exposure effects. Processing requires Create Nether Industry.",
   "ccd.configuration.content.more_catalysts_fluids": "Create: More Catalysts Media",
-  "ccd.configuration.content.more_catalysts_fluids.tooltip": "Off by default. Explosive Slurry, Resonant Solution, Sculk Suspension, Purifying Solution, Withering Fluid, Conduit Energy Fluid, Moss Suspension, Tear Solution and Corrupting Fluid, including buckets. Processing requires More Catalysts; Corrupting also requires AnvilCraft or L2 Hostility.",
+  "ccd.configuration.content.more_catalysts_fluids.tooltip": "Default AUTO enables this category when its processing addon is loaded. ENABLED and DISABLED override detection. Explosive Slurry, Resonant Solution, Sculk Suspension, Purifying Solution, Withering Fluid, Conduit Energy Fluid, Moss Suspension, Tear Solution and Corrupting Fluid, including buckets. Processing requires More Catalysts; Corrupting also requires AnvilCraft or L2 Hostility.",
   "ccd.configuration.contentSection.fluids": "Fluids by Origin"
 }

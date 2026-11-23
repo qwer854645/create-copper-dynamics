@@ -7,6 +7,20 @@ import net.neoforged.neoforge.gametest.*;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class ContentSwitchTests {
+    @GameTest(template="empty") public static void compatFluidAutomaticAndOverrideModes(GameTestHelper h){
+        for(var entry:CCDFeatures.COMPAT_FLUID_MODES.entrySet()){
+            var setting=entry.getValue();var previous=setting.get();
+            try{
+                setting.set(CCDFeatures.CompatFluidMode.AUTO);setting.clearCache();
+                h.assertTrue(CCDFeatures.enabled(entry.getKey())==net.neoforged.fml.ModList.get().isLoaded(CCDFeatures.COMPAT_FLUID_MODS.get(entry.getKey())),"AUTO did not follow addon presence");
+                setting.set(CCDFeatures.CompatFluidMode.ENABLED);setting.clearCache();
+                h.assertTrue(CCDFeatures.enabled(entry.getKey()),"Explicit enable ignored");
+                setting.set(CCDFeatures.CompatFluidMode.DISABLED);setting.clearCache();
+                h.assertTrue(!CCDFeatures.enabled(entry.getKey()),"Explicit disable ignored");
+            }finally{setting.set(previous);setting.clearCache();}
+        }
+        h.succeed();
+    }
     @GameTest(template="empty") public static void independentSwitchRetainsSavedContent(GameTestHelper h) {
         var pos=new BlockPos(2,1,2);
         h.setBlock(pos,CopperDynamics.BUFFER_PUMP.get());
@@ -32,7 +46,9 @@ public class ContentSwitchTests {
     }
     @GameTest(template="empty") public static void defaultFeatureMappings(GameTestHelper h) {
         h.assertTrue(!CCDFeatures.REBIRTH_NAME.getDefault(),"Easter egg must be off by default");
-        h.assertTrue(CCDFeatures.CONTENT.size()==45,"Content switch coverage changed");
+        h.assertTrue(CCDFeatures.CONTENT.size()+CCDFeatures.COMPAT_FLUID_MODES.size()==45,"Content switch coverage changed");
+        h.assertTrue(CCDFeatures.CONTENT.get("omni_pump").getDefault(),"Omni pump must default to enabled");
+        for(var mode:CCDFeatures.COMPAT_FLUID_MODES.values())h.assertTrue(mode.getDefault()==CCDFeatures.CompatFluidMode.AUTO,"Compat fluids must default to AUTO");
         for(String standalone:java.util.List.of("seething_reagent","powder_snow","quicksand"))
             h.assertTrue(CCDFeatures.feature(standalone).equals(standalone)&&CCDFeatures.CONTENT.containsKey(standalone),"Standalone fluid lost its switch");
         for(var entry:CCDFeatures.CONTENT.entrySet())h.assertTrue(entry.getValue().getDefault()==!CCDFeatures.DEFAULT_DISABLED.contains(entry.getKey()),"Incorrect content default: "+entry.getKey());

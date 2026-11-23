@@ -1,6 +1,6 @@
 # 独立内容开关
 
-配置文件：`config/ccd-content.toml`。45 个内容开关，无总开关。设备和工具独立控制；流体按下述类别控制。两种转向增压泵、万向泵、缓存泵、便携泵、调频泵和流量计共 7 项默认 `false`。修改后重启游戏或服务器，联机以服务端为准。
+配置文件：`config/ccd-content.toml`。45 个内容选项，无总开关。设备和工具独立控制；流体按下述类别控制。两种转向增压泵、缓存泵、便携泵、调频泵和流量计共 6 项默认 `false`；万向泵默认 `true`。修改后重启游戏或服务器，联机以服务端为准。
 
 文件按 `content.transport`、`content.storage`、`content.logistics`、`content.tools`、`content.processing`、`content.fluids` 分段。流体配置重写后，旧 processing 中的逐流体开关不再读取；不增加旧配置迁移逻辑。
 
@@ -10,9 +10,11 @@
 - `powder_snow`：细雪流体支持，默认开启，不关闭原版细雪桶/方块。
 - `quicksand`：流沙，默认开启，包括桶、喷砂和接触效果。
 - `base_fluids`：史莱姆流体、灵魂液、熏烤液，默认关闭。
-- `nuclear_fluids`：Create Nuclear 富集介质，默认关闭。
-- `nether_industry_fluids`：Create Nether Industry 剥魂液，默认关闭。
-- `more_catalysts_fluids`：爆破浆液、共鸣溶液、幽匿悬液、净化液、凋零液、潮涌能量液、苔藓悬浊液、催泪溶液、腐化液，默认关闭。
+- `nuclear_fluids`：Create Nuclear 富集介质，默认 `"AUTO"`，检测 `createnuclear`。
+- `nether_industry_fluids`：Create Nether Industry 剥魂液，默认 `"AUTO"`，检测 `createnetherindustry`。
+- `more_catalysts_fluids`：爆破浆液、共鸣溶液、幽匿悬液、净化液、凋零液、潮涌能量液、苔藓悬浊液、催泪溶液、腐化液，默认 `"AUTO"`，检测 `create_more_catalysts`。
+
+兼容类别在每次启动时通过 `AUTO` 跟随模组加载情况。可填写 `"ENABLED"` 或 `"DISABLED"` 显式覆盖；开启不代表补造缺失的上游加工配方。腐化配方的额外模组条件仍保留。旧类别布尔值改为上述字符串，不提供布尔值迁移；既有万向泵 `false` 不会因默认值改变而覆盖。
 
 `easterEggs.rebirthName` 默认 `false`。本地开启并使用中文语言时，模组创造栏标题替换为“流体的结合：重生（泵不住了）”。这是客户端本地外观选项，不随服务端功能开关同步，不更改模组列表的英文发行名称、注册 ID、物品名或玩法。
 
