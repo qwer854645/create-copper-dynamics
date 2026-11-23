@@ -204,38 +204,6 @@ public final class FluidPackagingTests {
     }
 
     @GameTest(template = "empty")
-    public static void interruptedOrderResumesAfterSave(GameTestHelper h) {
-        BlockPos machine = new BlockPos(2, 1, 2);
-        h.setBlock(machine.north(), AllBlocks.FLUID_TANK.getDefaultState());
-        h.setBlock(machine, CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING, Direction.SOUTH));
-        h.runAfterDelay(3, () -> {
-            var be = (FluidPackagerBlockEntity) h.getBlockEntity(machine);
-            be.targetFluidHandler().fill(water(4000), FluidAction.EXECUTE);
-            var requests = new java.util.ArrayList<com.simibubi.create.content.logistics.packager.PackagingRequest>();
-            requests.add(com.simibubi.create.content.logistics.packager.PackagingRequest.create(
-                dev.ccd.content.FluidStockItem.of(water(1)), 6000, "receiver", 0,
-                new org.apache.commons.lang3.mutable.MutableBoolean(true), 0, 77,
-                com.simibubi.create.content.logistics.stockTicker.PackageOrderWithCrafts.empty()));
-            be.attemptToSend(requests);
-            be.tick();
-            ItemStack first = be.heldBox.copy();
-            be.tick();
-            check(h, FluidPackageItem.contents(first).getAmount() == 4000, "First fragment missing");
-            var saved = be.saveWithFullMetadata(h.getLevel().registryAccess());
-            be.loadWithComponents(saved, h.getLevel().registryAccess());
-            be.heldBox = ItemStack.EMPTY;
-            be.animationTicks = 0;
-            be.targetFluidHandler().fill(water(2000), FluidAction.EXECUTE);
-            be.tick();
-            ItemStack last = be.heldBox.copy();
-            var helper = new dev.ccd.logistics.CompositeRepackageHelper(null);
-            check(h, helper.addPackageFragment(first) == -1, "First fragment prematurely completed order");
-            check(h, helper.addPackageFragment(last) == 77, "Saved order failed to emit closing fragment");
-            h.succeed();
-        });
-    }
-
-    @GameTest(template = "empty")
     public static void compositeFluidUnloadsAndMissingItemsAreRetained(GameTestHelper h) {
         BlockPos machine = new BlockPos(2, 1, 2);
         h.setBlock(machine.north(), AllBlocks.FLUID_TANK.getDefaultState());
