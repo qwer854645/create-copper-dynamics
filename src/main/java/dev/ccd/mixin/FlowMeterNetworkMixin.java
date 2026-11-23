@@ -19,6 +19,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(FluidNetwork.class)
 abstract class FlowMeterNetworkMixin {
+    @org.spongepowered.asm.mixin.Unique private final java.util.Map<BlockPos, java.util.List<BlockPos>> ccd$paths = new java.util.HashMap<>();
+    @org.spongepowered.asm.mixin.Unique private long ccd$pathTick = Long.MIN_VALUE;
     @Shadow Level world;
     @Shadow BlockFace start;
     @Shadow java.util.List<Pair<BlockFace,FlowSource>> targets;
@@ -38,15 +40,26 @@ abstract class FlowMeterNetworkMixin {
             var provider=target.getSecond().provideHandler();
             if(provider==null||provider.getCapability()!=handler)continue;
             var end=target.getFirst().getPos();
+            // Reuse only within this network tick, and validate every edge below.
+            // No persistent topology cache can become stale after a valve/port edit.
+            if(ccd$pathTick!=world.getGameTime()){ccd$paths.clear();ccd$pathTick=world.getGameTime();}
+            var cachedPath=ccd$paths.get(end);
+            if(cachedPath!=null && ccd$validPath(cachedPath)) {
+                for(var pos:cachedPath)if(world.getBlockEntity(pos) instanceof FlowMeterBlockEntity meter)meter.recordTransfer(filled);
+                break;
+            }
             var parents=new java.util.HashMap<BlockPos,BlockPos>();var queue=new java.util.ArrayDeque<BlockPos>();
             queue.add(start.getPos());parents.put(start.getPos(),start.getPos());
             while(!queue.isEmpty()&&parents.size()<=4096){
                 var pos=queue.removeFirst();
                 if(pos.equals(end)){
+                    var path=new java.util.ArrayList<BlockPos>();
                     while(true){
+                        path.add(pos);
                         if(world.getBlockEntity(pos) instanceof FlowMeterBlockEntity meter)meter.recordTransfer(filled);
                         var previous=parents.get(pos);if(previous.equals(pos))break;pos=previous;
                     }
+                    ccd$paths.put(end,java.util.List.copyOf(path));
                     break;
                 }
                 var pipe=FluidPropagator.getPipe(world,pos);if(pipe==null)continue;
@@ -65,5 +78,19 @@ abstract class FlowMeterNetworkMixin {
             break;
         }
         return filled;
+    }
+    @org.spongepowered.asm.mixin.Unique private boolean ccd$validPath(java.util.List<BlockPos> path){
+        for(int i=1;i<path.size();i++){
+            var from=path.get(i);var to=path.get(i-1);
+            if(!world.hasChunkAt(from)||!world.hasChunkAt(to))return false;
+            var pipe=FluidPropagator.getPipe(world,from);var other=FluidPropagator.getPipe(world,to);
+            if(pipe==null||other==null)return false;
+            var delta=to.subtract(from);var side=Direction.getNearest(delta.getX(),delta.getY(),delta.getZ());
+            var out=pipe.getConnection(side);var in=other.getConnection(side.getOpposite());
+            if(out==null||in==null||!out.hasFlow()||!in.hasFlow())return false;
+            var outgoing=((PipeConnectionFlowAccessor)out).ccd$getFlow().get();
+            if(outgoing.inbound||!outgoing.complete||!((PipeConnectionFlowAccessor)in).ccd$getFlow().get().inbound)return false;
+        }
+        return true;
     }
 }
