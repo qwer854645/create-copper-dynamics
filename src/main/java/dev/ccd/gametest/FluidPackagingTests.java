@@ -162,6 +162,26 @@ public final class FluidPackagingTests {
     }
 
     @GameTest(template = "empty")
+    public static void overlappingAccessIsNotIdenticalInventory(GameTestHelper h) {
+        BlockPos machine = new BlockPos(2,1,2);
+        h.setBlock(machine.north(), AllBlocks.FLUID_TANK.getDefaultState());
+        h.setBlock(machine, CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING,Direction.SOUTH));
+        h.runAfterDelay(3, () -> {
+            var be = (FluidPackagerBlockEntity) h.getBlockEntity(machine);
+            var own = be.targetInventory.getIdentifiedInventory();
+            var id = (dev.ccd.logistics.FluidInventoryBehaviour.AccessId) own.identifier();
+            var larger = new java.util.HashSet<BlockPos>(id.sources());
+            larger.add(h.absolutePos(machine.east(3)));
+            var overlap = new com.simibubi.create.content.logistics.packager.IdentifiedInventory(
+                new dev.ccd.logistics.FluidInventoryBehaviour.AccessId(id.dimension(),larger,id.access()),
+                be.targetInventory.getInventory());
+            check(h, be.isTargetingSameInventory(own), "Identical source rejected");
+            check(h, !be.isTargetingSameInventory(overlap), "Partial overlap treated as identical inventory");
+            h.succeed();
+        });
+    }
+
+    @GameTest(template = "empty")
     public static void packageAndUnpackAgainstCreateTank(GameTestHelper h) {
         BlockPos machine = new BlockPos(2, 1, 2);
         BlockPos tank = machine.north();

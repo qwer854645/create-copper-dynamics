@@ -100,7 +100,7 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         if (other != null && own != null
             && own.identifier() instanceof FluidInventoryBehaviour.AccessId a
             && other.identifier() instanceof FluidInventoryBehaviour.AccessId b)
-            return a.dimension().equals(b.dimension()) && !a.sources().isEmpty() && b.sources().containsAll(a.sources());
+            return a.dimension().equals(b.dimension()) && !a.sources().isEmpty() && a.sources().equals(b.sources());
         return other != null && own != null && own.identifier() != null && own.identifier().equals(other.identifier());
     }
 
