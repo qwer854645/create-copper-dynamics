@@ -34,7 +34,12 @@ public final class FluidArmPoint extends ArmInteractionPoint {
         this.face = face;
         this.mode = mode;
     }
-    @Override public boolean isValid() { return handler() != null; }
+    @Override public boolean isValid() { return handler() != null || fillingTarget(level,pos)!=null; }
+    @Nullable public static com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour fillingTarget(Level level,BlockPos pos){
+        if(!level.hasChunkAt(pos)||!dev.ccd.CCDFeatures.enabled(level.getBlockState(pos)))return null;
+        return com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour.get(level,pos,
+            com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TYPE);
+    }
     /** Shared by selection and every capability lookup, including points restored from older saves. */
     public static boolean canTarget(Level level, BlockPos pos) {
         return level.hasChunkAt(pos) && (level.getBlockState(pos).getBlock() instanceof FluidHatchBlock
@@ -46,8 +51,8 @@ public final class FluidArmPoint extends ArmInteractionPoint {
     }
     /** Hatches are arm/handheld interfaces, not pipe or machine forwarding capabilities. */
     @Nullable public static IFluidHandler interactionHandler(Level level, BlockPos pos, Direction face) {
-        if(!dev.ccd.CCDFeatures.enabled(level.getBlockState(pos)))return null;
         if (!level.hasChunkAt(pos)) return null;
+        if(!dev.ccd.CCDFeatures.enabled(level.getBlockState(pos)))return null;
         if (level.getBlockEntity(pos) instanceof FluidHatchBlockEntity hatch) return hatch.interactionHandler(face);
         var handler=level.getCapability(Capabilities.FluidHandler.BLOCK, pos, face);
         if(level.getBlockEntity(pos) instanceof dev.ccd.content.TankBlazeBurnerBlockEntity)return handler;
@@ -93,13 +98,14 @@ public final class FluidArmPoint extends ArmInteractionPoint {
         IFluidHandler handler = allowed(arm) ? handler() : null;
         if (handler == null || tank < 0 || tank >= handler.getTanks() || amount <= 0) return ItemStack.EMPTY;
         FluidStack sample = handler.getFluidInTank(tank).copy();
-        if (sample.isEmpty()) return ItemStack.EMPTY;
+        if (sample.isEmpty() || !((FluidArmBlockEntity)arm).acceptsFluid(sample)) return ItemStack.EMPTY;
         FluidStack fluid = handler.drain(sample.copyWithAmount(Math.min(amount, BATCH)),
             simulate ? FluidAction.SIMULATE : FluidAction.EXECUTE);
         // Preserve even unexpected actual results; the native held stack owns the full payload.
         return FluidArmCargoItem.containing(fluid);
     }
     @Override public ItemStack insert(ArmBlockEntity arm, ItemStack parcel, boolean simulate) {
+        if(allowed(arm)&&((FluidArmBlockEntity)arm).fillingMode())return fillItems((FluidArmBlockEntity)arm,parcel,simulate);
         IFluidHandler handler = allowed(arm) ? handler() : null;
         FluidStack fluid = FluidPackageItem.contents(parcel);
         if (handler == null || fluid.isEmpty()) return parcel.copy();
@@ -110,6 +116,27 @@ public final class FluidArmPoint extends ArmInteractionPoint {
         ItemStack rest = parcel.copyWithCount(1);
         rest.set(CopperDynamics.FLUID_CARGO.get(), new FluidCargo(fluid.copyWithAmount(fluid.getAmount() - accepted)));
         return rest;
+    }
+    private ItemStack fillItems(FluidArmBlockEntity arm,ItemStack parcel,boolean simulate){
+        var target=fillingTarget(level,pos);var fluid=FluidPackageItem.contents(parcel);
+        if(target==null||fluid.isEmpty())return parcel.copy();
+        int[] used={0};
+        target.handleProcessingOnAllItems(item->{
+            if(used[0]>0)return null;
+            int amount=com.simibubi.create.content.fluids.spout.FillingBySpout.getRequiredAmountForItem(level,item.stack.copy(),fluid.copy());
+            if(amount<=0||amount>fluid.getAmount()||!arm.acceptsFilling(item.stack,fluid,amount))return null;
+            if(simulate){used[0]=amount;return null;}
+            var input=item.stack.copy();var available=fluid.copy();
+            var result=com.simibubi.create.content.fluids.spout.FillingBySpout.fillItem(level,amount,input,available);
+            if(input.getCount()!=item.stack.getCount()-1||fluid.getAmount()-available.getAmount()!=amount)return null;
+            var output=item.copy();output.stack=result;
+            var remainder=item.copy();remainder.stack=input;used[0]=amount;
+            return com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TransportedResult.convertToAndLeaveHeld(
+                result.isEmpty()?java.util.List.of():java.util.List.of(output),input.isEmpty()?null:remainder);
+        });
+        if(used[0]==0)return parcel.copy();
+        if(used[0]==fluid.getAmount())return ItemStack.EMPTY;
+        var rest=parcel.copyWithCount(1);rest.set(CopperDynamics.FLUID_CARGO.get(),new FluidCargo(fluid.copyWithAmount(fluid.getAmount()-used[0])));return rest;
     }
     public static final class Type extends ArmInteractionPointType {
         // The native item-arm picker must not select fluid-only targets. FluidArmBlockEntity

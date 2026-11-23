@@ -72,8 +72,9 @@ public final class FluidArmItem extends ArmItem {
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
         Direction face = context.getClickedFace();
-        if (FluidArmPoint.interactionHandler(level, pos, face) == null) return InteractionResult.PASS;
-        if (!FluidArmPoint.canTarget(level, pos)) {
+        boolean fillingTarget=FluidArmPoint.fillingTarget(level,pos)!=null;
+        if (FluidArmPoint.interactionHandler(level, pos, face) == null && !fillingTarget) return InteractionResult.PASS;
+        if (!FluidArmPoint.canTarget(level, pos) && !fillingTarget) {
             if (!level.isClientSide()) player.displayClientMessage(Component.translatable("ccd.fluid_arm.hatch_required").withStyle(ChatFormatting.YELLOW), true);
             return InteractionResult.sidedSuccess(level.isClientSide());
         }
@@ -83,14 +84,14 @@ public final class FluidArmItem extends ArmItem {
         for (int i = 0; i < points.size(); i++) if (points.get(i).pos().equals(pos) && points.get(i).face() == face) { index = i; break; }
         String action;
         if (index >= 0) {
-            boolean input=!points.get(index).input();
+            boolean input=!fillingTarget&&!points.get(index).input();
             points.set(index, new Selected(pos.immutable(), face, input)); action = input?"input":"output";
         } else {
             if (points.size() >= FluidArmBlockEntity.MAX_POINTS) {
                 player.displayClientMessage(Component.translatable("ccd.fluid_arm.limit", FluidArmBlockEntity.MAX_POINTS).withStyle(ChatFormatting.RED), true);
                 return InteractionResult.SUCCESS;
             }
-            points.add(new Selected(pos.immutable(), face, true)); action = "input";
+            points.add(new Selected(pos.immutable(), face, !fillingTarget)); action = fillingTarget?"output":"input";
         }
         savePoints(stack,level,points);
         player.getInventory().setChanged();

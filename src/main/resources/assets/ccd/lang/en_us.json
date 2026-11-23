@@ -799,5 +799,12 @@
   "ccd.configuration.content.nether_industry_fluids.tooltip": "Default AUTO enables this category when its processing addon is loaded. ENABLED and DISABLED override detection. Soul Stripping Reagent, its bucket and exposure effects. Processing requires Create Nether Industry.",
   "ccd.configuration.content.more_catalysts_fluids": "Create: More Catalysts Media",
   "ccd.configuration.content.more_catalysts_fluids.tooltip": "Default AUTO enables this category when its processing addon is loaded. ENABLED and DISABLED override detection. Explosive Slurry, Resonant Solution, Sculk Suspension, Purifying Solution, Withering Fluid, Conduit Energy Fluid, Moss Suspension, Tear Solution and Corrupting Fluid, including buckets. Processing requires More Catalysts; Corrupting also requires AnvilCraft or L2 Hostility.",
-  "ccd.configuration.contentSection.fluids": "Fluids by Origin"
+  "ccd.configuration.contentSection.fluids": "Fluids by Origin",
+  "ccd.fluid_arm.filter_mode": "Fluid Arm Mode",
+  "ccd.fluid_arm.transfer_mode": "Transfer Fluid",
+  "ccd.fluid_arm.filling_mode": "Fill Items",
+  "block.ccd.fluid_arm.tooltip.control3": "When Holding R-Click on an East/West Base Filter Slot",
+  "block.ccd.fluid_arm.tooltip.action3": "Selects _Transfer Fluid_ or _Fill Items_. Short-click the same slot to set its filter.",
+  "block.ccd.fluid_arm.tooltip.condition3": "When Fill Items Is Selected",
+  "block.ccd.fluid_arm.tooltip.behaviour3": "Selects Depots or Belts as _outputs_ for filling recipes. The slot filters _outputs_; in transfer mode it filters fluids."
 }

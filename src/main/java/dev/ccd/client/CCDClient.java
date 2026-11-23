@@ -87,7 +87,7 @@ public final class CCDClient {
         event.registerBlockEntityRenderer(CopperDynamics.REDSTONE_FLUID_VALVE_BE.get(), RedstoneFluidValveRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.FAUCET_BE.get(), FaucetRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FAUCET_BE.get(), FaucetRenderer::new);
-        event.registerBlockEntityRenderer(CopperDynamics.FLUID_ARM_BE.get(), ArmRenderer::new);
+        event.registerBlockEntityRenderer(CopperDynamics.FLUID_ARM_BE.get(), FluidArmRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FLUID_HATCH_BE.get(), SmartBlockEntityRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.SMART_FLUID_TANK_BE.get(), SmartFluidTankRenderer::new);
         event.registerBlockEntityRenderer(CopperDynamics.HORIZONTAL_SMART_TANK_BE.get(), SmartFluidTankRenderer::new);

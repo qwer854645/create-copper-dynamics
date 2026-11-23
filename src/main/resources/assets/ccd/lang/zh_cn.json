@@ -799,5 +799,12 @@
   "ccd.configuration.content.nether_industry_fluids.tooltip": "默认 AUTO：加载对应加工模组时启用；ENABLED 强制开启，DISABLED 强制关闭。剥魂液及其桶和接触效果；加工需要安装 Create Nether Industry。",
   "ccd.configuration.content.more_catalysts_fluids": "Create: More Catalysts 加工流体",
   "ccd.configuration.content.more_catalysts_fluids.tooltip": "默认 AUTO：加载对应加工模组时启用；ENABLED 强制开启，DISABLED 强制关闭。爆破浆液、共鸣溶液、幽匿悬液、净化液、凋零液、潮涌能量液、苔藓悬浊液、催泪溶液、腐化液及其桶。加工需要更多触媒；腐化加工另需 AnvilCraft 或 L2 Hostility。",
-  "ccd.configuration.contentSection.fluids": "按来源分类的流体"
+  "ccd.configuration.contentSection.fluids": "按来源分类的流体",
+  "ccd.fluid_arm.filter_mode": "移液臂模式",
+  "ccd.fluid_arm.transfer_mode": "搬运流体",
+  "ccd.fluid_arm.filling_mode": "物品注液",
+  "block.ccd.fluid_arm.tooltip.control3": "长按基座过滤槽时",
+  "block.ccd.fluid_arm.tooltip.action3": "选择_搬运流体_或_物品注液_。短按在同一槽位设置过滤。",
+  "block.ccd.fluid_arm.tooltip.condition3": "选择物品注液模式时",
+  "block.ccd.fluid_arm.tooltip.behaviour3": "将置物台或传送带选为_输出点_，执行注液配方。槽位筛选_产物_；搬液模式筛选流体。"
 }
