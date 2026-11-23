@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 /** Released, inspected processing paths. Never executes process() to discover results. */
 public final class ThirdPartyOutputFilters {
     private ThirdPartyOutputFilters(){}
+    private static boolean coloringUnavailable;
     private static final java.util.Set<String> STANDARD=java.util.Set.of(
         "dev.lopyluna.dndesires.content.fan_types.DragonBreathingType",
         "dev.lopyluna.dndesires.content.fan_types.FreezingType",
@@ -66,6 +67,7 @@ public final class ThirdPartyOutputFilters {
         }
     }
     private static boolean coloring(FanProcessingType type,ItemStack input,Level level,FluidAtomizerBlockEntity owner){
+        if(coloringUnavailable)return false;
         try{
             var preview=(java.util.Optional<?>)ColoringPreview.PREVIEW.invoke(type,input.copyWithCount(1),level);
             if(preview.isEmpty())return false;
@@ -75,6 +77,10 @@ public final class ThirdPartyOutputFilters {
                 if(output.getChance()>0&&owner.acceptsOutput(output.getStack()))return true;
             }
             return false;
-        }catch(ReflectiveOperationException e){throw new IllegalStateException("Dragons Plus coloring preview failed",e);}
+        }catch(ReflectiveOperationException | LinkageError | RuntimeException e){
+            coloringUnavailable=true;
+            org.slf4j.LoggerFactory.getLogger("CCD-DragonsPlus").error("Pausing CCD filtered coloring: unsupported preview API",e);
+            return false;
+        }
     }
 }
