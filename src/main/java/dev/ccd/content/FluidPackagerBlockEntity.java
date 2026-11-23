@@ -281,7 +281,11 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
             for (int slot = 0; slot < items.getSlots(); slot++) {
                 var item = items.getStackInSlot(slot);
                 if (!net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(targetItems, item.copy(), true).isEmpty()) return box.copy();
-                if (!net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(shadow, item.copy(), false).isEmpty()) return box.copy();
+                // A generic shadow cannot reproduce custom insertion rules (virtual
+                // drawers, unlimited slots, shared stores). Trust their own preflight;
+                // execution already retains every unaccepted item.
+                if (targetItems instanceof net.neoforged.neoforge.items.wrapper.InvWrapper
+                    && !net.neoforged.neoforge.items.ItemHandlerHelper.insertItemStacked(shadow, item.copy(), false).isEmpty()) return box.copy();
             }
         }
         boolean hasItems = false;
