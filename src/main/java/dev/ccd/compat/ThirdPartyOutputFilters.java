@@ -33,20 +33,10 @@ public final class ThirdPartyOutputFilters {
             default -> null;
         };
         if(recipe==null)return false;
-        var primary=find(level,"create_dragons_plus",recipe,input);
-        if(primary!=null)return owner.acceptsRecipe(primary);
-        if(recipe.equals("sanding")){
-            var paper=com.simibubi.create.AllRecipeTypes.SANDPAPER_POLISHING.find(new SingleRecipeInput(input),level);
-            if(paper.isPresent())return owner.acceptsRecipe(paper.get().value());
-        }
-        // Only inspect registered recipe data from known integration partners, not compat callbacks.
-        var fallback=find(level,"dndesires",recipe.equals("ending")?"dragon_breathing":recipe,input);
-        if(fallback!=null)return owner.acceptsRecipe(fallback);
-        if(recipe.equals("freezing")){
-            fallback=find(level,"garnished","freezing",input);
-            if(fallback!=null)return owner.acceptsRecipe(fallback);
-        }
-        return false;
+        // These released paths apply recipes through RecipeApplier, where the CCD
+        // source context checks declared outputs before rolling or consumption.
+        // Let the upstream implementation choose compat callbacks and their order.
+        return true;
     }
     @SuppressWarnings({"rawtypes","unchecked"})
     private static Recipe<?> find(Level level,String namespace,String path,ItemStack input){
