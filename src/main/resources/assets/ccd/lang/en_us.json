@@ -375,8 +375,8 @@
   "block.ccd.faucet.tooltip.behaviour1": "_Pauses_ fluid output.",
   "block.ccd.smart_faucet.tooltip.condition1": "When Powered by Redstone",
   "block.ccd.smart_faucet.tooltip.behaviour1": "_Pauses_ fluid output.",
-  "block.ccd.smart_faucet.tooltip.control1": "Set the Front Filter",
-  "block.ccd.smart_faucet.tooltip.action1": "Allows only _matching fluid_ for pouring and filling.",
+  "block.ccd.smart_faucet.tooltip.control1": "When Holding R-Click on the Front Filter Slot",
+  "block.ccd.smart_faucet.tooltip.action1": "Selects _Fluid Filter_ or _Output Filter_ in the same slot. Short-click to set the filter.",
   "block.ccd.fluid_access_port.tooltip.condition1": "When Powered by Redstone",
   "block.ccd.fluid_access_port.tooltip.behaviour1": "_Disconnects_ the container. While unpowered, a Comparator repeats the container’s signal.",
   "block.ccd.fluid_bridge.tooltip.condition1": "When Powered by Redstone",
@@ -830,5 +830,10 @@
   "ccd.ponder.water_supply.header": "Supplying Adjacent Containers",
   "ccd.ponder.water_supply.text_1": "Water Supply Boxes automatically supply water to adjacent containers on all six sides",
   "ccd.ponder.water_basin.header": "Drawing Unlimited Water",
-  "ccd.ponder.water_basin.text_1": "Copper Water Basins supply handheld containers and pipes, but do not fill adjacent containers automatically"
+  "ccd.ponder.water_basin.text_1": "Copper Water Basins supply handheld containers and pipes, but do not fill adjacent containers automatically",
+  "ccd.smart_faucet.filter_mode": "Filter Mode",
+  "ccd.smart_faucet.filter_fluid": "Fluid Filter",
+  "ccd.smart_faucet.filter_output": "Output Filter",
+  "block.ccd.smart_faucet.tooltip.condition2": "When Output Filtering Is Selected",
+  "block.ccd.smart_faucet.tooltip.behaviour2": "Allows filling recipes with a possible _matching output_. Direct container pouring is disabled. An empty filter allows all filling outputs."
 }

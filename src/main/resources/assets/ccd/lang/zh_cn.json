@@ -375,8 +375,8 @@
   "block.ccd.faucet.tooltip.behaviour1": "_暂停_出液。",
   "block.ccd.smart_faucet.tooltip.condition1": "接收红石信号时",
   "block.ccd.smart_faucet.tooltip.behaviour1": "_暂停_出液。",
-  "block.ccd.smart_faucet.tooltip.control1": "对正面过滤槽设置过滤",
-  "block.ccd.smart_faucet.tooltip.action1": "只允许_匹配流体_出液或加工。",
+  "block.ccd.smart_faucet.tooltip.control1": "长按正面过滤槽时",
+  "block.ccd.smart_faucet.tooltip.action1": "在同一槽位选择_流体过滤_或_产物过滤_。短按设置过滤物品。",
   "block.ccd.fluid_access_port.tooltip.condition1": "接收红石信号时",
   "block.ccd.fluid_access_port.tooltip.behaviour1": "_断开_容器连接。未通电时，比较器转发容器的信号。",
   "block.ccd.fluid_bridge.tooltip.condition1": "接收红石信号时",
@@ -830,5 +830,10 @@
   "ccd.ponder.water_supply.header": "向相邻容器供水",
   "ccd.ponder.water_supply.text_1": "潮涌箱自动向六面相邻容器供水",
   "ccd.ponder.water_basin.header": "取用无限水源",
-  "ccd.ponder.water_basin.text_1": "铜水槽可供手持容器和管道取水，不会自动填充相邻容器"
+  "ccd.ponder.water_basin.text_1": "铜水槽可供手持容器和管道取水，不会自动填充相邻容器",
+  "ccd.smart_faucet.filter_mode": "筛选模式",
+  "ccd.smart_faucet.filter_fluid": "流体过滤",
+  "ccd.smart_faucet.filter_output": "产物过滤",
+  "block.ccd.smart_faucet.tooltip.condition2": "选择产物过滤时",
+  "block.ccd.smart_faucet.tooltip.behaviour2": "只执行可能产出_匹配物品_的注液配方；不直接向容器倒液。留空允许所有注液产物。"
 }
