@@ -112,7 +112,10 @@ public final class ThreeWayValveBlock extends DirectionalBlock
         BlockState state = level.getBlockState(pos);
         if (!(state.getBlock() instanceof ThreeWayValveBlock)) return;
         boolean powered = level.hasNeighborSignal(pos);
-        if (state.getValue(POWERED) != powered) level.setBlockAndUpdate(pos, state.setValue(POWERED, powered));
+        if (state.getValue(POWERED) != powered) {
+            level.setBlockAndUpdate(pos, state.setValue(POWERED, powered));
+            if (dev.ccd.compat.pnp.PnPCompat.active()) refreshNetwork(level, pos);
+        }
     }
     @Override public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         updateSignal(level, pos);
@@ -121,6 +124,15 @@ public final class ThreeWayValveBlock extends DirectionalBlock
     /** Reset old connection networks before wipePressure removes inactive port entries.
      * Visit all neighbours so the branch closed by the new state is notified too. */
     public static void refreshNetwork(Level level, BlockPos pos) {
+        if (dev.ccd.compat.pnp.PnPCompat.active()) {
+            // PnP owns topology and pressure caches while its engine is enabled.
+            // Dirty both routes, including the branch just disconnected by redstone.
+            dev.ccd.logistics.NativeEndpointPump.changed(level, pos);
+            for (Direction side : Direction.values())
+                if (level.hasChunkAt(pos.relative(side)))
+                    dev.ccd.logistics.NativeEndpointPump.changed(level, pos.relative(side));
+            return;
+        }
         FluidTransportBehaviour pipe = FluidPropagator.getPipe(level, pos);
         if (pipe != null) {
             if (pipe.interfaces != null) pipe.interfaces.values().forEach(connection -> connection.resetNetwork());

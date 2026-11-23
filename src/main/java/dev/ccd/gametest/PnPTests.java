@@ -18,6 +18,58 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class PnPTests {
+    @GameTest(template="empty",timeoutTicks=320)
+    public static void threeWaySwitchesLiveRoutes(GameTestHelper h){
+        if(!PnPCompat.active()){h.succeed();return;}
+        var valve=new BlockPos(3,2,3);
+        var source=valve.west(3);var straight=valve.east(2);var branch=valve.north(2);
+        for(var tank:java.util.List.of(source,straight,branch))h.setBlock(tank,AllBlocks.FLUID_TANK.getDefaultState());
+        h.setBlock(valve,CopperDynamics.THREE_WAY_VALVE.get().defaultBlockState()
+            .setValue(dev.ccd.content.ThreeWayValveBlock.FACING,Direction.EAST)
+            .setValue(dev.ccd.content.ThreeWayValveBlock.ROLL,1));
+        // Around X: UP -> NORTH. Common port WEST, straight EAST, branch NORTH.
+        h.assertTrue(dev.ccd.content.ThreeWayValveBlock.branch(h.getBlockState(valve))==Direction.NORTH,"Test branch orientation wrong");
+        h.setBlock(valve.west(),AllBlocks.FLUID_PIPE.get().getAxisState(Direction.Axis.X));
+        h.setBlock(valve.east(),AllBlocks.FLUID_PIPE.get().getAxisState(Direction.Axis.X));
+        h.setBlock(valve.north(),AllBlocks.FLUID_PIPE.get().getAxisState(Direction.Axis.Z));
+        h.setBlock(valve.west(2),AllBlocks.MECHANICAL_PUMP.getDefaultState()
+            .setValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING,Direction.EAST));
+        h.onEachTick(()->{
+            var pump=(PumpBlockEntity)h.getBlockEntity(valve.west(2));
+            if(pump.getSpeed()!=256)pump.setSpeed(256);
+        });
+        int[] closed={0};
+        h.runAfterDelay(10,()->{
+            ((FluidTankBlockEntity)h.getBlockEntity(source)).getTankInventory().fill(new FluidStack(Fluids.WATER,8000),FluidAction.EXECUTE);
+            var pump=(PumpBlockEntity)h.getBlockEntity(valve.west(2));pump.setSpeed(256);pump.onSpeedChanged(0);
+            var mode=pump.getBehaviour(de.devin.pipesnphysics.engine.turbine.PumpModeBehaviour.TYPE);
+            if(mode!=null)mode.setValue(de.devin.pipesnphysics.engine.turbine.PumpMode.PUMP.ordinal());
+        });
+        h.runAfterDelay(80,()->{
+            var a=(FluidTankBlockEntity)h.getBlockEntity(straight);var b=(FluidTankBlockEntity)h.getBlockEntity(branch);
+            h.assertTrue(a.getTankInventory().getFluidAmount()>0,"PnP three-way straight route did not transfer");
+            h.assertTrue(b.getTankInventory().isEmpty(),"Closed branch received fluid");
+            closed[0]=a.getTankInventory().getFluidAmount();
+            ((FluidTankBlockEntity)h.getBlockEntity(source)).getTankInventory().fill(new FluidStack(Fluids.WATER,8000),FluidAction.EXECUTE);
+            h.setBlock(valve.above(),net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK);
+            h.assertTrue(de.devin.pipesnphysics.engine.EngineTickHandler.hasPendingUrgent(h.getLevel(),h.absolutePos(valve)),
+                "Redstone switch did not immediately invalidate PnP route cache");
+        });
+        h.runAfterDelay(160,()->{
+            var a=(FluidTankBlockEntity)h.getBlockEntity(straight);var b=(FluidTankBlockEntity)h.getBlockEntity(branch);
+            h.assertTrue(b.getTankInventory().getFluidAmount()>0,"PnP three-way powered branch did not transfer");
+            h.assertTrue(a.getTankInventory().getFluidAmount()==closed[0],"Closed straight route kept receiving fluid");
+            closed[0]=b.getTankInventory().getFluidAmount();
+            a.getTankInventory().drain(8000,FluidAction.EXECUTE);
+            ((FluidTankBlockEntity)h.getBlockEntity(source)).getTankInventory().fill(new FluidStack(Fluids.WATER,8000),FluidAction.EXECUTE);
+            h.setBlock(valve.above(),net.minecraft.world.level.block.Blocks.AIR);
+        });
+        h.runAfterDelay(250,()->{
+            h.assertTrue(((FluidTankBlockEntity)h.getBlockEntity(straight)).getTankInventory().getFluidAmount()>0,"PnP route did not switch back");
+            h.assertTrue(((FluidTankBlockEntity)h.getBlockEntity(branch)).getTankInventory().getFluidAmount()==closed[0],"Closed branch kept receiving after switch back");
+            h.succeed();
+        });
+    }
     @GameTest(template="empty",timeoutTicks=200)
     public static void creativePipeRespectsWorldMode(GameTestHelper h){
         if(!PnPCompat.active()){h.succeed();return;}
