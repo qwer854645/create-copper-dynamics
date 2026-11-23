@@ -831,5 +831,12 @@
   "ccd.configuration.content.corrupting_fluid": "腐化液",
   "ccd.configuration.content.corrupting_fluid.tooltip": "启用此内容。关闭后保留已有物品、方块和流体，停止其功能并隐藏获取配方。重启游戏或服务器后生效。",
   "ccd.configuration.content.smoking_fluid": "熏烤液",
-  "ccd.configuration.content.smoking_fluid.tooltip": "启用此内容。关闭后保留已有物品、方块和流体，停止其功能并隐藏获取配方。重启游戏或服务器后生效。"
+  "ccd.configuration.content.smoking_fluid.tooltip": "启用此内容。关闭后保留已有物品、方块和流体，停止其功能并隐藏获取配方。重启游戏或服务器后生效。",
+  "ccd.configuration.contentSection.transport": "输送与管路",
+  "ccd.configuration.contentSection.storage": "储存与供水",
+  "ccd.configuration.contentSection.logistics": "流体物流",
+  "ccd.configuration.contentSection.tools": "容器与过滤工具",
+  "ccd.configuration.contentSection.processing": "气流加工与流体",
+  "ccd.configuration.rebirthName": "彩蛋：中文模组名称",
+  "ccd.configuration.rebirthName.tooltip": "默认关闭。开启后，中文界面的模组创造栏名称显示为“流体的结合：重生（泵不住了）”。不改变玩法和注册名称，重启游戏后生效。"
 }

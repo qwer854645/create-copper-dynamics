@@ -62,6 +62,7 @@
     "defaultRequire": 1
   },
   "client": [
+    "ChineseModTitleMixin",
     "FluidArmCutoutMixin",
     "FluidRepackagerCutoutMixin",
     "MobileTickerAmountMixin",

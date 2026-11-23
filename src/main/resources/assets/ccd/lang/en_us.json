@@ -831,5 +831,12 @@
   "ccd.configuration.content.corrupting_fluid": "Corrupting Fluid",
   "ccd.configuration.content.corrupting_fluid.tooltip": "Enable this content. Disabling retains saved items, blocks and fluids, stops their functions and hides acquisition recipes. Restart the game or server to apply.",
   "ccd.configuration.content.smoking_fluid": "Smoking Fluid",
-  "ccd.configuration.content.smoking_fluid.tooltip": "Enable this content. Disabling retains saved items, blocks and fluids, stops their functions and hides acquisition recipes. Restart the game or server to apply."
+  "ccd.configuration.content.smoking_fluid.tooltip": "Enable this content. Disabling retains saved items, blocks and fluids, stops their functions and hides acquisition recipes. Restart the game or server to apply.",
+  "ccd.configuration.contentSection.transport": "Transport and Pipes",
+  "ccd.configuration.contentSection.storage": "Storage and Water Supply",
+  "ccd.configuration.contentSection.logistics": "Fluid Logistics",
+  "ccd.configuration.contentSection.tools": "Containers and Filters",
+  "ccd.configuration.contentSection.processing": "Airflow Processing and Fluids",
+  "ccd.configuration.rebirthName": "Easter Egg: Chinese Mod Title",
+  "ccd.configuration.rebirthName.tooltip": "Off by default. Changes the mod creative-tab title in Chinese to the alternate title. Gameplay and registry names are unchanged. Restart the game to apply."
 }
