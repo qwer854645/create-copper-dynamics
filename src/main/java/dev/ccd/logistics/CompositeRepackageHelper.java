@@ -124,33 +124,28 @@ public final class CompositeRepackageHelper extends PackageRepackageHelper {
         totals.add(new FluidAmount(fluid));
     }
 
-    private static List<BigItemStack> prepare(int order, List<ItemStack> fragments) {
-        InventorySummary itemTotals = new InventorySummary();
+    private List<BigItemStack> prepare(int order, List<ItemStack> fragments) {
         List<FluidAmount> fluidTotals = new ArrayList<>();
         PackageOrderWithCrafts context = null;
         for (ItemStack parcel : fragments) {
             var data = parcel.get(AllDataComponents.PACKAGE_ORDER_DATA);
             if (data.orderContext() != null && !data.orderContext().isEmpty()) context = data.orderContext();
-            var items = PackageItem.getContents(parcel);
-            for (int i = 0; i < items.getSlots(); i++) itemTotals.add(items.getStackInSlot(i));
             if (FluidPackageItem.isFluidPackage(parcel)) addFluid(fluidTotals, FluidPackageItem.contents(parcel));
             if (CompositePackageItem.isComposite(parcel)) for (FluidStack fluid : CompositePackageItem.fluids(parcel)) addFluid(fluidTotals, fluid);
         }
-        List<BigItemStack> items = itemTotals.getStacks().stream().map(e -> new BigItemStack(e.stack.copy(), e.count)).toList();
+        // Let Create perform recipe grouping and item packing without replacing its rules.
+        List<ItemStack> itemParcels = new ArrayList<>();
+        for (BigItemStack entry : super.repack(order, owner == null ? RandomSource.create(0) : owner.getLevel().random)) {
+            if (entry.count > 1_000 - itemParcels.size()) return List.of();
+            for (int i = 0; i < entry.count; i++) itemParcels.add(entry.stack.copyWithCount(1));
+        }
         int itemIndex = 0, fluidIndex = 0;
         List<BigItemStack> result = new ArrayList<>();
-        while (itemIndex < items.size() || fluidIndex < fluidTotals.size()) {
+        while (itemIndex < itemParcels.size() || fluidIndex < fluidTotals.size()) {
             // Native completeness checking supports fragment indices 0..999.
             if (result.size() == 1_000) return List.of();
-            ItemStackHandler slots = new ItemStackHandler(PackageItem.SLOTS);
-            for (int slot = 0; slot < slots.getSlots() && itemIndex < items.size(); slot++) {
-                BigItemStack entry = items.get(itemIndex);
-                int amount = Math.min(entry.count, entry.stack.getMaxStackSize());
-                if (amount <= 0) return List.of();
-                slots.setStackInSlot(slot, entry.stack.copyWithCount(amount));
-                entry.count -= amount;
-                if (entry.count == 0) itemIndex++;
-            }
+            ItemStack nativeParcel = itemIndex < itemParcels.size() ? itemParcels.get(itemIndex++) : ItemStack.EMPTY;
+            ItemStackHandler slots = nativeParcel.isEmpty() ? new ItemStackHandler(PackageItem.SLOTS) : PackageItem.getContents(nativeParcel);
             List<FluidStack> fluids = new ArrayList<>();
             int space = CompositePackageItem.FLUID_CAPACITY;
             while (fluidIndex < fluidTotals.size() && space > 0 && fluids.size() < CompositePackageItem.MAX_FLUID_TYPES) {
@@ -160,14 +155,20 @@ public final class CompositeRepackageHelper extends PackageRepackageHelper {
                 total.remaining -= amount; space -= amount;
                 if (total.remaining == 0) fluidIndex++;
             }
-            result.add(new BigItemStack(CompositePackageItem.containing(slots, fluids), 1));
+            ItemStack parcel = fluids.isEmpty() && !nativeParcel.isEmpty() ? nativeParcel.copy()
+                : CompositePackageItem.containing(slots, fluids);
+            if (!nativeParcel.isEmpty() && nativeParcel.has(AllDataComponents.PACKAGE_ORDER_DATA))
+                parcel.set(AllDataComponents.PACKAGE_ORDER_DATA, nativeParcel.get(AllDataComponents.PACKAGE_ORDER_DATA));
+            result.add(new BigItemStack(parcel, 1));
         }
         String address = PackageItem.getAddress(fragments.getFirst());
         for (int i = 0; i < result.size(); i++) {
             ItemStack parcel = result.get(i).stack;
             PackageItem.addAddress(parcel, address);
             boolean last = i == result.size() - 1;
-            PackageItem.setOrder(parcel, order, 0, true, i, last, last ? context : null);
+            var nativeData = parcel.get(AllDataComponents.PACKAGE_ORDER_DATA);
+            PackageItem.setOrder(parcel, order, 0, true, i, last,
+                nativeData != null && nativeData.orderContext() != null ? nativeData.orderContext() : last ? context : null);
         }
         return result;
     }

@@ -136,6 +136,32 @@ public final class FluidPackagingTests {
     }
 
     @GameTest(template = "empty")
+    public static void fluidRepackingPreservesNativeRecipeGroups(GameTestHelper h) {
+        var slots = new net.neoforged.neoforge.items.ItemStackHandler(PackageItem.SLOTS);
+        slots.setStackInSlot(0, new ItemStack(net.minecraft.world.item.Items.IRON_INGOT, 8));
+        slots.setStackInSlot(1, new ItemStack(net.minecraft.world.item.Items.REDSTONE, 4));
+        var context = com.simibubi.create.content.logistics.stockTicker.PackageOrderWithCrafts.singleRecipe(java.util.List.of(
+            new com.simibubi.create.content.logistics.BigItemStack(new ItemStack(net.minecraft.world.item.Items.IRON_INGOT), 2),
+            new com.simibubi.create.content.logistics.BigItemStack(new ItemStack(net.minecraft.world.item.Items.REDSTONE), 1)));
+        ItemStack itemParcel = PackageItem.containing(slots);
+        PackageItem.setOrder(itemParcel, 88, 0, true, 0, false, context);
+        ItemStack fluidParcel = FluidPackageItem.containingFluid(water(1000));
+        PackageItem.setOrder(fluidParcel, 88, 0, true, 1, true, null);
+        var nativeHelper = new PackageRepackageHelper();
+        var fluidHelper = new dev.ccd.logistics.CompositeRepackageHelper(null);
+        nativeHelper.addPackageFragment(itemParcel); nativeHelper.addPackageFragment(fluidParcel);
+        fluidHelper.addPackageFragment(itemParcel); fluidHelper.addPackageFragment(fluidParcel);
+        var expected = new java.util.ArrayList<net.minecraft.world.item.component.ItemContainerContents>();
+        for (var entry : nativeHelper.repack(88, net.minecraft.util.RandomSource.create(0)))
+            for (int i = 0; i < entry.count; i++) expected.add(entry.stack.get(com.simibubi.create.AllDataComponents.PACKAGE_CONTENTS));
+        var actual = new java.util.ArrayList<net.minecraft.world.item.component.ItemContainerContents>();
+        for (var entry : fluidHelper.repack(88, net.minecraft.util.RandomSource.create(0)))
+            for (int i = 0; i < entry.count; i++) actual.add(entry.stack.get(com.simibubi.create.AllDataComponents.PACKAGE_CONTENTS));
+        check(h, expected.equals(actual), "Fluid order changed native recipe item grouping");
+        h.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void packageAndUnpackAgainstCreateTank(GameTestHelper h) {
         BlockPos machine = new BlockPos(2, 1, 2);
         BlockPos tank = machine.north();
