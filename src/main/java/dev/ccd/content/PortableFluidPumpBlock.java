@@ -9,6 +9,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.InteractionResult;
 
 public final class PortableFluidPumpBlock extends VariableFlowPumpBlock {
+    private final java.util.Map<BlockState,net.minecraft.world.phys.shapes.VoxelShape> stableCollisions=new java.util.HashMap<>();
     public PortableFluidPumpBlock(Properties properties) { super(properties.dynamicShape()); }
     @Override public boolean isSmallCog(){return false;}
     @Override public boolean hasShaftTowards(net.minecraft.world.level.LevelReader level,BlockPos pos,BlockState state,net.minecraft.core.Direction side){
@@ -38,7 +39,10 @@ public final class PortableFluidPumpBlock extends VariableFlowPumpBlock {
         double top=15-2.2*net.minecraft.util.Mth.clamp(stroke,0,1);
         return net.minecraft.world.phys.shapes.Shapes.or(box(1,0,1,15,2,15),box(2,2,2,14,top,14));
     }
-    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){return orientedStrokeShape(state,0);}
+    @Override public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos,net.minecraft.world.phys.shapes.CollisionContext context){
+        var pose=state.setValue(SIGNAL,0);
+        synchronized(stableCollisions){return stableCollisions.computeIfAbsent(pose,key->orientedStrokeShape(key,0));}
+    }
     @Override public net.minecraft.world.phys.shapes.VoxelShape getInteractionShape(BlockState state,net.minecraft.world.level.BlockGetter level,BlockPos pos){return getShape(state,level,pos,net.minecraft.world.phys.shapes.CollisionContext.empty());}
     @Override public BlockState getRotatedBlockState(BlockState state,net.minecraft.core.Direction clickedFace) {
         return PumpOrientation.rotate(state,ROLL,clickedFace);
