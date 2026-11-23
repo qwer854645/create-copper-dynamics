@@ -35,13 +35,19 @@ public final class CCDPonderScenes {
         var s=begin(builder,"atomizer_output_filter","Selecting Atomizer Outputs");
         show(s,util,B,CopperDynamics.FLUID_ATOMIZER.get().defaultBlockState().setValue(FluidAtomizerBlock.FACING,Direction.SOUTH));
         water(s,B,3000);s.world().setKineticSpeed(util.select().position(B),64);
-        s.overlay().showFilterSlotInput(util.vector().centerOf(B.east()),Direction.EAST,60);
+        s.overlay().showFilterSlotInput(util.vector().of(3.01,1.5,2.25),Direction.EAST,60);
         s.world().setFilterData(util.select().position(B),FluidAtomizerBlockEntity.class,new ItemStack(Items.IRON_NUGGET));
         text(s,util,B,"Set a target item or an Item Filter on a side of the Atomizer");
         var depot=B.south(2);show(s,util,depot,AllBlocks.DEPOT.getDefaultState());
         s.world().createItemOnBeltLike(depot,Direction.NORTH,com.simibubi.create.AllItems.CRUSHED_IRON.asStack());
         text(s,util,depot,"Only recipes with a possible matching output are allowed; rejected inputs stay unchanged");
+        s.world().modifyBlockEntity(depot,com.simibubi.create.content.logistics.depot.DepotBlockEntity.class,be->be.getBehaviour(com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TYPE)
+            .handleProcessingOnAllItems(item->{var result=item.copy();result.stack=new ItemStack(Items.IRON_NUGGET,9);return com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TransportedResult.convertToAndLeaveHeld(java.util.List.of(result),null);}));
         text(s,util,depot,"Accepted recipes keep all byproducts and their original output chances");
+        s.world().setFilterData(util.select().position(B),FluidAtomizerBlockEntity.class,new ItemStack(Items.DIAMOND));
+        s.world().createItemOnBeltLike(depot,Direction.NORTH,com.simibubi.create.AllItems.CRUSHED_IRON.asStack());
+        s.overlay().showOutline(PonderPalette.RED,"rejected_input",util.select().position(depot),60);
+        s.idle(40);
         s.world().setFilterData(util.select().position(B),FluidAtomizerBlockEntity.class,ItemStack.EMPTY);
         text(s,util,B,"An empty filter allows all outputs; changing it restarts processing without switching the processing type");
         text(s,util,B,"Output filters do not restrict potion or entity effects");s.markAsFinished();
@@ -272,6 +278,9 @@ public final class CCDPonderScenes {
         var depot=new BlockPos(2,1,4); show(s,util,depot,AllBlocks.DEPOT.getDefaultState());
         s.world().createItemOnBeltLike(depot,Direction.NORTH,com.simibubi.create.AllItems.CRUSHED_IRON.asStack());
         text(s,util,depot,"Air currents passing through the Atomizer can process items in bulk");
+        s.world().modifyBlockEntity(depot,com.simibubi.create.content.logistics.depot.DepotBlockEntity.class,be->be.getBehaviour(com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TYPE)
+            .handleProcessingOnAllItems(item->{var result=item.copy();result.stack=new ItemStack(Items.IRON_NUGGET,9);return com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TransportedResult.convertToAndLeaveHeld(java.util.List.of(result),null);}));
+        s.idle(25);
         s.world().modifyBlock(B,state->state.setValue(FluidAtomizerBlock.POWERED,true),false);
         text(s,util,B,"A Redstone Signal stops atomizing without stopping the air current"); s.markAsFinished();
     }
