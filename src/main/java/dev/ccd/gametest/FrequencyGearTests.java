@@ -14,6 +14,24 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class FrequencyGearTests {
+    @GameTest(template="empty") public static void pipeFacesRejectAllCogHelpers(GameTestHelper h) throws Exception {
+        var pos=new BlockPos(3,3,3);var absolute=h.absolutePos(pos);
+        for(String helperName:java.util.List.of("SmallCogHelper","LargeCogHelper","IntegratedSmallCogHelper")){
+            var type=Class.forName("com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem$"+helperName);
+            var constructor=type.getDeclaredConstructor();constructor.setAccessible(true);
+            var helper=(net.createmod.catnip.placement.IPlacementHelper)constructor.newInstance();
+            for(var facing:Direction.values())for(int roll=0;roll<4;roll++){
+                var state=CopperDynamics.VARIABLE_FLOW_PUMP.get().defaultBlockState().setValue(VariableFlowPumpBlock.FACING,facing).setValue(VariableFlowPumpBlock.ROLL,roll);
+                h.setBlock(pos,state);
+                for(var side:java.util.List.of(facing,facing.getOpposite())){
+                    var hit=new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(absolute)
+                        .add(net.minecraft.world.phys.Vec3.atLowerCornerOf(side.getNormal()).scale(.5)),side,absolute,false);
+                    h.assertTrue(!helper.getOffset(null,h.getLevel(),state,absolute,hit).isSuccessful(),"Pipe face still previews cog: "+helperName+" "+facing+" roll="+roll);
+                }
+            }
+        }
+        h.succeed();
+    }
     @GameTest(template="empty") public static void pipeFacesCannotMesh(GameTestHelper h){
         var pos=new BlockPos(3,3,3);
         for(var facing:Direction.values())for(int roll=0;roll<4;roll++){
