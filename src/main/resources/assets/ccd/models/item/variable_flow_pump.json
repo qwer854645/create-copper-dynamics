@@ -1,7 +1,6 @@
 {
-  "format_version": "26.3",
-  "credit": "Made with Blockbench",
   "parent": "create:block/block",
+  "loader": "neoforge:composite",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "particle": "create:block/copper_underside",
@@ -10,1479 +9,1743 @@
     "gear": "ccd:block/variable_flow_pump",
     "gauge": "create:block/gauge"
   },
-  "elements": [
-    {
-      "name": "native_rim_connector_north",
-      "from": [
-        3.9,
-        3.9,
-        -3
-      ],
-      "to": [
-        12.1,
-        12.1,
-        4
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          8,
-          0
-        ]
+  "children": {
+    "0": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
       },
-      "faces": {
-        "east": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
+      "elements": [
+        {
+          "name": "native_rim_connector_north",
+          "from": [
+            3.9,
+            3.9,
+            -3
           ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            4,
-            2,
-            8,
-            0
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            4,
-            2,
-            8,
-            0
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            4,
-            0,
-            8,
-            2
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        }
-      }
-    },
-    {
-      "name": "native_rim_north",
-      "from": [
-        3,
-        3,
-        -3
-      ],
-      "to": [
-        13,
-        13,
-        -1
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "east": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "south": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        }
-      }
-    },
-    {
-      "name": "native_rim_connector_south",
-      "from": [
-        3.9,
-        3.9,
-        12
-      ],
-      "to": [
-        12.1,
-        12.1,
-        19
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0,
-          8,
-          0
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 90,
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            4,
-            8,
-            8,
-            6
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            4,
-            6,
-            8,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#pipe"
-        }
-      }
-    },
-    {
-      "name": "native_rim_south",
-      "from": [
-        3,
-        3,
-        17
-      ],
-      "to": [
-        13,
-        13,
-        19
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          8,
-          28,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "east": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "texture": "#pipe"
-        },
-        "south": {
-          "uv": [
-            11,
-            11,
-            16,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "west": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "texture": "#pipe"
-        },
-        "up": {
-          "uv": [
-            9.5,
-            16,
-            10.5,
-            11
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        },
-        "down": {
-          "uv": [
-            10.5,
-            11,
-            9.5,
-            16
-          ],
-          "rotation": 270,
-          "texture": "#pipe"
-        }
-      }
-    },
-    {
-      "name": "signal_gauge_head",
-      "from": [
-        14.175,
-        4,
-        4
-      ],
-      "to": [
-        14.175,
-        12,
-        12
-      ],
-      "faces": {
-        "east": {
-          "uv": [
-            8,
-            0,
-            12,
+          "to": [
+            12.1,
+            12.1,
             4
           ],
-          "texture": "#gauge"
+          "faces": {
+            "east": {
+              "uv": [
+                4,
+                0,
+                8,
+                3.5
+              ],
+              "rotation": 90,
+              "texture": "#pipe"
+            },
+            "west": {
+              "uv": [
+                4,
+                3.5,
+                8,
+                0
+              ],
+              "rotation": 90,
+              "texture": "#pipe"
+            },
+            "up": {
+              "uv": [
+                4,
+                3.5,
+                8,
+                0
+              ],
+              "rotation": 180,
+              "texture": "#pipe"
+            },
+            "down": {
+              "uv": [
+                4,
+                0,
+                8,
+                3.5
+              ],
+              "rotation": 180,
+              "texture": "#pipe"
+            }
+          },
+          "rotation": {
+            "angle": 0,
+            "axis": "y",
+            "origin": [
+              0,
+              8,
+              0
+            ]
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "signal_gauge_head",
-      "from": [
-        13.6,
-        5.2,
-        5.2
-      ],
-      "to": [
-        14.6,
-        6.3,
-        6.3
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
+    "1": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "native_rim_north",
+          "from": [
+            3,
+            3,
+            -3
           ],
-          "texture": "#gauge"
-        },
-        "east": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "south": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "west": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "up": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "down": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "texture": "#gauge"
-        }
-      }
-    },
-    {
-      "name": "signal_gauge_head",
-      "from": [
-        12.1,
-        3,
-        3
-      ],
-      "to": [
-        14.1,
-        13,
-        13
-      ],
-      "faces": {
-        "north": {
-          "uv": [
+          "to": [
             13,
-            5,
-            14,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "east": {
-          "uv": [
-            9,
-            5,
-            14,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "south": {
-          "uv": [
             13,
-            5,
-            14,
-            10
+            -1
           ],
-          "texture": "#gauge"
-        },
-        "west": {
-          "uv": [
-            9,
-            5,
-            14,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "up": {
-          "uv": [
-            9,
-            5,
-            10,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "down": {
-          "uv": [
-            9,
-            5,
-            10,
-            10
-          ],
-          "texture": "#gauge"
+          "faces": {
+            "north": {
+              "uv": [
+                11,
+                11,
+                16,
+                16
+              ],
+              "texture": "#pipe"
+            },
+            "east": {
+              "uv": [
+                7.5,
+                0.5,
+                6.5,
+                5.5
+              ],
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                11,
+                11,
+                16,
+                16
+              ],
+              "texture": "#pipe"
+            },
+            "west": {
+              "uv": [
+                6.5,
+                0.5,
+                7.5,
+                5.5
+              ],
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                7.5,
+                0.5,
+                6.5,
+                5.5
+              ],
+              "rotation": 270,
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                6.5,
+                0.5,
+                7.5,
+                5.5
+              ],
+              "rotation": 270,
+              "texture": "#gear"
+            }
+          },
+          "rotation": {
+            "angle": 0,
+            "axis": "y",
+            "origin": [
+              8,
+              28,
+              8
+            ]
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "signal_gauge_head",
-      "from": [
-        1.825,
-        4,
-        4
-      ],
-      "to": [
-        1.825,
-        12,
-        12
-      ],
-      "faces": {
-        "west": {
-          "uv": [
-            8,
-            0,
-            12,
+    "2": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "native_rim_connector_south",
+          "from": [
+            3.9,
+            3.9,
+            12
+          ],
+          "to": [
+            12.1,
+            12.1,
+            19
+          ],
+          "faces": {
+            "east": {
+              "uv": [
+                4,
+                4.5,
+                8,
+                8
+              ],
+              "rotation": 90,
+              "texture": "#pipe"
+            },
+            "west": {
+              "uv": [
+                4,
+                8,
+                8,
+                4.5
+              ],
+              "rotation": 90,
+              "texture": "#pipe"
+            },
+            "up": {
+              "uv": [
+                4,
+                8,
+                8,
+                4.5
+              ],
+              "rotation": 180,
+              "texture": "#pipe"
+            },
+            "down": {
+              "uv": [
+                4,
+                4.5,
+                8,
+                8
+              ],
+              "rotation": 180,
+              "texture": "#pipe"
+            }
+          },
+          "rotation": {
+            "angle": 0,
+            "axis": "y",
+            "origin": [
+              0,
+              8,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    "3": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "native_rim_south",
+          "from": [
+            3,
+            3,
+            17
+          ],
+          "to": [
+            13,
+            13,
+            19
+          ],
+          "faces": {
+            "north": {
+              "uv": [
+                11,
+                11,
+                16,
+                16
+              ],
+              "texture": "#pipe"
+            },
+            "east": {
+              "uv": [
+                7.5,
+                0.5,
+                6.5,
+                5.5
+              ],
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                11,
+                11,
+                16,
+                16
+              ],
+              "texture": "#pipe"
+            },
+            "west": {
+              "uv": [
+                6.5,
+                0.5,
+                7.5,
+                5.5
+              ],
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                7.5,
+                0.5,
+                6.5,
+                5.5
+              ],
+              "rotation": 270,
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                6.5,
+                0.5,
+                7.5,
+                5.5
+              ],
+              "rotation": 270,
+              "texture": "#gear"
+            }
+          },
+          "rotation": {
+            "angle": 0,
+            "axis": "y",
+            "origin": [
+              8,
+              28,
+              8
+            ]
+          }
+        }
+      ]
+    },
+    "4": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_head",
+          "from": [
+            14.175,
+            4,
             4
           ],
-          "texture": "#gauge"
+          "to": [
+            14.175,
+            12,
+            12
+          ],
+          "faces": {
+            "east": {
+              "uv": [
+                8,
+                0,
+                12,
+                4
+              ],
+              "texture": "#gauge"
+            }
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "signal_gauge_head",
-      "from": [
-        1.4,
-        5.2,
-        9.7
-      ],
-      "to": [
-        2.4,
-        6.3,
-        10.8
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
+    "5": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_head",
+          "from": [
+            13.6,
+            5.2,
+            5.2
           ],
-          "texture": "#gauge"
-        },
-        "east": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
+          "to": [
+            14.6,
+            6.3,
+            6.3
           ],
-          "texture": "#gauge"
-        },
-        "south": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "west": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "up": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "down": {
-          "uv": [
-            0,
-            9.5,
-            0.5,
-            10
-          ],
-          "rotation": 180,
-          "texture": "#gauge"
+          "faces": {
+            "north": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "east": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "south": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "west": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "up": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "down": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            }
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "signal_gauge_head",
-      "from": [
-        1.9,
-        3,
-        3
-      ],
-      "to": [
-        3.9,
-        13,
-        13
-      ],
-      "faces": {
-        "north": {
-          "uv": [
+    "6": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_head",
+          "from": [
+            12.1,
+            3,
+            3
+          ],
+          "to": [
+            14.1,
             13,
-            5,
-            14,
-            10
+            13
           ],
-          "texture": "#gauge"
-        },
-        "east": {
-          "uv": [
-            9,
-            5,
-            14,
-            10
+          "faces": {
+            "north": {
+              "uv": [
+                13,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "east": {
+              "uv": [
+                9,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "south": {
+              "uv": [
+                13,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "west": {
+              "uv": [
+                9,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "up": {
+              "uv": [
+                9,
+                5,
+                10,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "down": {
+              "uv": [
+                9,
+                5,
+                10,
+                10
+              ],
+              "texture": "#gauge"
+            }
+          }
+        }
+      ]
+    },
+    "7": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_head",
+          "from": [
+            1.825,
+            4,
+            4
           ],
-          "texture": "#gauge"
-        },
-        "south": {
-          "uv": [
+          "to": [
+            1.825,
+            12,
+            12
+          ],
+          "faces": {
+            "west": {
+              "uv": [
+                8,
+                0,
+                12,
+                4
+              ],
+              "texture": "#gauge"
+            }
+          }
+        }
+      ]
+    },
+    "8": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_head",
+          "from": [
+            1.4,
+            5.2,
+            9.7
+          ],
+          "to": [
+            2.4,
+            6.3,
+            10.8
+          ],
+          "faces": {
+            "north": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "east": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "south": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "west": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "up": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "down": {
+              "uv": [
+                0,
+                9.5,
+                0.5,
+                10
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            }
+          }
+        }
+      ]
+    },
+    "9": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_head",
+          "from": [
+            1.9,
+            3,
+            3
+          ],
+          "to": [
+            3.9,
             13,
-            5,
-            14,
-            10
+            13
           ],
-          "texture": "#gauge"
-        },
-        "west": {
-          "uv": [
-            9,
-            5,
-            14,
-            10
-          ],
-          "texture": "#gauge"
-        },
-        "up": {
-          "uv": [
-            9,
-            5,
-            10,
-            10
-          ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "down": {
-          "uv": [
-            9,
-            5,
-            10,
-            10
-          ],
-          "rotation": 180,
-          "texture": "#gauge"
+          "faces": {
+            "north": {
+              "uv": [
+                13,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "east": {
+              "uv": [
+                9,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "south": {
+              "uv": [
+                13,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "west": {
+              "uv": [
+                9,
+                5,
+                14,
+                10
+              ],
+              "texture": "#gauge"
+            },
+            "up": {
+              "uv": [
+                9,
+                5,
+                10,
+                10
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "down": {
+              "uv": [
+                9,
+                5,
+                10,
+                10
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            }
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "signal_gauge_needle",
-      "from": [
-        13.85,
-        5.25,
-        5.75
-      ],
-      "to": [
-        14.55,
-        6.25,
-        10.75
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            13.5,
-            4,
-            14,
-            4.5
+    "10": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_needle",
+          "from": [
+            13.85,
+            5.25,
+            5.75
           ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "east": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
+          "to": [
+            14.55,
+            6.25,
+            10.75
           ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "south": {
-          "uv": [
-            15.5,
-            4,
-            16,
-            4.5
-          ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "west": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
-          ],
-          "texture": "#gauge"
-        },
-        "up": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
-          ],
-          "rotation": 90,
-          "texture": "#gauge"
-        },
-        "down": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
-          ],
-          "rotation": 270,
-          "texture": "#gauge"
+          "faces": {
+            "north": {
+              "uv": [
+                13.5,
+                4,
+                14,
+                4.5
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "east": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "south": {
+              "uv": [
+                15.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "west": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "texture": "#gauge"
+            },
+            "up": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 90,
+              "texture": "#gauge"
+            },
+            "down": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 270,
+              "texture": "#gauge"
+            }
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "signal_gauge_needle",
-      "from": [
-        1.45,
-        5.25,
-        5.25
-      ],
-      "to": [
-        2.15,
-        6.25,
-        10.25
-      ],
-      "faces": {
-        "north": {
-          "uv": [
-            15.5,
-            4,
-            16,
-            4.5
+    "11": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "signal_gauge_needle",
+          "from": [
+            1.45,
+            5.25,
+            5.25
           ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "east": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
+          "to": [
+            2.15,
+            6.25,
+            10.25
           ],
-          "texture": "#gauge"
-        },
-        "south": {
-          "uv": [
-            13.5,
-            4,
-            14,
-            4.5
-          ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "west": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
-          ],
-          "rotation": 180,
-          "texture": "#gauge"
-        },
-        "up": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
-          ],
-          "rotation": 270,
-          "texture": "#gauge"
-        },
-        "down": {
-          "uv": [
-            13.5,
-            4,
-            16,
-            4.5
-          ],
-          "rotation": 90,
-          "texture": "#gauge"
+          "faces": {
+            "north": {
+              "uv": [
+                15.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "east": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "texture": "#gauge"
+            },
+            "south": {
+              "uv": [
+                13.5,
+                4,
+                14,
+                4.5
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "west": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 180,
+              "texture": "#gauge"
+            },
+            "up": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 270,
+              "texture": "#gauge"
+            },
+            "down": {
+              "uv": [
+                13.5,
+                4,
+                16,
+                4.5
+              ],
+              "rotation": 90,
+              "texture": "#gauge"
+            }
+          }
         }
-      }
+      ]
     },
-    {
-      "name": "left_copper_housing",
-      "from": [
-        2,
-        2,
-        2
-      ],
-      "to": [
-        5,
-        14,
-        14
-      ],
-      "faces": {
-        "north": {
-          "uv": [
+    "12": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "left_copper_housing",
+          "from": [
+            2,
+            2,
+            2
+          ],
+          "to": [
+            5,
+            14,
+            14
+          ],
+          "faces": {
+            "north": {
+              "uv": [
+                11,
+                2,
+                14,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "east": {
+              "uv": [
+                2,
+                2,
+                14,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "south": {
+              "uv": [
+                14,
+                2,
+                11,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "west": {
+              "uv": [
+                2,
+                2,
+                14,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "up": {
+              "uv": [
+                14,
+                2,
+                11,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "down": {
+              "uv": [
+                14,
+                2,
+                11,
+                14
+              ],
+              "texture": "#copper"
+            }
+          }
+        }
+      ]
+    },
+    "13": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "name": "right_copper_housing",
+          "from": [
             11,
             2,
+            2
+          ],
+          "to": [
+            14,
             14,
             14
           ],
-          "texture": "#copper"
-        },
-        "east": {
-          "uv": [
-            2,
-            2,
-            14,
-            14
+          "faces": {
+            "north": {
+              "uv": [
+                2,
+                2,
+                5,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "east": {
+              "uv": [
+                2,
+                2,
+                14,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "south": {
+              "uv": [
+                5,
+                2,
+                2,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "west": {
+              "uv": [
+                2,
+                2,
+                14,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "up": {
+              "uv": [
+                5,
+                2,
+                2,
+                14
+              ],
+              "texture": "#copper"
+            },
+            "down": {
+              "uv": [
+                5,
+                2,
+                2,
+                14
+              ],
+              "texture": "#copper"
+            }
+          },
+          "rotation": {
+            "angle": 0,
+            "axis": "y",
+            "origin": [
+              0.25,
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    "14": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "from": [
+            5.05,
+            0.9,
+            5.5
           ],
-          "texture": "#copper"
+          "to": [
+            10.95,
+            15.1,
+            10.5
+          ],
+          "faces": {
+            "east": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "rotation": 180,
+              "texture": "#gear"
+            }
+          }
+        }
+      ],
+      "transform": {
+        "rotation": {
+          "x": 164
         },
-        "south": {
-          "uv": [
-            14,
-            2,
+        "origin": "center"
+      }
+    },
+    "15": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "from": [
+            5.05,
+            5.5,
+            0.9
+          ],
+          "to": [
+            10.95,
+            10.5,
+            15.1
+          ],
+          "faces": {
+            "north": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "texture": "#gear"
+            },
+            "east": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            }
+          }
+        }
+      ],
+      "transform": {
+        "rotation": {
+          "x": -151
+        },
+        "origin": "center"
+      }
+    },
+    "16": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "from": [
+            5.05,
+            5.5,
+            0.9
+          ],
+          "to": [
+            10.95,
+            10.5,
+            15.1
+          ],
+          "faces": {
+            "north": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "texture": "#gear"
+            },
+            "east": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            }
+          }
+        }
+      ],
+      "transform": {
+        "rotation": {
+          "x": 164
+        },
+        "origin": "center"
+      }
+    },
+    "17": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "from": [
+            5.05,
+            0.9,
+            5.5
+          ],
+          "to": [
+            10.95,
+            15.1,
+            10.5
+          ],
+          "faces": {
+            "east": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                1,
+                6.5,
+                8,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                10,
+                9,
+                13,
+                11.5
+              ],
+              "rotation": 180,
+              "texture": "#gear"
+            }
+          }
+        }
+      ],
+      "transform": {
+        "rotation": {
+          "x": -151
+        },
+        "origin": "center"
+      }
+    },
+    "18": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            6.5,
+            -1
+          ],
+          "to": [
             11,
-            14
+            9.5,
+            17
           ],
-          "texture": "#copper"
+          "faces": {
+            "north": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "east": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "rotation": 180,
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            }
+          }
+        }
+      ],
+      "transform": {
+        "rotation": {
+          "x": -128.5
         },
-        "west": {
-          "uv": [
-            2,
-            2,
-            14,
-            14
+        "origin": "center"
+      }
+    },
+    "19": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            -1,
+            6.5
           ],
-          "texture": "#copper"
-        },
-        "up": {
-          "uv": [
-            14,
-            2,
+          "to": [
             11,
-            14
+            17,
+            9.5
           ],
-          "texture": "#copper"
+          "faces": {
+            "north": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 270,
+              "texture": "#gear"
+            },
+            "east": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "rotation": 180,
+              "texture": "#gear"
+            }
+          }
+        }
+      ],
+      "transform": {
+        "rotation": {
+          "x": -128.5
         },
-        "down": {
-          "uv": [
-            14,
-            2,
+        "origin": "center"
+      }
+    },
+    "20": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
+      },
+      "elements": [
+        {
+          "from": [
+            5,
+            6.5,
+            -1
+          ],
+          "to": [
             11,
-            14
+            9.5,
+            17
           ],
-          "texture": "#copper"
+          "faces": {
+            "north": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "east": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "rotation": 180,
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            }
+          }
         }
+      ],
+      "transform": {
+        "rotation": {
+          "x": -173.5
+        },
+        "origin": "center"
       }
     },
-    {
-      "name": "right_copper_housing",
-      "from": [
-        11,
-        2,
-        2
-      ],
-      "to": [
-        14,
-        14,
-        14
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          0.25,
-          0,
-          0
-        ]
+    "21": {
+      "parent": "minecraft:block/block",
+      "textures": {
+        "particle": "create:block/copper_underside",
+        "copper": "create:block/copper_underside",
+        "pipe": "create:block/pipes",
+        "gear": "ccd:block/variable_flow_pump",
+        "gauge": "create:block/gauge"
       },
-      "faces": {
-        "north": {
-          "uv": [
-            2,
-            2,
+      "elements": [
+        {
+          "from": [
             5,
-            14
+            -1,
+            6.5
           ],
-          "texture": "#copper"
-        },
-        "east": {
-          "uv": [
-            2,
-            2,
-            14,
-            14
+          "to": [
+            11,
+            17,
+            9.5
           ],
-          "texture": "#copper"
-        },
-        "south": {
-          "uv": [
-            5,
-            2,
-            2,
-            14
-          ],
-          "texture": "#copper"
-        },
-        "west": {
-          "uv": [
-            2,
-            2,
-            14,
-            14
-          ],
-          "texture": "#copper"
-        },
-        "up": {
-          "uv": [
-            5,
-            2,
-            2,
-            14
-          ],
-          "texture": "#copper"
-        },
-        "down": {
-          "uv": [
-            5,
-            2,
-            2,
-            14
-          ],
-          "texture": "#copper"
+          "faces": {
+            "north": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 270,
+              "texture": "#gear"
+            },
+            "east": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "south": {
+              "uv": [
+                0,
+                9,
+                9,
+                12
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "west": {
+              "uv": [
+                0,
+                6.5,
+                9,
+                8
+              ],
+              "rotation": 90,
+              "texture": "#gear"
+            },
+            "up": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "texture": "#gear"
+            },
+            "down": {
+              "uv": [
+                10,
+                6.5,
+                13,
+                8
+              ],
+              "rotation": 180,
+              "texture": "#gear"
+            }
+          }
         }
-      }
-    },
-    {
-      "from": [
-        4.55,
-        0.9,
-        5.5
       ],
-      "to": [
-        11.45,
-        15.1,
-        10.5
-      ],
-      "rotation": {
-        "angle": -22.5,
-        "axis": "x",
-        "origin": [
-          5.035,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
+      "transform": {
+        "rotation": {
+          "x": -173.5
         },
-        "west": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "up": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        4.55,
-        5.5,
-        0.9
-      ],
-      "to": [
-        11.45,
-        10.5,
-        15.1
-      ],
-      "rotation": {
-        "angle": 22.5,
-        "axis": "x",
-        "origin": [
-          8.035,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "texture": "#gear"
-        },
-        "east": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "south": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "texture": "#gear"
-        },
-        "west": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        4.55,
-        5.5,
-        0.9
-      ],
-      "to": [
-        11.45,
-        10.5,
-        15.1
-      ],
-      "rotation": {
-        "angle": -22.5,
-        "axis": "x",
-        "origin": [
-          5.035,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "texture": "#gear"
-        },
-        "east": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "south": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "texture": "#gear"
-        },
-        "west": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        4.55,
-        0.9,
-        5.5
-      ],
-      "to": [
-        11.45,
-        15.1,
-        10.5
-      ],
-      "rotation": {
-        "angle": 22.5,
-        "axis": "x",
-        "origin": [
-          5.035,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "east": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "west": {
-          "uv": [
-            1,
-            6.5,
-            8,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "up": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            10,
-            9,
-            13.5,
-            11.5
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        4.5,
-        6.5,
-        -1
-      ],
-      "to": [
-        11.5,
-        9.5,
-        17
-      ],
-      "rotation": {
-        "angle": 45,
-        "axis": "x",
-        "origin": [
-          8,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "east": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "south": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "west": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        },
-        "up": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        4.5,
-        -1,
-        6.5
-      ],
-      "to": [
-        11.5,
-        17,
-        9.5
-      ],
-      "rotation": {
-        "angle": 45,
-        "axis": "x",
-        "origin": [
-          5,
-          8,
-          8
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 270,
-          "texture": "#gear"
-        },
-        "east": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "south": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "west": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "up": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        4.5,
-        6.5,
-        -1
-      ],
-      "to": [
-        11.5,
-        9.5,
-        17
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          -3,
-          0,
-          0
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "east": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "south": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "west": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        },
-        "up": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        }
-      }
-    },
-    {
-      "from": [
-        4.5,
-        -1,
-        6.5
-      ],
-      "to": [
-        11.5,
-        17,
-        9.5
-      ],
-      "rotation": {
-        "angle": 0,
-        "axis": "y",
-        "origin": [
-          -3,
-          0,
-          0
-        ]
-      },
-      "faces": {
-        "north": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 270,
-          "texture": "#gear"
-        },
-        "east": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "south": {
-          "uv": [
-            0,
-            9,
-            9,
-            12.5
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "west": {
-          "uv": [
-            0,
-            6.5,
-            9,
-            8
-          ],
-          "rotation": 90,
-          "texture": "#gear"
-        },
-        "up": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "texture": "#gear"
-        },
-        "down": {
-          "uv": [
-            10,
-            6.5,
-            13.5,
-            8
-          ],
-          "rotation": 180,
-          "texture": "#gear"
-        }
+        "origin": "center"
       }
     }
+  },
+  "item_render_order": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21"
   ]
 }
