@@ -11,8 +11,7 @@ public final class CCDFeatures {
     private CCDFeatures() {}
     public static final Map<String, ModConfigSpec.BooleanValue> CONTENT = new LinkedHashMap<>();
     public static final java.util.Set<String> DEFAULT_DISABLED = java.util.Set.of(
-        "turning_booster_pump", "vertical_turning_booster_pump", "buffer_pump",
-        "portable_fluid_pump", "flow_meter", "base_fluids",
+        "base_fluids",
         "nuclear_fluids", "nether_industry_fluids", "more_catalysts_fluids");
     private static volatile Map<String, Boolean> remote = Map.of();
     public enum CompatFluidMode { AUTO, ENABLED, DISABLED }
@@ -34,7 +33,7 @@ public final class CCDFeatures {
         Map.entry("corrupting_fluid","more_catalysts_fluids"));
     static {
         var builder = new ModConfigSpec.Builder();
-        builder.comment("Selected advanced pump variants, the flow meter and base processing fluids are disabled by default. The omnidirectional pump is enabled.",
+        builder.comment("All machines and tools are enabled by default. Base processing fluids are disabled by default.",
             "Addon fluid categories default to AUTO: enabled when their processing addon is loaded.",
             "Super Lava, Powder Snow fluid support and Quicksand have separate switches enabled by default. Other devices remain enabled.",
             "Restart the game/server after editing. Multiplayer uses the server's content settings.",

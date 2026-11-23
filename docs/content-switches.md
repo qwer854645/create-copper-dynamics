@@ -1,6 +1,6 @@
 # 独立内容开关
 
-配置文件：`config/ccd-content.toml`。45 个内容选项，无总开关。设备和工具独立控制；流体按下述类别控制。两种转向增压泵、缓存泵、便携泵、调频泵和流量计共 6 项默认 `false`；万向泵默认 `true`。修改后重启游戏或服务器，联机以服务端为准。
+配置文件：`config/ccd-content.toml`。44 个内容选项，无总开关。所有现有机器和工具默认开启，设备独立控制；流体按下述类别控制。调频泵已删除。修改后重启游戏或服务器，联机以服务端为准。已有配置中的显式关闭值不会被新默认值覆盖。
 
 文件按 `content.transport`、`content.storage`、`content.logistics`、`content.tools`、`content.processing`、`content.fluids` 分段。流体配置重写后，旧 processing 中的逐流体开关不再读取；不增加旧配置迁移逻辑。
 
