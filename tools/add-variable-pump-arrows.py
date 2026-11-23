@@ -1,17 +1,23 @@
-"""Approved nine-pixel triangles on the upper copper housings, pointing to local -Z."""
+"""Pixel-aligned triangles on three-pixel-wide copper housings, pointing to local -Z."""
 import json,importlib.util
 from pathlib import Path
 from PIL import Image
 root=Path(__file__).resolve().parents[1]
 assets=root/'src/main/resources/assets/ccd'
 texture=assets/'textures/block/variable_flow_pump_outlet_arrow.png'
-Image.open(root/'outputs/variable-pump-arrows/triangle-arrow.png').transpose(Image.Transpose.ROTATE_90).save(texture)
+old=Image.open(texture).convert('RGBA')
+ink=next(pixel for pixel in old.getdata() if pixel[3])
+arrow=Image.new('RGBA',(3,3),(0,0,0,0))
+for z,row in enumerate(['.#.','###','###']):
+    for x,pixel in enumerate(row):
+        if pixel=='#':arrow.putpixel((x,z),ink)
+arrow.save(texture)
 for relative in ['models/block/variable_flow_pump/body.json','models/item/variable_flow_pump.json']:
     p=assets/relative;d=json.loads(p.read_text())
     d['textures']['outlet_mark']='ccd:block/variable_flow_pump_outlet_arrow'
     d['elements']=[e for e in d['elements'] if not e.get('name','').startswith('outlet_arrow_')]
     for x in [3.5,12.5]:
-        d['elements'].append({'name':f'outlet_arrow_{x}_up','from':[x-1.25,14.02,7.25],'to':[x+1.25,14.02,8.75],
+        d['elements'].append({'name':f'outlet_arrow_{x}_up','from':[x-1.5,14.02,7],'to':[x+1.5,14.02,10],
             'faces':{'up':{'uv':[0,0,16,16],'texture':'#outlet_mark'}}})
     d['render_type']='minecraft:cutout_mipped'
     p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
