@@ -17,29 +17,18 @@ shutil.copy2(downloads/'glass_of_tank_blaze_burner.png',assets/'textures/block/g
 jar=next((Path.home()/'.gradle/caches/modules-2/files-2.1/com.simibubi.create/create-1.21.1/6.0.10-280').rglob('*-slim.jar'))
 with ZipFile(jar) as z:
     blaze=json.loads(z.read('assets/create/models/block/blaze_burner/blaze/idle.json'))
-    # Keep native UVs, fit the same upper-space transform used by the runtime renderer.
-    for e in blaze['elements']:
-        for k in ['from','to']:e[k][1]=4+e[k][1]*11/16
-        if 'rotation' in e:e['rotation']['origin'][1]=4+e['rotation']['origin'][1]*11/16
+    # Native idle head: no scaling/translation; unlit item matches the world idle state.
     (assets/'models/block/tank_blaze_burner/item_blaze.json').write_text(json.dumps(blaze,indent=2)+'\n')
-    # Include all native blaze geometry (head plus both rod groups), excluding its old cage.
+    # Keep only the native idle head from the item OBJ; rods are a burning-state visual.
     obj=z.read('assets/create/models/block/blaze_burner/item.obj').decode()
-    lines=[];material=None
+    lines=[];material=None;group=''
     for line in obj.splitlines():
         if line.startswith('mtllib '):line='mtllib create:models/block/blaze_burner/item.mtl'
-        if line.startswith('v '):
-            x,y,zz=map(float,line.split()[1:]);line=f'v {x:.6f} {4/16+y*11/16:.6f} {zz:.6f}'
+        if line.startswith('o '):group=line.split()[1]
         if line.startswith('usemtl '):material=line.split()[1]
-        if line.startswith('f ') and material!='m_1':continue
+        if line.startswith('f ') and (material!='m_1' or group!='cube'):continue
         lines.append(line)
     (assets/'models/block/tank_blaze_burner/item_blaze.obj').write_text('\n'.join(lines)+'\n')
-    rods=[];group=''
-    for line in lines:
-        if line.startswith('o '):group=line.split()[1]
-        if line.startswith('f ') and group not in ('cube2','cube3'):continue
-        rods.append(line)
-    (assets/'models/block/tank_blaze_burner/idle_rods.obj').write_text('\n'.join(rods)+'\n')
-    (assets/'models/block/tank_blaze_burner/idle_rods.json').write_text(json.dumps({'loader':'neoforge:obj','flip_v':True,'model':'ccd:models/block/tank_blaze_burner/idle_rods.obj','textures':{'0':'create:block/blaze_heater_brazier','1':'create:block/blaze_idle'}},indent=2)+'\n')
     (assets/'models/block/tank_blaze_burner/item_blaze.json').write_text(json.dumps({'parent':'minecraft:block/block','loader':'neoforge:obj','flip_v':True,'model':'ccd:models/block/tank_blaze_burner/item_blaze.obj','textures':{'0':'create:block/blaze_heater_brazier','1':'create:block/blaze_idle'}},indent=2)+'\n')
     old=json.loads((assets/'models/item/tank_blaze_burner.json').read_text())
     item={'parent':'minecraft:block/block','loader':'neoforge:composite','render_type':'minecraft:cutout_mipped',
