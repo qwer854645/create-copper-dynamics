@@ -35,6 +35,14 @@ public final class SmartTankClusterInventory implements IFluidHandler {
     public long amount() { var view = snapshot(); return view == null ? 0 : view.amount; }
     public int capacity() { var view = snapshot(); return view == null ? 0 : view.capacity; }
     public int kinds() { var view = snapshot(); return view == null ? 0 : view.kinds; }
+    /** Independent planning state with the same shared capacity and fluid-kind limit. */
+    @Nullable public SmartTankInventory planningCopy() {
+        var view = snapshot();
+        if (view == null) return null;
+        var copy = new SmartTankInventory(() -> view.capacity(), () -> CCDConfig.SMART_TANK_MAX_FLUIDS.get(), () -> {});
+        copy.absorbOwned(view.fluids());
+        return copy;
+    }
     @Override public int getTanks() {
         var view = snapshot();
         return view == null ? 0 : view.fluids.size() + (view.kinds < CCDConfig.SMART_TANK_MAX_FLUIDS.get() ? 1 : 0);

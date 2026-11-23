@@ -29,6 +29,21 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder(CopperDynamics.ID)
 @PrefixGameTestTemplate(false)
 public final class FluidPackagingTests {
+    @GameTest(template="empty") public static void sharedTankBatchCapacityIsReservedOnce(GameTestHelper h) {
+        var pos=new BlockPos(2,1,2);
+        h.setBlock(pos.north(),CopperDynamics.SMART_FLUID_TANK.get());
+        h.setBlock(pos,CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING,Direction.SOUTH));
+        h.runAfterDelay(3,()->{
+            var be=(FluidPackagerBlockEntity)h.getBlockEntity(pos);
+            var target=be.targetFluidHandler();
+            var fluids=java.util.List.of(water(750),new FluidStack(Fluids.LAVA,750));
+            var box=dev.ccd.content.CompositePackageItem.containing(new net.neoforged.neoforge.items.ItemStackHandler(PackageItem.SLOTS),fluids);
+            check(h,be.unwrapBox(box,true),"Empty dynamic tank should allow multiple fluid kinds");
+            target.fill(water(target.getTankCapacity(0)-1000),FluidAction.EXECUTE);
+            check(h,!be.unwrapBox(box,true),"Shared free capacity was reserved more than once");
+            h.succeed();
+        });
+    }
     private static FluidStack water(int amount) { return new FluidStack(Fluids.WATER, amount); }
     private static void check(GameTestHelper helper, boolean condition, String message) { helper.assertTrue(condition, message); }
 

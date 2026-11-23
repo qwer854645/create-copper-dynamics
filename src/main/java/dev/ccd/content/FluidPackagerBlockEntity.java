@@ -293,8 +293,8 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
             hasItems |= !rest.isEmpty();
         }
         var target = targetFluidHandler();
-        FluidStack[] reserved = target == null ? new FluidStack[0] : new FluidStack[target.getTanks()];
-        for (int tank = 0; tank < reserved.length; tank++) reserved[tank] = target.getFluidInTank(tank).copy();
+        if (simulate && targetItems == null && !dev.ccd.logistics.FluidBatchPlanning.fits(
+            level, targetFluidPos(), facing, CompositePackageItem.fluids(box))) return box.copy();
         var fluids = new java.util.ArrayList<FluidStack>();
         for (FluidStack fluid : CompositePackageItem.fluids(box)) {
             // An item destination selects parcel separation; a fluid-only destination
@@ -312,18 +312,6 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
                     }
                 }
                 continue;
-            }
-            if (simulate && target != null) {
-                int needed = fluid.getAmount();
-                for (int tank = 0; tank < reserved.length && needed > 0; tank++) {
-                    var stored = reserved[tank];
-                    if (!target.isFluidValid(tank, fluid) || !stored.isEmpty()
-                        && !FluidStack.isSameFluidSameComponents(stored, fluid)) continue;
-                    int amount = Math.min(needed, Math.max(0, target.getTankCapacity(tank) - stored.getAmount()));
-                    if (amount > 0) reserved[tank] = fluid.copyWithAmount(stored.getAmount() + amount);
-                    needed -= amount;
-                }
-                if (needed > 0) return box.copy();
             }
             FluidStack rest = target == null ? fluid : simulate
                 ? (FluidTransfers.canFillAll(target, fluid) ? FluidStack.EMPTY : fluid)
