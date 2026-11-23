@@ -7,6 +7,22 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 /** Native lava spread, ignition, sounds, particles and dimension-dependent timing. */
 public abstract class SuperLavaFluid extends LavaFluid {
+    /** LivingEntity.travel's lava branch, used because NeoForge dispatches custom types first. */
+    public static boolean moveLikeLava(net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.phys.Vec3 input,double gravity){
+        double previousY=entity.getY();
+        boolean falling=entity.getDeltaMovement().y<=0;
+        entity.moveRelative(.02f,input);
+        entity.move(net.minecraft.world.entity.MoverType.SELF,entity.getDeltaMovement());
+        if(entity.getFluidTypeHeight(medium().type.get())<=entity.getFluidJumpThreshold()){
+            entity.setDeltaMovement(entity.getDeltaMovement().multiply(.5,.8f,.5));
+            entity.setDeltaMovement(entity.getFluidFallingAdjustedMovement(gravity,falling,entity.getDeltaMovement()));
+        }else entity.setDeltaMovement(entity.getDeltaMovement().scale(.5));
+        if(gravity!=0)entity.setDeltaMovement(entity.getDeltaMovement().add(0,-gravity/4,0));
+        var velocity=entity.getDeltaMovement();
+        if(entity.horizontalCollision&&entity.isFree(velocity.x,velocity.y+.6f-entity.getY()+previousY,velocity.z))
+            entity.setDeltaMovement(velocity.x,.3f,velocity.z);
+        return true;
+    }
     public static void setupInteractions(){
         var type=medium().type.get();
         net.neoforged.neoforge.fluids.FluidInteractionRegistry.addInteraction(type,

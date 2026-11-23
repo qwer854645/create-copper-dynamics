@@ -40,7 +40,9 @@ public final class ProcessingMedia {
                 .lightLevel(15).density(3000).viscosity(6000).temperature(2000)
                 .sound(SoundActions.BUCKET_FILL,SoundEvents.BUCKET_FILL_LAVA).sound(SoundActions.BUCKET_EMPTY,SoundEvents.BUCKET_EMPTY_LAVA)){
                     @Override public double motionScale(net.minecraft.world.entity.Entity entity){return net.neoforged.neoforge.common.NeoForgeMod.LAVA_TYPE.value().motionScale(entity);}
-                    @Override public boolean move(net.minecraft.world.level.material.FluidState state,net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.phys.Vec3 movement,double gravity){return true;}
+                     @Override public boolean move(net.minecraft.world.level.material.FluidState state,net.minecraft.world.entity.LivingEntity entity,net.minecraft.world.phys.Vec3 movement,double gravity){
+                         return SuperLavaFluid.moveLikeLava(entity,movement,gravity);
+                     }
                     @Override public void setItemMovement(net.minecraft.world.entity.item.ItemEntity entity){net.neoforged.neoforge.common.NeoForgeMod.LAVA_TYPE.value().setItemMovement(entity);}
                 }:new FluidType(FluidType.Properties.create().descriptionId("fluid_type.ccd."+id)
                 .density(1200).viscosity(2000).temperature(temperature)
