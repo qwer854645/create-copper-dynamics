@@ -86,13 +86,22 @@ public final class CCDPonderScenes {
         show(s,util,input,CopperDynamics.FLUID_HATCH.get().defaultBlockState().setValue(FluidHatchBlock.FACING,Direction.NORTH));
         show(s,util,output,CopperDynamics.FLUID_HATCH.get().defaultBlockState().setValue(FluidHatchBlock.FACING,Direction.NORTH));
         show(s,util,B.south(2),CopperDynamics.FLUID_ARM.get().defaultBlockState());
-        s.overlay().showControls(util.vector().centerOf(A),Pointing.DOWN,50).rightClick().withItem(new ItemStack(CopperDynamics.FLUID_ARM_ITEM.get()));
-        s.overlay().showOutline(PonderPalette.BLUE,"arm_input",util.select().position(A),70);
-        text(s,util,A,"While holding the Fluid Arm, select accessible fluid endpoints before placing it");
+        s.overlay().showControls(util.vector().blockSurface(input,Direction.SOUTH),Pointing.DOWN,50).rightClick().withItem(new ItemStack(CopperDynamics.FLUID_ARM_ITEM.get()));
+        s.overlay().showOutline(PonderPalette.BLUE,"arm_input",util.select().position(input),70);
+        text(s,util,input,"While holding the Fluid Arm, select accessible fluid endpoints before placing it");
         s.overlay().showOutline(PonderPalette.GREEN,"arm_output",util.select().position(C),70);
         text(s,util,output,"R-Click a Fluid Hatch to select an input; click it again to switch between input and output");
         s.world().setKineticSpeed(util.select().position(B.south(2)),32);
-        water(s,A,2000);water(s,C,1000);
+        s.world().modifyBlockEntity(B.south(2),FluidArmBlockEntity.class,be->{
+            var world=be.getLevel();
+            be.configure(java.util.List.of(
+                new dev.ccd.logistics.FluidArmPoint(world,input,world.getBlockState(input),Direction.SOUTH,com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint.Mode.TAKE),
+                new dev.ccd.logistics.FluidArmPoint(world,output,world.getBlockState(output),Direction.SOUTH,com.simibubi.create.content.kinetics.mechanicalArm.ArmInteractionPoint.Mode.DEPOSIT)));
+            ((dev.ccd.mixin.FluidArmAccessor)(Object)be).ccd$held(FluidArmCargoItem.containing(new FluidStack(Fluids.WATER,1000)));
+        });
+        water(s,A,2000);s.idle(30);
+        s.world().modifyBlockEntity(B.south(2),FluidArmBlockEntity.class,be->((dev.ccd.mixin.FluidArmAccessor)(Object)be).ccd$held(ItemStack.EMPTY));
+        water(s,C,1000);
         text(s,util,B.south(2),"Place the configured Arm and supply rotational power to transfer fluid between the selected locations");
         text(s,util,C,"Fluid Hatches can provide controlled access to the containers behind them");s.markAsFinished();
     }
