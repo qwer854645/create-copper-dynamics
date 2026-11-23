@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.InteractionResult;
 
-public final class PortableFluidPumpBlock extends VariableFlowPumpBlock {
+public final class PortableFluidPumpBlock extends PortablePumpBaseBlock {
     private final java.util.Map<BlockState,net.minecraft.world.phys.shapes.VoxelShape> stableCollisions=new java.util.HashMap<>();
     public PortableFluidPumpBlock(Properties properties) { super(properties.dynamicShape()); }
     @Override public boolean isSmallCog(){return false;}

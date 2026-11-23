@@ -4,7 +4,6 @@
   "package": "dev.ccd.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "FrequencyPumpCogPreviewMixin",
     "pnp.ComponentPumpModeMixin",
     "DisabledFluidCatalystMixin",
     "pnp.DirectSourceTransportMixin",
@@ -29,9 +28,8 @@
     "ScriptFluidInteractionMixin",
     "ScriptFluidSpreadMixin",
     "SuperLavaEntityMixin",
-    "FrequencyPumpPlacementHelperMixin",
+    "BufferPumpPlacementHelperMixin",
     "BlazeBurnerFuelInvoker",
-    "FrequencyPumpGearMixin",
     "FlowMeterNetworkMixin",
     "PipeConnectionFlowAccessor",
     "ImprovePackageSafetyMixin",

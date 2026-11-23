@@ -12,7 +12,7 @@ public final class PumpPlacement {
     public static boolean isCcdPump(BlockState state) {
         return state.getBlock() instanceof BoosterPumpBlock || state.getBlock() instanceof TurningBoosterPumpBlock
             || state.getBlock() instanceof BidirectionalFluidPumpBlock || state.getBlock() instanceof RedstoneFluidPumpBlock
-            || state.getBlock() instanceof VariableFlowPumpBlock || state.getBlock() instanceof BufferPumpBlock;
+            || state.getBlock() instanceof PortablePumpBaseBlock || state.getBlock() instanceof BufferPumpBlock;
     }
     public static boolean mouth(BlockState state,Direction side) {
         if(state.getBlock() instanceof ThreeWayValveBlock)

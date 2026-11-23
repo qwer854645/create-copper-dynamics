@@ -14,14 +14,14 @@ public class PortablePumpTests {
     @GameTest(template="empty") public static void allPortablePosesRotateShapeAndShaft(GameTestHelper h){
         var block=CopperDynamics.PORTABLE_PUMP.get();var pos=new BlockPos(2,2,2);
         for(var front:Direction.values())for(int roll=0;roll<4;roll++){
-            var state=block.defaultBlockState().setValue(dev.ccd.content.VariableFlowPumpBlock.FACING,front).setValue(dev.ccd.content.VariableFlowPumpBlock.ROLL,roll);
+            var state=block.defaultBlockState().setValue(dev.ccd.content.PortablePumpBaseBlock.FACING,front).setValue(dev.ccd.content.PortablePumpBaseBlock.ROLL,roll);
             h.setBlock(pos,state);var pump=(PortableFluidPumpBlockEntity)h.getBlockEntity(pos);
             pump.stroke=0;var expanded=block.getShape(state,h.getLevel(),h.absolutePos(pos),net.minecraft.world.phys.shapes.CollisionContext.empty()).bounds();
             var collision=block.getCollisionShape(state,h.getLevel(),h.absolutePos(pos),net.minecraft.world.phys.shapes.CollisionContext.empty());
             pump.stroke=1;var compressed=block.getShape(state,h.getLevel(),h.absolutePos(pos),net.minecraft.world.phys.shapes.CollisionContext.empty()).bounds();
             h.assertTrue(!net.minecraft.world.phys.shapes.Shapes.joinIsNotEmpty(collision,block.getCollisionShape(state,h.getLevel(),h.absolutePos(pos),net.minecraft.world.phys.shapes.CollisionContext.empty()),net.minecraft.world.phys.shapes.BooleanOp.NOT_SAME),"Collision changed with bellows stroke");
             h.assertTrue(collision.bounds().equals(expanded),"Stable collision differs from expanded profile");
-            var strokeAxis=dev.ccd.content.PumpOrientation.side(state,dev.ccd.content.VariableFlowPumpBlock.ROLL,Direction.UP).getAxis();
+            var strokeAxis=dev.ccd.content.PumpOrientation.side(state,dev.ccd.content.PortablePumpBaseBlock.ROLL,Direction.UP).getAxis();
             double a=strokeAxis.choose(expanded.getXsize(),expanded.getYsize(),expanded.getZsize());
             double b=strokeAxis.choose(compressed.getXsize(),compressed.getYsize(),compressed.getZsize());
             h.assertTrue(a>b,"Rotated bellows shape did not compress: "+front+"/"+roll);

@@ -10,9 +10,9 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class PumpWrenchCycleTests {
     @GameTest(template="empty") public static void wrenchRotatesWholeFrameAroundClickedAxis(GameTestHelper h){
-        for(var block:java.util.List.of(CopperDynamics.REDSTONE_FLUID_PUMP.get(),CopperDynamics.VARIABLE_FLOW_PUMP.get())){
+        for(var block:java.util.List.of(CopperDynamics.REDSTONE_FLUID_PUMP.get(),CopperDynamics.PORTABLE_PUMP.get())){
             var wrench=(com.simibubi.create.content.equipment.wrench.IWrenchable)block;
-            var roll=block instanceof dev.ccd.content.RedstoneFluidPumpBlock?dev.ccd.content.RedstoneFluidPumpBlock.ROLL:dev.ccd.content.VariableFlowPumpBlock.ROLL;
+            var roll=block instanceof dev.ccd.content.RedstoneFluidPumpBlock?dev.ccd.content.RedstoneFluidPumpBlock.ROLL:dev.ccd.content.PortablePumpBaseBlock.ROLL;
             for(var facing:Direction.values())for(int r=0;r<4;r++)for(var clicked:Direction.values()){
                 var initial=block.defaultBlockState().setValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING,facing).setValue(roll,r);var state=initial;
                 var reached=new java.util.HashSet<net.minecraft.world.level.block.state.BlockState>();

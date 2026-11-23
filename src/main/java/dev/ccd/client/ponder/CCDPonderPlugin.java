@@ -28,7 +28,6 @@ public final class CCDPonderPlugin implements PonderPlugin {
         scene(helper,"pumping",CCDPonderScenes::verticalTurningPump,"vertical_turning_booster_pump");
         scene(helper,"pumping",CCDPonderScenes::redstonePump,"redstone_fluid_pump");
         scene(helper,"pumping",CCDPonderScenes::bidirectionalPump,"bidirectional_fluid_pump");
-        scene(helper,"pumping",CCDPonderScenes::variablePump,"variable_flow_pump");
         scene(helper,"pumping",CCDPonderScenes::portablePump,"portable_fluid_pump");
         scene(helper,"tanks",CCDPonderScenes::buffering,"buffer_pump");
         scene(helper,"tanks",CCDPonderScenes::creativeSupply,"creative_delivery_fluid_tank");

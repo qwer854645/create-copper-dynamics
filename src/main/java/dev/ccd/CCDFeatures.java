@@ -12,7 +12,7 @@ public final class CCDFeatures {
     public static final Map<String, ModConfigSpec.BooleanValue> CONTENT = new LinkedHashMap<>();
     public static final java.util.Set<String> DEFAULT_DISABLED = java.util.Set.of(
         "turning_booster_pump", "vertical_turning_booster_pump", "buffer_pump",
-        "portable_fluid_pump", "variable_flow_pump", "flow_meter", "base_fluids",
+        "portable_fluid_pump", "flow_meter", "base_fluids",
         "nuclear_fluids", "nether_industry_fluids", "more_catalysts_fluids");
     private static volatile Map<String, Boolean> remote = Map.of();
     public enum CompatFluidMode { AUTO, ENABLED, DISABLED }
@@ -44,7 +44,7 @@ public final class CCDFeatures {
         section(builder,"transport","Pumps, valves and direct fluid transfer.",new String[]{
             "booster_pump", "turning_booster_pump", "vertical_turning_booster_pump",
             "bidirectional_fluid_pump", "redstone_fluid_pump", "omni_pump", "redstone_fluid_valve",
-            "three_way_valve", "buffer_pump", "portable_fluid_pump", "variable_flow_pump", "fluid_transmitter",
+            "three_way_valve", "buffer_pump", "portable_fluid_pump", "fluid_transmitter",
             "creative_delivery_fluid_tank", "fluid_access_port", "fluid_bridge", "flow_meter"});
         section(builder,"storage","Storage, handheld access, collection and water supply.",new String[]{"smart_fluid_tank",
             "horizontal_smart_fluid_tank", "faucet", "smart_faucet", "fluid_hatch", "smart_fluid_hatch",
@@ -94,7 +94,6 @@ public final class CCDFeatures {
             case "booster_pump" -> "Enable the extended-pressure pump. Pressure, range and stress multipliers are configured in ccd-server.toml.";
             case "redstone_fluid_pump" -> "Enable the pump whose flow direction is reversed by a redstone signal.";
             case "bidirectional_fluid_pump" -> "Enable the pump whose flow follows its shaft rotation direction.";
-            case "variable_flow_pump" -> "Enable signal-controlled pumping. Flow/range endpoints are configured in ccd-server.toml.";
             case "portable_fluid_pump" -> "Enable manually or mechanically driven pumping. Flow and range are configured in ccd-server.toml.";
             case "buffer_pump" -> "Enable the 2000 mB buffer and powered outlet; this pump does not actively extract from adjacent storage.";
             case "tank_blaze_burner" -> "Enable the Blaze Burner with a 4000 mB liquid-fuel reservoir and optional Liquid Fuel support.";

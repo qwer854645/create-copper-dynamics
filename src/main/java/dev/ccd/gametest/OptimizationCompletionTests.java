@@ -15,8 +15,8 @@ import net.neoforged.neoforge.gametest.*;
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class OptimizationCompletionTests {
     @GameTest(template="empty") public static void pumpMirrorsAndRotationsPreserveFrame(GameTestHelper h){
-        for(var block:java.util.List.of(CopperDynamics.REDSTONE_FLUID_PUMP.get(),CopperDynamics.VARIABLE_FLOW_PUMP.get())){
-            var roll=block instanceof RedstoneFluidPumpBlock?RedstoneFluidPumpBlock.ROLL:VariableFlowPumpBlock.ROLL;
+        for(var block:java.util.List.of(CopperDynamics.REDSTONE_FLUID_PUMP.get(),CopperDynamics.PORTABLE_PUMP.get())){
+            var roll=block instanceof RedstoneFluidPumpBlock?RedstoneFluidPumpBlock.ROLL:PortablePumpBaseBlock.ROLL;
             for(var front:Direction.values())for(int r=0;r<4;r++){
                 var state=block.defaultBlockState().setValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING,front).setValue(roll,r);
                 var right=PumpOrientation.side(state,roll,Direction.EAST);

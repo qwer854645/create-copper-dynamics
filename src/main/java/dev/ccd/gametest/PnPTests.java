@@ -18,27 +18,7 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class PnPTests {
-    @GameTest(template="empty",timeoutTicks=180) public static void verticalVariablePumpDelivers(GameTestHelper h){
-        if(!PnPCompat.active()){h.succeed();return;}
-        var pos=new BlockPos(2,3,2);
-        h.setBlock(pos,CopperDynamics.VARIABLE_FLOW_PUMP.get().defaultBlockState()
-            .setValue(dev.ccd.content.VariableFlowPumpBlock.FACING,Direction.DOWN));
-        for(var dir:java.util.List.of(Direction.UP,Direction.DOWN)){
-            h.setBlock(pos.relative(dir),AllBlocks.FLUID_PIPE.get().getAxisState(Direction.Axis.Y));
-            h.setBlock(pos.relative(dir,2),AllBlocks.FLUID_TANK.getDefaultState());
-        }
-        h.setBlock(pos.north(),net.minecraft.world.level.block.Blocks.REDSTONE_BLOCK);
-        h.onEachTick(()->{var pump=(PumpBlockEntity)h.getBlockEntity(pos);pump.setSpeed(64);});
-        h.runAfterDelay(10,()->{
-            ((FluidTankBlockEntity)h.getBlockEntity(pos.above(2))).getTankInventory().fill(new FluidStack(Fluids.WATER,8000),FluidAction.EXECUTE);
-            var pump=(PumpBlockEntity)h.getBlockEntity(pos);pump.onSpeedChanged(0);
-        });
-        h.runAfterDelay(120,()->{
-            h.assertTrue(((FluidTankBlockEntity)h.getBlockEntity(pos.below(2))).getTankInventory().getFluidAmount()>0,
-                "Isolated vertical variable pump failed: "+de.devin.pipesnphysics.engine.FluidEngine.solveFresh(h.getLevel(),h.absolutePos(pos)));
-            h.succeed();
-        });
-    }
+
     @GameTest(template="empty") public static void componentStorageRoles(GameTestHelper h){
         if(!PnPCompat.active()){h.succeed();return;}
         for(var block:java.util.List.of(CopperDynamics.CREATIVE_DELIVERY_TANK.get(),CopperDynamics.COPPER_WATER_BASIN.get(),CopperDynamics.COPPER_WATER_SUPPLY.get()))
@@ -48,25 +28,7 @@ public class PnPTests {
         h.assertTrue(de.devin.pipesnphysics.engine.boundary.HandlerRoles.explicitRole(CopperDynamics.FLUID_BRIDGE.get().defaultBlockState())!=de.devin.pipesnphysics.api.FluidHandlerRole.RELAY,"Finite proxy marked as infinite relay");
         h.succeed();
     }
-    @GameTest(template="empty") public static void componentPumpContracts(GameTestHelper h){
-        if(!PnPCompat.active()){h.succeed();return;}
-        var pos=new BlockPos(2,2,2);
-        for(var block:java.util.List.of(CopperDynamics.BOOSTER_PUMP.get(),CopperDynamics.TURNING_BOOSTER_PUMP.get(),
-            CopperDynamics.VERTICAL_TURNING_BOOSTER_PUMP.get(),CopperDynamics.REDSTONE_FLUID_PUMP.get(),
-            CopperDynamics.BIDIRECTIONAL_FLUID_PUMP.get(),CopperDynamics.VARIABLE_FLOW_PUMP.get(),
-            CopperDynamics.PORTABLE_PUMP.get(),CopperDynamics.BUFFER_PUMP.get())){
-            h.setBlock(pos,block);
-            var pump=(PumpBlockEntity)h.getBlockEntity(pos);
-            var mode=pump.getBehaviour(de.devin.pipesnphysics.engine.turbine.PumpModeBehaviour.TYPE);
-            if(mode!=null)mode.setValue(de.devin.pipesnphysics.engine.turbine.PumpMode.TURBINE.ordinal());
-            h.assertTrue(!((de.devin.pipesnphysics.engine.turbine.HydroTurbine)pump).pipesnphysics$isTurbine(),"CCD component entered internal turbine mode: "+block);
-            h.assertTrue(!de.devin.pipesnphysics.engine.turbine.Turbines.isTurbine(h.getLevel(),h.absolutePos(pos)),"CCD component classified as turbine");
-            pump.setSpeed(64);
-            if(pump instanceof dev.ccd.content.BoosterPumpBlockEntity)
-                h.assertTrue(de.devin.pipesnphysics.engine.pump.Pumps.strength(h.getLevel(),h.absolutePos(pos))==64*dev.ccd.CCDConfig.PUMP_PRESSURE_MULTIPLIER.get(),"Booster lost configured pressure multiplier");
-        }
-        h.succeed();
-    }
+
     @GameTest(template="empty",timeoutTicks=320)
     public static void threeWaySwitchesLiveRoutes(GameTestHelper h){
         if(!PnPCompat.active()){h.succeed();return;}

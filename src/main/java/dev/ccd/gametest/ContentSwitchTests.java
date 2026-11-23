@@ -46,7 +46,7 @@ public class ContentSwitchTests {
     }
     @GameTest(template="empty") public static void defaultFeatureMappings(GameTestHelper h) {
         h.assertTrue(!CCDFeatures.REBIRTH_NAME.getDefault(),"Easter egg must be off by default");
-        h.assertTrue(CCDFeatures.CONTENT.size()+CCDFeatures.COMPAT_FLUID_MODES.size()==45,"Content switch coverage changed");
+        h.assertTrue(CCDFeatures.CONTENT.size()+CCDFeatures.COMPAT_FLUID_MODES.size()==44,"Content switch coverage changed");
         h.assertTrue(CCDFeatures.CONTENT.get("omni_pump").getDefault(),"Omni pump must default to enabled");
         for(var mode:CCDFeatures.COMPAT_FLUID_MODES.values())h.assertTrue(mode.getDefault()==CCDFeatures.CompatFluidMode.AUTO,"Compat fluids must default to AUTO");
         for(String standalone:java.util.List.of("seething_reagent","powder_snow","quicksand"))

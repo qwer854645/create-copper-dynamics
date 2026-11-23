@@ -14,7 +14,7 @@ abstract class BoosterPumpPressureMixin {
     @Redirect(method = "distributePressureTo", at = @At(value = "INVOKE",
         target = "Lcom/simibubi/create/content/fluids/pump/PumpBlockEntity;getSpeed()F"))
     private float ccd$manualPumpSpeed(PumpBlockEntity pump) {
-        return pump instanceof dev.ccd.content.VariableFlowPumpBlockEntity reciprocating
+        return pump instanceof dev.ccd.content.PortablePumpBaseBlockEntity reciprocating
             ? reciprocating.pumpingSpeed() : pump.getSpeed();
     }
     @Redirect(method = "distributePressureTo", at = @At(value = "INVOKE",
@@ -22,14 +22,14 @@ abstract class BoosterPumpPressureMixin {
     private int ccd$boosterRange() {
         int original = FluidPropagator.getPumpRange();
         if((Object)this instanceof dev.ccd.logistics.NativeEndpointPump pump)return pump.range();
-        if ((Object)this instanceof dev.ccd.content.VariableFlowPumpBlockEntity pump) return pump.targetRange();
+        if ((Object)this instanceof dev.ccd.content.PortablePumpBaseBlockEntity pump) return pump.targetRange();
         return (Object) this instanceof BoosterPumpBlockEntity ? CCDConfig.boosterRange(original) : original;
     }
 
     @Redirect(method = "distributePressureTo", at = @At(value = "INVOKE", target = "Ljava/lang/Math;abs(F)F"))
     private float ccd$boosterPressure(float rpm) {
         float original = Math.abs(rpm);
-        if ((Object)this instanceof dev.ccd.content.VariableFlowPumpBlockEntity pump) return pump.flowPressure();
+        if ((Object)this instanceof dev.ccd.content.PortablePumpBaseBlockEntity pump) return pump.flowPressure();
         return (Object) this instanceof BoosterPumpBlockEntity
             ? original * CCDConfig.PUMP_PRESSURE_MULTIPLIER.get().floatValue() : original;
     }

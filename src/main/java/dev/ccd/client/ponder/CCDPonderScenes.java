@@ -400,18 +400,6 @@ public final class CCDPonderScenes {
         s.world().modifyBlock(B,state->state.setValue(BidirectionalFluidPumpBlock.REVERSED,true),true);
         text(s,util,B,"Reverse the rotation to reverse fluid flow");s.markAsFinished();
     }
-    public static void variablePump(SceneBuilder builder,SceneBuildingUtil util){
-        var s=begin(builder,"variable_pump","Controlling Pump Flow");
-        show(s,util,B,CopperDynamics.VARIABLE_FLOW_PUMP.get().defaultBlockState().setValue(VariableFlowPumpBlock.FACING,Direction.SOUTH));
-        s.world().setKineticSpeed(util.select().position(B),32);
-        text(s,util,B,"Supply rotation through the exposed Cogwheel faces");
-        show(s,util,B.east(),Blocks.REDSTONE_BLOCK.defaultBlockState());
-        s.world().modifyBlock(B,state->state.setValue(VariableFlowPumpBlock.SIGNAL,15),true);
-        text(s,util,B,"Redstone strength controls flow and range; the dial shows signal strength");
-        s.world().setBlock(B.east(),Blocks.AIR.defaultBlockState(),true);
-        s.world().modifyBlock(B,state->state.setValue(VariableFlowPumpBlock.SIGNAL,0),true);
-        text(s,util,B,"With the default settings, no signal stops pumping while the gear can still turn");s.markAsFinished();
-    }
     public static void portablePump(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"portable_pump","Operating a Portable Pump");
         show(s,util,B,CopperDynamics.PORTABLE_PUMP.get().defaultBlockState());

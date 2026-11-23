@@ -12,11 +12,11 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 @GameTestHolder("ccd") @PrefixGameTestTemplate(false)
 public class WrenchRotationTests {
     @GameTest(template="empty") public static void directionalComponentsRotateFromEveryFace(GameTestHelper h){
-        for(var block:java.util.List.of(CopperDynamics.VARIABLE_FLOW_PUMP.get(),CopperDynamics.PORTABLE_PUMP.get(),CopperDynamics.FLUID_ATOMIZER.get(),CopperDynamics.FLUID_HATCH.get(),CopperDynamics.SMART_FLUID_HATCH.get(),CopperDynamics.FLUID_ACCESS_PORT.get(),CopperDynamics.FLUID_BRIDGE.get(),CopperDynamics.CREATIVE_DELIVERY_TANK.get())){
+        for(var block:java.util.List.of(CopperDynamics.PORTABLE_PUMP.get(),CopperDynamics.PORTABLE_PUMP.get(),CopperDynamics.FLUID_ATOMIZER.get(),CopperDynamics.FLUID_HATCH.get(),CopperDynamics.SMART_FLUID_HATCH.get(),CopperDynamics.FLUID_ACCESS_PORT.get(),CopperDynamics.FLUID_BRIDGE.get(),CopperDynamics.CREATIVE_DELIVERY_TANK.get())){
             var wrenchable=(IWrenchable)block;
             for(var state:block.getStateDefinition().getPossibleStates()){
                 // The frequency and portable models only support horizontal placement.
-                if(block instanceof dev.ccd.content.VariableFlowPumpBlock&&state.getValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING).getAxis().isVertical())continue;
+                if(block instanceof dev.ccd.content.PortablePumpBaseBlock&&state.getValue(com.simibubi.create.content.fluids.pump.PumpBlock.FACING).getAxis().isVertical())continue;
                 for(var face:Direction.values())h.assertTrue(wrenchable.getRotatedBlockState(state,face)!=state,"No rotation for "+block+" from "+face);
             }
         }

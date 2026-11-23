@@ -12,7 +12,7 @@ import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 public class RecipeBalanceTests {
     @GameTest(template="empty") public static void survivalRecipesLoadWithoutCreativeOutputs(GameTestHelper h){
         var manager=h.getLevel().getRecipeManager();
-        for(var id:java.util.List.of("copper_bucket","brass_bucket","booster_pump","bidirectional_fluid_pump","redstone_fluid_pump","variable_flow_pump","buffer_pump","omni_pump","fluid_atomizer","fluid_bridge","copper_water_supply","smart_fluid_tank"))
+        for(var id:java.util.List.of("copper_bucket","brass_bucket","booster_pump","bidirectional_fluid_pump","redstone_fluid_pump","buffer_pump","omni_pump","fluid_atomizer","fluid_bridge","copper_water_supply","smart_fluid_tank"))
             h.assertTrue(manager.byKey(ResourceLocation.fromNamespaceAndPath("ccd",id)).isPresent(),"Missing survival recipe: "+id);
         var tank=manager.byKey(ResourceLocation.fromNamespaceAndPath("ccd","smart_fluid_tank")).orElseThrow().value();
         h.assertTrue(tank.getResultItem(h.getLevel().registryAccess()).getCount()==1,"Smart tank recipe duplicates capacity");

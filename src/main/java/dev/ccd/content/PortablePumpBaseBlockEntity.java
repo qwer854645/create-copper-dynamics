@@ -6,21 +6,19 @@ import dev.ccd.CopperDynamics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
+public class PortablePumpBaseBlockEntity extends PumpBlockEntity {
     public float previousStroke,stroke;
-    public float previousSignalDial,signalDial;
-    private boolean signalDialInitialized;
+
     private double phase;
     private double previousPhase;
     public double visualPhase(float partialTicks) { return previousPhase+(phase-previousPhase)*partialTicks; }
-    public VariableFlowPumpBlockEntity(BlockPos pos,BlockState state) { this(CopperDynamics.VARIABLE_FLOW_PUMP_BE.get(),pos,state); }
-    protected VariableFlowPumpBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
+    protected PortablePumpBaseBlockEntity(net.minecraft.world.level.block.entity.BlockEntityType<?> type,BlockPos pos,BlockState state) { super(type,pos,state); }
     public float pumpingSpeed() {
         return getSpeed();
     }
     protected double strokePhaseStep() { return Math.abs(pumpingSpeed())/1200.0; }
-    public int targetFlow() { return CCDConfig.variableFlow(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)); }
-    public int targetRange() { return CCDConfig.variableRange(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)); }
+    public int targetFlow() { return CCDConfig.portableFlow(); }
+    public int targetRange() { return CCDConfig.PORTABLE_RANGE.get(); }
     public float flowPressure() { return !dev.ccd.CCDFeatures.enabled(getBlockState())||pumpingSpeed()==0||isOverStressed()||targetRange()==0?0:targetFlow()*2f; }
     @Override protected void distributePressureTo(net.minecraft.core.Direction side) {
         if(flowPressure()>0)super.distributePressureTo(side);
@@ -29,12 +27,6 @@ public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
     @Override public void tick() {
         if (!dev.ccd.CCDFeatures.enabled(getBlockState())) return;
         super.tick();
-        if(level!=null&&(level.isClientSide()||isVirtual())){
-            float target=getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)/15f;
-            if(!signalDialInitialized){signalDial=previousSignalDial=target;signalDialInitialized=true;}
-            previousSignalDial=signalDial;
-            signalDial+=(target-signalDial)*.25f;
-        }
         if(level!=null&&(level.isClientSide()||isVirtual()||this instanceof PortableFluidPumpBlockEntity)) {
             previousStroke=stroke;
             previousPhase=phase;
@@ -48,8 +40,6 @@ public class VariableFlowPumpBlockEntity extends PumpBlockEntity {
         super.addToGoggleTooltip(tooltip,sneaking);
         dev.ccd.CCDTooltip.heading(tooltip,"ccd.goggles.pumping");
         dev.ccd.CCDTooltip.stat(tooltip,"ccd.goggles.target_flow",dev.ccd.CCDTooltip.number(targetFlow()).append(net.minecraft.network.chat.Component.translatable("ccd.unit.flow")));
-        if (!(this instanceof PortableFluidPumpBlockEntity))
-            dev.ccd.CCDTooltip.stat(tooltip,"ccd.goggles.signal",dev.ccd.CCDTooltip.number(getBlockState().getValue(VariableFlowPumpBlock.SIGNAL)).append(net.minecraft.network.chat.Component.literal(" / 15").withStyle(net.minecraft.ChatFormatting.DARK_GRAY)));
         dev.ccd.CCDTooltip.stat(tooltip,"ccd.goggles.range",dev.ccd.CCDTooltip.number(targetRange()).append(net.minecraft.network.chat.Component.translatable("ccd.unit.blocks")));
         return true;
     }

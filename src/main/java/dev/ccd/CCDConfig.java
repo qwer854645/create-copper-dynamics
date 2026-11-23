@@ -13,8 +13,6 @@ public final class CCDConfig {
     public static final ModConfigSpec.IntValue WATER_SUPPLY_RATE;
     public static final ModConfigSpec.IntValue ATOMIZER_NORMAL_COST, ATOMIZER_POTION_COST;
     public static final ModConfigSpec.DoubleValue ATOMIZER_CONSUMPTION_MULTIPLIER;
-    public static final ModConfigSpec.IntValue VARIABLE_FLOW_MIN_FLOW, VARIABLE_FLOW_MAX_FLOW;
-    public static final ModConfigSpec.IntValue VARIABLE_FLOW_MIN_RANGE, VARIABLE_FLOW_MAX_RANGE;
     public static final ModConfigSpec.IntValue PORTABLE_FLOW, PORTABLE_RANGE;
 
     static {
@@ -64,17 +62,6 @@ public final class CCDConfig {
             .translation("ccd.configuration.atomizer.potionConsumption")
             .worldRestart().defineInRange("potionConsumption", 25, 1, 4000);
         builder.pop();
-        builder.push("variableFlowPump");
-        VARIABLE_FLOW_MIN_FLOW = builder.comment("Target flow in mB/t at redstone strength 0. Requires rotational power. Flow endpoints and interpolated rates round to multiples of 100 mB/t.")
-            .worldRestart().defineInRange("minimumFlow", 0, 0, 1000000);
-        VARIABLE_FLOW_MAX_FLOW = builder.comment("Target flow in mB/t at strength 15; intermediate strengths interpolate linearly.",
-            "Native pipe branches and endpoint capacity may reduce actual flow. Endpoints are sorted if minimum exceeds maximum.")
-            .worldRestart().defineInRange("maximumFlow", 1500, 0, 1000000);
-        VARIABLE_FLOW_MIN_RANGE = builder.comment("Pipe search distance on each side at redstone strength 0, in blocks.")
-            .worldRestart().defineInRange("minimumRange", 0, 0, 256);
-        VARIABLE_FLOW_MAX_RANGE = builder.comment("Pipe search distance on each side at strength 15. Intermediate strengths interpolate linearly.")
-            .worldRestart().defineInRange("maximumRange", 32, 0, 256);
-        builder.pop();
         builder.push("portablePump");
         PORTABLE_FLOW=builder.comment("Target flow in mB/t with manual or rotational power. Rounded to the nearest 100 mB/t, minimum 100.").worldRestart().defineInRange("flow",1000,100,1000000);
         PORTABLE_RANGE=builder.comment("Pipe range per side in blocks.").worldRestart().defineInRange("range",4,1,256);
@@ -87,11 +74,7 @@ public final class CCDConfig {
     }
 
     private CCDConfig() {}
-    public static int variableFlow(int signal) {
-        int low=quantizePumpFlow(VARIABLE_FLOW_MIN_FLOW.get());
-        int high=quantizePumpFlow(VARIABLE_FLOW_MAX_FLOW.get());
-        return quantizePumpFlow(interpolateFlow(low, high, signal));
-    }
+
     public static int bufferPumpRange(int nativeRange) {
         return nativeRange + (boosterRange(nativeRange) - nativeRange) / 2;
     }
@@ -99,11 +82,6 @@ public final class CCDConfig {
         return (int)(Math.round(flow / 100.0) * 100);
     }
     public static int portableFlow() { return Math.max(100,quantizePumpFlow(PORTABLE_FLOW.get())); }
-    public static int variableRange(int signal) {
-        return interpolateFlow(VARIABLE_FLOW_MIN_RANGE.get(), VARIABLE_FLOW_MAX_RANGE.get(), signal);
-    }
-    public static int interpolateFlow(int first, int second, int signal) {
-        int low=Math.min(first,second),high=Math.max(first,second);
-        return (int)(low+Math.round((high-(long)low)*Math.clamp(signal,0,15)/15.0));
-    }
+
+
 }

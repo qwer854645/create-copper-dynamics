@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.HolderLookup;
 
 /** Pump with a short-lived hand-crank source on its existing shaft network. */
-public final class PortableFluidPumpBlockEntity extends VariableFlowPumpBlockEntity {
+public final class PortableFluidPumpBlockEntity extends PortablePumpBaseBlockEntity {
     private int manualTicks;
     private boolean backwards;
     public PortableFluidPumpBlockEntity(BlockPos pos,BlockState state) { super(CopperDynamics.PORTABLE_PUMP_BE.get(),pos,state); }
