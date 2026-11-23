@@ -427,8 +427,13 @@ public final class CCDPonderScenes {
     }
     public static void redstoneValve(SceneBuilder builder,SceneBuildingUtil util){
         var s=begin(builder,"redstone_valving","Controlling Fluid Connections");show(s,util,B,CopperDynamics.REDSTONE_FLUID_VALVE.get().defaultBlockState());
+        for(var pos:java.util.List.of(B.north(),B.south()))show(s,util,pos,AllBlocks.FLUID_PIPE.get().getAxisState(Direction.Axis.Z));
         text(s,util,B,"Redstone Fluid Valves allow flow while unpowered");
+        show(s,util,B.east(),Blocks.REDSTONE_BLOCK.defaultBlockState());
+        s.world().modifyBlock(B,state->state.setValue(RedstoneFluidValveBlock.POWERED,true).setValue(RedstoneFluidValveBlock.ENABLED,false),true);
         text(s,util,B,"A Redstone Signal closes the connection; removing the signal opens it again");
+        s.world().setBlock(B.east(),Blocks.AIR.defaultBlockState(),true);
+        s.world().modifyBlock(B,state->state.setValue(RedstoneFluidValveBlock.POWERED,false).setValue(RedstoneFluidValveBlock.ENABLED,true),true);
         text(s,util,B,"A Mechanical Pump is still required to move fluid through the pipe");s.markAsFinished();
     }
     public static void filtering(SceneBuilder builder,SceneBuildingUtil util){
