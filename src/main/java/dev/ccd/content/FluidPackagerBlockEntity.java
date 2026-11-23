@@ -297,6 +297,22 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
         for (int tank = 0; tank < reserved.length; tank++) reserved[tank] = target.getFluidInTank(tank).copy();
         var fluids = new java.util.ArrayList<FluidStack>();
         for (FluidStack fluid : CompositePackageItem.fluids(box)) {
+            // An item destination selects parcel separation; a fluid-only destination
+            // retains direct unloading. Output uses Create's existing saved queue.
+            if (targetItems != null) {
+                if (!simulate) {
+                    int remaining = fluid.getAmount();
+                    while (remaining > 0) {
+                        int amount = Math.min(FluidPackageItem.CAPACITY, remaining);
+                        ItemStack parcel = FluidPackageItem.containingFluid(fluid.copyWithAmount(amount));
+                        PackageItem.addAddress(parcel, PackageItem.getAddress(box));
+                        queuedExitingPackages.add(new BigItemStack(parcel, 1));
+                        computerBehaviour.prepareComputerEvent(new PackageEvent(parcel, "package_created"));
+                        remaining -= amount;
+                    }
+                }
+                continue;
+            }
             if (simulate && target != null) {
                 int needed = fluid.getAmount();
                 for (int tank = 0; tank < reserved.length && needed > 0; tank++) {
@@ -314,7 +330,10 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
                 : FluidTransfers.fillAndKeepRemainder(target, fluid);
             if (!rest.isEmpty()) fluids.add(rest);
         }
-        return !hasItems && fluids.isEmpty() ? ItemStack.EMPTY : CompositePackageItem.containing(remainingItems, fluids);
+        if (!hasItems && fluids.isEmpty()) return ItemStack.EMPTY;
+        ItemStack remainder = CompositePackageItem.containing(remainingItems, fluids);
+        PackageItem.addAddress(remainder, PackageItem.getAddress(box));
+        return remainder;
     }
 
     @Override protected void read(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {

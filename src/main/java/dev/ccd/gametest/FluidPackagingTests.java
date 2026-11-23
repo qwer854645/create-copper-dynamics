@@ -250,6 +250,65 @@ public final class FluidPackagingTests {
     }
 
     @GameTest(template = "empty")
+    public static void brassParcelSeparatesIntoItemsAndCopperParcels(GameTestHelper h) {
+        BlockPos machine = new BlockPos(2,1,2);
+        h.setBlock(machine.north(), net.minecraft.world.level.block.Blocks.BARREL.defaultBlockState());
+        h.setBlock(machine, CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING,Direction.SOUTH));
+        h.runAfterDelay(3, () -> {
+            var be = (FluidPackagerBlockEntity) h.getBlockEntity(machine);
+            var target = h.getLevel().getCapability(Capabilities.ItemHandler.BLOCK,h.absolutePos(machine.north()),Direction.SOUTH);
+            var slots = new net.neoforged.neoforge.items.ItemStackHandler(PackageItem.SLOTS);
+            slots.setStackInSlot(0,new ItemStack(net.minecraft.world.item.Items.IRON_INGOT,3));
+            var box = dev.ccd.content.CompositePackageItem.containing(slots,java.util.List.of(water(6500),
+                new FluidStack(Fluids.LAVA,1000)));
+            PackageItem.addAddress(box,"Fluid Hall");
+            check(h,be.unwrapBox(box,true),"Item container should accept brass parcel separation");
+            check(h,target.getStackInSlot(0).isEmpty() && be.queuedExitingPackages.isEmpty(),"Preflight changed cargo");
+            check(h,be.inventory.insertItem(0,box,false).isEmpty(),"Package interface rejected separation");
+            check(h,target.getStackInSlot(0).getCount()==3,"Items did not reach barrel");
+            check(h,be.queuedExitingPackages.size()==3,"Expected two water parcels and one lava parcel");
+            check(h,be.queuedExitingPackages.stream().mapToInt(e->FluidPackageItem.contents(e.stack).getAmount()).sum()==7500,"Separated fluid total changed");
+            check(h,be.queuedExitingPackages.stream().allMatch(e->FluidPackageItem.contents(e.stack).getAmount()<=4000
+                && PackageItem.getAddress(e.stack).equals("Fluid Hall")),"Copper parcel capacity or address changed");
+            var saved = be.saveWithFullMetadata(h.getLevel().registryAccess());
+            be.loadWithComponents(saved,h.getLevel().registryAccess());
+            check(h,be.queuedExitingPackages.size()==3,"Output queue did not survive reload");
+            h.setBlock(machine,net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+            var drops=h.getLevel().getEntitiesOfClass(com.simibubi.create.content.logistics.box.PackageEntity.class,
+                new net.minecraft.world.phys.AABB(h.absolutePos(machine)).inflate(2));
+            check(h,drops.stream().mapToInt(e->FluidPackageItem.contents(e.box).getAmount()).sum()==7500,"Breaking separator lost queued fluids");
+            h.succeed();
+        });
+    }
+
+    @GameTest(template = "empty")
+    public static void fullItemDestinationWaitsAndRetainsExecutionRemainder(GameTestHelper h) {
+        BlockPos machine = new BlockPos(2,1,2);
+        h.setBlock(machine.north(),net.minecraft.world.level.block.Blocks.BARREL.defaultBlockState());
+        h.setBlock(machine,CopperDynamics.FLUID_PACKAGER.get().defaultBlockState().setValue(PackagerBlock.FACING,Direction.SOUTH));
+        h.runAfterDelay(3, () -> {
+            var be=(FluidPackagerBlockEntity)h.getBlockEntity(machine);
+            var target=h.getLevel().getCapability(Capabilities.ItemHandler.BLOCK,h.absolutePos(machine.north()),Direction.SOUTH);
+            var slots=new net.neoforged.neoforge.items.ItemStackHandler(PackageItem.SLOTS);
+            slots.setStackInSlot(0,new ItemStack(net.minecraft.world.item.Items.IRON_INGOT,3));
+            var box=dev.ccd.content.CompositePackageItem.containing(slots,java.util.List.of(water(1000)));
+            check(h,be.unwrapBox(box,true),"Empty barrel should fit items");
+            for(int slot=0;slot<target.getSlots();slot++)target.insertItem(slot,new ItemStack(net.minecraft.world.item.Items.STONE,64),false);
+            check(h,!be.unwrapBox(box,true),"Full barrel should wait");
+            check(h,be.queuedExitingPackages.isEmpty(),"Rejected simulation produced fluid parcels");
+            check(h,be.unwrapBox(box,false),"Execution should own changed-destination cargo");
+            check(h,PackageItem.getContents(be.getCompositeRecovery()).getStackInSlot(0).getCount()==3,"Item remainder lost");
+            check(h,be.queuedExitingPackages.size()==1,"Fluid should be packaged once");
+            be.lazyTick();
+            check(h,be.queuedExitingPackages.size()==1,"Recovery duplicated fluid parcels");
+            target.extractItem(0,64,false);
+            be.lazyTick();
+            check(h,be.getCompositeRecovery().isEmpty() && target.getStackInSlot(0).getCount()==3,"Recovery did not resume item delivery");
+            h.succeed();
+        });
+    }
+
+    @GameTest(template = "empty")
     public static void compositeFluidUnloadsAndMissingItemsAreRetained(GameTestHelper h) {
         BlockPos machine = new BlockPos(2, 1, 2);
         h.setBlock(machine.north(), AllBlocks.FLUID_TANK.getDefaultState());
