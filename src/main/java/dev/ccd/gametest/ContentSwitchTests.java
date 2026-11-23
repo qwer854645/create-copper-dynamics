@@ -32,9 +32,15 @@ public class ContentSwitchTests {
     }
     @GameTest(template="empty") public static void defaultFeatureMappings(GameTestHelper h) {
         h.assertTrue(!CCDFeatures.REBIRTH_NAME.getDefault(),"Easter egg must be off by default");
-        h.assertTrue(CCDFeatures.CONTENT.size()==55,"Content switch coverage changed");
+        h.assertTrue(CCDFeatures.CONTENT.size()==45,"Content switch coverage changed");
+        for(String standalone:java.util.List.of("seething_reagent","powder_snow","quicksand"))
+            h.assertTrue(CCDFeatures.feature(standalone).equals(standalone)&&CCDFeatures.CONTENT.containsKey(standalone),"Standalone fluid lost its switch");
         for(var entry:CCDFeatures.CONTENT.entrySet())h.assertTrue(entry.getValue().getDefault()==!CCDFeatures.DEFAULT_DISABLED.contains(entry.getKey()),"Incorrect content default: "+entry.getKey());
-        h.assertTrue(CCDFeatures.feature("flowing_smoking_fluid").equals("smoking_fluid"),"Flowing identity mismatch");
+        h.assertTrue(CCDFeatures.feature("flowing_smoking_fluid").equals("base_fluids"),"Flowing identity mismatch");
+        for(var entry:CCDFeatures.FLUID_CATEGORIES.entrySet()) {
+            h.assertTrue(CCDFeatures.feature(entry.getKey()+"_bucket").equals(entry.getValue()),"Bucket category mismatch");
+            h.assertTrue(CCDFeatures.feature("flowing_"+entry.getKey()).equals(entry.getValue()),"Fluid category mismatch");
+        }
         h.assertTrue(CCDFeatures.feature("brass_package_10x8").equals("composite_package"),"Package variant mismatch");
         h.succeed();
     }
@@ -48,6 +54,21 @@ public class ContentSwitchTests {
         h.assertTrue(recipe==enabled,"Recipe does not respect loaded content config");
         h.assertTrue(tagged==enabled,"Catalyst tag does not respect loaded content config");
         System.out.println("CCD_CONTENT_SWITCH smoking="+enabled+" recipe="+recipe+" tag="+tagged);
+        h.succeed();
+    }
+    @GameTest(template="empty") public static void fluidOriginCategoryControlsAllForms(GameTestHelper h) {
+        var setting=CCDFeatures.CONTENT.get("base_fluids");boolean previous=setting.get();
+        try {
+            setting.set(false);setting.clearCache();
+            for(String fluid:java.util.List.of("haunting","slime","smoking_fluid")) {
+                h.assertTrue(!CCDFeatures.enabled(fluid)&&!CCDFeatures.enabled("flowing_"+fluid)
+                    &&!CCDFeatures.enabled(fluid+"_bucket"),"Category did not disable all forms: "+fluid);
+            }
+            for(String fluid:java.util.List.of("seething_reagent","powder_snow","quicksand"))
+                h.assertTrue(CCDFeatures.CONTENT.get(fluid).getDefault(),"Standalone fluid default changed");
+            setting.set(true);setting.clearCache();
+            h.assertTrue(CCDFeatures.enabled("haunting_bucket"),"Category did not re-enable bucket");
+        }finally{setting.set(previous);setting.clearCache();}
         h.succeed();
     }
 }

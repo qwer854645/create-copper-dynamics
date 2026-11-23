@@ -12,18 +12,29 @@ public final class CCDFeatures {
     public static final Map<String, ModConfigSpec.BooleanValue> CONTENT = new LinkedHashMap<>();
     public static final java.util.Set<String> DEFAULT_DISABLED = java.util.Set.of(
         "turning_booster_pump", "vertical_turning_booster_pump", "omni_pump", "buffer_pump",
-        "portable_fluid_pump", "variable_flow_pump", "flow_meter");
+        "portable_fluid_pump", "variable_flow_pump", "flow_meter", "base_fluids",
+        "nuclear_fluids", "nether_industry_fluids", "more_catalysts_fluids");
     private static volatile Map<String, Boolean> remote = Map.of();
     public static void remote(Map<String, Boolean> settings) { remote = Map.copyOf(settings); }
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue REBIRTH_NAME;
+    public static final Map<String,String> FLUID_CATEGORIES = Map.ofEntries(
+        Map.entry("slime","base_fluids"), Map.entry("haunting","base_fluids"), Map.entry("smoking_fluid","base_fluids"),
+        Map.entry("enriching_reagent","nuclear_fluids"),
+        Map.entry("soul_stripping_reagent","nether_industry_fluids"),
+        Map.entry("explosive_slurry","more_catalysts_fluids"), Map.entry("resonant_solution","more_catalysts_fluids"),
+        Map.entry("sculk_suspension","more_catalysts_fluids"), Map.entry("purifying_solution","more_catalysts_fluids"),
+        Map.entry("withering_fluid","more_catalysts_fluids"), Map.entry("conduit_energy_fluid","more_catalysts_fluids"),
+        Map.entry("moss_suspension","more_catalysts_fluids"), Map.entry("tear_solution","more_catalysts_fluids"),
+        Map.entry("corrupting_fluid","more_catalysts_fluids"));
     static {
         var builder = new ModConfigSpec.Builder();
-        builder.comment("Independent content switches. Advanced pump variants and the flow meter are disabled by default; other content is enabled.",
+        builder.comment("Advanced pump variants, the flow meter and grouped fluid categories are disabled by default.",
+            "Super Lava, Powder Snow fluid support and Quicksand have separate switches enabled by default. Other devices remain enabled.",
             "Restart the game/server after editing. Multiplayer uses the server's content settings.",
             "Disabled content keeps its registry IDs and saved contents; acquisition and normal operation stop.",
             "CCD acquisition/conversion recipes require every referenced content setting to be enabled.",
-            "Sections organize individual settings only; there are no master or category switches.").push("content");
+            "Devices have independent switches; fluids and their buckets share switches grouped by processing origin. No master switch.").push("content");
         section(builder,"transport","Pumps, valves and direct fluid transfer.",new String[]{
             "booster_pump", "turning_booster_pump", "vertical_turning_booster_pump",
             "bidirectional_fluid_pump", "redstone_fluid_pump", "omni_pump", "redstone_fluid_valve",
@@ -36,11 +47,9 @@ public final class CCDFeatures {
             "fluid_arm", "fluid_packager", "fluid_repackager", "fluid_gauge", "fluid_package", "composite_package"});
         section(builder,"tools","Handheld fluid containers and filter configuration.",new String[]{
             "fluid_filter", "fluid_attribute_filter", "copper_bucket", "brass_bucket"});
-        section(builder,"processing","Burner, atomizer and fluid media. Each fluid setting includes its source, flowing form and bucket.",new String[]{"tank_blaze_burner","fluid_atomizer",
-            "quicksand", "slime", "haunting", "powder_snow", "seething_reagent", "enriching_reagent",
-            "soul_stripping_reagent", "explosive_slurry", "resonant_solution", "sculk_suspension", "purifying_solution",
-            "withering_fluid", "conduit_energy_fluid", "moss_suspension", "tear_solution", "corrupting_fluid", "smoking_fluid"
-        });
+        section(builder,"processing","Burner and atomizer devices; fluid media are configured separately by origin.",new String[]{"tank_blaze_burner","fluid_atomizer"});
+        section(builder,"fluids","Processing origin categories. Each switch controls all listed source/flowing fluids, blocks, buckets, CCD recipes and effects. Does not disable the upstream mod.",new String[]{
+            "seething_reagent","powder_snow","quicksand","base_fluids","nuclear_fluids","nether_industry_fluids","more_catalysts_fluids"});
         builder.pop();
         builder.comment("Optional cosmetic extras. These never change gameplay or registry IDs.").push("easterEggs");
         REBIRTH_NAME=builder.comment("Use the alternate Chinese mod title in the creative tab when the client language is Chinese.",
@@ -57,6 +66,11 @@ public final class CCDFeatures {
     }
     private static String description(String id){
         return switch(id){
+            case "base_fluids" -> "CCD/base Create media: Slime Fluid, Soul Fluid and Smoking Fluid, including their buckets and effects.";
+            case "seething_reagent" -> "Super Lava and its bucket. Controls fuel, seething processing and exposure effects, including standalone fuel use without Dungeons & Desires.";
+            case "nuclear_fluids" -> "Create Nuclear medium: Enriching Reagent, its bucket and radiation exposure. Processing still requires Create Nuclear.";
+            case "nether_industry_fluids" -> "Create Nether Industry medium: Soul Stripping Reagent and its bucket/effects. Processing still requires that addon.";
+            case "more_catalysts_fluids" -> "Create: More Catalysts media: Explosive Slurry, Resonant Solution, Sculk Suspension, Purifying Solution, Withering Fluid, Conduit Energy Fluid, Moss Suspension, Tear Solution and Corrupting Fluid. Corrupting processing also requires AnvilCraft or L2 Hostility.";
             case "fluid_package" -> "Enable copper fluid packages, including all sizes. Required for fluid packaging and brass-package separation.";
             case "composite_package" -> "Enable brass mixed-cargo packages, including all sizes. Required for mixed-order repacking.";
             case "fluid_arm" -> "Enable the fluid arm and its internal carried cargo. Disabled arms retain their cargo for recovery.";
@@ -64,7 +78,7 @@ public final class CCDFeatures {
             case "powder_snow" -> "Enable CCD fluid transport and processing support for powder snow. Does not disable the vanilla bucket or block.";
             case "copper_water_basin" -> "Enable the infinite water basin and manual/piped access. Does not control the Water Supply Box.";
             case "copper_water_supply" -> "Enable automatic adjacent water supply and the box's water interfaces. Supply rate is set in ccd-server.toml.";
-            case "fluid_atomizer" -> "Enable fluid-powered airflow processing and entity effects. Individual media retain their own switches.";
+            case "fluid_atomizer" -> "Enable fluid-powered airflow processing and entity effects. Fluid switches are configured below, individually or by origin.";
             case "booster_pump" -> "Enable the extended-pressure pump. Pressure, range and stress multipliers are configured in ccd-server.toml.";
             case "redstone_fluid_pump" -> "Enable the pump whose flow direction is reversed by a redstone signal.";
             case "bidirectional_fluid_pump" -> "Enable the pump whose flow follows its shaft rotation direction.";
@@ -88,7 +102,7 @@ public final class CCDFeatures {
         if (path.startsWith("brass_package_")) return "composite_package";
         if (path.equals("fluid_arm_cargo")) return "fluid_arm";
         if (path.equals("fluid_stock")) return "fluid_gauge";
-        return path;
+        return FLUID_CATEGORIES.getOrDefault(path,path);
     }
     public static boolean enabled(String path) {
         String key=feature(path);
