@@ -261,6 +261,16 @@ public final class FluidPackagerBlockEntity extends PackagerBlockEntity implemen
     }
 
     @Override public void destroy() {
+        if (level != null && !level.isClientSide() && !recovery.isEmpty()) {
+            FluidStack remaining = recovery;
+            recovery = FluidStack.EMPTY;
+            while (!remaining.isEmpty()) {
+                int amount = Math.min(FluidPackageItem.CAPACITY, remaining.getAmount());
+                net.minecraft.world.level.block.Block.popResource(level, worldPosition,
+                    FluidPackageItem.containingFluid(remaining.copyWithAmount(amount)));
+                remaining = remaining.copyWithAmount(remaining.getAmount() - amount);
+            }
+        }
         recovery = FluidStack.EMPTY;
         super.destroy();
     }

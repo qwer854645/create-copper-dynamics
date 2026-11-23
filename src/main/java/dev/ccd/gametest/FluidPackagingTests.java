@@ -204,6 +204,22 @@ public final class FluidPackagingTests {
     }
 
     @GameTest(template = "empty")
+    public static void breakingPackagerReturnsRecovery(GameTestHelper h) {
+        BlockPos machine = new BlockPos(2, 1, 2);
+        h.setBlock(machine, CopperDynamics.FLUID_PACKAGER.get().defaultBlockState());
+        var be = (FluidPackagerBlockEntity) h.getBlockEntity(machine);
+        check(h, be.unwrapBox(FluidPackageItem.containingFluid(water(5_250)), false), "Failed to retain undelivered cargo");
+        h.setBlock(machine, net.minecraft.world.level.block.Blocks.AIR.defaultBlockState());
+        var boxes = h.getLevel().getEntitiesOfClass(com.simibubi.create.content.logistics.box.PackageEntity.class,
+            new net.minecraft.world.phys.AABB(h.absolutePos(machine)).inflate(2));
+        check(h, boxes.stream().mapToInt(e -> FluidPackageItem.contents(e.box).getAmount()).sum() == 5_250,
+            "Breaking packager lost recovery fluid");
+        check(h, boxes.stream().allMatch(e -> FluidPackageItem.contents(e.box).getAmount() <= FluidPackageItem.CAPACITY),
+            "Recovery drop exceeded parcel capacity");
+        h.succeed();
+    }
+
+    @GameTest(template = "empty")
     public static void nativeNetworkCodecPreservesFluid(GameTestHelper h) {
         ItemStack original = FluidPackageItem.containingFluid(water(731));
         PackageItem.addAddress(original, "receiver");
