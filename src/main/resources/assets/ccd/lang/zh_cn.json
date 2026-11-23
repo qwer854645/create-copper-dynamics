@@ -175,9 +175,9 @@
   "ccd.configuration.smartTank.maxFluidTypes.tooltip": "竖向和横向储罐每组允许的流体种类数。不同附加性质分别计数；降低上限不清除已有内容。",
   "ccd.configuration.waterSupply.rate": "每容器供水速率",
   "ccd.configuration.waterSupply.rate.tooltip": "单位 mB/刻，按周期集中供水。-1 表示单次尽量补满，0 关闭自动补水；不影响手动取水。",
-  "ccd.configuration.atomizer.normalConsumption": "加工媒介耗量",
+  "ccd.configuration.atomizer.normalConsumption": "加工介质基础耗量",
   "ccd.configuration.atomizer.normalConsumption.tooltip": "单位 mB/秒，仅在有效喷雾时消耗；自定义雾化配方可单独设置。",
-  "ccd.configuration.atomizer.potionConsumption": "药液耗量",
+  "ccd.configuration.atomizer.potionConsumption": "药液基础耗量",
   "ccd.configuration.atomizer.potionConsumption.tooltip": "单位 mB/秒，控制药水喷雾耗量；自定义配方可单独设置。",
   "block.ccd.fluid_access_port": "流体扩展端口",
   "block.ccd.fluid_bridge": "流体桥接器",
@@ -296,7 +296,7 @@
   "item.ccd.composite_package.tooltip.action1": "_取出物品_，流体分装为_铜包裹_。",
   "block.ccd.fluid_access_port.tooltip.summary": "扩展所连接容器的_流体接口_。",
   "block.ccd.fluid_bridge.tooltip.summary": "通过同一个接口存取_两端容器_中的流体。",
-  "block.ccd.fluid_atomizer.tooltip.summary": "消耗流体，为气流提供_批量加工_效果。",
+  "block.ccd.fluid_atomizer.tooltip.summary": "将储存的流体雾化，为气流提供_批量加工_效果。",
   "item.ccd.enriching_reagent_bucket.tooltip.summary": "用于_富集_的流体。",
   "item.ccd.enriching_reagent_bucket.tooltip.condition1": "安装 Create Nuclear，气流经过流体或装入雾化器时",
   "item.ccd.enriching_reagent_bucket.tooltip.behaviour1": "使用对应配方_批量加工物品_。",
@@ -491,7 +491,7 @@
   "ccd.ponder.metal_buckets.text_2": "右键点击容器取液，潜行右键点击倒液。",
   "ccd.ponder.metal_buckets.text_3": "在世界中每次取放一桶流体，黄铜桶的容量比铜桶更大。",
   "ccd.ponder.fluid_media.header": "使用加工流体",
-  "ccd.ponder.fluid_media.text_1": "流体雾化器消耗储存的流体，为气流提供加工效果。",
+  "ccd.ponder.fluid_media.text_1": "流体雾化器使用储存的流体提供加工效果，消耗量可在配置中调整",
   "ccd.ponder.fluid_media.text_2": "可选加工流体需要安装对应附属，才能提供相应的气流加工类型。",
   "ccd.ponder.fluid_media.text_3": "超级熔岩也可供给烈焰人燃烧室，每 1000 mB 提供 160 秒超级燃烧。",
   "ccd.ponder.fluid_ordering.header": "监控与订购流体",
@@ -838,5 +838,7 @@
   "ccd.configuration.contentSection.tools": "容器与过滤工具",
   "ccd.configuration.contentSection.processing": "气流加工与流体",
   "ccd.configuration.rebirthName": "彩蛋：中文模组名称",
-  "ccd.configuration.rebirthName.tooltip": "默认关闭。开启后，中文界面的模组创造栏名称显示为“流体的结合：重生（泵不住了）”。不改变玩法和注册名称，重启游戏后生效。"
+  "ccd.configuration.rebirthName.tooltip": "默认关闭。开启后，中文界面的模组创造栏名称显示为“流体的结合：重生（泵不住了）”。不改变玩法和注册名称，重启游戏后生效。",
+  "ccd.configuration.atomizer.consumptionMultiplier": "流体消耗倍率",
+  "ccd.configuration.atomizer.consumptionMultiplier.tooltip": "作用于所有雾化流体，包括自定义配方。0 不消耗，但仍需装入对应流体；1 使用基础或配方耗量。正数耗量向上取整。重新进入世界后生效。"
 }

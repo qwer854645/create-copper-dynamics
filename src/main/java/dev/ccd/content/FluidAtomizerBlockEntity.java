@@ -112,6 +112,7 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
         if (getSpeed() == 0 || getBlockState().getValue(FluidAtomizerBlock.POWERED)) { stopMist(); return; }
         if (activeRevision == AtomizingRules.revision() && active != null && active.recipe() != null && Math.abs(getSpeed()) < active.recipe().minimumRpm()) { stopMist(); return; }
         FluidStack available = tank.getPrimaryHandler().getFluid();
+        if (dev.ccd.CCDConfig.ATOMIZER_CONSUMPTION_MULTIPLIER.get() == 0 && available.isEmpty()) { stopMist(); return; }
         if (mistActive && !available.isEmpty() && !FluidStack.isSameFluidSameComponents(available, activeFluid)) stopMist();
         if (mistActive && activeRevision == AtomizingRules.revision() && level.getGameTime() < paidUntil) return;
         if (lookupRevision != AtomizingRules.revision() || !FluidStack.isSameFluidSameComponents(available, lookupFluid)) {
@@ -119,11 +120,13 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
             lookupRevision = AtomizingRules.revision();
             selected = AtomizingRules.select(level, available);
         }
+        int consumption = selected == null ? 0 : consumptionAmount(selected.amount());
         if (available.isEmpty() || selected == null || !selected.hasAction()
             || selected.recipe() != null && Math.abs(getSpeed()) < selected.recipe().minimumRpm()
-            || available.getAmount() < selected.amount()) { stopMist(); return; }
-        FluidStack paid = tank.getPrimaryHandler().drain(selected.amount(), FluidAction.EXECUTE);
-        if (paid.getAmount() != selected.amount()) { stopMist(); return; }
+            || available.getAmount() < consumption) { stopMist(); return; }
+        FluidStack paid = consumption == 0 ? available.copyWithAmount(1)
+            : tank.getPrimaryHandler().drain(consumption, FluidAction.EXECUTE);
+        if (consumption > 0 && paid.getAmount() != consumption) { stopMist(); return; }
         boolean changed = !mistActive || active != selected || !FluidStack.isSameFluidSameComponents(activeFluid, paid);
         mistActive = true;
         active = selected;
@@ -133,6 +136,9 @@ public final class FluidAtomizerBlockEntity extends EncasedFanBlockEntity {
             + BuiltInRegistries.FLUID.getKey(activeFluid.getFluid()) + ":" + activeFluid.getComponentsPatch();
         paidUntil = level.getGameTime() + selected.interval();
         if (changed) { nextEntityPulse = level.getGameTime(); updateAirFlow = true; sendData(); }
+    }
+    public static int consumptionAmount(int baseAmount) {
+        return (int) Math.min(Integer.MAX_VALUE, Math.ceil(baseAmount * dev.ccd.CCDConfig.ATOMIZER_CONSUMPTION_MULTIPLIER.get()));
     }
     private void stopMist() {
         boolean changed = mistActive;

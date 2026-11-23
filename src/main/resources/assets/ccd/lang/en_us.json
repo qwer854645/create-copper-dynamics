@@ -175,9 +175,9 @@
   "ccd.configuration.smartTank.maxFluidTypes.tooltip": "Maximum fluid types per vertical or horizontal tank structure. Different components count separately; lowering the limit preserves existing contents.",
   "ccd.configuration.waterSupply.rate": "Supply Rate per Container",
   "ccd.configuration.waterSupply.rate.tooltip": "Measured in mB/tick per container, supplied in batches. -1 fills available space per operation; 0 disables automatic supply. Manual extraction is unaffected.",
-  "ccd.configuration.atomizer.normalConsumption": "Processing Medium Consumption",
+  "ccd.configuration.atomizer.normalConsumption": "Processing Medium Base Consumption",
   "ccd.configuration.atomizer.normalConsumption.tooltip": "Measured in mB/second of active spray. Custom atomizing recipes may override this value.",
-  "ccd.configuration.atomizer.potionConsumption": "Potion Consumption",
+  "ccd.configuration.atomizer.potionConsumption": "Potion Base Consumption",
   "ccd.configuration.atomizer.potionConsumption.tooltip": "Measured in mB/second of potion spray. Custom recipes may override this value.",
   "block.ccd.fluid_access_port": "Fluid Access Port",
   "block.ccd.fluid_bridge": "Fluid Bridge",
@@ -296,7 +296,7 @@
   "item.ccd.composite_package.tooltip.action1": "_Returns the items_ and separates fluids into _Copper Packages_.",
   "block.ccd.fluid_access_port.tooltip.summary": "Extends access to an attached container’s _fluid interface_.",
   "block.ccd.fluid_bridge.tooltip.summary": "Provides fluid access to _both end containers_ through one interface.",
-  "block.ccd.fluid_atomizer.tooltip.summary": "Consumes fluids to provide _Bulk Processing_ effects to air currents.",
+  "block.ccd.fluid_atomizer.tooltip.summary": "Atomizes stored fluids to provide _Bulk Processing_ effects to air currents.",
   "item.ccd.enriching_reagent_bucket.tooltip.summary": "A fluid for _enriching_.",
   "item.ccd.enriching_reagent_bucket.tooltip.condition1": "When Used with Create Nuclear",
   "item.ccd.enriching_reagent_bucket.tooltip.behaviour1": "_Processes items in bulk_ using the matching recipes.",
@@ -491,7 +491,7 @@
   "ccd.ponder.metal_buckets.text_2": "R-Click containers to draw fluid; Sneak and R-Click to pour",
   "ccd.ponder.metal_buckets.text_3": "World interactions transfer one bucket at a time; Brass Buckets hold more than Copper Buckets",
   "ccd.ponder.fluid_media.header": "Using Processing Fluids",
-  "ccd.ponder.fluid_media.text_1": "Fluid Atomizers use stored fluid to give air currents a processing effect",
+  "ccd.ponder.fluid_media.text_1": "Fluid Atomizers use stored fluid for processing; consumption can be configured",
   "ccd.ponder.fluid_media.text_2": "Optional processing fluids require the matching addon to provide their fan-processing type",
   "ccd.ponder.fluid_media.text_3": "Super Lava can also fuel Blaze Burners, providing 160 seconds of Superheating per 1000 mB",
   "ccd.ponder.fluid_ordering.header": "Monitoring and Ordering Fluids",
@@ -838,5 +838,7 @@
   "ccd.configuration.contentSection.tools": "Containers and Filters",
   "ccd.configuration.contentSection.processing": "Airflow Processing and Fluids",
   "ccd.configuration.rebirthName": "Easter Egg: Chinese Mod Title",
-  "ccd.configuration.rebirthName.tooltip": "Off by default. Changes the mod creative-tab title in Chinese to the alternate title. Gameplay and registry names are unchanged. Restart the game to apply."
+  "ccd.configuration.rebirthName.tooltip": "Off by default. Changes the mod creative-tab title in Chinese to the alternate title. Gameplay and registry names are unchanged. Restart the game to apply.",
+  "ccd.configuration.atomizer.consumptionMultiplier": "Fluid Consumption Multiplier",
+  "ccd.configuration.atomizer.consumptionMultiplier.tooltip": "Scales all atomizer costs, including custom recipes. 0 consumes nothing but still requires matching fluid; 1 uses the base or recipe cost. Positive amounts round up. Reopen the world to apply."
 }

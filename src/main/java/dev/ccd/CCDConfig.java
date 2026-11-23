@@ -12,6 +12,7 @@ public final class CCDConfig {
     public static final ModConfigSpec.IntValue SMART_TANK_MAX_FLUIDS;
     public static final ModConfigSpec.IntValue WATER_SUPPLY_RATE;
     public static final ModConfigSpec.IntValue ATOMIZER_NORMAL_COST, ATOMIZER_POTION_COST;
+    public static final ModConfigSpec.DoubleValue ATOMIZER_CONSUMPTION_MULTIPLIER;
     public static final ModConfigSpec.IntValue VARIABLE_FLOW_MIN_FLOW, VARIABLE_FLOW_MAX_FLOW;
     public static final ModConfigSpec.IntValue VARIABLE_FLOW_MIN_RANGE, VARIABLE_FLOW_MAX_RANGE;
     public static final ModConfigSpec.IntValue PORTABLE_FLOW, PORTABLE_RANGE;
@@ -50,6 +51,12 @@ public final class CCDConfig {
             .worldRestart().defineInRange("rate", 1000, -1, Integer.MAX_VALUE);
         builder.pop();
         builder.translation("ccd.configuration.atomizer").push("atomizer");
+        ATOMIZER_CONSUMPTION_MULTIPLIER = builder.comment(
+            "Multiplier for all atomizer fluid consumption, including custom recipe costs.",
+            "0 consumes no fluid but still requires a matching fluid in the tank. 1 uses the configured/recipe cost.",
+            "Positive fractional costs round up to one mB per consumption interval.")
+            .translation("ccd.configuration.atomizer.consumptionMultiplier")
+            .worldRestart().defineInRange("consumptionMultiplier", 0.0, 0.0, 100.0);
         ATOMIZER_NORMAL_COST = builder.comment("[in mB per second] Fluid consumed when atomizing a fan-processing medium. Custom recipes may override this.")
             .translation("ccd.configuration.atomizer.normalConsumption")
             .worldRestart().defineInRange("normalConsumption", 10, 1, 4000);
