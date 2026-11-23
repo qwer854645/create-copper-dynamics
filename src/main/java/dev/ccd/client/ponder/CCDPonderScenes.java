@@ -272,9 +272,13 @@ public final class CCDPonderScenes {
         s.world().setBlock(target,Blocks.WATER_CAULDRON.defaultBlockState().setValue(net.minecraft.world.level.block.LayeredCauldronBlock.LEVEL,3),true);
         text(s,util,target,"Open the Faucet to fill a container directly below");
         s.world().setBlock(faucet,CopperDynamics.SMART_FAUCET.get().defaultBlockState().setValue(FaucetBlock.FACING,Direction.SOUTH),true);
+        s.world().modifyBlock(faucet,state->state.setValue(FaucetBlock.OPEN,true),false);
         s.world().setBlock(target,Blocks.AIR.defaultBlockState(),false);
         show(s,util,faucet.below(2),AllBlocks.DEPOT.getDefaultState());
         s.world().createItemOnBeltLike(faucet.below(2),Direction.NORTH,new ItemStack(Items.GLASS_BOTTLE));
+        s.idle(25);water(s,source,3750);
+        s.world().modifyBlockEntity(faucet.below(2),com.simibubi.create.content.logistics.depot.DepotBlockEntity.class,be->be.getBehaviour(com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TYPE)
+            .handleProcessingOnAllItems(item->{var result=item.copy();result.stack=net.minecraft.world.item.alchemy.PotionContents.createItemStack(Items.POTION,net.minecraft.world.item.alchemy.Potions.WATER);return com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TransportedResult.convertToAndLeaveHeld(java.util.List.of(result),null);}));
         text(s,util,faucet.below(2),"Smart Faucets can also fill items on Belts or Depots two blocks below"); s.markAsFinished();
     }
     public static void atomizing(SceneBuilder builder,SceneBuildingUtil util) {
@@ -304,6 +308,7 @@ public final class CCDPonderScenes {
         text(s,util,B,"Without a Redstone Signal, it connects to the opposite end");
         s.overlay().showOutline(PonderPalette.GREEN,"route",util.select().fromTo(B,B.south()),55);
         s.world().modifyBlock(B,state->state.setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.POWERED,true),false);
+        show(s,util,B.east(),Blocks.REDSTONE_BLOCK.defaultBlockState());
         text(s,util,B,"A Redstone Signal switches it to the side connection");
         s.overlay().showOutline(PonderPalette.GREEN,"route",util.select().fromTo(B,B.above()),55);
         text(s,util,B,"Mechanical Pumps still determine the direction of flow"); s.markAsFinished();
